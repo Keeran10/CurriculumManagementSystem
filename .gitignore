@@ -1,0 +1,7 @@
+# IDE-based folders, extensions, files
+.idea/
+.vscode/
+.DS_Store
+
+# local database persistence not needed in repo
+docker/data/db/**
