@@ -1,8 +1,14 @@
+sudo: false
 language: java
-sudo: false #faster builds
-jdk: oraclejdk8
-jobs:
-  include:
-    - stage: Build
-    script:
-      - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+services:
+- docker
+cache:
+  directories:
+  - "$HOME/.cache"
+
+deploy:
+  provider: script
+  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy"
+  skip_cleanup: true
+  on:
+    tags: true
