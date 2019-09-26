@@ -1,2 +1,8 @@
 language: java
 sudo: false #faster builds
+jdk: oraclejdk8
+jobs:
+  include:
+    - stage: Build
+    script:
+      - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
