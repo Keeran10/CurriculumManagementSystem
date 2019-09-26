@@ -1,14 +1,7 @@
 sudo: false
-language: java
-services:
-- docker
-cache:
-  directories:
-  - "$HOME/.cache"
-
-deploy:
-  provider: script
-  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy"
-  skip_cleanup: true
-  on:
-    tags: true
+language: node_js
+node_js:
+  - 'node'
+  - '6'
+  - '5'
+  - '4'
