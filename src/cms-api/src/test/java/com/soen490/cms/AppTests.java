@@ -10,9 +10,8 @@ import org.apache.logging.log4j.Logger;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Log4j2
 public class AppTests {
-
-	private static Logger log = LogManager.getLogger(AppTests.class);
 
 	@Test
 	public void contextLoads() {
