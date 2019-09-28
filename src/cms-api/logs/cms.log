@@ -1,0 +1,11 @@
+2019-09-27 00:00:14,302 INFO o.s.b.StartupInfoLogger [main] Starting AppTests on MDNA with PID 7936 (started by scott in D:\My Documents\capstone\CurriculumManagementSystem\src\cms-api)
+2019-09-27 00:00:14,307 INFO o.s.b.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-09-27 00:00:15,236 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-27 00:00:15,586 INFO o.s.b.a.s.s.UserDetailsServiceAutoConfiguration [main] 
+
+Using generated security password: 37cfe3f3-a888-412f-820d-dadc3c3eab47
+
+2019-09-27 00:00:15,738 INFO o.s.s.w.DefaultSecurityFilterChain [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@fc5554, org.springframework.security.web.context.SecurityContextPersistenceFilter@1da1d19, org.springframework.security.web.header.HeaderWriterFilter@14a9ba, org.springframework.security.web.csrf.CsrfFilter@159501e, org.springframework.security.web.authentication.logout.LogoutFilter@1fc2aad, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@a6e3c0, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@a953cf, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@8cda75, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@aa5d7c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@92eede, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@180d62f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1049056, org.springframework.security.web.session.SessionManagementFilter@1d680e6, org.springframework.security.web.access.ExceptionTranslationFilter@7f4980, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@79b626]
+2019-09-27 00:00:15,821 INFO o.s.b.StartupInfoLogger [main] Started AppTests in 1.75 seconds (JVM running for 2.487)
+2019-09-27 00:00:16,040 INFO c.s.c.AppTests [main] This is a log test
+2019-09-27 00:00:16,091 INFO o.s.s.c.ExecutorConfigurationSupport [Thread-2] Shutting down ExecutorService 'applicationTaskExecutor'
