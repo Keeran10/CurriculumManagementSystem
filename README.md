@@ -1,5 +1,7 @@
 # Curriculum Management System
 
+[![Build Status](https://travis-ci.com/Keeran10/CurriculumManagementSystem.svg?token=MoxxqDdGkV24zknvVVL5&branch=master)](https://travis-ci.com/Keeran10/CurriculumManagementSystem)
+
 ### Contributors
 - [Keeran Ratnasabapathy](https://github.com/Keeran10)
 - [Matthew Benchimol](https://github.com/MBenchimol)
