@@ -5,7 +5,7 @@ jobs:
     - stage: "Tests"               
       name: "Unit Tests"            
       #script: ./unit-tests #this will be added later
-    #- script: ./integration-tests #this will be added later
+    - script: #./integration-tests #this will be added later
       name: "Integration Tests"     
     - stage: deploy
       name: "Deployment"
