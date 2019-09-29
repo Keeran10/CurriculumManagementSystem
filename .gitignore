@@ -5,3 +5,6 @@
 
 # local database persistence not needed in repo
 docker/data/db/**
+
+# to avoid course-admin docs conflict
+course-admin/ 
