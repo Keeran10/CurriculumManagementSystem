@@ -1,1 +1,9 @@
 language: minimal
+
+jobs:
+  include:
+    - stage: test
+      #script: ./test 1 - will be added later
+      #script: ./test 2 - will be added later
+    - stage: deploy
+      #script: ./deploy - will be added later
