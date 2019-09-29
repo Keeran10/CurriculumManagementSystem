@@ -2,12 +2,11 @@ language: minimal
 
 jobs:
   include:
-    - stage: "Tests"
-	name: "Unit Tests"
-      #script: ./unit-tests - will be added later
-      #script: ./test 2 - will be added later
-	  name: "Integration Tests"
-	  #script: to be added later
+    - stage: "Tests"                
+      name: "Unit Tests"           
+      #script: ./unit-tests to be added later
+      name: "Integration Tests" 
+	  #script: ./integration-tests to be added later    
     - stage: deploy
-	name: "Deployment"
-      #script: ./deploy - will be added later
+      name: "Deployment"
+      #script: ./deploy to be added later
