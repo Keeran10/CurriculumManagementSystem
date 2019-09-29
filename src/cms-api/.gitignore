@@ -15,4 +15,4 @@ target/
 *.iws
 *.iml
 *.ipr
-
+logs/
