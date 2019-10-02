@@ -6,13 +6,16 @@ version: '3.7'
 services:
 # Frontend Service 
   client:
+    container_name: client
     build:
       context: src/cms-client
       dockerfile: Dockerfile
     ports:
       - "4200:4200"
-    command: >
-      bash -c "npm install && ng serve --host 0.0.0.0 --port 4200" 
+      - "49153:49153"
+    volumes:
+      - "/usr/src/app/node_modules"
+      - "./src/cms-client/:/usr/src/app/"
     restart: always
     depends_on:
       - server
@@ -21,6 +24,7 @@ services:
 
   # Backend service
   server:
+    container_name: api
     build:
       context: src/cms-api
       dockerfile: Dockerfile
@@ -40,6 +44,7 @@ services:
   # Database Service 
   db:
     image: mysql:5.7
+    container_name: db
     ports:
       - "3306:3306"
     restart: always
