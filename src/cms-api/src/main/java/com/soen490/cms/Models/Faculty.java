@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class Faculty {
 
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "faculty")
     private Collection<Department> departments;
 }

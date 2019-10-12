@@ -1,5 +1,7 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,13 +25,16 @@ public class Request {
 
     private Timestamp timestamp;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "request")
     private Collection<SupportingDocument> supportingDocuments;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "request")
     private Collection<Approval> approvals;
 }

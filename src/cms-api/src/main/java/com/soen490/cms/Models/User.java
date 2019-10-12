@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,9 +27,11 @@ public class User {
 
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private Collection<Request> requests;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private Collection<Approval> approvals;
 }

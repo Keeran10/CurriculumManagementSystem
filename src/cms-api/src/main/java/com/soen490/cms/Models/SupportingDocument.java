@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class SupportingDocument {
     @Lob
     private byte[] document;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "request_id")
     private Request request;

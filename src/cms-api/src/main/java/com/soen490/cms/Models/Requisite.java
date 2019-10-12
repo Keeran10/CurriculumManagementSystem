@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class Requisite {
 
     private int isActive;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;

@@ -1,5 +1,7 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +22,12 @@ public class Degree {
 
     private double credits;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "program_id")
     private Program program;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "required_course",
@@ -31,6 +35,7 @@ public class Degree {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     Collection<Course> requiredCourses;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "elective_course",
