@@ -2,7 +2,6 @@ import {ChangeDetectorRef, Component, DoCheck, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {isNull} from 'util';
 
 export interface SearchCategory {
   value: string;
@@ -42,6 +41,10 @@ export class SearchPageComponent implements OnInit {
   constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.setFilteredOptions();
+  }
+
+  private setFilteredOptions() {
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
@@ -51,17 +54,19 @@ export class SearchPageComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     let returnedList: string[] = [];
 
     switch (this.selectedValue) {
       case 'faculty': {
-        // empty for now
+        returnedList = [];
+        this.displayedList = returnedList;
+        returnedList = [];
         break;
       }
       case 'department': {
         returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
         this.displayedList = returnedList;
+        returnedList = [];
         break;
       }
       case 'program': {
@@ -79,16 +84,20 @@ export class SearchPageComponent implements OnInit {
       default: {
         returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
         this.displayedList = returnedList;
+        returnedList = [];
         break;
       }
     }
-
 
     return returnedList;
   }
 
   public showResults(): void {
-    this.ref.detectChanges();
+    // this.myControl.updateValueAndValidity(); // might want to use this later
+    this.isResultShown = false;
+    this.myControl.reset(); // resets whatever was written,
+
+    this.setFilteredOptions();
     this.isResultShown = true;
   }
 

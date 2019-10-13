@@ -1,23 +1,6 @@
 <form class="example-form" id="searchForm">
   <mat-form-field class="example-full-width">
-    <!--<div *ngIf="selectedValue === 'faculty'">
-      <input type="text" placeholder="Search a faculty" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    </div>
-    <div *ngIf="selectedValue === 'department'">
-      <input type="text" placeholder="Search a department" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    </div>
-    <div *ngIf="selectedValue === 'program'">
-      <input type="text" placeholder="Search a program" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    </div>
-    <div *ngIf="selectedValue === 'degree'">
-      <input type="text" placeholder="Search a degree" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    </div>
-    <div *ngIf="selectedValue === 'course'">
-      <input type="text" placeholder="Search a course" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    </div>-->
-
       <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{option}}
