@@ -1,5 +1,8 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,21 +10,20 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Data
 public class Department {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter
     private int id;
 
-    @Getter @Setter
     private String name;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "faculty_id")
-    @Getter @Setter
     private Faculty faculty;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "department")
-    @Getter @Setter
     private Collection<Program> programs;
 }
