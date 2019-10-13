@@ -1,6 +1,6 @@
 <form class="example-form" id="searchForm">
   <mat-form-field class="example-full-width">
-    <div *ngIf="selectedValue === 'faculty'">
+    <!--<div *ngIf="selectedValue === 'faculty'">
       <input type="text" placeholder="Search a faculty" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
     </div>
     <div *ngIf="selectedValue === 'department'">
@@ -14,8 +14,10 @@
     </div>
     <div *ngIf="selectedValue === 'course'">
       <input type="text" placeholder="Search a course" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    </div>
-    <input type="text" placeholder="Choose a search category" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    </div>-->
+
+      <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{option}}
@@ -27,6 +29,7 @@
     <mat-select [(ngModel)]="selectedValue" name="searchCategory">
       <mat-option *ngFor="let searchCategory of searchCategories" [value]="searchCategory.value">
         {{searchCategory.viewValue}}
+        {{selectSearchFormPlaceholder()}}
       </mat-option>
     </mat-select>
   </mat-form-field>

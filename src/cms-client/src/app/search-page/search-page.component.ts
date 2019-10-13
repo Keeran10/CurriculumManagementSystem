@@ -19,10 +19,12 @@ export class SearchPageComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   displayedList: string[] = [];
   isResultShown = false;
+  searchFormPlaceholder = 'Select Search Category';
 
   departments: string[] = [
     'Software Engineering',
     'Computer Science',
+    // test value.
     'AAA'
   ];
 
@@ -61,6 +63,36 @@ export class SearchPageComponent implements OnInit {
       this.displayedList = returnedList;
     }
 
+   /* switch (this.selectedValue) {
+      case 'faculty': {
+        // empty for now
+        break;
+      }
+      case 'department': {
+        returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
+        this.displayedList = returnedList;
+        break;
+      }
+      case 'program': {
+        // empty for now
+        break;
+      }
+      case 'degree': {
+        // empty for now
+        break;
+      }
+      case 'course': {
+        // empty for now
+        break;
+      }
+      default: {
+        returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
+        this.displayedList = returnedList;
+        break;
+      }
+    }*/
+
+
     return returnedList;
   }
 
@@ -68,8 +100,37 @@ export class SearchPageComponent implements OnInit {
     this.isResultShown = true;
   }
 
-}
+  public selectSearchFormPlaceholder(): void {
+    switch (this.selectedValue) {
+      case 'faculty': {
+        this.searchFormPlaceholder = 'Search faculties';
+        break;
+      }
+      case 'department': {
+        this.searchFormPlaceholder = 'Search departments';
+        break;
+      }
+      case 'program': {
+        this.searchFormPlaceholder = 'Search programs';
+        break;
+      }
+      case 'degree': {
+        this.searchFormPlaceholder = 'Search degrees';
+        break;
+      }
+      case 'course': {
+        this.searchFormPlaceholder = 'Search courses';
+        break;
+      }
+      default: {
+        this.searchFormPlaceholder = 'Select Search Category';
+        break;
+      }
+    }
 
+  }
+
+}
 
 export class Department {
   name: string;
