@@ -9,7 +9,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Search Category</mat-label>
-    <mat-select [(ngModel)]="selectedValue" name="searchCategory">
+    <mat-select [(ngModel)]="selectedValue" name="searchCategory" [formControl]="myChildControl">
       <mat-option *ngFor="let searchCategory of searchCategories" [value]="searchCategory.value">
         {{searchCategory.viewValue}}
         {{selectSearchFormPlaceholder()}}

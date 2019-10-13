@@ -16,6 +16,7 @@ export interface SearchCategory {
 export class SearchPageComponent implements OnInit {
 
   myControl = new FormControl();
+  myChildControl = new FormControl();
   filteredOptions: Observable<string[]>;
   displayedList: string[] = [];
   isResultShown = false;
@@ -58,27 +59,39 @@ export class SearchPageComponent implements OnInit {
 
     switch (this.selectedValue) {
       case 'faculty': {
+        // this behavior is the default for now to reset the displayedList
         returnedList = [];
         this.displayedList = returnedList;
-        returnedList = [];
+        // removes the previous displayed list when user starts typing
+        this.isResultShown = false;
         break;
       }
       case 'department': {
         returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
         this.displayedList = returnedList;
-        returnedList = [];
+        // returnedList = []; // if we put this, auto-completion gets removed
+        this.isResultShown = false;
         break;
       }
       case 'program': {
-        // empty for now
+        // this behavior is the default for now to reset the displayedList
+        returnedList = [];
+        this.displayedList = returnedList;
+        returnedList = [];
         break;
       }
       case 'degree': {
-        // empty for now
+        // this behavior is the default for now to reset the displayedList
+        returnedList = [];
+        this.displayedList = returnedList;
+        returnedList = [];
         break;
       }
       case 'course': {
-        // empty for now
+        // this behavior is the default for now to reset the displayedList
+        returnedList = [];
+        this.displayedList = returnedList;
+        returnedList = [];
         break;
       }
       default: {
@@ -96,7 +109,6 @@ export class SearchPageComponent implements OnInit {
     // this.myControl.updateValueAndValidity(); // might want to use this later
     this.isResultShown = false;
     this.myControl.reset(); // resets whatever was written,
-
     this.setFilteredOptions();
     this.isResultShown = true;
   }
