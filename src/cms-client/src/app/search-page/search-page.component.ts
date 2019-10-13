@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, DoCheck, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -14,6 +14,11 @@ export interface SearchCategory {
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
+
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
+  displayedList: string[] = [];
+  isResultShown = false;
 
   departments: string[] = [
     'Software Engineering',
@@ -33,12 +38,6 @@ export class SearchPageComponent implements OnInit {
 
   constructor(private ref: ChangeDetectorRef) { }
 
-
-  myControl = new FormControl();
-  filteredOptions: Observable<string[]>;
-  displayedList: string[] = [];
-  isResultShown = false;
-
   ngOnInit() {
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
@@ -54,10 +53,12 @@ export class SearchPageComponent implements OnInit {
 
     if (this.selectedValue === 'department') {
       returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
+      this.displayedList = returnedList;
     } else if (this.selectedValue === 'faculty' ) {
       // empty on purpose
     } else {
       returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
+      this.displayedList = returnedList;
     }
 
     return returnedList;
@@ -65,8 +66,6 @@ export class SearchPageComponent implements OnInit {
 
   public showResults(): void {
     this.isResultShown = true;
-    this.filteredOptions.subscribe(data => this.displayedList = data);
-
   }
 
 }
