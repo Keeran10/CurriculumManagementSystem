@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Support Documents</title>
+    </head>
+
+    <body>
+        <a>Supporting Documents</a><br />
+
+        <table>
+            <tr th:each="doc : ${documents}">
+                <td th:text="${document.name}"></td>
+            </tr>
+        </table>
+
+        <button>Upload Supporting Document</button>
+    </body>
+</html>
