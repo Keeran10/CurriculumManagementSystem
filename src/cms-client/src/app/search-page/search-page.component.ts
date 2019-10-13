@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, DoCheck, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {isNull} from 'util';
 
 export interface SearchCategory {
   value: string;
@@ -53,17 +54,7 @@ export class SearchPageComponent implements OnInit {
 
     let returnedList: string[] = [];
 
-    if (this.selectedValue === 'department') {
-      returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
-      this.displayedList = returnedList;
-    } else if (this.selectedValue === 'faculty' ) {
-      // empty on purpose
-    } else {
-      returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
-      this.displayedList = returnedList;
-    }
-
-   /* switch (this.selectedValue) {
+    switch (this.selectedValue) {
       case 'faculty': {
         // empty for now
         break;
@@ -90,13 +81,14 @@ export class SearchPageComponent implements OnInit {
         this.displayedList = returnedList;
         break;
       }
-    }*/
+    }
 
 
     return returnedList;
   }
 
   public showResults(): void {
+    this.ref.detectChanges();
     this.isResultShown = true;
   }
 
