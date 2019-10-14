@@ -3,7 +3,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CourseFormComponent } from './course-form/course-form.component';
+import { CourseListComponent } from './course-list/course-list.component';
+import { CourseService} from './service/course.service';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,12 +19,18 @@ import { SearchPageComponent } from './search-page/search-page.component';
 
 
 
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
+    CourseFormComponent,
+    CourseListComponent,
     SearchPageComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
@@ -30,9 +40,9 @@ import { SearchPageComponent } from './search-page/search-page.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [CourseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
