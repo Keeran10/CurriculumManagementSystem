@@ -1,0 +1,34 @@
+<form class="example-form" id="searchForm">
+  <mat-form-field class="example-full-width">
+      <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Search Category</mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="searchCategory" [formControl]="myChildControl">
+      <mat-option *ngFor="let searchCategory of searchCategories" [value]="searchCategory.value">
+        {{searchCategory.viewValue}}
+        {{selectSearchFormPlaceholder()}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button (click)="showResults()">Search</button>
+</form>
+
+
+<div>
+  <div *ngIf="isResultShown === true && displayedList.length === 0">
+    <span>No results found.</span>
+  </div>
+  <div  *ngIf="isResultShown === true && displayedList.length != 0">
+    <div *ngFor="let listItem of displayedList">
+     {{listItem}}
+    </div>
+  </div>
+</div>
+
+
