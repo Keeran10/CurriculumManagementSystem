@@ -1,38 +1,55 @@
 <div class="container">
-  <h1 class="title">Edit Course Page</h1>
-  <form class="edit-form">
-    <mat-form-field class="row1col1">
-      <input matInput placeholder="Department" [(ngModel)]="model.department" name="department">
-    </mat-form-field>
-    <mat-form-field class="row1col2">
-      <input matInput placeholder="Number" [(ngModel)]="model.number" name="number">
-    </mat-form-field>
-    <mat-form-field class="row1col3">
-      <input matInput placeholder="Credits" [(ngModel)]="model.credits" name="credits">
-    </mat-form-field>
-    <mat-form-field class="row2">
-      <input matInput placeholder="Course Name" [(ngModel)]="model.courseName" name="courseName">
-    </mat-form-field>
-    <mat-form-field class="row3">
-      <input matInput placeholder="Prerequisites Courses (Seperate with ;" [(ngModel)]="model.prerequisites" name="prerequisites">
-    </mat-form-field>
-    <mat-form-field class="row4">
-      <textarea matInput placeholder="Description" [(ngModel)]="model.description" name="description"></textarea>
-    </mat-form-field>
-    <mat-form-field class="row5">
-      <input matInput placeholder="Notes" [(ngModel)]="model.notes" name="notes">
-    </mat-form-field>
-  </form>
+    <h1 class="title">Edit Course Page</h1>
+    <form class="edit-form">
+      <mat-form-field class="row1col1">
+        <input matInput placeholder="Department" [(ngModel)]="model.department" name="department">
+      </mat-form-field>
+      <mat-form-field class="row1col2">
+        <input matInput placeholder="Number" [(ngModel)]="model.number" name="number">
+      </mat-form-field>
+      <mat-form-field class="row1col3">
+        <input matInput placeholder="Credits" [(ngModel)]="model.credits" name="credits">
+      </mat-form-field>
+      <mat-form-field class="row2">
+        <input matInput placeholder="Course Name" [(ngModel)]="model.courseName" name="courseName">
+      </mat-form-field>
+      <mat-form-field class="row3">
+        <textarea matInput placeholder="Prerequisites Courses (Seperate with ;)" [(ngModel)]="model.prerequisites" name="prerequisites"></textarea>
+      </mat-form-field>
+      <mat-form-field class="row4">
+        <textarea matInput placeholder="Description" [(ngModel)]="model.description" name="description"></textarea>
+      </mat-form-field>
+      <mat-form-field class="row5">
+        <input matInput placeholder="Notes" [(ngModel)]="model.notes" name="notes">
+      </mat-form-field>
+    </form>
 
-  <div class="edited-text">
-    <p>
-      <span><b>{{model.department}} {{model.number}} <i>{{model.courseName}} </i></b>({{model.credits}} credits)</span>
-    </p>
-    <p>
-      <span>Prerequisite: {{model.prerequisites}}. {{model.description}}</span>
-    </p>
-    <p *ngIf="model.notes.length != 0">
-      <span><i>NOTE: {{model.notes}}</i></span>
-    </p>
+    <div class="edited-text">
+      <span>
+        <b>
+          <span style="display: inline-block" semanticDiff [left]="original.department" [right]="model.department"></span>
+          <span style="display: inline-block" semanticDiff [left]="original.number" [right]="model.number"></span>
+          &nbsp;
+          <i>
+            <span style="display: inline-block" semanticDiff [left]="original.courseName" [right]="model.courseName"></span>
+          </i>
+          &nbsp;
+        </b>
+        <span style="display: inline-block">
+          (
+            <span style="display: inline-block" semanticDiff [left]="original.credits" [right]="model.credits"></span>
+          credits )
+        </span>
+      </span>
+
+      <br>
+      <span>
+        <span style="display: inline-block">Prerequisite: </span>
+        <span style="display: inline-block" semanticDiff [left]="original.prerequisites" [right]="model.prerequisites"></span>
+        <span style="display: inline-block" semanticDiff [left]="original.description" [right]="model.description"></span>
+      </span>
+      <div *ngIf="model.notes.length != 0">
+        <span><i>NOTE: {{model.notes}}</i></span>
+      </div>
+    </div>
   </div>
-</div>
