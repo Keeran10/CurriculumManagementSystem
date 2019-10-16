@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-edit-form',
@@ -6,7 +6,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
   styleUrls: ['./edit-form.component.css']
 })
 
-export class EditFormComponent implements OnInit, AfterViewInit {
+export class EditFormComponent implements OnInit {
 
   model: Model = {
     department: 'COMP',
@@ -44,11 +44,18 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit(): void {
-    (document.querySelector('.ins') as HTMLElement).style.background = '#bbffbb';
-    (document.querySelector('.del') as HTMLElement).style.background = '#ffbbbb';
-  }
+  public highlightChanges(): void {
+    const insElements = document.querySelectorAll('ins');
+    const delElements = document.querySelectorAll('del');
 
+    insElements.forEach( (e) => {
+      e.style.background = '#bbffbb';
+    });
+
+    delElements.forEach( (e) => {
+      e.style.background = '#ffbbbb';
+    });
+  }
 }
 
 export class Model {

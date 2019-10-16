@@ -74,14 +74,11 @@
   grid-row-end: 2;
 }
 
-
-
-.ins,
-ins {
+ins, ins * {
   background: #bbffbb!important;
 }
 
-.del,
-del {
+del, del * {
   background: #ffbbbb!important;
 }
+
