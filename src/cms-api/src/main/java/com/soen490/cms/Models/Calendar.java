@@ -15,7 +15,9 @@ public class Calendar {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String section;
+    private String sectionId;
+
+    private String sectionTitle;
 
     private String body;
 

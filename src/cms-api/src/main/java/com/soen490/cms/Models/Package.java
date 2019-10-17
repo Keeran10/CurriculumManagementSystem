@@ -19,4 +19,9 @@ public class Package {
     @JsonManagedReference
     @OneToMany(mappedBy = "requestPackage")
     private Collection<Request> requests;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
