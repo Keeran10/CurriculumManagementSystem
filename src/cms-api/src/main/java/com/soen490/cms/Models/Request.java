@@ -33,7 +33,7 @@ public class Request {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "package_id")
-    private Package request_package;
+    private Package requestPackage; // package is a reserved keyword
 
     @JsonManagedReference
     @OneToMany(mappedBy = "request")

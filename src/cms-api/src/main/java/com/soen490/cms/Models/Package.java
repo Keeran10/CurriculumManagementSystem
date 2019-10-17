@@ -17,6 +17,6 @@ public class Package {
     private int id;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "package")
+    @OneToMany(mappedBy = "requestPackage")
     private Collection<Request> requests;
 }
