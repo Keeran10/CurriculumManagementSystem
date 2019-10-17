@@ -34,4 +34,8 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private Collection<Approval> approvals;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    private Collection<Package> packages;
 }

@@ -30,6 +30,11 @@ public class Request {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "package_id")
+    private Package requestPackage; // package is a reserved keyword
+
     @JsonManagedReference
     @OneToMany(mappedBy = "request")
     private Collection<SupportingDocument> supportingDocuments;

@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
@@ -10,18 +11,17 @@ import java.util.Collection;
 
 @Entity
 @Data
-public class Faculty {
+public class Package {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String name;
-
     @JsonManagedReference
-    @OneToMany(mappedBy = "faculty")
-    private Collection<Department> departments;
+    @OneToMany(mappedBy = "requestPackage")
+    private Collection<Request> requests;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "faculty")
-    private Collection<Calendar> calendars;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
