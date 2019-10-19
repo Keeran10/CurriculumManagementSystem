@@ -44,7 +44,7 @@ INSERT IGNORE INTO course VALUES (11, 3.00, 'Organization of large software deve
 INSERT IGNORE INTO course VALUES (12, 3.00, 'Mathematical modelling of dynamical systems; block diagrams; feedback; open and closed loops. Linear differential equations; time domain analysis; free, forced, and total response; steady state and transient response. Laplace transform and inverse transform; second order systems. Transfer functions and stability. Control system design: PID and root locus techniques. Computer simulation of control systems. Applications.', 1, 0, 3, 1, 'SOEN', 385, NULL, 'Control Systems and Applications', 1, 1);
 INSERT IGNORE INTO course VALUES (13, 3.50, 'Students work in teams to design and implement a software project from requirements provided by the coordinator. Each team will demonstrate the software and prepare adequate documentation for it. In addition, each student will write an individual report.', 1, 3, 2, 1, 'SOEN', 390, NULL, 'Software Engineering Team Design Project', 1, 1);
 INSERT IGNORE INTO course VALUES (14, 4.00, 'Students work in teams of at least four members to construct a significant software application. The class meets at regular intervals. Team members will give a presentation of their contribution to the project.', 1, 2, 1, 1, 'SOEN', 490, NULL, 'Capstone Software Engineering Design Project', 0, 1);
-INSERT IGNORE INTO course VALUES (15, 3.50, 'From requirements design to implementation. Planned vs. evolutionary design and refactoring. Model‑driven design and Unified Modelling Language (UML). Structural and behavioural design descriptions and specifications. General and domain‑specific design principles, patterns and idioms. Object‑oriented design concepts such as interfaces vs. abstract types, polymorphism, generics, and delegation vs. subclassing. Introduction to software architecture (styles and view models). Design quality. Design rationale. Design methodologies (e.g. based on responsibility assignment). Test‑driven development.', 0, 0, 3, 1, 'SOEN', 343, NULL, 'Software Architecture and Design I extreme', 1, 1);
+INSERT IGNORE INTO course VALUES (15, 3.50, 'From requirements to design to implementation. Planned vs. evolutionary design and refactoring. Model‑driven design and Unified Modelling Language (UML). Structural and behavioural design descriptions and specifications. General and domain‑specific design principles, patterns and idioms. Object‑oriented design concepts such as interfaces vs. abstract types, polymorphism, generics, and delegation vs. subclassing. Introduction to software architecture (styles and view models). Design quality. Design rationale. Design methodologies (e.g. based on responsibility assignment). Test‑driven development.', 0, 0, 3, 2, 'SOEN', 343, NULL, 'Software Architecture and Design I extreme', 1, 1);
 
 -- id, active, req_course_id, type (1=pre, 2=con, 3=anti, 4=equal), course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, 5, 1, 6);-- soen 342 needs 341
@@ -54,7 +54,7 @@ INSERT IGNORE INTO requisite VALUES (4, 1, 7, 1, 8);-- soen 344 needs 343
 INSERT IGNORE INTO requisite VALUES (5, 1, 7, 2, 9);-- soen 345 needs 343
 INSERT IGNORE INTO requisite VALUES (6, 1, 5, 1, 10);-- soen 357 needs 341
 INSERT IGNORE INTO requisite VALUES (7, 0, 5, 1, 15);-- soen 343 edited needs 341
-INSERT IGNORE INTO requisite VALUES (8, 0, 6, 2, 15);-- soen 343 edited needs 342
+INSERT IGNORE INTO requisite VALUES (8, 0, 4, 2, 15);-- soen 343 edited needs 342
 
 -- degree_id, course_id
 INSERT IGNORE INTO required_course VALUES (1, 1);

@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soen490.cms.Models.Course;
 import com.soen490.cms.Models.Request;
+import com.soen490.cms.Models.Requisite;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,7 +79,19 @@ public class ImpactAssessmentCourseService {
         // check level
         if(originalCourse.getLevel() != requestedCourse.getLevel())
             elements.put("level", Integer.toString(requestedCourse.getLevel()));
+
         // check preRequisites
+        String preReqRemoved = "";
+        preReqRemoved = preReqCompare(originalCourse,requestedCourse);
+        if(!(preReqRemoved.equals("")))
+            elements.put("PreReq_removed", preReqRemoved);
+
+        String preReqAdded = "";
+        preReqAdded = preReqCompare(requestedCourse, originalCourse);
+        if(!(preReqAdded.equals("")))
+            elements.put("PreReq_added", preReqAdded);
+
+        // Map to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             courseChanges = objectMapper.writeValueAsString(elements);
@@ -88,6 +102,29 @@ public class ImpactAssessmentCourseService {
         return courseChanges;
     }
 
+    private String preReqCompare(Course originalCourse, Course requestedCourse){
+        Collection<Requisite> originalRequisites = originalCourse.getRequisites();
+        Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
+        String reqReport = "";
+        for(Requisite original : originalRequisites){
+            Course oldCourse = courseService.findCourseById(original.getRequisiteCourseId());
+            String oldName = oldCourse.getName();
+            int oldNumber = oldCourse.getNumber();
+            boolean exist = false;
 
+            for(Requisite changed : requestedRequisites){
+                Course newCourse = courseService.findCourseById(changed.getRequisiteCourseId());
+                String newName = newCourse.getName();
+                int newNumber = newCourse.getNumber();
+                if((oldName.equalsIgnoreCase(newName))&&(oldNumber == newNumber)){
+                    exist = true;
+                }
+            }
+            if(!exist){
+                reqReport += oldName +" "+ oldNumber+". " ;
+            }
+        }
+      return reqReport;
+    }
 
 }
