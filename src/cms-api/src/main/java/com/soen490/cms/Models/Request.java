@@ -19,7 +19,7 @@ public class Request {
 
     private int targetId;
 
-    private int originalId;
+    private int originalId; // original target Id if its a edit requests
 
     private int targetType; // 1: program, 2: course
 

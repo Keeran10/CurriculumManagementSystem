@@ -74,8 +74,11 @@ INSERT IGNORE INTO required_course VALUES (1, 14);
 INSERT IGNORE INTO calendar VALUES(1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  2, 4);
 INSERT IGNORE INTO calendar VALUES(2, 'Students employed full‑time in a computer science position during their non‑study terms may have this Industrial Experience listed on their official transcript and student record, provided they successfully complete the Reflective Learning course associated with this work term. Students may only register for these courses with the permission of the Faculty. The Industrial Experience terms COMP 107 and 207 carry no credit value and are used to indicate that the student is on an Industrial Experience term. The COMP 108 and 208 Industrial Experience Reflective Learning courses are worth three credits and are marked on a pass/fail basis. They are above and beyond the credit requirements of the student’s program and are not transferable nor are they included in the full‑ or part‑time assessment status. Students studying for a co‑op work term or CIADI term should not register for these Industrial Experience and Reflective Learning courses.', '71.70.7', 'Industrial Experience and Reflective Learning Courses', 'general', 2, 4);
 
+-- id, user id
+INSERT IGNORE INTO package VALUES (1, 1); -- creating a package for user 1
+
 -- id, original id, request type, target id, target type, timestamp, package id, user id
-INSERT IGNORE INTO request VALUES (1, 7, 2, 15, 2, NULL, NULL, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (1, 7, 2, 15, 2, NULL, 1, 1); -- updating request for the course soen 343
 
 -- id, apc, dcc, fcc, gdc, senate, ugdc
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 1, 2, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
