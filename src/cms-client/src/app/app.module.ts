@@ -30,7 +30,8 @@ import { SearchPageComponent } from './search-page/search-page.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxFileDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
