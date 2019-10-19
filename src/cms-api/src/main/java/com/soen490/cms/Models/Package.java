@@ -24,4 +24,6 @@ public class Package {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public String toString(){return null;}
 }
