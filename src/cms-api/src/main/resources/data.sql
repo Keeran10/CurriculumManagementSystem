@@ -53,6 +53,8 @@ INSERT IGNORE INTO requisite VALUES (3, 1, 6, 2, 7);-- soen 343 needs 342
 INSERT IGNORE INTO requisite VALUES (4, 1, 7, 1, 8);-- soen 344 needs 343
 INSERT IGNORE INTO requisite VALUES (5, 1, 7, 2, 9);-- soen 345 needs 343
 INSERT IGNORE INTO requisite VALUES (6, 1, 5, 1, 10);-- soen 357 needs 341
+INSERT IGNORE INTO requisite VALUES (7, 0, 5, 1, 15);-- soen 343 edited needs 341
+INSERT IGNORE INTO requisite VALUES (8, 0, 6, 2, 15);-- soen 343 edited needs 342
 
 -- degree_id, course_id
 INSERT IGNORE INTO required_course VALUES (1, 1);
