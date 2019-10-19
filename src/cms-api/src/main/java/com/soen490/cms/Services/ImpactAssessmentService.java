@@ -12,11 +12,23 @@ public class ImpactAssessmentService {
 
     @Autowired
     RequestRepository requestRepository;
+    @Autowired
+    ImpactAssessmentCourseService impactAssessmentCourseService;
 
     public String getAssessment(int requestId){
-        System.err.println("Hello Request ID is: " + requestId);
         Request request = requestRepository.findByRequestId(requestId);
-        System.err.println("Here"+ request);
-        return "Your request Id is:" + requestId;
+        log.info("Looking for the Request with: "+ requestId );
+
+        if(request == null){
+            return "Request does not exisit";
+        }
+        else{
+            log.info("Content of Request "+ request );
+            switch (request.getTargetType()){
+                case 1: return "it's a program change request";
+                case 2: return impactAssessmentCourseService.getCourseImpact(request);
+                default: return "invalid Target Type in the Request";
+            }
+        }
     }
 }

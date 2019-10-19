@@ -25,5 +25,8 @@ public class Package {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public String toString(){return null;}
+    public String toString() {
+        String s = "{id = " + id + "}";
+        return s;
+    }
 }
