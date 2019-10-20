@@ -49,7 +49,7 @@ public class ImpactAssessmentCourseService {
         finalResponseMap.put("CourseName",originalCourse.getName());
         finalResponseMap.put("courseNumber",Integer.toString(originalCourse.getNumber()));
 
-        Map<String, String> responseMap = new HashMap();
+        Map<String, Object> responseMap = new HashMap();
         // check name
         if(!(originalCourse.getName().equalsIgnoreCase(requestedCourse.getName())))
             responseMap.put("name", requestedCourse.getName());
@@ -80,14 +80,14 @@ public class ImpactAssessmentCourseService {
 
         // check preRequisites
         String preReqRemoved = "";
-        preReqRemoved = preReqCompare(originalCourse,requestedCourse);
-        if(!(preReqRemoved.equals("")))
-            responseMap.put("PreReq_removed", preReqRemoved);
+        Map<String, Object> preReqRemovedMap = preReqCompare(originalCourse,requestedCourse);
+        if(!(preReqRemovedMap.isEmpty()))
+            responseMap.put("PreReq_removed", preReqRemovedMap);
 
         String preReqAdded = "";
-        preReqAdded = preReqCompare(requestedCourse, originalCourse);
-        if(!(preReqAdded.equals("")))
-            responseMap.put("PreReq_added", preReqAdded);
+        Map<String, Object> preReqAddedMap = preReqCompare(requestedCourse, originalCourse);
+        if(!(preReqAddedMap.isEmpty()))
+            responseMap.put("PreReq_added", preReqAddedMap);
 
 
         if(responseMap.keySet().size() > 2){
@@ -98,10 +98,10 @@ public class ImpactAssessmentCourseService {
         return finalResponseMap;
     }
 
-    private String preReqCompare(Course originalCourse, Course requestedCourse){
+    private Map<String, Object> preReqCompare(Course originalCourse, Course requestedCourse){
         Collection<Requisite> originalRequisites = originalCourse.getRequisites();
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
-        String reqReport = "";
+        Map<String, Object> responseMap = new HashMap();
         for(Requisite original : originalRequisites){
             Course oldCourse = courseService.findCourseById(original.getRequisiteCourseId());
             String oldName = oldCourse.getName();
@@ -117,10 +117,10 @@ public class ImpactAssessmentCourseService {
                 }
             }
             if(!exist){
-                reqReport += oldName +" "+ oldNumber+". " ;
+                responseMap.put("Course",oldName +" "+ oldNumber);
             }
         }
-      return reqReport;
+      return responseMap;
     }
 
 }
