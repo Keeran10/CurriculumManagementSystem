@@ -164,4 +164,7 @@ public class ImpactAssessmentCourseService {
             return responseMap;
         }
     }
+    public void setServiceMock(CourseService course){
+        courseService = course;
+    }
 }
