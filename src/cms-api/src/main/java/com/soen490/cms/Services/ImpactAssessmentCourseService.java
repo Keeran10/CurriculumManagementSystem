@@ -20,16 +20,34 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> responseMap = new HashMap();
         switch (request.getRequestType()){
 
-            //TODO case 1: return courseCreationImpact(request);
+            case 1: return courseCreationImpactReport(request);
             case 2: return courseEditedImpact(request);
-            case 3: return courseRemovalImpact(request);
+            case 3: return courseRemovalImpactReport(request);
             default: {
                 responseMap.put("error","wrong course Request Type");
                 return responseMap;
             }
         }
     }
-    private Map<String, Object>  courseEditedImpact(Request request){
+    private Map<String, Object> courseCreationImpactReport(Request request){
+        Map<String, Object> responseReport = new HashMap();
+
+        Course course = courseService.findCourseById(request.getTargetId());
+
+        Collection<Requisite> coursesInReference = course.getRequisites();
+        Map<String, Object> responseMap = new HashMap();
+        List<String> parentCourses = new ArrayList();
+        for(Requisite requisite : coursesInReference){
+            Course parentCourse = courseService.findCourseById(requisite.getRequisiteCourseId());
+            parentCourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
+        }
+        responseMap.put("courses",parentCourses);
+
+        responseReport.put("CoursesInRequisites",responseMap);
+        return responseReport;
+    }
+
+    private Map<String, Object> courseEditedImpact(Request request){
         Course originalCourse = courseService.findCourseById(request.getOriginalId());
         if(originalCourse == null){
             Map<String, Object> responseMap = new HashMap();
@@ -41,18 +59,22 @@ public class ImpactAssessmentCourseService {
            return getCourseDiffReport(originalCourse, requestedCourse);
         }
     }
-    private Map<String,Object> courseRemovalImpact(Request request){
-        Map<String, Object> responseMap = new HashMap();
+
+    private Map<String,Object> courseRemovalImpactReport(Request request){
+        Map<String, Object> responseReport = new HashMap();
         Course course = courseService.findCourseById(request.getTargetId());
         int courseId = course.getId();
-        Collection<Requisite> coursesInReference = courseService.findAllOccurancesOfCourseAsRequisite(courseId);
+
+        Collection<Requisite> coursesInReference = courseService.findAllOccurrencesOfCourseAsRequisite(courseId);
+
+        Map<String, Object> responseMap = new HashMap();
         List<String> parentCourses = new ArrayList();
         for(Requisite requisite : coursesInReference){
-           Course parentCourse = courseService.findCourseById(requisite.getRequisiteCourseId());
+            Course parentCourse = requisite.getCourse();
             parentCourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
         }
         responseMap.put("courses",parentCourses);
-        Map<String, Object> responseReport = new HashMap();
+
         responseReport.put("RemovingFromParentCourses",responseMap);
         return responseReport;
     }
@@ -138,5 +160,4 @@ public class ImpactAssessmentCourseService {
             return responseMap;
         }
     }
-
 }

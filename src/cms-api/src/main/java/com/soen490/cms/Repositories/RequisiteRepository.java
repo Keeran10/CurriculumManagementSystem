@@ -10,6 +10,7 @@ import java.util.Collection;
 @Repository
 public interface RequisiteRepository extends JpaRepository<Requisite, Integer>{
 
-    @Query(value = "SELECT * FROM requisite WHERE course_id=?", nativeQuery = true)
-    Collection<Requisite> findAllOccurancesOfCourseAsRequisite(int course_id);
+    @Query(value = "SELECT * FROM requisite WHERE requisite_course_id=?", nativeQuery = true)
+    Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id);
+
 }

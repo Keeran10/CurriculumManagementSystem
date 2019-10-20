@@ -34,9 +34,10 @@ public class CourseService {
         return cr.findById(id);
     }
 
-    public Collection<Requisite> findAllOccurancesOfCourseAsRequisite(int id){
+    public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){
         log.info("Course "+id+" requisites: ");
-        return rq.findAllOccurancesOfCourseAsRequisite(id);
+        return rq.findAllOccurrencesOfCourseAsRequisite(id);
     }
+
 
 }

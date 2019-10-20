@@ -54,7 +54,8 @@ INSERT IGNORE INTO requisite VALUES (4, 1, 7, 1, 8);-- soen 344 needs 343
 INSERT IGNORE INTO requisite VALUES (5, 1, 7, 2, 9);-- soen 345 needs 343
 INSERT IGNORE INTO requisite VALUES (6, 1, 5, 1, 10);-- soen 357 needs 341
 INSERT IGNORE INTO requisite VALUES (7, 0, 5, 1, 15);-- soen 343 edited needs 341
-INSERT IGNORE INTO requisite VALUES (8, 0, 4, 2, 15);-- soen 343 edited needs 342
+INSERT IGNORE INTO requisite VALUES (8, 0, 4, 2, 15);-- soen 343 edited needs 331
+INSERT IGNORE INTO requisite VALUES (9, 0, 15, 2, 10);-- soen 357 edited needs 343 edited
 
 -- degree_id, course_id
 INSERT IGNORE INTO required_course VALUES (1, 1);
@@ -81,7 +82,8 @@ INSERT IGNORE INTO package VALUES (1, 1); -- creating a package for user 1
 
 -- id, original id, request type, target id, target type, timestamp, package id, user id
 INSERT IGNORE INTO request VALUES (1, 7, 2, 15, 2, NULL, 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 7, 3, 15, 2, NULL, 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 7, 3, 15, 2, NULL, 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 7, 1, 15, 2, NULL, 1, 1); -- creating request for the course soen 343
 
 -- id, apc, dcc, fcc, gdc, senate, ugdc
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 1, 2, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
