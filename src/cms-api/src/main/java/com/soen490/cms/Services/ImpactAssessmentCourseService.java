@@ -45,15 +45,15 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> responseMap = new HashMap();
         Course course = courseService.findCourseById(request.getTargetId());
         int courseId = course.getId();
-        Collection<Requisite> coursesInRefference = courseService.findAllOccurancesOfCourseAsRequisite(courseId);
-        List<String> parentcourses = new ArrayList();
-        for(Requisite requisite : coursesInRefference){
+        Collection<Requisite> coursesInReference = courseService.findAllOccurancesOfCourseAsRequisite(courseId);
+        List<String> parentCourses = new ArrayList();
+        for(Requisite requisite : coursesInReference){
            Course parentCourse = courseService.findCourseById(requisite.getRequisiteCourseId());
-            parentcourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
+            parentCourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
         }
-        responseMap.put("courses",parentcourses);
+        responseMap.put("courses",parentCourses);
         Map<String, Object> responseReport = new HashMap();
-        responseReport.put("DependantParentCourses",responseMap);
+        responseReport.put("RemovingFromParentCourses",responseMap);
         return responseReport;
     }
 
@@ -94,16 +94,13 @@ public class ImpactAssessmentCourseService {
         // check preRequisites
         Map<String, Object> preReqRemovedMap = preReqCompare(originalCourse,requestedCourse);
         if(!(preReqRemovedMap.isEmpty()))
-            responseMap.put("PreReq_removed", preReqRemovedMap);
+            responseMap.put("RequisitesRemoved", preReqRemovedMap);
 
         Map<String, Object> preReqAddedMap = preReqCompare(requestedCourse, originalCourse);
         if(!(preReqAddedMap.isEmpty()))
-            responseMap.put("PreReq_added", preReqAddedMap);
+            responseMap.put("RequisitesAdded", preReqAddedMap);
 
-        if(responseMap.keySet().size() > 2){
-            finalResponseMap.put("Course_Changes", responseMap);}
-        else{
-            finalResponseMap.put("Course_Changes", responseMap);}
+        finalResponseMap.put("CourseChanges", responseMap);
 
         return finalResponseMap;
     }
@@ -112,8 +109,8 @@ public class ImpactAssessmentCourseService {
         Collection<Requisite> originalRequisites = originalCourse.getRequisites();
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
         Map<String, Object> responseMap = new HashMap();
+        List<String> coursesList = new ArrayList();
 
-        int counter = 1;
         for(Requisite original : originalRequisites){
             Course oldCourse = courseService.findCourseById(original.getRequisiteCourseId());
             String oldName = oldCourse.getName();
@@ -129,11 +126,17 @@ public class ImpactAssessmentCourseService {
                 }
             }
             if(!exist){
-                responseMap.put("Course"+counter,oldName +" "+ oldNumber);
-                counter++;
+                coursesList.add(oldName +" "+ oldNumber);
             }
         }
-      return responseMap;
+
+        if(coursesList.isEmpty()){
+            return responseMap;
+        }
+        else {
+            responseMap.put("Courses", coursesList);
+            return responseMap;
+        }
     }
 
 }
