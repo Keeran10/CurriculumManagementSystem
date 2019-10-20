@@ -25,4 +25,9 @@ public class CourseService {
         return cr.findByCourseNumber(name, number);
     }
 
+    public Course findCourseById(int id){
+        log.info("Course findbyId(): " + id);
+        return cr.findById(id);
+    }
+
 }
