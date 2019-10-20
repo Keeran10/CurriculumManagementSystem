@@ -7,9 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -44,15 +42,19 @@ public class ImpactAssessmentCourseService {
         }
     }
     private Map<String,Object> courseRemovalImpact(Request request){
+        Map<String, Object> responseMap = new HashMap();
         Course course = courseService.findCourseById(request.getTargetId());
         int courseId = course.getId();
         Collection<Requisite> coursesInRefference = courseService.findAllOccurancesOfCourseAsRequisite(courseId);
-        
+        List<String> parentcourses = new ArrayList();
         for(Requisite requisite : coursesInRefference){
-            System.out.println(requisite.getCourse());
+           Course parentCourse = courseService.findCourseById(requisite.getRequisiteCourseId());
+            parentcourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
         }
-
-        return null;
+        responseMap.put("courses",parentcourses);
+        Map<String, Object> responseReport = new HashMap();
+        responseReport.put("DependantParentCourses",responseMap);
+        return responseReport;
     }
 
     private Map<String, Object>  getCourseDiffReport(Course originalCourse, Course requestedCourse){
@@ -90,16 +92,13 @@ public class ImpactAssessmentCourseService {
             responseMap.put("level", Integer.toString(requestedCourse.getLevel()));
 
         // check preRequisites
-        String preReqRemoved = "";
         Map<String, Object> preReqRemovedMap = preReqCompare(originalCourse,requestedCourse);
         if(!(preReqRemovedMap.isEmpty()))
             responseMap.put("PreReq_removed", preReqRemovedMap);
 
-        String preReqAdded = "";
         Map<String, Object> preReqAddedMap = preReqCompare(requestedCourse, originalCourse);
         if(!(preReqAddedMap.isEmpty()))
             responseMap.put("PreReq_added", preReqAddedMap);
-
 
         if(responseMap.keySet().size() > 2){
             finalResponseMap.put("Course_Changes", responseMap);}
@@ -113,6 +112,8 @@ public class ImpactAssessmentCourseService {
         Collection<Requisite> originalRequisites = originalCourse.getRequisites();
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
         Map<String, Object> responseMap = new HashMap();
+
+        int counter = 1;
         for(Requisite original : originalRequisites){
             Course oldCourse = courseService.findCourseById(original.getRequisiteCourseId());
             String oldName = oldCourse.getName();
@@ -128,7 +129,8 @@ public class ImpactAssessmentCourseService {
                 }
             }
             if(!exist){
-                responseMap.put("Course",oldName +" "+ oldNumber);
+                responseMap.put("Course"+counter,oldName +" "+ oldNumber);
+                counter++;
             }
         }
       return responseMap;
