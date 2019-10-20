@@ -1,6 +1,7 @@
 package com.soen490.cms;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -9,6 +10,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import com.soen490.cms.Models.Course;
+import com.soen490.cms.Models.Request;
+import com.soen490.cms.Models.Requisite;
+import com.soen490.cms.Services.CourseService;
+import com.soen490.cms.Services.ImpactAssessmentCourseService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +26,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.soen490.cms.Controllers.ImpactAssessmentController;
 import com.soen490.cms.Services.ImpactAssessmentService;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ImpactAssessmentController.class)
-public class ImpactStatementTest {
+public class ImpactStatementControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private ImpactAssessmentService impactAssessmentService;
-
+    
     @Autowired
     private ImpactAssessmentController controller;
 
@@ -53,8 +61,21 @@ public class ImpactStatementTest {
     }
 
     @Test
+    public void GetStatementShouldReturnErrorMessageForInvalidRequest() {
+        try {
+            Map<String, Object> responseMap = new HashMap();
+            responseMap.put("error","RequestTypeInvalid");
+            when(impactAssessmentService.getAssessment(25535896)).thenReturn(responseMap);
+            this.mockMvc.perform(get("/ImpactAssessment?requestId=25535896")).andDo(print()).andExpect(status().isOk())
+                    .andExpect(content().string(containsString("error")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
     public void contexLoads(){
         assertThat(controller).isNotNull();
     }
+
 
 }
