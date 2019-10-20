@@ -1,7 +1,9 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.Course;
+import com.soen490.cms.Models.Requisite;
 import com.soen490.cms.Repositories.CourseRepository;
+import com.soen490.cms.Repositories.RequisiteRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ public class CourseService {
 
     @Autowired
     CourseRepository cr;
+    @Autowired
+    RequisiteRepository rq;
 
     public Collection<Course> findAll(){
         log.info("findAll()");
@@ -28,6 +32,11 @@ public class CourseService {
     public Course findCourseById(int id){
         log.info("Course findbyId(): " + id);
         return cr.findById(id);
+    }
+
+    public Collection<Requisite> findAllOccurancesOfCourseAsRequisite(int id){
+        log.info("Course "+id+" requisites: ");
+        return rq.findAllOccurancesOfCourseAsRequisite(id);
     }
 
 }

@@ -24,7 +24,7 @@ public class ImpactAssessmentCourseService {
 
             //TODO case 1: return courseCreationImpact(request);
             case 2: return courseEditedImpact(request);
-            //TODO case 3: return courseRemovalImpact(request);
+            case 3: return courseRemovalImpact(request);
             default: {
                 responseMap.put("error","wrong course Request Type");
                 return responseMap;
@@ -42,6 +42,17 @@ public class ImpactAssessmentCourseService {
             Course requestedCourse = courseService.findCourseById(request.getTargetId());
            return getCourseDiffReport(originalCourse, requestedCourse);
         }
+    }
+    private Map<String,Object> courseRemovalImpact(Request request){
+        Course course = courseService.findCourseById(request.getTargetId());
+        int courseId = course.getId();
+        Collection<Requisite> coursesInRefference = courseService.findAllOccurancesOfCourseAsRequisite(courseId);
+        
+        for(Requisite requisite : coursesInRefference){
+            System.out.println(requisite.getCourse());
+        }
+
+        return null;
     }
 
     private Map<String, Object>  getCourseDiffReport(Course originalCourse, Course requestedCourse){
