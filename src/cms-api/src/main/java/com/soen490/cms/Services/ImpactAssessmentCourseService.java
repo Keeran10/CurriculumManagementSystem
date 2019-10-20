@@ -1,7 +1,5 @@
 package com.soen490.cms.Services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soen490.cms.Models.Course;
 import com.soen490.cms.Models.Request;
 import com.soen490.cms.Models.Requisite;
@@ -20,86 +18,84 @@ public class ImpactAssessmentCourseService {
     @Autowired
     CourseService courseService;
 
-    public String getCourseImpact(Request request){
+    public Map<String, Object>  getCourseImpact(Request request){
+        Map<String, Object> responseMap = new HashMap();
         switch (request.getRequestType()){
-            case 1: return "Course Creation Impact Report";//courseCreationImpact();
+
+            //TODO case 1: return courseCreationImpact(request);
             case 2: return courseEditedImpact(request);
-            case 3: return "Course Deletion Impact Report";//courseRemovalImpact();
-            default: return "wrong course Request Type";
+            //TODO case 3: return courseRemovalImpact(request);
+            default: {
+                responseMap.put("error","wrong course Request Type");
+                return responseMap;
+            }
         }
     }
-    private String courseEditedImpact(Request request){
+    private Map<String, Object>  courseEditedImpact(Request request){
         Course originalCourse = courseService.findCourseById(request.getOriginalId());
         if(originalCourse == null){
-            return "Original course not referenced";
+            Map<String, Object> responseMap = new HashMap();
+            responseMap.put("error","Original course not referred in request");
+            return responseMap;
         }
         else{
             Course requestedCourse = courseService.findCourseById(request.getTargetId());
-           return getDiffReport(originalCourse, requestedCourse);
+           return getCourseDiffReport(originalCourse, requestedCourse);
         }
     }
 
-    private String getDiffReport(Course originalCourse, Course requestedCourse){
-        String report= "";
-        report = "{\"courseName\":" + originalCourse.getName()
-                +",\"courseNumber\":" + originalCourse.getNumber()
-                +",\"changed\":";
-        report += getCourseDiff(originalCourse, requestedCourse);
-        report += "}";
-        return report;
-    }
+    private Map<String, Object>  getCourseDiffReport(Course originalCourse, Course requestedCourse){
+        Map<String, Object> finalResponseMap = new HashMap();
+        finalResponseMap.put("CourseName",originalCourse.getName());
+        finalResponseMap.put("courseNumber",Integer.toString(originalCourse.getNumber()));
 
-    private String getCourseDiff(Course originalCourse, Course requestedCourse){
-        String courseChanges = "";
-        Map<String, String> elements = new HashMap();
+        Map<String, String> responseMap = new HashMap();
         // check name
         if(!(originalCourse.getName().equalsIgnoreCase(requestedCourse.getName())))
-            elements.put("name", requestedCourse.getName());
+            responseMap.put("name", requestedCourse.getName());
         // check number
         if(originalCourse.getNumber() != requestedCourse.getNumber())
-            elements.put("number", Integer.toString(requestedCourse.getNumber()));
+            responseMap.put("number", Integer.toString(requestedCourse.getNumber()));
         // check credit
         if(originalCourse.getCredits() != requestedCourse.getCredits())
-            elements.put("credits", Double.toString(requestedCourse.getCredits()));
+            responseMap.put("credits", Double.toString(requestedCourse.getCredits()));
         // check title
         if(!(originalCourse.getTitle().equalsIgnoreCase(requestedCourse.getTitle())))
-            elements.put("title", requestedCourse.getTitle());
+            responseMap.put("title", requestedCourse.getTitle());
         // check tutorial time
         if(originalCourse.getTutorialHours() != requestedCourse.getTutorialHours())
-            elements.put("tutorial_hours", Double.toString(requestedCourse.getTutorialHours()));
+            responseMap.put("tutorial_hours", Double.toString(requestedCourse.getTutorialHours()));
         // check lab time
         if(originalCourse.getLabHours() != requestedCourse.getLabHours())
-            elements.put("lab_hours", Double.toString(requestedCourse.getLabHours()));
+            responseMap.put("lab_hours", Double.toString(requestedCourse.getLabHours()));
         // check lecture time
         if(originalCourse.getLectureHours() != requestedCourse.getLectureHours())
-            elements.put("lecture_hours", Double.toString(requestedCourse.getLectureHours()));
+            responseMap.put("lecture_hours", Double.toString(requestedCourse.getLectureHours()));
         // check description
         if(!(originalCourse.getDescription().equalsIgnoreCase(requestedCourse.getDescription())))
-            elements.put("description", requestedCourse.getDescription());
+            responseMap.put("description", requestedCourse.getDescription());
         // check level
         if(originalCourse.getLevel() != requestedCourse.getLevel())
-            elements.put("level", Integer.toString(requestedCourse.getLevel()));
+            responseMap.put("level", Integer.toString(requestedCourse.getLevel()));
 
         // check preRequisites
         String preReqRemoved = "";
         preReqRemoved = preReqCompare(originalCourse,requestedCourse);
         if(!(preReqRemoved.equals("")))
-            elements.put("PreReq_removed", preReqRemoved);
+            responseMap.put("PreReq_removed", preReqRemoved);
 
         String preReqAdded = "";
         preReqAdded = preReqCompare(requestedCourse, originalCourse);
         if(!(preReqAdded.equals("")))
-            elements.put("PreReq_added", preReqAdded);
+            responseMap.put("PreReq_added", preReqAdded);
 
-        // Map to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            courseChanges = objectMapper.writeValueAsString(elements);
-            System.out.println("json = " + courseChanges);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return courseChanges;
+
+        if(responseMap.keySet().size() > 2){
+            finalResponseMap.put("Course_Changes", responseMap);}
+        else{
+            finalResponseMap.put("Course_Changes", responseMap);}
+
+        return finalResponseMap;
     }
 
     private String preReqCompare(Course originalCourse, Course requestedCourse){
