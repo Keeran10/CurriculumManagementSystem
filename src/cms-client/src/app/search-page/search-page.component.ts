@@ -2,6 +2,9 @@ import {ChangeDetectorRef, Component, DoCheck, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {Course} from '../model/course';
+import {forEachComment} from 'tslint';
+import {CourseService} from '../service/course.service';
 
 export interface SearchCategory {
   value: string;
@@ -19,6 +22,8 @@ export class SearchPageComponent implements OnInit {
   myChildControl = new FormControl();
   filteredOptions: Observable<string[]>;
   displayedList: string[] = [];
+  storedCourseNames: string[] = [];
+  courses: Course[];
   isResultShown = false;
   searchFormPlaceholder = 'Select Search Category';
 
@@ -39,10 +44,12 @@ export class SearchPageComponent implements OnInit {
     {value: 'course', viewValue: 'Course'}
   ];
 
-  constructor(private ref: ChangeDetectorRef) { }
+  constructor(private courseService: CourseService) { }
 
   ngOnInit() {
     this.setFilteredOptions();
+    this.courseService.findAll().subscribe(data => {this.courses = data;
+    });
   }
 
   private setFilteredOptions() {
@@ -53,9 +60,18 @@ export class SearchPageComponent implements OnInit {
       );
   }
 
+  private getStringValue() {
+    let coursesName: string[];
+    this.courses.forEach(value => this.storedCourseNames.push(value.name + ' ' + value.number + ' ' + value.title + ' '));
+    coursesName = this.storedCourseNames;
+    this.storedCourseNames = coursesName;
+  }
+
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+    const filterValue = value.toLowerCase().trim()
+      .replace(/\s/g, '');
     let returnedList: string[] = [];
+    this.getStringValue();
 
     switch (this.selectedValue) {
       case 'faculty': {
@@ -67,11 +83,11 @@ export class SearchPageComponent implements OnInit {
         break;
       }
       case 'department': {
-        returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
-        this.displayedList = returnedList;
+         returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
+         this.displayedList = returnedList;
         // returnedList = []; // if we put this, auto-completion gets removed
-        this.isResultShown = false;
-        break;
+         this.isResultShown = false;
+         break;
       }
       case 'program': {
         // this behavior is the default for now to reset the displayedList
@@ -89,9 +105,14 @@ export class SearchPageComponent implements OnInit {
       }
       case 'course': {
         // this behavior is the default for now to reset the displayedList
-        returnedList = [];
-        this.displayedList = returnedList;
-        returnedList = [];
+        returnedList = returnedList.concat(this.storedCourseNames.filter(c => c
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, '')
+          .includes(filterValue)));
+        const filteredList = returnedList;
+        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.isResultShown = false;
         break;
       }
       default: {
