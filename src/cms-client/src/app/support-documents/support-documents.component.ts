@@ -56,5 +56,5 @@ export class SupportDocumentComponent {
       public fileLeave(event){
         console.log(event);
       }
-    }
+
 }
