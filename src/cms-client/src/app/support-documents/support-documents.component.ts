@@ -11,6 +11,7 @@ import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 
 export class SupportDocumentComponent {
 
     public files: NgxFileDropEntry[] = [];
+    public documents: File[] = [];
 
       public dropped(files: NgxFileDropEntry[]) {
         this.files = files;
@@ -23,6 +24,7 @@ export class SupportDocumentComponent {
 
               // Here you can access the real file
               console.log(droppedFile.relativePath, file);
+              this.documents.push(file);
 
               /**
               // You could upload it like this:
