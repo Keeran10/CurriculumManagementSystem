@@ -12,7 +12,8 @@ import { Course } from '../model/course';
 export class EditFormComponent implements OnInit {
 
   id: string;
-  course: Course;
+  courseOriginal: Course = new Course();
+  courseEditable: Course = new Course();
 
   model: Model = {
     department: 'COMP',
@@ -51,8 +52,11 @@ export class EditFormComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
-    this.api.getCourse(this.id).subscribe(data => this.course = data);
-    console.log(this.course);
+    this.api.getCourse(this.id).subscribe(data =>{
+      console.log(data);
+      this.courseOriginal = data;
+      this.courseEditable = Object.assign({}, data);
+    });
   }
 
   public highlightChanges(): void {

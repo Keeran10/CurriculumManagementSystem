@@ -10,14 +10,18 @@ export class ApiService {
   private url: string;
 
   constructor(private http: HttpClient) {
-    this.url = 'http://192.168.99.100:8080/';
+    this.url = 'http://localhost:8080/';
   }
 
   public getFeatureFlagTest() {
     return this.http.get<string>(this.url + 'featureFlagTest');
   }
 
+  public getAllCourses(){
+    return this.http.get<Course[]>(this.url + 'courses');
+  }
+
   public getCourse(id: string) {
-    return this.http.get<Course>(this.url + 'courses/' + id);
+    return this.http.get<Course>(this.url + 'course/' + id);
   }
 }
