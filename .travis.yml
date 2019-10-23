@@ -1,12 +1,24 @@
-language: minimal
-
-jobs:
-  include:
-    - stage: "Tests"               
-      name: "Unit Tests"            
-      #script: ./unit-tests #this will be added later
-    - script: #./integration-tests #this will be added later
-      name: "Integration Tests"     
-    - stage: deploy
-      name: "Deployment"
-      #script: ./deploy #this will be added later
+ os:
+   - linux
+ services:
+   - docker
+ language: node_js
+ node_js:
+   - "10.16.0"
+ jdk:
+   - oraclejdk8
+ sudo: false
+ cache:
+   directories:
+     - cms-client/node_modules
+ before_install:
+   - jdk_switcher use oraclejdk8
+   - java -version
+   - npm install -g @angular/cli@8.3.5
+ script:
+   - chmod +x src/cms-api/mvnw
+   - cd src/cms-api && ./mvnw -q clean verify
+   - cd src/cms-client && npm i && npm test
+   - cd src/cms-api && mvnw -q spring-boot:run &
+   - cd src/cms-client && npm run build --prod
+   - npm run e2e
