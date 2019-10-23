@@ -4,7 +4,7 @@ import { EditFormComponent } from './edit-form/edit-form.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 
 const routes: Routes = [
-  {path: 'editForm', component: EditFormComponent},
+  {path: 'editForm/:id', component: EditFormComponent},
   {path: 'searchPage', component: SearchPageComponent}
 ];
 

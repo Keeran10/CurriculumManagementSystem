@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../backend-api.service';
+import { Course } from '../model/course';
 
 @Component({
   selector: 'app-edit-form',
@@ -7,6 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class EditFormComponent implements OnInit {
+
+  id: string;
+  course: Course;
 
   model: Model = {
     department: 'COMP',
@@ -38,10 +44,15 @@ export class EditFormComponent implements OnInit {
     notes: 'Students who have received credit for SOEN 228 may not take this course for credit.'
   };
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private api: ApiService) {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+    });
+    this.api.getCourse(this.id).subscribe(data => this.course = data);
+    console.log(this.course);
   }
 
   public highlightChanges(): void {
