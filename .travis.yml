@@ -12,7 +12,6 @@
    directories:
      - cms-client/node_modules
  before_install:
-   - jdk_switcher use oraclejdk8
    - java -version
    - npm install -g @angular/cli@8.3.5
  script:
