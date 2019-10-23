@@ -3,10 +3,8 @@
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
       <tr>
-        <th scope="col">id</th>
         <th scope="col">Credits</th>
         <th scope="col">Description</th>
-        <th scope="col">Active</th>
         <th scope="col">Lab Hours</th>
         <th scope="col">Lecture Hours</th>
         <th scope="col">Level</th>
@@ -15,15 +13,12 @@
         <th scope="col">Outline</th>
         <th scope="col">Title</th>
         <th scope="col">Tutorial Hours</th>
-        <th scope="col">Program Id</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let course of courses">
-        <td>{{ course.id }}</td>
         <td>{{ course.credits }}</td>
         <td>{{ course.description }}</td>
-        <td>{{ course.isActive }}</td>
         <td>{{ course.labHours }}</td>
         <td>{{ course.lectureHours }}</td>
         <td>{{ course.level }}</td>
@@ -32,7 +27,6 @@
         <td>{{ course.outline }}</td>
         <td>{{ course.title }}</td>
         <td>{{ course.tutorialHours }}</td>
-        <td>{{ course.programId }}</td>
       </tr>
       </tbody>
     </table>

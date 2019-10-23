@@ -22,6 +22,7 @@ export class SearchPageComponent implements OnInit {
   myChildControl = new FormControl();
   filteredOptions: Observable<string[]>;
   displayedList: string[] = [];
+  descriptionList: string [] = [];
   storedCourseNames: string[] = [];
   courses: Course[];
   isResultShown = false;
@@ -61,10 +62,14 @@ export class SearchPageComponent implements OnInit {
   }
 
   private getStringValue() {
-    let coursesName: string[];
-    this.courses.forEach(value => this.storedCourseNames.push(value.name + ' ' + value.number + ' ' + value.title + ' '));
-    coursesName = this.storedCourseNames;
-    this.storedCourseNames = coursesName;
+    this.courses.forEach(value => this.storedCourseNames.
+    push(value.name + ' ' + value.number + ' ' + value.title));
+  }
+
+  private getDescription() {
+    // test function
+    this.courses.forEach(value => this.descriptionList.push(value.description));
+    this.descriptionList = this.descriptionList.filter((el, i, a) => i === a.indexOf(el));
   }
 
   private _filter(value: string): string[] {
@@ -72,6 +77,7 @@ export class SearchPageComponent implements OnInit {
       .replace(/\s/g, '');
     let returnedList: string[] = [];
     this.getStringValue();
+    this.getDescription();
 
     switch (this.selectedValue) {
       case 'faculty': {
