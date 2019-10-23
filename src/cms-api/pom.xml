@@ -26,6 +26,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- H2 Database for testing purposes -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- Spring Data JPA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
