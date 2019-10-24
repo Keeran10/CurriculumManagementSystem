@@ -21,17 +21,25 @@ public class CourseService {
 
     public Collection<Course> findAll(){
         log.info("findAll()");
-        return cr.findAll();
+        Collection<Course> courses = cr.findAll();
+        for(Course course : courses)
+            addRequisites(course);
+        return courses;
     }
 
     public Collection<Course> find(String name, int number){
         log.info("find(" + name + number + ")");
-        return cr.findByCourseNumber(name, number);
+        Collection<Course> courses = cr.findByCourseNumber(name, number);
+        for(Course course : courses)
+            addRequisites(course);
+        return courses;
     }
 
     public Course findCourseById(int id){
         log.info("Course findbyId(): " + id);
-        return cr.findById(id);
+        Course course = cr.findById(id);
+        addRequisites(course);
+        return course;
     }
 
     public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){
@@ -39,10 +47,7 @@ public class CourseService {
         return rq.findAllOccurrencesOfCourseAsRequisite(id);
     }
 
-
-    public Course getCourse(int id) {
-
-        Course course = cr.findById(id);
+    public void addRequisites(Course course) {
         for(Requisite requisite : course.getRequisites()){
             if(requisite.getType() == 1) {
                 Course prereq = cr.findById(requisite.getRequisiteCourseId());
@@ -61,6 +66,5 @@ public class CourseService {
                 course.getEquivalent().add(eq.getName() + eq.getNumber());
             }
         }
-        return course;
     }
 }

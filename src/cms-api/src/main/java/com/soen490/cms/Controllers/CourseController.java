@@ -30,7 +30,6 @@ public class CourseController {
 
     @GetMapping("/course/")
     public Course getCourseById(@RequestParam int id){
-        Course course = cs.getCourse(id);
-        return course;
+        return cs.findCourseById(id);
     }
 }
