@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from './model/course';
 
 @Injectable({
@@ -22,6 +22,8 @@ export class ApiService {
   }
 
   public getCourse(id: string) {
-    return this.http.get<Course>(this.url + 'course/' + id);
+    return this.http.get<Course>(this.url + 'course/',{
+      params: new HttpParams().set('id', id)
+  });
   }
 }
