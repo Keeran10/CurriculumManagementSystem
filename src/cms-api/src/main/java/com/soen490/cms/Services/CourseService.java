@@ -40,4 +40,27 @@ public class CourseService {
     }
 
 
+    public Course getCourse(int id) {
+
+        Course course = cr.findById(id);
+        for(Requisite requisite : course.getRequisites()){
+            if(requisite.getType() == 1) {
+                Course prereq = cr.findById(requisite.getRequisiteCourseId());
+                course.getPrerequisites().add(prereq.getName() + prereq.getNumber());
+            }
+            if(requisite.getType() == 2) {
+                Course coreq = cr.findById(requisite.getRequisiteCourseId());
+                course.getCorequisites().add(coreq.getName() + coreq.getNumber());
+            }
+            if(requisite.getType() == 3) {
+                Course antireq = cr.findById(requisite.getRequisiteCourseId());
+                course.getAntirequisites().add(antireq.getName() + antireq.getNumber());
+            }
+            if(requisite.getType() == 4) {
+                Course eq = cr.findById(requisite.getRequisiteCourseId());
+                course.getEquivalent().add(eq.getName() + eq.getNumber());
+            }
+        }
+        return course;
+    }
 }

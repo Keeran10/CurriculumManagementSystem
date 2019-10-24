@@ -1,6 +1,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.Course;
+import com.soen490.cms.Models.Requisite;
 import com.soen490.cms.Services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +28,9 @@ public class CourseController {
         return cs.find(name, number);
     }
 
-    @GetMapping("/course/{id}")
-    public Course getCourseById(@PathVariable @NotNull int id){
-        return cs.findCourseById(id);
+    @GetMapping("/course/")
+    public Course getCourseById(@RequestParam int id){
+        Course course = cs.getCourse(id);
+        return course;
     }
 }
