@@ -2,7 +2,9 @@ sudo: required
 dist: trusty
 
 branches:
-  only: travis-ci-dev
+  only:
+  - master
+  - dev
 
 matrix:
   include:
