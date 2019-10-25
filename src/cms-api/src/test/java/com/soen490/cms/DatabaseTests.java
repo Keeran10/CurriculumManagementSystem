@@ -27,8 +27,7 @@ public class DatabaseTests {
         // confirms that 1 user exists in database
         for(User user : users){
             System.out.println("made it here");
-            assertEquals(user.getId(), 0/*id_ctr++*/);
+            assertEquals(user.getId(), id_ctr++);
         }
-        /**/
     }
 }
