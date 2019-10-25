@@ -34,4 +34,13 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private Collection<Approval> approvals;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    private Collection<Package> packages;
+
+    public String toString(){
+        String s = "{id = " + id+", firstName = "+ firstName+ ", lastName = "+ lastName+", userType = "+ userType+ ", email = "+ email+ ", password = "+ password+"}";
+        return s;
+}
 }

@@ -7,27 +7,29 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Data
-public class Department {
+public class Calendar {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String name;
+    private String sectionId;
+
+    private String sectionTitle;
+
+    private String body;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "department")
-    private Collection<Program> programs;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "department")
-    private Collection<Calendar> calendars;
+    private String sectionType; // faculty | faculty_list (profs) | courses | general
 }
