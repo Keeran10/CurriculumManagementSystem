@@ -15,9 +15,9 @@
    - java -version
    - npm install -g @angular/cli@8.3.5
  script:
-   - chmod +x src/cms-api/mvnw
-   - cd src/cms-api && ./mvnw -q clean verify
-   - cd src/cms-client && npm i && npm test
-   - cd src/cms-api && mvnw -q spring-boot:run &
-   - cd src/cms-client && npm run build --prod
-   - npm run e2e
+   - chmod +x ./src/cms-api/mvnw
+   - cd ./src/cms-api && ./mvnw -q clean verify
+   - cd ./src/cms-client && npm i && npm test
+   - cd ./src/cms-api && mvnw -q spring-boot:run &
+   - cd ./src/cms-client && npm run build --prod
+   - cd ./src/cms-client && npm run e2e
