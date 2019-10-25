@@ -16,7 +16,7 @@ matrix:
     - language: java
       jdk: oraclejdk8
       script:
-        - ./mvnw test -B -q
+        - ./mvnw -q clean verify
       before_script:
         - cd ./src/cms-api/
 
