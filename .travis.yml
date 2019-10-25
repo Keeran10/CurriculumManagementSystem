@@ -34,5 +34,3 @@ matrix:
       script:
         - npm run build
         - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-      before_script:
-        - cd ./src/cms-client/
