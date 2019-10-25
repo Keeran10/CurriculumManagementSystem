@@ -18,9 +18,21 @@ matrix:
 
     - language: node_js
       node_js: stable
+      addons:
+      apt:
+        sources:
+          - google-chrome
+        packages:
+          - google-chrome-stable
+      cache:
+        directories:
+          - ./node_modules
       install:
         - npm install
       before_install:
         - cd ./src/cms-client/
       script:
         - npm run build
+        - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+      before_script:
+        - cd ./src/cms-client/
