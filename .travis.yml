@@ -4,13 +4,6 @@ dist: trusty
 branches:
   only: travis-ci-dev
 
-addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
-
 matrix:
   include:
     - language: java
@@ -28,4 +21,3 @@ matrix:
         - cd ./src/cms-client/
       script:
         - npm run build
-        - npm run e2e
