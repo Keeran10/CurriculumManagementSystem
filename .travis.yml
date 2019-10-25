@@ -9,7 +9,7 @@ matrix:
     - language: java
       jdk: oraclejdk8
       script:
-        - mvnw -q clean verify
+        - ./mvnw -q clean verify
       before_script:
         - chmod +x src/cms-api/mvnw
         - cd ./src/cms-api/
