@@ -1,3 +1,8 @@
+ALTER DATABASE cms
+  DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;
+
+USE cms;
 -- id, email, firstname, lastname, password, user_type
 INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin');
 INSERT IGNORE INTO user VALUES (2, 'felix@soen.com', 'Felix', 'Rosinante','123', 'admin');
