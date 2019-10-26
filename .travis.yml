@@ -1,12 +1,36 @@
-language: minimal
+sudo: required
+dist: trusty
 
-jobs:
+branches:
+  only:
+  - master
+  - dev
+
+matrix:
   include:
-    - stage: "Tests"               
-      name: "Unit Tests"            
-      #script: ./unit-tests #this will be added later
-    - script: #./integration-tests #this will be added later
-      name: "Integration Tests"     
-    - stage: deploy
-      name: "Deployment"
-      #script: ./deploy #this will be added later
+    - language: java
+      jdk: oraclejdk8
+      script:
+        - ./mvnw -q clean verify
+      before_script:
+        - chmod +x src/cms-api/mvnw
+        - cd ./src/cms-api/
+
+    - language: node_js
+      node_js: stable
+      addons:
+      apt:
+        sources:
+          - google-chrome
+        packages:
+          - google-chrome-stable
+      cache:
+        directories:
+          - ./node_modules
+      install:
+        - npm install
+      before_install:
+        - cd ./src/cms-client/
+      script:
+        - npm run build
+        - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
