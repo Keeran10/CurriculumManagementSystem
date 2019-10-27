@@ -8,7 +8,6 @@ import { getDocument } from 'pdfjs-dist';
   styleUrls: ['./support-documents.component.css']
 })
 
-
 export class SupportDocumentComponent {
 
     public files: NgxFileDropEntry[] = [];
@@ -16,29 +15,29 @@ export class SupportDocumentComponent {
     public fileObjectArray: File[];
     public pdfSrc;
 
-      public dropped(files: NgxFileDropEntry[]) {
-        this.files = files;
-        for (const droppedFile of files) {
+    public dropped(files: NgxFileDropEntry[]) {
+      this.files = files;
+      for (const droppedFile of files) {
 
-          // Is it a file?
-          if (droppedFile.fileEntry.isFile) {
-            const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-            fileEntry.file((file: File) => {
+        // Is it a file?
+        if (droppedFile.fileEntry.isFile) {
+          const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+          fileEntry.file((file: File) => {
 
-              // Here you can access the real file
-              console.log(droppedFile.relativePath, file);
-              this.documents.push(file);
-            });
-          }
+            // Here you can access the real file
+            console.log(droppedFile.relativePath, file);
+            this.documents.push(file);
+          });
         }
       }
+    }
 
-      public fileOver(event) {
-        console.log(event);
-      }
+    public fileOver(event) {
+      console.log(event);
+    }
 
-      public fileLeave(event) {
-        console.log(event);
-      }
+    public fileLeave(event) {
+      console.log(event);
+    }
 
 }
