@@ -3,10 +3,9 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -35,6 +34,8 @@ public class Course {
 
     private double labHours;
 
+    private String note;
+
     @Lob
     private byte[] outline;
 
@@ -56,4 +57,23 @@ public class Course {
     @JsonBackReference
     @ManyToMany(mappedBy = "electiveCourses")
     Collection<Degree> electives;
+
+    @Transient
+    ArrayList<String> prerequisites;
+
+    @Transient
+    ArrayList<String> corequisites;
+
+    @Transient
+    ArrayList<String> antirequisites;
+
+    @Transient
+    ArrayList<String> equivalent;
+
+    public Course(){
+        prerequisites = new ArrayList<>();
+        corequisites = new ArrayList<>();
+        antirequisites = new ArrayList<>();
+        equivalent = new ArrayList<>();
+    }
 }

@@ -1,0 +1,15 @@
+.app-container{
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr auto;
+}
+
+.top-bar{
+  grid-row-start: 0;
+  grid-row-end: 1;
+}
+
+.router-outlet{
+  grid-row: span 0;
+}
+

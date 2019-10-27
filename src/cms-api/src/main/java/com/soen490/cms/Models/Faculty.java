@@ -20,4 +20,8 @@ public class Faculty {
     @JsonManagedReference
     @OneToMany(mappedBy = "faculty")
     private Collection<Department> departments;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Calendar> calendars;
 }

@@ -11,23 +11,22 @@ import java.util.Collection;
 
 @Entity
 @Data
-public class Department {
+public class Package {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String name;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "requestPackage")
+    private Collection<Request> requests;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "faculty_id")
-    private Faculty faculty;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "department")
-    private Collection<Program> programs;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "department")
-    private Collection<Calendar> calendars;
+    public String toString() {
+        String s = "{id = " + id + "}";
+        return s;
+    }
 }
