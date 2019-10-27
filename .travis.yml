@@ -29,6 +29,8 @@ matrix:
           - ./node_modules
       install:
         - npm install
+        - npm install ngx-file-drop --save
+        - npm install ng2-pdf-viewer --save
       before_install:
         - cd ./src/cms-client/
       script:

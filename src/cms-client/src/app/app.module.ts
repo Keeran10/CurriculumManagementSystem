@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Keep imports alphabetical for source control
 import { AppComponent } from './app.component';
@@ -17,12 +19,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
+import { SupportDocumentComponent } from './support-documents/support-documents.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EditFormComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    SupportDocumentComponent,
+    EditFormComponent
   ],
   // Keep imports alphabetical for source control
   imports: [
@@ -38,7 +42,9 @@ import { SearchPageComponent } from './search-page/search-page.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxFileDropModule,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
