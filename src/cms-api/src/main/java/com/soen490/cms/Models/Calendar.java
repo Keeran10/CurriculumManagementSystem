@@ -1,10 +1,7 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -21,12 +18,12 @@ public class Calendar {
 
     private String body;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;

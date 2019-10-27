@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Data
+@ToString(exclude= {"programs", "calendars"})
 public class Department {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,16 +20,16 @@ public class Department {
 
     private String name;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "department")
     private Collection<Program> programs;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "department")
     private Collection<Calendar> calendars;
 }

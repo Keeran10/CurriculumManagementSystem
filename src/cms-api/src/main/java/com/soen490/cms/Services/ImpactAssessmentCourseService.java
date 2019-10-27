@@ -14,7 +14,7 @@ import java.util.*;
 public class ImpactAssessmentCourseService {
 
     @Autowired
-    CourseService courseService;
+    SearchService searchService;
 
     public Map<String, Object>  getCourseImpact(Request request){
         Map<String, Object> responseMap = new HashMap();
@@ -30,13 +30,13 @@ public class ImpactAssessmentCourseService {
     }
     private Map<String, Object> courseCreationImpactReport(Request request){
         Map<String, Object> responseReport = new HashMap();
-        Course course = courseService.findCourseById(request.getTargetId());
+        Course course = searchService.findCourseById(request.getTargetId());
 
         Collection<Requisite> coursesInReference = course.getRequisites();
         Map<String, Object> responseMap = new HashMap();
         List<String> parentCourses = new ArrayList();
         for(Requisite requisite : coursesInReference){
-            Course parentCourse = courseService.findCourseById(requisite.getRequisiteCourseId());
+            Course parentCourse = searchService.findCourseById(requisite.getRequisiteCourseId());
             parentCourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
         }
         responseMap.put("Courses",parentCourses);
@@ -48,14 +48,14 @@ public class ImpactAssessmentCourseService {
     }
 
     private Map<String, Object> courseEditedImpact(Request request){
-        Course originalCourse = courseService.findCourseById(request.getOriginalId());
+        Course originalCourse = searchService.findCourseById(request.getOriginalId());
         if(originalCourse == null){
             Map<String, Object> responseMap = new HashMap();
             responseMap.put("error","Original course not referred in request");
             return responseMap;
         }
         else{
-            Course requestedCourse = courseService.findCourseById(request.getTargetId());
+            Course requestedCourse = searchService.findCourseById(request.getTargetId());
             Map<String, Object> responseMap = getCourseDiffReport(originalCourse, requestedCourse);
             responseMap.put("RequestType",request.getRequestType());
             return responseMap;
@@ -64,10 +64,10 @@ public class ImpactAssessmentCourseService {
 
     private Map<String,Object> courseRemovalImpactReport(Request request){
         Map<String, Object> responseReport = new HashMap();
-        Course course = courseService.findCourseById(request.getTargetId());
+        Course course = searchService.findCourseById(request.getTargetId());
         int courseId = course.getId();
 
-        Collection<Requisite> coursesInReference = courseService.findAllOccurrencesOfCourseAsRequisite(courseId);
+        Collection<Requisite> coursesInReference = searchService.findAllOccurrencesOfCourseAsRequisite(courseId);
 
         Map<String, Object> responseMap = new HashMap();
         List<String> parentCourses = new ArrayList();
@@ -138,13 +138,13 @@ public class ImpactAssessmentCourseService {
         List<String> coursesList = new ArrayList();
 
         for(Requisite original : originalRequisites){
-            Course oldCourse = courseService.findCourseById(original.getRequisiteCourseId());
+            Course oldCourse = searchService.findCourseById(original.getRequisiteCourseId());
             String oldName = oldCourse.getName();
             int oldNumber = oldCourse.getNumber();
             boolean exist = false;
 
             for(Requisite changed : requestedRequisites){
-                Course newCourse = courseService.findCourseById(changed.getRequisiteCourseId());
+                Course newCourse = searchService.findCourseById(changed.getRequisiteCourseId());
                 String newName = newCourse.getName();
                 int newNumber = newCourse.getNumber();
                 if((oldName.equalsIgnoreCase(newName))&&(oldNumber == newNumber)){
@@ -164,7 +164,7 @@ public class ImpactAssessmentCourseService {
             return responseMap;
         }
     }
-    public void setServiceMock(CourseService course){
-        courseService = course;
+    public void setServiceMock(SearchService course){
+        searchService = course;
     }
 }

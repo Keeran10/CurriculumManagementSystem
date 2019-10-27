@@ -3,14 +3,14 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Data
+@ToString(exclude= {"degrees", "courses"})
 public class Program {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,16 +22,16 @@ public class Program {
 
     private int isActive;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "program")
     private Collection<Degree> degrees;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "program")
     private Collection<Course> courses;
 }
