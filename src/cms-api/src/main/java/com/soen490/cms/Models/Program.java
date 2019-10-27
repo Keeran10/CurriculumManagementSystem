@@ -27,6 +27,7 @@ public class Program {
     @JoinColumn(name = "department_id")
     private Department department;
 
+
     @JsonBackReference
     @OneToMany(mappedBy = "program")
     private Collection<Degree> degrees;

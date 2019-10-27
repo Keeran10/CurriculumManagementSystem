@@ -2,7 +2,6 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 

@@ -3,7 +3,6 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.util.Collection;
 

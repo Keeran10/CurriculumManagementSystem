@@ -21,6 +21,7 @@ public class Approval {
 
     private Timestamp timestamp;
 
+
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
