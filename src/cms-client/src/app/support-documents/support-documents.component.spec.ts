@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SupportDocumentComponent } from './support-documents.component';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 describe('SupportDocumentComponent', () => {
   let component: SupportDocumentComponent;
@@ -7,6 +8,9 @@ describe('SupportDocumentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        NgxFileDropModule
+      ],
       declarations: [ SupportDocumentComponent ]
     })
     .compileComponents();
