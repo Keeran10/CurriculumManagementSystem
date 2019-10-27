@@ -2,7 +2,7 @@
   <h1 class="title">Edit Course Page</h1>
   <form class="edit-form">
     <mat-form-field class="row1col1">
-      <input autofocus matInput placeholder="Department" [(ngModel)]="courseEditable.name" name="department">
+      <input autofocus matInput placeholder="Program" [(ngModel)]="courseEditable.name" name="department">
     </mat-form-field>
     <mat-form-field class="row1col2">
       <input matInput placeholder="Number" [(ngModel)]="courseEditable.number" name="number">
@@ -14,10 +14,12 @@
       <input matInput placeholder="Course Name" [(ngModel)]="courseEditable.title" name="courseName">
     </mat-form-field>
     <mat-form-field class="row3">
-      <textarea matInput placeholder="Prerequisites Courses (Seperate with ;)" [(ngModel)]="editedModel.prerequisites" name="prerequisites"></textarea>
+      <textarea matInput placeholder="Prerequisites Courses (Seperate with ;)" [(ngModel)]="editedModel.prerequisites"
+        name="prerequisites"></textarea>
     </mat-form-field>
     <mat-form-field class="row4">
-      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description" name="description"></textarea>
+      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description"
+        name="description"></textarea>
     </mat-form-field>
     <mat-form-field class="row5">
       <input matInput placeholder="Notes" [(ngModel)]="courseEditable.note" name="notes">
@@ -27,31 +29,38 @@
   <div class="edited-text">
     <span>
       <b>
-        <span style="display: inline-block" semanticDiff [left]="courseOriginal.name" [right]="courseEditable.name"></span>
-        <span style="display: inline-block" semanticDiff [left]="courseOriginal.number" [right]="courseEditable.number"></span>
+        <span style="display: inline-block" semanticDiff [left]="courseOriginal.name"
+          [right]="courseEditable.name"></span>
+        <span style="display: inline-block" semanticDiff [left]="courseOriginal.number"
+          [right]="courseEditable.number"></span>
         &nbsp;
         <i>
-          <span style="display: inline-block" semanticDiff [left]="courseOriginal.title" [right]="courseEditable.title"></span>
+          <span style="display: inline-block" semanticDiff [left]="courseOriginal.title"
+            [right]="courseEditable.title"></span>
         </i>
         &nbsp;
       </b>
       <span style="display: inline-block">
         (
-          <span style="display: inline-block" semanticDiff [left]="courseOriginal.credits" [right]="courseEditable.credits"></span>
+        <span style="display: inline-block" semanticDiff [left]="courseOriginal.credits"
+          [right]="courseEditable.credits"></span>
         credits )
       </span>
     </span>
 
     <br>
     <span>
-      <span *ngIf="editedModel.prerequisites.length != 0" style="display: inline-block">Prerequisite: 
-        <span style="display: inline-block" semanticDiff [left]="model.prerequisites" [right]="editedModel.prerequisites"></span>
+      <span *ngIf="editedModel.prerequisites.length != 0" style="display: inline-block">Prerequisite:
+        <span style="display: inline-block" semanticDiff [left]="model.prerequisites"
+          [right]="editedModel.prerequisites"></span>
       </span>
-      <span style="display: inline-block" semanticDiff [left]="courseOriginal.description" [right]="courseEditable.description"></span>
+      <span style="display: inline-block" semanticDiff [left]="courseOriginal.description"
+        [right]="courseEditable.description"></span>
     </span>
     <div *ngIf="courseEditable.note">
-      <i>NOTE: 
-        <span style="display: inline-block" semanticDiff [left]="courseOriginal.note" [right]="courseEditable.note"></span>
+      <i>NOTE:
+        <span style="display: inline-block" semanticDiff [left]="courseOriginal.note"
+          [right]="courseEditable.note"></span>
       </i>
     </div>
 
@@ -59,4 +68,3 @@
     <button mat-raised-button (click)="highlightChanges()">Highlight Changes</button>
   </div>
 </div>
-
