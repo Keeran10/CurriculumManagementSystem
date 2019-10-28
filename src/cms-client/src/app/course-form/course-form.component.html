@@ -1,0 +1,98 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input type="number" [(ngModel)]="course.id"
+               class="form-control" id="id" name="id" placeholder="Enter course Id"
+               required #id="ngModel">
+      </div>
+      <div [hidden]="!id.pristine" class="alert alert-danger">Course id is required</div>
+      <div class="form-group">
+        <label for="credits">credits</label>
+        <input type="number" [(ngModel)]="course.credits"
+               class="form-control" id="credits" name="credits" placeholder="Enter course credits"
+               required #credits="ngModel">
+        <div [hidden]="!credits.pristine" class="alert alert-danger">Course credits number is required</div>
+      </div>
+      <div class="form-group">
+        <label for="description">description</label>
+        <input type="text" [(ngModel)]="course.description"
+               class="form-control" id="description" name="description" placeholder="Enter course description"
+               required #description="ngModel">
+        <div [hidden]="!description.pristine" class="alert alert-danger">Course description is required</div>
+      </div>
+      <div class="form-group">
+        <label for="isActive">Active</label>
+        <input type="checkbox" [(ngModel)]="course.isActive"
+               class="form-control" id="isActive" name="isActive" placeholder="Is the course active?"
+               required #isActive="ngModel">
+        <div [hidden]="!isActive.pristine" class="alert alert-danger">Course Active value is required</div>
+      </div>
+      <div class="form-group">
+        <label for="labHours">Lab Hours</label>
+        <input type="number" [(ngModel)]="course.labHours"
+               class="form-control" id="labHours" name="labHours" placeholder="Enter course lab hours"
+               required #labHours="ngModel">
+        <div [hidden]="!labHours.pristine" class="alert alert-danger">Course lab hours are required</div>
+      </div>
+      <div class="form-group">
+        <label for="lectureHours">Lecture Hours</label>
+        <input type="number" [(ngModel)]="course.lectureHours"
+               class="form-control" id="lectureHours" name="lectureHours" placeholder="Enter course lecture hours"
+               required #lectureHours="ngModel">
+        <div [hidden]="!lectureHours.pristine" class="alert alert-danger">Course lecture hours are required</div>
+      </div>
+      <div class="form-group">
+        <label for="level">Level</label>
+        <input type="number" [(ngModel)]="course.level"
+               class="form-control" id="level" name="level" placeholder="Enter course level"
+               required #level="ngModel">
+        <div [hidden]="!level.pristine" class="alert alert-danger">Course level is required</div>
+      </div>
+      <div class="form-group">
+        <label for="name">Course Name</label>
+        <input type="text" [(ngModel)]="course.name"
+               class="form-control" id="name" name="name" placeholder="Enter course name"
+               required #name="ngModel">
+        <div [hidden]="!name.pristine" class="alert alert-danger">Course name is required</div>
+      </div>
+      <div class="form-group">
+        <label for="number">Course Number</label>
+        <input type="number" [(ngModel)]="course.number"
+               class="form-control" id="number" name="number" placeholder="Enter course number"
+               required #number="ngModel">
+        <div [hidden]="!number.pristine" class="alert alert-danger">Course number is required</div>
+      </div>
+      <div class="form-group">
+        <label for="outline">Outline</label>
+        <input type="text" [(ngModel)]="course.outline"
+               class="form-control" id="outline" name="outline" placeholder="Enter course outline"
+               required #outline="ngModel">
+        <div [hidden]="!outline.pristine" class="alert alert-danger">Course outline is required</div>
+      </div>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" [(ngModel)]="course.title"
+               class="form-control" id="title" name="title" placeholder="Enter course title"
+               required #title="ngModel">
+        <div [hidden]="!title.pristine" class="alert alert-danger">Course title is required</div>
+      </div>
+      <div class="form-group">
+        <label for="tutorialHours">Tutorial Hours</label>
+        <input type="number" [(ngModel)]="course.tutorialHours"
+               class="form-control" id="tutorialHours" name="tutorialHours" placeholder="Enter course tutorial hours"
+               required #tutorialHours="ngModel">
+        <div [hidden]="!tutorialHours.pristine" class="alert alert-danger">Course tutorial hours are required</div>
+      </div>
+      <div class="form-group">
+        <label for="programId">Program Id</label>
+        <input type="number" [(ngModel)]="course.programId"
+               class="form-control" id="programId" name="programId" placeholder="Enter program id"
+               required #programId="ngModel">
+        <div [hidden]="!programId.pristine" class="alert alert-danger">Course program id is required</div>
+      </div>
+      <button type="submit" [disabled]="!courseForm.form.valid" class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>

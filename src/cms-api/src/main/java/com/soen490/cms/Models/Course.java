@@ -3,14 +3,14 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.ToString;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Data
+@ToString(exclude= {"requisites", "requirements", "electives"})
 public class Course {
 
     @Id
@@ -35,18 +35,20 @@ public class Course {
 
     private double labHours;
 
+    private String note;
+
     @Lob
     private byte[] outline;
 
     private int isActive;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "program_id")
     private Program program;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "course")
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
     private Collection<Requisite> requisites;
 
     @JsonBackReference
@@ -56,4 +58,23 @@ public class Course {
     @JsonBackReference
     @ManyToMany(mappedBy = "electiveCourses")
     Collection<Degree> electives;
+
+    @Transient
+    ArrayList<String> prerequisites;
+
+    @Transient
+    ArrayList<String> corequisites;
+
+    @Transient
+    ArrayList<String> antirequisites;
+
+    @Transient
+    ArrayList<String> equivalent;
+
+    public Course(){
+        prerequisites = new ArrayList<>();
+        corequisites = new ArrayList<>();
+        antirequisites = new ArrayList<>();
+        equivalent = new ArrayList<>();
+    }
 }

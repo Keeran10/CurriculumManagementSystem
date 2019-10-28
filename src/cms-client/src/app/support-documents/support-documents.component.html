@@ -1,0 +1,25 @@
+<div class="center">
+  <ngx-file-drop dropZoneLabel="Add Supporting Documents" (onFileDrop)="dropped($event)"
+                 (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+      Upload Support Documents
+    </ng-template>
+  </ngx-file-drop>
+  <div class="upload-table">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Supporting Documents:</th>
+      </tr>
+      </thead>
+      <tbody class="upload-name-style">
+      <tr *ngFor="let item of documents; let i=index">
+        <td class = "fake-link">
+            {{ item.name }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

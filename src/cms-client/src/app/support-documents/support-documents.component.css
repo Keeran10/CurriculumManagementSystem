@@ -1,0 +1,10 @@
+.center {
+  width: 18%;
+  padding: 1%;
+}
+
+.fake-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
