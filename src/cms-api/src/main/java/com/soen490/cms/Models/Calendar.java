@@ -16,6 +16,7 @@ public class Calendar {
 
     private String sectionTitle;
 
+    @Lob
     private String body;
 
     @JsonManagedReference
