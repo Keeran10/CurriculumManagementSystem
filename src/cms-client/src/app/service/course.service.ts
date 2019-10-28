@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class CourseService {
 
-  private coursesUrl: string;
+  private readonly coursesUrl: string;
 
   constructor(private http: HttpClient) {
     this.coursesUrl = 'http://localhost:8080/courses';

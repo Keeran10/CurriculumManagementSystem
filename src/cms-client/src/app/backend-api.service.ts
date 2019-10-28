@@ -7,7 +7,7 @@ import { Course } from './model/course';
 })
 export class ApiService {
 
-  private url: string;
+  private readonly url: string;
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/';
