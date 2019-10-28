@@ -7,8 +7,8 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { CourseFormComponent } from './course-form/course-form.component';
 
 const routes: Routes = [
+  { path: '', component: SearchPageComponent },
   { path: 'editForm/:id', component: EditFormComponent },
-  { path: 'searchPage', component: SearchPageComponent },
   { path: 'addcourse', component: CourseFormComponent }
 ];
 

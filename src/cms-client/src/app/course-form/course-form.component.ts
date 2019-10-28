@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService } from '../service/course.service';
+import { ApiService } from '../backend-api.service';
 import { Course } from '../model/course';
 
 @Component({
@@ -12,12 +12,12 @@ export class CourseFormComponent implements OnInit {
 
   course: Course;
 
-  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService) {
+  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService) {
     this.course = new Course();
   }
 
   onSubmit() {
-    this.courseService.save(this.course).subscribe(result => this.gotoCourseList());
+    this.apiService.saveCourse(this.course).subscribe(result => this.gotoCourseList());
   }
 
   gotoCourseList() {

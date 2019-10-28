@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../model/course';
-import { CourseService } from '../service/course.service';
+import { ApiService } from '../backend-api.service';
 
 @Component({
   selector: 'app-course-list',
@@ -11,10 +11,10 @@ export class CourseListComponent implements OnInit {
 
   courses: Course[];
 
-  constructor(private courseService: CourseService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.courseService.findAll().subscribe(data => {this.courses = data;
+    this.apiService.getAllCourses().subscribe(data => {this.courses = data;
     });
   }
 }

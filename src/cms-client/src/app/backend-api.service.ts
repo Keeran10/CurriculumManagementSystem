@@ -26,4 +26,9 @@ export class ApiService {
       params: new HttpParams().set('id', id)
     });
   }
+
+  public saveCourse(course: Course)
+  {
+    return this.http.post<Course>(this.url + "courses", course);
+  }
 }

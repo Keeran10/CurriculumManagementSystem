@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {Course} from '../model/course';
 import {forEachComment} from 'tslint';
-import {CourseService} from '../service/course.service';
+import { ApiService } from '../backend-api.service';
 
 export interface SearchCategory {
   value: string;
@@ -45,11 +45,12 @@ export class SearchPageComponent implements OnInit {
     {value: 'course', viewValue: 'Course'}
   ];
 
-  constructor(private courseService: CourseService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
     this.setFilteredOptions();
-    this.courseService.findAll().subscribe(data => {this.courses = data;
+    this.apiService.getAllCourses().subscribe(data => {
+      this.courses = data;
     });
   }
 
@@ -57,7 +58,9 @@ export class SearchPageComponent implements OnInit {
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
-        map(value => value.length >= 1 ? this._filter(value) : [])
+        map(value => {
+          return value.length >= 1 ? this._filter(value) : [];
+        })
       );
   }
 
@@ -168,6 +171,11 @@ export class SearchPageComponent implements OnInit {
       }
     }
 
+  }
+
+  public getCourseId(listItem: string){
+    let tmpCourse: Course = this.courses.find(c => listItem.includes(c.title));
+    return tmpCourse.id;
   }
 
 }
