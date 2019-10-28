@@ -30,7 +30,7 @@ export class EditFormComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
-    this.api.getCourse(this.id).subscribe(data =>{
+    this.api.getCourse(this.id).subscribe(data => {
       console.log(data);
       this.courseOriginal = data;
       this.courseEditable = Object.assign({}, data);
@@ -39,7 +39,7 @@ export class EditFormComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
 
   }
 
@@ -56,10 +56,10 @@ export class EditFormComponent implements OnInit {
     });
   }
 
-  public getPrerequisitesString(course:Course): string{
+  public getPrerequisitesString(course: Course): string {
     let result = '';
-    if(course.prerequisites.length > 0){
-      course.prerequisites.forEach(p => result += p + "; ")
+    if (course.prerequisites.length > 0) {
+      course.prerequisites.forEach(p => result += p + '; ');
     }
     return result;
   }

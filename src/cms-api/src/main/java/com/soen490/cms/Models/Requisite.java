@@ -1,10 +1,8 @@
 package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,7 +18,7 @@ public class Requisite {
 
     private int isActive;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;

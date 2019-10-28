@@ -1,15 +1,14 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.ToString;
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Data
+@ToString(exclude= {"requests", "approvals", "packages"})
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,20 +26,15 @@ public class User {
 
     private String password;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private Collection<Request> requests;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private Collection<Approval> approvals;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private Collection<Package> packages;
-
-    public String toString(){
-        String s = "{id = " + id+", firstName = "+ firstName+ ", lastName = "+ lastName+", userType = "+ userType+ ", email = "+ email+ ", password = "+ password+"}";
-        return s;
-}
 }

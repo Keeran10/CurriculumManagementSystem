@@ -3,7 +3,7 @@ package com.soen490.cms;
 import com.soen490.cms.Models.Course;
 import com.soen490.cms.Models.Request;
 import com.soen490.cms.Models.Requisite;
-import com.soen490.cms.Services.CourseService;
+import com.soen490.cms.Services.SearchService;
 import com.soen490.cms.Services.ImpactAssessmentCourseService;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 public class ImpactStatementUnitTest {
 
-    CourseService courseService = mock(CourseService.class);
+    SearchService searchService = mock(SearchService.class);
     Course course;
     ImpactAssessmentCourseService impactAssessmentCourse;
 
@@ -35,9 +35,9 @@ public class ImpactStatementUnitTest {
         course.setLevel(2);
         course.setTitle("Math");
         course.setRequisites(new ArrayList<>());
-        when(courseService.findCourseById(1)).thenReturn(course);
+        when(searchService.findCourseById(1)).thenReturn(course);
         impactAssessmentCourse = new ImpactAssessmentCourseService();
-        impactAssessmentCourse.setServiceMock(courseService);
+        impactAssessmentCourse.setServiceMock(searchService);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class ImpactStatementUnitTest {
         request.setRequestType(1);
         request.setTargetId(1);
 
-        when(courseService.findAllOccurrencesOfCourseAsRequisite(5)).thenReturn(new ArrayList<Requisite>());
+        when(searchService.findAllOccurrencesOfCourseAsRequisite(5)).thenReturn(new ArrayList<Requisite>());
         Map<String,Object> mapResponse = impactAssessmentCourse.getCourseImpact(request);
 
         assertThat(mapResponse.containsValue(course.getName())).isEqualTo(true);
@@ -73,9 +73,9 @@ public class ImpactStatementUnitTest {
         courseUpdated.setLevel(2);
         courseUpdated.setRequisites(new ArrayList<>());
 
-        when(courseService.findCourseById(2)).thenReturn(courseUpdated);
-        when(courseService.findAllOccurrencesOfCourseAsRequisite(5)).thenReturn(new ArrayList<Requisite>());
-        when(courseService.findAllOccurrencesOfCourseAsRequisite(6)).thenReturn(new ArrayList<Requisite>());
+        when(searchService.findCourseById(2)).thenReturn(courseUpdated);
+        when(searchService.findAllOccurrencesOfCourseAsRequisite(5)).thenReturn(new ArrayList<Requisite>());
+        when(searchService.findAllOccurrencesOfCourseAsRequisite(6)).thenReturn(new ArrayList<Requisite>());
 
         Map<String,Object> mapResponse = impactAssessmentCourse.getCourseImpact(request);
         assertThat(mapResponse.get("CourseChanges").toString()).isEqualTo("{Number="+courseUpdated.getNumber()+"}");
@@ -88,7 +88,7 @@ public class ImpactStatementUnitTest {
         request.setTargetId(1);
 
 
-        when(courseService.findAllOccurrencesOfCourseAsRequisite(5)).thenReturn(new ArrayList<Requisite>());
+        when(searchService.findAllOccurrencesOfCourseAsRequisite(5)).thenReturn(new ArrayList<Requisite>());
         Map<String,Object> mapResponse = impactAssessmentCourse.getCourseImpact(request);
 
         assertThat(mapResponse.containsValue(course.getName())).isEqualTo(true);

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DegreeRepository extends JpaRepository<Degree, Integer>{
+    Degree findByName(String name);
 }

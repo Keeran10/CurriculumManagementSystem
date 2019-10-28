@@ -3,15 +3,14 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.ToString;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
 @Data
+@ToString(exclude= {"requestPackage", "approvals"})
 public class Request {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +26,7 @@ public class Request {
 
     private Timestamp timestamp;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,7 +40,7 @@ public class Request {
     @OneToMany(mappedBy = "request")
     private Collection<SupportingDocument> supportingDocuments;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "request")
     private Collection<Approval> approvals;
 }

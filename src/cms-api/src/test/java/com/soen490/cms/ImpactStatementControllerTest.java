@@ -10,11 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import com.soen490.cms.Models.Course;
-import com.soen490.cms.Models.Request;
-import com.soen490.cms.Models.Requisite;
-import com.soen490.cms.Services.CourseService;
-import com.soen490.cms.Services.ImpactAssessmentCourseService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.soen490.cms.Controllers.ImpactAssessmentController;
 import com.soen490.cms.Services.ImpactAssessmentService;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 

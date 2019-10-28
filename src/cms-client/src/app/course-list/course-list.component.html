@@ -1,0 +1,34 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Credits</th>
+        <th scope="col">Description</th>
+        <th scope="col">Lab Hours</th>
+        <th scope="col">Lecture Hours</th>
+        <th scope="col">Level</th>
+        <th scope="col">Course Name</th>
+        <th scope="col">Course Number</th>
+        <th scope="col">Outline</th>
+        <th scope="col">Title</th>
+        <th scope="col">Tutorial Hours</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let course of courses">
+        <td>{{ course.credits }}</td>
+        <td>{{ course.description }}</td>
+        <td>{{ course.labHours }}</td>
+        <td>{{ course.lectureHours }}</td>
+        <td>{{ course.level }}</td>
+        <td>{{ course.name }}</td>
+        <td>{{ course.number }}</td>
+        <td>{{ course.outline }}</td>
+        <td>{{ course.title }}</td>
+        <td>{{ course.tutorialHours }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
