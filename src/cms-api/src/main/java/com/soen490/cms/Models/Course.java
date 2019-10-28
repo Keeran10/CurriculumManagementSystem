@@ -27,6 +27,7 @@ public class Course {
 
     private double credits;
 
+    @Lob
     private String description;
 
     private double lectureHours;

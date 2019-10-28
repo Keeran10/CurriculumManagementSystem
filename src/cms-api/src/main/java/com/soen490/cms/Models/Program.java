@@ -18,6 +18,7 @@ public class Program {
 
     private String name;
 
+    @Lob
     private String description;
 
     private int isActive;
