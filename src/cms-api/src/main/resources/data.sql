@@ -122,16 +122,16 @@ INSERT IGNORE INTO course VALUES (37, 3.00, 'Prerequisite: ENCS 282; MECH 311, 3
 INSERT IGNORE INTO course VALUES (38, 4.00, 'Prerequisite: 75 credits in the program; ENCS 282; ENGR 301; MECH 344, 390. A supervised design, simulation or experimental capstone design project including a preliminary project proposal with complete project plan and a technical report at the end of the fall term; a final report by the group and presentation at the end of the winter term. Lectures: one hour per week, one term. Equivalent laboratory time: three hours per week, two terms.',
 1, 3, 1, 1, 'MECH', 'NOTE: Students will work in groups under direct supervision of a faculty member.', 490, NULL, 'Capstone Mechanical Engineering Design Project', 0, 3);
 
--- id, active, req_course_id, type (1=pre, 2=con, 3=anti, 4=equal), course_id
-INSERT IGNORE INTO requisite VALUES (1, 1, 5, 1, 6);-- soen 342 needs 341
-INSERT IGNORE INTO requisite VALUES (2, 1, 5, 1, 7);-- soen 343 needs 341
-INSERT IGNORE INTO requisite VALUES (3, 1, 6, 2, 7);-- soen 343 needs 342
-INSERT IGNORE INTO requisite VALUES (4, 1, 7, 1, 8);-- soen 344 needs 343
-INSERT IGNORE INTO requisite VALUES (5, 1, 7, 2, 9);-- soen 345 needs 343
-INSERT IGNORE INTO requisite VALUES (6, 1, 5, 1, 10);-- soen 357 needs 341
-INSERT IGNORE INTO requisite VALUES (7, 0, 5, 1, 15);-- soen 343 edited needs 341
-INSERT IGNORE INTO requisite VALUES (8, 0, 4, 2, 15);-- soen 343 edited needs 331
-INSERT IGNORE INTO requisite VALUES (9, 0, 15, 2, 10);-- soen 357 edited needs 343 edited
+-- id, is_active, name, number, type, course_id
+INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
+INSERT IGNORE INTO requisite VALUES (2, 1, "SOEN", 341, "prerequisite", 7);-- soen 343 needs 341
+INSERT IGNORE INTO requisite VALUES (3, 1, "SOEN", 342, "prerequisite", 7);-- soen 343 needs 342
+INSERT IGNORE INTO requisite VALUES (4, 1, "SOEN", 343, "prerequisite", 8);-- soen 344 needs 343
+INSERT IGNORE INTO requisite VALUES (5, 1, "SOEN", 343, "prerequisite", 9);-- soen 345 needs 343
+INSERT IGNORE INTO requisite VALUES (6, 1, "SOEN", 341, "prerequisite", 10);-- soen 357 needs 341
+INSERT IGNORE INTO requisite VALUES (7, 0, "SOEN", 341, "prerequisite", 15);-- soen 343 edited needs 341
+INSERT IGNORE INTO requisite VALUES (8, 0, "SOEN", 331, "prerequisite", 15);-- soen 343 edited needs 331
+INSERT IGNORE INTO requisite VALUES (9, 0, "SOEN", 343, "prerequisite", 10);-- soen 357 edited needs 343 edited
 
 -- degree_id, course_id
 INSERT IGNORE INTO required_course VALUES (1, 1);

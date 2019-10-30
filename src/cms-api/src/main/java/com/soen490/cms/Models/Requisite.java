@@ -1,24 +1,28 @@
 package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
 @Data
+@ToString(exclude = "course")
 public class Requisite {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private int requisiteCourseId; // must be handled in repository call
+    private String name;
 
-    private int type; // 1: pre, 2: co, 3: anti, 4: equivalent
+    private int number;
+
+    private String type;
 
     private int isActive;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
