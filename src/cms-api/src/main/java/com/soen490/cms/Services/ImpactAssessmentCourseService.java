@@ -29,21 +29,21 @@ public class ImpactAssessmentCourseService {
         }
     }
     private Map<String, Object> courseCreationImpactReport(Request request){
+
         Map<String, Object> responseReport = new HashMap();
         Course course = searchService.findCourseById(request.getTargetId());
 
         Collection<Requisite> coursesInReference = course.getRequisites();
         Map<String, Object> responseMap = new HashMap();
-        List<String> parentCourses = new ArrayList();
+        List<String> requisiteCourses = new ArrayList();
         for(Requisite requisite : coursesInReference){
-            Course parentCourse = searchService.findCourseById(requisite.getRequisiteCourseId());
-            parentCourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
+            requisiteCourses.add(requisite.getName()+" " + requisite.getNumber());
         }
-        responseMap.put("Courses",parentCourses);
-        responseReport.put("Name",course.getName());
-        responseReport.put("Number",course.getNumber());
-        responseReport.put("RequestType",request.getRequestType());
-        responseReport.put("CoursesInRequisites",responseMap);
+        responseMap.put("Courses", requisiteCourses);
+        responseReport.put("Name", course.getName());
+        responseReport.put("Number", course.getNumber());
+        responseReport.put("RequestType", request.getRequestType());
+        responseReport.put("CoursesInRequisites", responseMap);
         return responseReport;
     }
 
@@ -138,15 +138,13 @@ public class ImpactAssessmentCourseService {
         List<String> coursesList = new ArrayList();
 
         for(Requisite original : originalRequisites){
-            Course oldCourse = searchService.findCourseById(original.getRequisiteCourseId());
-            String oldName = oldCourse.getName();
-            int oldNumber = oldCourse.getNumber();
+            String oldName = original.getName();
+            int oldNumber = original.getNumber();
             boolean exist = false;
 
             for(Requisite changed : requestedRequisites){
-                Course newCourse = searchService.findCourseById(changed.getRequisiteCourseId());
-                String newName = newCourse.getName();
-                int newNumber = newCourse.getNumber();
+                String newName = changed.getName();
+                int newNumber = changed.getNumber();
                 if((oldName.equalsIgnoreCase(newName))&&(oldNumber == newNumber)){
                     exist = true;
                 }
