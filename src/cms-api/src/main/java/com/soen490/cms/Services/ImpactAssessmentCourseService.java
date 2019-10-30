@@ -101,21 +101,9 @@ public class ImpactAssessmentCourseService {
         // check title
         if(!(originalCourse.getTitle().equalsIgnoreCase(requestedCourse.getTitle())))
             responseMap.put("Title", requestedCourse.getTitle());
-        // check tutorial time
-        if(originalCourse.getTutorialHours() != requestedCourse.getTutorialHours())
-            responseMap.put("Tutorial_hours", Double.toString(requestedCourse.getTutorialHours()));
-        // check lab time
-        if(originalCourse.getLabHours() != requestedCourse.getLabHours())
-            responseMap.put("Lab_hours", Double.toString(requestedCourse.getLabHours()));
-        // check lecture time
-        if(originalCourse.getLectureHours() != requestedCourse.getLectureHours())
-            responseMap.put("Lecture_hours", Double.toString(requestedCourse.getLectureHours()));
         // check description
         if(!(originalCourse.getDescription().equalsIgnoreCase(requestedCourse.getDescription())))
             responseMap.put("Description", requestedCourse.getDescription());
-        // check level
-        if(originalCourse.getLevel() != requestedCourse.getLevel())
-            responseMap.put("Level", Integer.toString(requestedCourse.getLevel()));
 
         // check preRequisites
         Map<String, Object> preReqRemovedMap = requisitesCompare(originalCourse,requestedCourse);

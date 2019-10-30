@@ -20,22 +20,14 @@ public class Course {
 
     private int number;
 
-    private int level;
-
     private String title;
 
     private double credits;
 
+    private String note;
+
     @Lob
     private String description;
-
-    private double lectureHours;
-
-    private double tutorialHours;
-
-    private double labHours;
-
-    private String note;
 
     @Lob
     private byte[] outline;
