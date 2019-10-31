@@ -8,7 +8,7 @@ import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"requests", "approvals", "packages"})
+@ToString(exclude= {"requests", "approvals"})
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,8 +33,4 @@ public class User {
     @JsonBackReference
     @OneToMany(mappedBy = "user")
     private Collection<Approval> approvals;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "user")
-    private Collection<Package> packages;
 }

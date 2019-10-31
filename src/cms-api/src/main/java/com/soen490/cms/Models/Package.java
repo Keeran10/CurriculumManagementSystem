@@ -19,6 +19,6 @@ public class Package {
 
     @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "department_id")
+    private Department department;
 }
