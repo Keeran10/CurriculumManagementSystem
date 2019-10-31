@@ -5,12 +5,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"requisites", "requirements", "electives"})
+@ToString(exclude= {"requirements", "electives"})
 public class Course {
 
     @Id
@@ -21,22 +20,14 @@ public class Course {
 
     private int number;
 
-    private int level;
-
     private String title;
 
     private double credits;
 
+    private String note;
+
     @Lob
     private String description;
-
-    private double lectureHours;
-
-    private double tutorialHours;
-
-    private double labHours;
-
-    private String note;
 
     @Lob
     private byte[] outline;
@@ -48,8 +39,8 @@ public class Course {
     @JoinColumn(name = "program_id")
     private Program program;
 
-    @JsonBackReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "course")
     private Collection<Requisite> requisites;
 
     @JsonBackReference
@@ -59,23 +50,4 @@ public class Course {
     @JsonBackReference
     @ManyToMany(mappedBy = "electiveCourses")
     Collection<Degree> electives;
-
-    @Transient
-    ArrayList<String> prerequisites;
-
-    @Transient
-    ArrayList<String> corequisites;
-
-    @Transient
-    ArrayList<String> antirequisites;
-
-    @Transient
-    ArrayList<String> equivalent;
-
-    public Course(){
-        prerequisites = new ArrayList<>();
-        corequisites = new ArrayList<>();
-        antirequisites = new ArrayList<>();
-        equivalent = new ArrayList<>();
-    }
 }

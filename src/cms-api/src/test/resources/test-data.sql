@@ -9,5 +9,5 @@ INSERT INTO program (id, description, is_active, name, department_id) VALUES  (1
 
 INSERT INTO degree (id, credits, level, name, program_id) VALUES (1, 120, 1, 'Bachelor of Software Engineering (BEng)', 1);
 
-INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, outline, title, tutorial_hours, program_id) VALUES (1, 4.00, 'Processor structure...',
-1, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, NULL, 'System Hardware', 2, 1);
+INSERT INTO course (id, credits, description, is_active, name, note, number, outline, title, program_id) VALUES (1, 4.00, 'Processor structure...',
+1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, NULL, 'System Hardware', 1);
