@@ -41,7 +41,7 @@ INSERT IGNORE INTO degree VALUES (4, 90, 3, 'Doctor of Philosophy (PhD in Softwa
 
 
 -- id, credits, description,
--- is_active, lab_hours, lecture_hours, level, course_name, course_number, outline, title, tutorial_hours, program_id
+-- is_active, course_name, course_number, outline, title, program_id
 INSERT IGNORE INTO course VALUES (1, 4.00, 'Processor structure, Data and Instructions, Instruction Set Processor (ISP) level view of computer hardware, assembly language level use. Memory systems — RAM and disks, hierarchy of memories. I/O organization, I/O devices and their diversity, their interconnection to CPU and Memory. Communication between computers at the physical level. Networks and computers. Lectures: three hours per week. Tutorial: two hours per week. Laboratory: two hours per week.',
 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, NULL, 'System Hardware', 1);
 INSERT IGNORE INTO course VALUES (2, 3.00, 'Internet architecture and protocols. Web applications through clients and servers. Markup languages. Client‑side programming using scripting languages. Static website contents and dynamic page generation through server‑side programming. Preserving state (client‑side) in web applications. Lectures: three hours per week. Tutorial: two hours per week.',
@@ -125,13 +125,74 @@ INSERT IGNORE INTO course VALUES (38, 4.00, 'Prerequisite: 75 credits in the pro
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
 INSERT IGNORE INTO requisite VALUES (2, 1, "SOEN", 341, "prerequisite", 7);-- soen 343 needs 341
-INSERT IGNORE INTO requisite VALUES (3, 1, "SOEN", 342, "prerequisite", 7);-- soen 343 needs 342
+INSERT IGNORE INTO requisite VALUES (3, 1, "SOEN", 342, "corequisite", 7);-- soen 343 needs 342
 INSERT IGNORE INTO requisite VALUES (4, 1, "SOEN", 343, "prerequisite", 8);-- soen 344 needs 343
 INSERT IGNORE INTO requisite VALUES (5, 1, "SOEN", 343, "prerequisite", 9);-- soen 345 needs 343
 INSERT IGNORE INTO requisite VALUES (6, 1, "SOEN", 341, "prerequisite", 10);-- soen 357 needs 341
 INSERT IGNORE INTO requisite VALUES (7, 0, "SOEN", 341, "prerequisite", 15);-- soen 343 edited needs 341
 INSERT IGNORE INTO requisite VALUES (8, 0, "SOEN", 331, "prerequisite", 15);-- soen 343 edited needs 331
 INSERT IGNORE INTO requisite VALUES (9, 0, "SOEN", 343, "prerequisite", 10);-- soen 357 edited needs 343 edited
+
+INSERT IGNORE INTO requisite VALUES (10, 1, "ENGR", 213, "prerequisite", 16);
+INSERT IGNORE INTO requisite VALUES (11, 1, "PHYS", 204, "prerequisite", 16);
+INSERT IGNORE INTO requisite VALUES (12, 1, "MATH", 204, "prerequisite", 16);
+INSERT IGNORE INTO requisite VALUES (13, 1, "ENGR", 213, "prerequisite", 17);
+INSERT IGNORE INTO requisite VALUES (14, 1, "ENGR", 242, "prerequisite", 17);
+INSERT IGNORE INTO requisite VALUES (15, 1, "ENGR", 213, "prerequisite", 18);
+INSERT IGNORE INTO requisite VALUES (16, 1, "ENGR", 233, "corequisite", 18);
+INSERT IGNORE INTO requisite VALUES (17, 1, "ENGR", 242, "or-prerequisite", 18); -- new type or-prerequisite; you either had to do 242 or 245 as prerequisites
+INSERT IGNORE INTO requisite VALUES (18, 1, "ENGR", 245, "or-prerequisite", 18); -- new type or-prerequisite; you either had to do 242 or 245 as prerequisites
+INSERT IGNORE INTO requisite VALUES (19, 1, "MATH", 203, "prerequisite", 19);
+INSERT IGNORE INTO requisite VALUES (20, 1, "ENGR", 213, "prerequisite", 20);
+INSERT IGNORE INTO requisite VALUES (21, 1, "ENGR", 233, "prerequisite", 20);
+INSERT IGNORE INTO requisite VALUES (22, 1, "ENGR", 213, "prerequisite", 21);
+INSERT IGNORE INTO requisite VALUES (23, 1, "ENGR", 233, "prerequisite", 21);
+INSERT IGNORE INTO requisite VALUES (24, 1, "ENGR", 251, "prerequisite", 21);
+
+INSERT IGNORE INTO requisite VALUES (25, 1, "COMP", 354, "equivalent", 5); -- soen 341 = comp 354
+INSERT IGNORE INTO requisite VALUES (26, 1, "COMP", 228, "equivalent", 5); -- soen 228 = comp 228
+
+INSERT IGNORE INTO requisite VALUES (27, 1, "MATH", 204, "prerequisite", 23);
+INSERT IGNORE INTO requisite VALUES (28, 1, "CHEM", 205, "prerequisite", 24);
+INSERT IGNORE INTO requisite VALUES (29, 1, "MECH", 313, "prerequisite", 25);
+INSERT IGNORE INTO requisite VALUES (30, 1, "MECH", 211, "prerequisite", 26);
+INSERT IGNORE INTO requisite VALUES (31, 1, "MECH", 221, "prerequisite", 27);
+INSERT IGNORE INTO requisite VALUES (32, 1, "ENGR", 213, "prerequisite", 28);
+INSERT IGNORE INTO requisite VALUES (33, 1, "ENGR", 233, "prerequisite", 28);
+INSERT IGNORE INTO requisite VALUES (34, 1, "ENGR", 243, "prerequisite", 28);
+INSERT IGNORE INTO requisite VALUES (35, 1, "ENGR", 244, "prerequisite", 29);
+INSERT IGNORE INTO requisite VALUES (36, 1, "MECH", 313, "prerequisite", 29);
+INSERT IGNORE INTO requisite VALUES (37, 1, "MECH", 321, "corequisite", 29);
+INSERT IGNORE INTO requisite VALUES (38, 1, "MECH", 343, "corequisite", 29);
+INSERT IGNORE INTO requisite VALUES (39, 1, "MECH", 441, "equivalent", 29);
+INSERT IGNORE INTO requisite VALUES (40, 1, "ENGR", 251, "prerequisite", 30);
+INSERT IGNORE INTO requisite VALUES (41, 1, "ENGR", 311, "prerequisite", 31);
+INSERT IGNORE INTO requisite VALUES (42, 1, "ENGR", 361, "prerequisite", 31);
+INSERT IGNORE INTO requisite VALUES (43, 1, "ENGR", 361, "prerequisite", 32);
+INSERT IGNORE INTO requisite VALUES (44, 1, "PHYS", 205, "prerequisite", 33);
+INSERT IGNORE INTO requisite VALUES (45, 1, "ENGR", 311, "corequisite", 33);
+INSERT IGNORE INTO requisite VALUES (46, 1, "MECH", 470, "equivalent", 33);
+INSERT IGNORE INTO requisite VALUES (47, 1, "PHYS", 205, "prerequisite", 34);
+INSERT IGNORE INTO requisite VALUES (48, 1, "ENGR", 213, "prerequisite", 34);
+INSERT IGNORE INTO requisite VALUES (49, 1, "ENGR", 311, "corequisite", 34);
+INSERT IGNORE INTO requisite VALUES (50, 1, "ENGR", 243, "or-prerequisite", 34);
+INSERT IGNORE INTO requisite VALUES (51, 1, "ENGR", 245, "or-prerequisite", 34);
+INSERT IGNORE INTO requisite VALUES (52, 1, "ELEC", 370, "equivalent", 34);
+INSERT IGNORE INTO requisite VALUES (53, 1, "ENGR", 311, "prerequisite", 35);
+INSERT IGNORE INTO requisite VALUES (54, 1, "MECH", 370, "prerequisite", 35);
+INSERT IGNORE INTO requisite VALUES (55, 1, "ELEC", 372, "equivalent", 35);
+INSERT IGNORE INTO requisite VALUES (56, 1, "AERO", 371, "or-prerequisite", 36);
+INSERT IGNORE INTO requisite VALUES (57, 1, "MECH", 370, "or-prerequisite", 36);
+INSERT IGNORE INTO requisite VALUES (58, 1, "MECH", 443, "equivalent", 36);
+INSERT IGNORE INTO requisite VALUES (59, 1, "ENCS", 282, "prerequisite", 37);
+INSERT IGNORE INTO requisite VALUES (60, 1, "MECH", 311, "prerequisite", 37);
+INSERT IGNORE INTO requisite VALUES (61, 1, "MECH", 343, "prerequisite", 37);
+INSERT IGNORE INTO requisite VALUES (62, 1, "MECH", 344, "corequisite", 37);
+INSERT IGNORE INTO requisite VALUES (63, 1, "ENCS", 282, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (64, 1, "ENGR", 301, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (65, 1, "MECH", 344, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (66, 1, "MECH", 390, "corequisite", 38);
+INSERT IGNORE INTO requisite VALUES (67, 1, "75 credits in the program", 000, "prerequisite", 38);
 
 -- degree_id, course_id
 INSERT IGNORE INTO required_course VALUES (1, 1);
