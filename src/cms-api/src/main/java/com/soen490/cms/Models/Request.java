@@ -24,6 +24,8 @@ public class Request {
 
     private int requestType; // 1: create, 2: update, 3: remove
 
+    private String rationale;
+
     private Timestamp timestamp;
 
     @JsonManagedReference
