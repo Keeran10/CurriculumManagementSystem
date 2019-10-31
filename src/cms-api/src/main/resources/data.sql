@@ -217,10 +217,10 @@ INSERT IGNORE INTO calendar VALUES(2, 'Students employed full‑time in a comput
 -- id, user id
 INSERT IGNORE INTO package VALUES (1, 1); -- creating a package for user 1
 
--- id, original id, request type, target id, target type, timestamp, package id, user id
-INSERT IGNORE INTO request VALUES (1, 7, 2, 15, 2, NULL, 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 7, 3, 15, 2, NULL, 1, 1); -- removing request for the course soen 343
-INSERT IGNORE INTO request VALUES (3, 7, 1, 15, 2, NULL, 1, 1); -- creating request for the course soen 343
+-- id, original id, rationale, request type, target id, target type, timestamp, package id, user id
+INSERT IGNORE INTO request VALUES (1, 7, "rationale", 2, 15, 2, NULL, 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, 15, 2, NULL, 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, 15, 2, NULL, 1, 1); -- creating request for the course soen 343
 
 -- id, apc, dcc, fcc, gdc, senate, ugdc
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 1, 2, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
