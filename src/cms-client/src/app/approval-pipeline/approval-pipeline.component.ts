@@ -31,10 +31,6 @@ export class ApprovalPipelineComponent {
     // placeholder logs user selected predefined pipeline until next page is created that will need this information
     public predefined() {
         console.log('User selected predefined pipeline');
-        let i;
-        for (i of this.predefinedPipeline) {
-            console.log(i);
-        }
     }
 
 }
