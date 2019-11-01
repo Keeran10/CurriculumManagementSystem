@@ -8,10 +8,18 @@ import { Component } from '@angular/core';
 
 export class ApprovalPipelineComponent {
 
-    public customPipeline;
+    // if user selects to create a custom pipeline, store here
+    public customPipeline = [];
     public custom(opt: string[]) {
-        this.customPipeline = opt;
-        console.log('items' + opt[0]);
+        let i;
+        if (opt.length === 0) {
+            alert('Cannot submit blank pipeline');
+        } else {
+        for (i of opt) {
+            this.customPipeline.push(i.value);
+            console.log(i);
+        }
+    }
     }
 
 }
