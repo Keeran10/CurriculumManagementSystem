@@ -23,6 +23,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
+import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -35,7 +38,8 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     EditFormComponent,
     CourseFormComponent,
     CourseListComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    ApprovalPipelineComponent
   ],
   // Keep imports alphabetical for source control
   imports: [
@@ -53,7 +57,9 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     MatSelectModule,
     ReactiveFormsModule,
     NgxFileDropModule,
-    PdfViewerModule
+    PdfViewerModule,
+    MatCheckboxModule,
+    MatListModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

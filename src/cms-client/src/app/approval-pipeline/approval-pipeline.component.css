@@ -1,0 +1,15 @@
+.container {
+    margin: 30px;
+}
+
+.predefined {
+    margin: 3%;
+    width: 44%;
+    float: left;
+}
+
+.custom {
+    margin: 3%;
+    width: 44%;
+    float:left;
+}

@@ -1,0 +1,79 @@
+<div class="container">
+    <h2>Please Select an Approval Pipeline:</h2>
+    <div class="options">
+        <div class="predefined">
+            <mat-card>
+                <mat-card-title>
+                    Predefined Pipeline
+                </mat-card-title>
+                <mat-card-content>
+                    <p>The Predefined Approval Pipeline is as follows:</p>
+                    <p>
+                        1. Department Curriculum Committee 
+                    </p> 
+                    <p>
+                        2. Department Council
+                    </p>
+                    <p>
+                        3. Associate Dean Academic Programs
+                        Under Graduate Studies Committee
+                    </p>
+                    <p>
+                        4. Faculty Council
+                    </p>
+                    <p>
+                        5. APC
+                    </p>
+                    <p>
+                        6. Senate
+                    </p>
+                    <button>Select</button>
+                </mat-card-content>
+            </mat-card>            
+        </div> 
+
+        <div class="custom">
+            <mat-card>
+                    <mat-card-title>
+                            Custom Pipeline
+                    </mat-card-title>
+                    <mat-card-content>
+                        <a>
+                            Select the order of your custom approval pipeline out of the following options:
+                        </a>
+                        <mat-selection-list #options>
+                                <mat-list-option value="Department Curriculum Committee">
+                                    Department Curriculum Committee
+                                </mat-list-option>
+                                <mat-list-option value="Department Council">
+                                    Department Council
+                                </mat-list-option>
+                                <mat-list-option value="Associate Dean Academic Programs Under Graduate Studies Committee">
+                                    Associate Dean Academic Programs Under Graduate Studies Committee
+                                </mat-list-option>
+                                <mat-list-option value="Faculty Council">
+                                    Faculty Council
+                                </mat-list-option>
+                                <mat-list-option value="APC">
+                                    APC
+                                </mat-list-option>
+                                <mat-list-option value="Senate">
+                                    Senate
+                                </mat-list-option>
+                        </mat-selection-list>                 
+                        <p>
+                            Your custom approval pipeline:
+                        </p>
+                        <table>
+                            <tbody>
+                                <tr *ngFor = "let sel of options.selectedOptions.selected">
+                                    <td> {{ sel.value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button>Select</button>
+                    </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
