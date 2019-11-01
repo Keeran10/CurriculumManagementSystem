@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApprovalPipelineComponent } from './approval-pipeline.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule, MatCard } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('ApprovalPipelineComponent', () => {
   let component: ApprovalPipelineComponent;
@@ -11,7 +13,10 @@ describe('ApprovalPipelineComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatCheckboxModule,
-        MatListModule
+        MatListModule,
+        MatCardModule,
+        MatCard,
+        MatButtonModule
       ],
       declarations: [ ApprovalPipelineComponent ]
     })
