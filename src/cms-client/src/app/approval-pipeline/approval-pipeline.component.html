@@ -27,7 +27,7 @@
                     <p>
                         6. Senate
                     </p>
-                    <button  mat-raised-button color="primary" class="select_button">Select</button>
+                    <button  (click)="predefined()" mat-raised-button color="primary" class="select_button">Select</button>
                 </mat-card-content>
             </mat-card>            
         </div> 
@@ -42,22 +42,22 @@
                             Select the order of your custom approval pipeline out of the following options:
                         </a>
                         <mat-selection-list #options>
-                                <mat-list-option value="Department Curriculum Committee">
+                                <mat-list-option  class="custom_options" value="Department Curriculum Committee">
                                     Department Curriculum Committee
                                 </mat-list-option>
-                                <mat-list-option value="Department Council">
+                                <mat-list-option  class="custom_options" value="Department Council">
                                     Department Council
                                 </mat-list-option>
-                                <mat-list-option value="Associate Dean Academic Programs Under Graduate Studies Committee">
+                                <mat-list-option  class="custom_options" value="Associate Dean Academic Programs Under Graduate Studies Committee">
                                     Associate Dean Academic Programs Under Graduate Studies Committee
                                 </mat-list-option>
-                                <mat-list-option value="Faculty Council">
+                                <mat-list-option  class="custom_options" value="Faculty Council">
                                     Faculty Council
                                 </mat-list-option>
-                                <mat-list-option value="APC">
+                                <mat-list-option  class="custom_options" value="APC">
                                     APC
                                 </mat-list-option>
-                                <mat-list-option value="Senate">
+                                <mat-list-option  class="custom_options" value="Senate">
                                     Senate
                                 </mat-list-option>
                         </mat-selection-list>                 
@@ -67,7 +67,7 @@
                         <table>
                             <tbody>
                                 <tr *ngFor = "let sel of options.selectedOptions.selected">
-                                    <td> {{ sel.value }}</td>
+                                    <td> - {{ sel.value }}</td>
                                 </tr>
                             </tbody>
                         </table>
