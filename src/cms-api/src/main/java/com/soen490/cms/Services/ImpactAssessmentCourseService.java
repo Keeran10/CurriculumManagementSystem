@@ -1,6 +1,7 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.Course;
+import com.soen490.cms.Models.Degree;
 import com.soen490.cms.Models.Request;
 import com.soen490.cms.Models.Requisite;
 import lombok.extern.log4j.Log4j2;
@@ -113,10 +114,31 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> preReqAddedMap = requisitesCompare(requestedCourse, originalCourse);
         if(!(preReqAddedMap.isEmpty()))
             responseMap.put("RequisitesAdded", preReqAddedMap);
-
+        for(Degree degree: searchService.findDegreesByRequiredCourseId(originalCourse.getId())){
+            System.err.println("HELOOOOOOOOOOOOOOOOO==========:"+degree);
+        }
+        for(Degree degree: searchService.findDegreesByElectiveCourseId(originalCourse.getId())){
+            System.err.println("HELOOOOOOOOOOOOOOOOO==========:"+degree);
+        }
         finalResponseMap.put("CourseChanges", responseMap);
 
         return finalResponseMap;
+    }
+
+    private Map<String, Object> degreeImpactUpdateRequest(Course originalCourse,Course requestedCourse){
+        Map<String, Object> responseMap = new HashMap();
+
+
+        if(originalCourse.getCredits() != requestedCourse.getCredits()){
+            if(originalCourse.getName().equals(requestedCourse.getName())){
+                responseMap.put("")
+            }
+            responseMap.put("")
+        }
+        if(originalCourse.getName().equals(requestedCourse.getName())){
+            responseMap.put("")
+        }
+        return responseMap;
     }
 
     private Map<String, Object> requisitesCompare(Course originalCourse, Course requestedCourse){
