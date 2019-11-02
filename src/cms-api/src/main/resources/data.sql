@@ -131,7 +131,7 @@ INSERT IGNORE INTO requisite VALUES (5, 1, "SOEN", 343, "prerequisite", 9);-- so
 INSERT IGNORE INTO requisite VALUES (6, 1, "SOEN", 341, "prerequisite", 10);-- soen 357 needs 341
 INSERT IGNORE INTO requisite VALUES (7, 0, "SOEN", 341, "prerequisite", 15);-- soen 343 edited needs 341
 INSERT IGNORE INTO requisite VALUES (8, 0, "SOEN", 331, "prerequisite", 15);-- soen 343 edited needs 331
-INSERT IGNORE INTO requisite VALUES (9, 0, "SOEN", 343, "prerequisite", 10);-- soen 357 edited needs 343 edited
+INSERT IGNORE INTO requisite VALUES (9, 0, "COMP", 3431, "prerequisite", 10);-- soen 357 edited needs 343 edited
 
 INSERT IGNORE INTO requisite VALUES (10, 1, "ENGR", 213, "prerequisite", 16);
 INSERT IGNORE INTO requisite VALUES (11, 1, "PHYS", 204, "prerequisite", 16);
