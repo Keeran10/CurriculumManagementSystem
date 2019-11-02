@@ -209,7 +209,7 @@ INSERT IGNORE INTO required_course VALUES (1, 11);
 INSERT IGNORE INTO required_course VALUES (1, 12);
 INSERT IGNORE INTO required_course VALUES (1, 13);
 INSERT IGNORE INTO required_course VALUES (1, 14);
-INSERT IGNORE INTO required_course VALUES (1, 15);
+INSERT IGNORE INTO required_course VALUES (2, 15);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES(1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  2, 4);

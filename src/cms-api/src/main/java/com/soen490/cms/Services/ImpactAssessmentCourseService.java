@@ -114,30 +114,91 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> preReqAddedMap = requisitesCompare(requestedCourse, originalCourse);
         if(!(preReqAddedMap.isEmpty()))
             responseMap.put("RequisitesAdded", preReqAddedMap);
-        for(Degree degree: searchService.findDegreesByRequiredCourseId(originalCourse.getId())){
-            System.err.println("HELOOOOOOOOOOOOOOOOO==========:"+degree);
-        }
-        for(Degree degree: searchService.findDegreesByElectiveCourseId(originalCourse.getId())){
-            System.err.println("HELOOOOOOOOOOOOOOOOO==========:"+degree);
-        }
+
         finalResponseMap.put("CourseChanges", responseMap);
 
+        finalResponseMap.put("DegreeRequiredCourses",getRequiredCourseDegreeImpact(originalCourse,requestedCourse));
         return finalResponseMap;
     }
 
     private Map<String, Object> degreeImpactUpdateRequest(Course originalCourse,Course requestedCourse){
         Map<String, Object> responseMap = new HashMap();
+        responseMap.put("DegreeRequiredCourses",getRequiredCourseDegreeImpact(originalCourse,requestedCourse));
+        return responseMap;
+    }
 
+    private Map<Object, Object> getRequiredCourseDegreeImpact(Course originalCourse,Course requestedCourse){
+        Map<Object, Object> responseMap = new HashMap();
 
-        if(originalCourse.getCredits() != requestedCourse.getCredits()){
-            if(originalCourse.getName().equals(requestedCourse.getName())){
-                responseMap.put("")
+        Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(originalCourse.getId());
+        Collection<Degree> targetCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(requestedCourse.getId());
+
+        ArrayList<Map> updatedList = new ArrayList();
+
+        ArrayList<Map> removedList = new ArrayList();
+        ArrayList<Map> addedList = new ArrayList();
+        ArrayList<Map> originalList = new ArrayList();
+
+        for(Degree originalReqdegree: originalCourseRequiredDegrees){
+            for(Degree requestedReqDegree: targetCourseRequiredDegrees){
+                boolean notFound = true;
+                // When only the credits have changed in a required degree
+                if(originalReqdegree.getId() == requestedReqDegree.getId()){
+                    notFound = false;
+                    if(originalCourse.getCredits() != requestedCourse.getCredits()){
+                        double difference = + Math.abs(originalCourse.getCredits() - requestedCourse.getCredits());
+                        double totalCredits = originalReqdegree.getCredits();
+                        //if credits increased else credits decreased
+                        if(originalCourse.getCredits() < requestedCourse.getCredits())
+                            totalCredits += difference;
+                        else{
+                            totalCredits -= difference;
+                        }
+                        Map<String, Object> updatedMap = new HashMap();
+                        updatedMap.put(originalReqdegree.getName(), totalCredits);
+                        updatedList.add(updatedMap);
+                        Map<String, Object> originalMap = new HashMap();
+                        originalMap.put(originalReqdegree.getName(), originalReqdegree.getCredits());
+                        originalList.add(originalMap);
+
+                    }
+                }
+                // if degree not found in original List then it was removed
+                if(notFound){
+                    double totalCredits = originalReqdegree.getCredits() - originalCourse.getCredits();
+                    Map<String, Object> removedMap = new HashMap();
+                    removedMap.put(originalReqdegree.getName(), totalCredits);
+                    removedList.add(removedMap);
+                    Map<String, Object> originalMap = new HashMap();
+                    originalMap.put(originalReqdegree.getName(), originalReqdegree.getCredits());
+                    originalList.add(originalMap);
+                }
             }
-            responseMap.put("")
         }
-        if(originalCourse.getName().equals(requestedCourse.getName())){
-            responseMap.put("")
+
+        // New course requirement for a degree
+        for(Degree requestedReqDegree: targetCourseRequiredDegrees){
+            for(Degree originalReqdegree: originalCourseRequiredDegrees){
+                boolean notFound = true;
+                if(originalReqdegree.getId() == requestedReqDegree.getId()) {
+                    notFound = false;
+                }
+                if(notFound){
+                    double totalCredits = requestedReqDegree.getCredits() + requestedCourse.getCredits();
+                    Map<String, Object> addedMap = new HashMap();
+                    addedMap.put(requestedReqDegree.getName(), totalCredits);
+                    addedList.add(addedMap);
+                    Map<String, Object> originalMap = new HashMap();
+                    originalMap.put(requestedReqDegree.getName(), requestedReqDegree.getCredits());
+                    originalList.add(originalMap);
+                }
+            }
         }
+
+        responseMap.put("updated",updatedList);
+        responseMap.put("removed",removedList);
+        responseMap.put("added",addedList);
+        responseMap.put("original",originalList);
         return responseMap;
     }
 
