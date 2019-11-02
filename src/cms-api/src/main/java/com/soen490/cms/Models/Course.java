@@ -1,10 +1,12 @@
 package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
@@ -52,10 +54,12 @@ public class Course {
     private Collection<Requisite> requisites;
 
     @JsonManagedReference
+    @JsonIgnoreProperties("requiredCourses")
     @ManyToMany(mappedBy = "requiredCourses")
     Collection<Degree> requiredDegrees;
 
     @JsonManagedReference
+    @JsonIgnoreProperties("electiveCourses")
     @ManyToMany(mappedBy = "electiveCourses")
     Collection<Degree> electiveDegrees;
 }
