@@ -2,6 +2,7 @@
 .idea/
 .vscode/
 .DS_Store
+.suml
 
 # local database persistence not needed in repo
 docker/data/db/**
