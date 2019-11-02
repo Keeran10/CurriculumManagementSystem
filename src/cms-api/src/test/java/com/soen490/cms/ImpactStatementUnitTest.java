@@ -30,6 +30,10 @@ public class ImpactStatementUnitTest {
         course.setNumber(362);
         course.setCredits(5);
         course.setDescription("test");
+        course.setLabHours(5);
+        course.setTutorialHours(3);
+        course.setLectureHours(1);
+        course.setLevel(2);
         course.setTitle("Math");
         course.setRequisites(new ArrayList<>());
         when(searchService.findCourseById(1)).thenReturn(course);
@@ -67,6 +71,10 @@ public class ImpactStatementUnitTest {
         courseUpdated.setTitle("Math");
         courseUpdated.setCredits(5);
         courseUpdated.setDescription("test");
+        courseUpdated.setLabHours(5);
+        courseUpdated.setTutorialHours(3);
+        courseUpdated.setLectureHours(1);
+        courseUpdated.setLevel(2);
         courseUpdated.setRequisites(new ArrayList<>());
 
         when(searchService.findCourseById(2)).thenReturn(courseUpdated);
