@@ -23,7 +23,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
-
+import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 
 
 
@@ -35,7 +35,8 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     EditFormComponent,
     CourseFormComponent,
     CourseListComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    PipelineTrackingComponent
   ],
   // Keep imports alphabetical for source control
   imports: [
