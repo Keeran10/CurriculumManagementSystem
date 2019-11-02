@@ -49,7 +49,7 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> map = new HashMap();
         map.put("updated",updatedList);
         map.put("original",originalList);
-        responseReport.put("DegreeCourseRequiredImapct", map);
+        responseReport.put("DegreeCourseRequiredImpact", map);
 
         Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
         updatedList = new ArrayList();
@@ -119,7 +119,7 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> map = new HashMap();
         map.put("updated",updatedList);
         map.put("original",originalList);
-        responseReport.put("DegreeCourseRequiredImapct", map);
+        responseReport.put("DegreeCourseRequiredImpact", map);
 
         Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
         updatedList = new ArrayList();
@@ -184,7 +184,7 @@ public class ImpactAssessmentCourseService {
 
 
         finalResponseMap.put("CourseEdits", responseMap);
-        finalResponseMap.put("DegreeCourseRequiredImapct",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
+        finalResponseMap.put("DegreeCourseRequiredImpact",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("DegreeCourseElectiveImpact",getElectiveCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
         finalResponseMap.put("ProgramImpact",programResponseMap);
