@@ -72,7 +72,7 @@ INSERT IGNORE INTO course VALUES (13, 3.50, 'Students work in teams to design an
 INSERT IGNORE INTO course VALUES (14, 4.00, 'Students work in teams of at least four members to construct a significant software application. The class meets at regular intervals. Team members will give a presentation of their contribution to the project. Lectures: one hour per week. Laboratory: two hours per week. Two terms.',
 1, 'SOEN', NULL,  490, NULL, 'Capstone Software Engineering Design Project', 1);
 INSERT IGNORE INTO course VALUES (15, 3.50, 'From requirements to design to implementation. Planned vs. evolutionary design and refactoring. Model‑driven design and Unified Modelling Language (UML). Structural and behavioural design descriptions and specifications. General and domain‑specific design principles, patterns and idioms. Object‑oriented design concepts such as interfaces vs. abstract types, polymorphism, generics, and delegation vs. subclassing. Introduction to software architecture (styles and view models). Design quality. Design rationale. Design methodologies (e.g. based on responsibility assignment). Test‑driven development. Lectures: three hours per week. Tutorial: one hour per week.',
-0, 'SOEN', NULL, 343, NULL, 'Software Architecture and Design I extreme', 1);
+0, 'COMP', NULL, 3431, NULL, 'Software Architecture and Design I extreme', 2);
 
 INSERT IGNORE INTO course VALUES (16, 3.00, 'Prerequisite: ENGR 213 previously or concurrently; PHYS 204; MATH 204. Resultant of force systems; equilibrium of particles and rigid bodies; distributed forces; statically determinate systems; trusses; friction; moments of inertia; virtual work. Shear and bending moment diagrams. Lectures: three hours per week. Tutorial: two hours per week.',
 1, 'ENGR', NULL, 242, NULL, 'Statics', 3);
@@ -131,7 +131,7 @@ INSERT IGNORE INTO requisite VALUES (5, 1, "SOEN", 343, "prerequisite", 9);-- so
 INSERT IGNORE INTO requisite VALUES (6, 1, "SOEN", 341, "prerequisite", 10);-- soen 357 needs 341
 INSERT IGNORE INTO requisite VALUES (7, 0, "SOEN", 341, "prerequisite", 15);-- soen 343 edited needs 341
 INSERT IGNORE INTO requisite VALUES (8, 0, "SOEN", 331, "prerequisite", 15);-- soen 343 edited needs 331
-INSERT IGNORE INTO requisite VALUES (9, 0, "SOEN", 343, "prerequisite", 10);-- soen 357 edited needs 343 edited
+INSERT IGNORE INTO requisite VALUES (9, 0, "COMP", 3431, "prerequisite", 10);-- soen 357 edited needs 343 edited
 
 INSERT IGNORE INTO requisite VALUES (10, 1, "ENGR", 213, "prerequisite", 16);
 INSERT IGNORE INTO requisite VALUES (11, 1, "PHYS", 204, "prerequisite", 16);
@@ -209,6 +209,7 @@ INSERT IGNORE INTO required_course VALUES (1, 11);
 INSERT IGNORE INTO required_course VALUES (1, 12);
 INSERT IGNORE INTO required_course VALUES (1, 13);
 INSERT IGNORE INTO required_course VALUES (1, 14);
+INSERT IGNORE INTO required_course VALUES (2, 15);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES(1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  2, 4);

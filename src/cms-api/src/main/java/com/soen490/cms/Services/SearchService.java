@@ -44,6 +44,15 @@ public class SearchService {
         return degreeRepository.findAll();
     }
 
+    public Collection<Degree> findDegreesByRequiredCourseId(int id){
+        log.info("findAllDegrees()");
+        return degreeRepository.findDegreeByRequiredCourseId(id);
+    }
+    public Collection<Degree> findDegreesByElectiveCourseId(int id){
+        log.info("findAllDegrees()");
+        return degreeRepository.findDegreeByElectiveCourseId(id);
+    }
+
     public Degree findDegreeByName(String name) {
         log.info("find degree " + name);
         return degreeRepository.findByName(name);
