@@ -113,15 +113,21 @@ public class ImpactAssessmentCourseService {
         if(!(preReqAddedMap.isEmpty()))
             responseMap.put("RequisitesAdded", preReqAddedMap);
 
+        Map<String, Object> programResponseMap = new HashMap();
+        if(originalCourse.getProgram().getId() != requestedCourse.getProgram().getId()){
+            programResponseMap.put("original", originalCourse.getProgram().getName());
+            programResponseMap.put("change", requestedCourse.getProgram().getName());
+        }
+
+
         finalResponseMap.put("CourseEdits", responseMap);
-        finalResponseMap.put("DegreeRequiredCourses",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
-        finalResponseMap.put("DegreeElectiveCourses",getElectiveCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
+        finalResponseMap.put("DegreeCourseRequiredImapct",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
+        finalResponseMap.put("DegreeCourseElectiveImpact",getElectiveCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
+        finalResponseMap.put("ProgramImpact",programResponseMap);
 
         return finalResponseMap;
     }
-
-
 
     private Map<Object, Object> getRequiredCourseDegreeImpactUpdatedCourse(Course originalCourse,Course requestedCourse){
         Map<Object, Object> responseMap = new HashMap();
@@ -197,6 +203,7 @@ public class ImpactAssessmentCourseService {
         responseMap.put("original",originalList);
         return responseMap;
     }
+
     private Map<Object, Object> getElectiveCourseDegreeImpactUpdatedCourse(Course originalCourse,Course requestedCourse) {
         Map<Object, Object> responseMap = new HashMap();
 
@@ -237,7 +244,7 @@ public class ImpactAssessmentCourseService {
         return responseMap;
     }
 
-        private Map<String, Object> requisitesCompare(Course originalCourse, Course requestedCourse){
+    private Map<String, Object> requisitesCompare(Course originalCourse, Course requestedCourse){
         Collection<Requisite> originalRequisites = originalCourse.getRequisites();
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
         Map<String, Object> responseMap = new HashMap();
