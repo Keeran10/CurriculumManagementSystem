@@ -68,6 +68,8 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseElectiveImpact", map);
 
+        responseReport.put("Name",course.getName());
+        responseReport.put("Number",course.getNumber());
         responseReport.put("Course", course);
         responseReport.put("RequestType", request.getRequestType());
         return responseReport;
@@ -101,9 +103,45 @@ public class ImpactAssessmentCourseService {
             Course parentCourse = requisite.getCourse();
             parentCourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
         }
+
+        Collection<Degree> courseRequiredDegrees = searchService.findDegreesByRequiredCourseId(course.getId());
+        ArrayList<Map> updatedList = new ArrayList();
+        ArrayList<Map> originalList = new ArrayList();
+        for(Degree degree : courseRequiredDegrees){
+            Map<String, Object> originalMap = new HashMap();
+            originalMap.put(degree.getName(), degree.getCredits());
+            originalList.add(originalMap);
+            Map<String, Object> changedMap = new HashMap();
+            double totaCredits =  degree.getCredits() - course.getCredits();
+            changedMap.put(degree.getName(), totaCredits);
+            updatedList.add(changedMap);
+        }
+        Map<String, Object> map = new HashMap();
+        map.put("updated",updatedList);
+        map.put("original",originalList);
+        responseReport.put("DegreeCourseRequiredImapct", map);
+
+        Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
+        updatedList = new ArrayList();
+        originalList = new ArrayList();
+        for(Degree degree : courseElectiveDegrees){
+            Map<String, Object> originalMap = new HashMap();
+            originalMap.put(degree.getName(), degree.getCredits());
+            originalList.add(originalMap);
+            Map<String, Object> changedMap = new HashMap();
+            double totaCredits =  degree.getCredits() - course.getCredits();
+            changedMap.put(degree.getName(), totaCredits);
+            updatedList.add(changedMap);
+        }
+        map = new HashMap();
+        map.put("updated",updatedList);
+        map.put("original",originalList);
+        responseReport.put("DegreeCourseElectiveImpact", map);
+
         responseMap.put("Courses",parentCourses);
         responseReport.put("Name",course.getName());
         responseReport.put("Number",course.getNumber());
+        responseReport.put("Course",course);
         responseReport.put("RemovingFromParentCourses",responseMap);
         responseReport.put("RequestType",request.getRequestType());
         return responseReport;
