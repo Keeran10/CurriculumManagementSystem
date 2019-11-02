@@ -34,17 +34,42 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> responseReport = new HashMap();
         Course course = searchService.findCourseById(request.getTargetId());
 
-        Collection<Requisite> coursesInReference = course.getRequisites();
-        Map<String, Object> responseMap = new HashMap();
-        List<String> requisiteCourses = new ArrayList();
-        for(Requisite requisite : coursesInReference){
-            requisiteCourses.add(requisite.getName()+" " + requisite.getNumber());
+        Collection<Degree> courseRequiredDegrees = searchService.findDegreesByRequiredCourseId(course.getId());
+        ArrayList<Map> updatedList = new ArrayList();
+        ArrayList<Map> originalList = new ArrayList();
+        for(Degree degree : courseRequiredDegrees){
+            Map<String, Object> originalMap = new HashMap();
+            originalMap.put(degree.getName(), degree.getCredits());
+            originalList.add(originalMap);
+            Map<String, Object> changedMap = new HashMap();
+            double totaCredits =  degree.getCredits() + course.getCredits();
+            changedMap.put(degree.getName(), totaCredits);
+            updatedList.add(changedMap);
         }
-        responseMap.put("Courses", requisiteCourses);
-        responseReport.put("Name", course.getName());
-        responseReport.put("Number", course.getNumber());
+        Map<String, Object> map = new HashMap();
+        map.put("updated",updatedList);
+        map.put("original",originalList);
+        responseReport.put("DegreeCourseRequiredImapct", map);
+
+        Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
+        updatedList = new ArrayList();
+        originalList = new ArrayList();
+        for(Degree degree : courseElectiveDegrees){
+            Map<String, Object> originalMap = new HashMap();
+            originalMap.put(degree.getName(), degree.getCredits());
+            originalList.add(originalMap);
+            Map<String, Object> changedMap = new HashMap();
+            double totaCredits =  degree.getCredits() + course.getCredits();
+            changedMap.put(degree.getName(), totaCredits);
+            updatedList.add(changedMap);
+        }
+        map = new HashMap();
+        map.put("updated",updatedList);
+        map.put("original",originalList);
+        responseReport.put("DegreeCourseElectiveImpact", map);
+
+        responseReport.put("Course", course);
         responseReport.put("RequestType", request.getRequestType());
-        responseReport.put("CoursesInRequisites", responseMap);
         return responseReport;
     }
 
@@ -216,7 +241,6 @@ public class ImpactAssessmentCourseService {
         for(Degree originalReqdegree: originalCourseRequiredDegrees) {
             boolean notFound = true;
             for (Degree requestedReqDegree : targetCourseRequiredDegrees) {
-                // When only the credits have changed in a required degree
                 if (originalReqdegree.getId() == requestedReqDegree.getId()) {
                     notFound = false;
                 }
@@ -229,7 +253,6 @@ public class ImpactAssessmentCourseService {
         for (Degree requestedReqDegree : targetCourseRequiredDegrees) {
             boolean notFound = true;
             for(Degree originalReqdegree: originalCourseRequiredDegrees) {
-                // When only the credits have changed in a required degree
                 if (originalReqdegree.getId() == requestedReqDegree.getId()) {
                     notFound = false;
                 }
