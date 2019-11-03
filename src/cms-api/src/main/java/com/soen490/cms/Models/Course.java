@@ -1,6 +1,6 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
@@ -9,7 +9,7 @@ import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"requirements", "electives"})
+@ToString(exclude= {"requiredDegrees", "electiveDegrees"})
 public class Course {
 
     @Id
@@ -25,6 +25,14 @@ public class Course {
     private double credits;
 
     private String note;
+
+    private int level;
+
+    private double lectureHours;
+
+    private double tutorialHours;
+
+    private double labHours;
 
     @Lob
     private String description;
@@ -43,11 +51,13 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private Collection<Requisite> requisites;
 
-    @JsonBackReference
+    @JsonManagedReference
+    @JsonIgnoreProperties("requiredCourses")
     @ManyToMany(mappedBy = "requiredCourses")
-    Collection<Degree> requirements;
+    Collection<Degree> requiredDegrees;
 
-    @JsonBackReference
+    @JsonManagedReference
+    @JsonIgnoreProperties("electiveCourses")
     @ManyToMany(mappedBy = "electiveCourses")
-    Collection<Degree> electives;
+    Collection<Degree> electiveDegrees;
 }
