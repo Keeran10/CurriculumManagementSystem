@@ -4,16 +4,14 @@ import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.RequestService;
 import com.soen490.cms.Services.SupportingDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class SupportingDocumentsController {
 
     @Autowired
