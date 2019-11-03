@@ -1,16 +1,15 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"requisites", "requirements", "electives"})
+@ToString(exclude= {"requiredDegrees", "electiveDegrees"})
 public class Course {
 
     @Id
@@ -21,13 +20,13 @@ public class Course {
 
     private int number;
 
-    private int level;
-
     private String title;
 
     private double credits;
 
-    private String description;
+    private String note;
+
+    private int level;
 
     private double lectureHours;
 
@@ -35,7 +34,8 @@ public class Course {
 
     private double labHours;
 
-    private String note;
+    @Lob
+    private String description;
 
     @Lob
     private byte[] outline;
@@ -47,34 +47,17 @@ public class Course {
     @JoinColumn(name = "program_id")
     private Program program;
 
-    @JsonBackReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "course")
     private Collection<Requisite> requisites;
 
-    @JsonBackReference
+    @JsonManagedReference
+    @JsonIgnoreProperties("requiredCourses")
     @ManyToMany(mappedBy = "requiredCourses")
-    Collection<Degree> requirements;
+    Collection<Degree> requiredDegrees;
 
-    @JsonBackReference
+    @JsonManagedReference
+    @JsonIgnoreProperties("electiveCourses")
     @ManyToMany(mappedBy = "electiveCourses")
-    Collection<Degree> electives;
-
-    @Transient
-    ArrayList<String> prerequisites;
-
-    @Transient
-    ArrayList<String> corequisites;
-
-    @Transient
-    ArrayList<String> antirequisites;
-
-    @Transient
-    ArrayList<String> equivalent;
-
-    public Course(){
-        prerequisites = new ArrayList<>();
-        corequisites = new ArrayList<>();
-        antirequisites = new ArrayList<>();
-        equivalent = new ArrayList<>();
-    }
+    Collection<Degree> electiveDegrees;
 }
