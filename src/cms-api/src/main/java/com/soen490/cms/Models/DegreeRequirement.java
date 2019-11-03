@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -12,11 +13,13 @@ import java.io.Serializable;
 @Data
 public class DegreeRequirement implements Serializable{
 
+    @JsonIgnoreProperties({"program", "degreeRequirements"})
     @Id
     @ManyToOne
     @JoinColumn(name = "degree_id")
     private Degree degree;
 
+    @JsonIgnoreProperties({"program", "degreeRequirements"})
     @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
