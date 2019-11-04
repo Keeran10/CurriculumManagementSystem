@@ -1,6 +1,7 @@
 package com.soen490.cms;
 
 import com.soen490.cms.Models.Course;
+import com.soen490.cms.Models.Program;
 import com.soen490.cms.Models.Request;
 import com.soen490.cms.Models.Requisite;
 import com.soen490.cms.Services.SearchService;
@@ -59,8 +60,11 @@ public class ImpactStatementUnitTest {
         request.setRequestType(2);
         request.setTargetId(2);
         request.setOriginalId(1);
-
+        Program program = new Program();
+        program.setId(1);
+        course.setProgram(program);
         Course courseUpdated = new Course();
+        courseUpdated.setProgram(program);
         courseUpdated.setId(6);
         courseUpdated.setName("COMP");
         courseUpdated.setNumber(363);
@@ -78,7 +82,7 @@ public class ImpactStatementUnitTest {
         when(searchService.findAllOccurrencesOfCourseAsRequisite(6)).thenReturn(new ArrayList<Requisite>());
 
         Map<String,Object> mapResponse = impactAssessmentCourse.getCourseImpact(request);
-        assertThat(mapResponse.get("CourseChanges").toString()).isEqualTo("{Number="+courseUpdated.getNumber()+"}");
+        assertThat(mapResponse.get("CourseEdits").toString()).isEqualTo("{Number="+courseUpdated.getNumber()+"}");
     }
 
     @Test

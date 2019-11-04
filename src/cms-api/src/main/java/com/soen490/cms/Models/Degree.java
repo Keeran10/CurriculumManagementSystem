@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Degree {
     private Program program;
 
     @JsonManagedReference
+    @JsonIgnoreProperties("requiredDegrees")
     @ManyToMany
     @JoinTable(
             name = "required_course",
@@ -32,6 +34,7 @@ public class Degree {
     Collection<Course> requiredCourses;
 
     @JsonManagedReference
+    @JsonIgnoreProperties("electiveDegrees")
     @ManyToMany
     @JoinTable(
             name = "elective_course",

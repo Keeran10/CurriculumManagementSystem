@@ -27,29 +27,30 @@ public class SearchService {
 
     public Collection<Course> findAllCourses(){
         log.info("findAllCourses()");
-        Collection<Course> courses = courseRepository.findAll();
-        for(Course course : courses)
-            addRequisites(course);
-        return courses;
+        return courseRepository.findAll();
     }
     public Collection<Course> findCourseByNameAndNumber(String name, int number){
         log.info("find(" + name + number + ")");
-        Collection<Course> courses = courseRepository.findByCourseNumber(name, number);
-        for(Course course : courses)
-            addRequisites(course);
-        return courses;
+        return courseRepository.findByCourseNumber(name, number);
     }
 
     public Course findCourseById(int id){
         log.info("Course findbyId(): " + id);
-        Course course = courseRepository.findById(id);
-        addRequisites(course);
-        return course;
+        return courseRepository.findById(id);
     }
 
     public Collection<Degree> findAllDegrees(){
         log.info("findAllDegrees()");
         return degreeRepository.findAll();
+    }
+
+    public Collection<Degree> findDegreesByRequiredCourseId(int id){
+        log.info("findAllDegrees()");
+        return degreeRepository.findDegreeByRequiredCourseId(id);
+    }
+    public Collection<Degree> findDegreesByElectiveCourseId(int id){
+        log.info("findAllDegrees()");
+        return degreeRepository.findDegreeByElectiveCourseId(id);
     }
 
     public Degree findDegreeByName(String name) {
@@ -89,31 +90,7 @@ public class SearchService {
 
     public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){
         log.info("Course "+id+" requisites: ");
-        return requisiteRepository.findAllOccurrencesOfCourseAsRequisite(id);
+        Course course = courseRepository.findById(id);
+        return requisiteRepository.findAllOccurrencesOfCourseAsRequisite(course.getName(), course.getNumber());
     }
-
-    public void addRequisites(Course course) {
-
-        if(course == null) return;
-
-        for(Requisite requisite : course.getRequisites()){
-            if(requisite.getType() == 1) {
-                Course prereq = courseRepository.findById(requisite.getRequisiteCourseId());
-                course.getPrerequisites().add(prereq.getName() + prereq.getNumber());
-            }
-            if(requisite.getType() == 2) {
-                Course coreq = courseRepository.findById(requisite.getRequisiteCourseId());
-                course.getCorequisites().add(coreq.getName() + coreq.getNumber());
-            }
-            if(requisite.getType() == 3) {
-                Course antireq = courseRepository.findById(requisite.getRequisiteCourseId());
-                course.getAntirequisites().add(antireq.getName() + antireq.getNumber());
-            }
-            if(requisite.getType() == 4) {
-                Course eq = courseRepository.findById(requisite.getRequisiteCourseId());
-                course.getEquivalent().add(eq.getName() + eq.getNumber());
-            }
-        }
-    }
-
 }

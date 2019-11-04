@@ -10,9 +10,9 @@ import java.util.Collection;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer>{
 
-    @Query(value = "SELECT * FROM course WHERE name=?1 AND number=?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM course WHERE name=?1 AND number=?2 AND is_active=1", nativeQuery = true)
     Collection<Course> findByCourseNumber(String name, int number);
 
-    @Query(value = "SELECT * FROM course WHERE id=?1 ", nativeQuery = true)
+    @Query(value = "SELECT * FROM course WHERE id=?1", nativeQuery = true)
     Course findById(int number);
 }
