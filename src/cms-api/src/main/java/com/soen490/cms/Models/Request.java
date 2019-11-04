@@ -1,16 +1,14 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"requestPackage", "approvals"})
+@ToString(exclude= {"requestPackage"})
 public class Request {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,21 +26,14 @@ public class Request {
 
     private Timestamp timestamp;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "package_id")
-    private Package requestPackage; // package is a reserved keyword
+    private RequestPackage requestPackage; // package is a reserved keyword
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "request")
-    private Collection<SupportingDocument> supportingDocuments;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "request")
-    private Collection<Approval> approvals;
 }
