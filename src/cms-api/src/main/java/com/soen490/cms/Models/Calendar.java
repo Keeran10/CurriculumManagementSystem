@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
@@ -19,6 +20,8 @@ public class Calendar {
     @Lob
     private String body;
 
+    private String sectionType; // faculty | faculty_list (profs) | courses | general
+
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "faculty_id")
@@ -28,6 +31,4 @@ public class Calendar {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-
-    private String sectionType; // faculty | faculty_list (profs) | courses | general
 }

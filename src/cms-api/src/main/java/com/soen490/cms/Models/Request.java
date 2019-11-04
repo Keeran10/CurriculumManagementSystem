@@ -1,6 +1,5 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
@@ -27,6 +26,7 @@ public class Request {
 
     private Timestamp timestamp;
 
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,6 +34,6 @@ public class Request {
     @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "package_id")
-    private Package requestPackage; // package is a reserved keyword
+    private RequestPackage requestPackage; // package is a reserved keyword
 
 }

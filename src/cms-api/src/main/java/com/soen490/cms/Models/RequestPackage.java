@@ -1,7 +1,6 @@
 package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,25 +8,25 @@ import java.util.Collection;
 
 @Entity
 @Data
-public class Package {
+public class RequestPackage {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @JsonIgnoreProperties({"packages"})
+    @JsonIgnoreProperties("requestPackages")
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
     private Collection<Request> requests;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "aPackage")
+    @JsonIgnoreProperties("requestPackages")
+    @OneToMany(mappedBy = "requestPackage")
     private Collection<SupportingDocument> supportingDocuments;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "aPackage")
+    @JsonIgnoreProperties("requestPackages")
+    @OneToMany(mappedBy = "requestPackage")
     private Collection<Approval> approvals;
 }

@@ -2,7 +2,6 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,7 +10,7 @@ import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"programs", "calendars", "packages"})
+@ToString(exclude= {"programs", "calendars", "requestPackages"})
 public class Department {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,20 +18,20 @@ public class Department {
 
     private String name;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties({"departments", "calendars"})
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @JsonIgnoreProperties({"department"})
+    @JsonIgnoreProperties({"department", "degrees", "courses"})
     @OneToMany(mappedBy = "department")
     private Collection<Program> programs;
 
-    @JsonIgnoreProperties({"department"})
+    @JsonIgnoreProperties({"department", "requests", "supportingDocuments", "approvals"})
+    @OneToMany(mappedBy = "department")
+    private Collection<RequestPackage> requestPackages;
+
+    @JsonBackReference
     @OneToMany(mappedBy = "department")
     private Collection<Calendar> calendars;
-
-    @JsonIgnoreProperties({"department"})
-    @OneToMany(mappedBy = "department")
-    private Collection<Package> packages;
 }

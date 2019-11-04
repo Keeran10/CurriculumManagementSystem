@@ -21,13 +21,13 @@ public class Approval {
 
     private Timestamp timestamp;
 
-
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnoreProperties({"approvals"})
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "package_id")
-    private Package aPackage;
+    private RequestPackage requestPackage;
 }

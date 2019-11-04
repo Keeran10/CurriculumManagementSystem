@@ -17,8 +17,13 @@ public class SupportingDocument {
     @Lob
     private byte[] document;
 
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
+    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals"})
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals"})
     @ManyToOne
     @JoinColumn(name = "package_id")
-    private Package aPackage;
+    private RequestPackage requestPackage;
 }

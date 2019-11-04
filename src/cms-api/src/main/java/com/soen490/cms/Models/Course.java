@@ -40,7 +40,7 @@ public class Course {
 
     private int isActive;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties({"courses", "degrees"})
     @ManyToOne
     @JoinColumn(name = "program_id")
     private Program program;
@@ -49,7 +49,6 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private Collection<Requisite> requisites;
 
-    @JsonManagedReference
     @JsonIgnoreProperties("course")
     @OneToMany(mappedBy = "course")
     Collection<DegreeRequirement> degreeRequirements;

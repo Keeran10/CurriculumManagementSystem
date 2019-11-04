@@ -1,6 +1,5 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
@@ -26,11 +25,15 @@ public class User {
 
     private String password;
 
-    @JsonIgnoreProperties({"user"})
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private Collection<Request> requests;
 
-    @JsonIgnoreProperties({"user"})
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private Collection<Approval> approvals;
+
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user")
+    private Collection<SupportingDocument> supportingDocuments;
 }
