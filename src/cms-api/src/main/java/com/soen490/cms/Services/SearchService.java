@@ -45,13 +45,14 @@ public class SearchService {
     }
 
     public Collection<Degree> findDegreesByRequiredCourseId(int id){
-        log.info("findAllDegrees()");
+        log.info("find all degrees by required Course id");
         return degreeRepository.findDegreeByRequiredCourseId(id);
     }
-   /* public Collection<Degree> findDegreesByElectiveCourseId(int id){
-        log.info("findAllDegrees()");
+
+    public Collection<Degree> findDegreesByElectiveCourseId(int id){
+        log.info("find all degrees by elective Course id");
         return degreeRepository.findDegreeByElectiveCourseId(id);
-    }*/
+    }
 
     public Degree findDegreeByName(String name) {
         log.info("find degree " + name);
