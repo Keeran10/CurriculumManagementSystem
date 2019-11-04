@@ -14,7 +14,7 @@ public class ImpactAssessmentCourseService {
     @Autowired
     SearchService searchService;
 
-    public Map<String, Object>  getCourseImpact(Request request){
+    public Map<String, Object> getCourseImpact(Request request){
         Map<String, Object> responseMap = new HashMap();
         switch (request.getRequestType()){
             case 1: return courseCreationImpactReport(request);
@@ -26,11 +26,13 @@ public class ImpactAssessmentCourseService {
             }
         }
     }
+
     private Map<String, Object> courseCreationImpactReport(Request request){
 
         Map<String, Object> responseReport = new HashMap();
         Course course = searchService.findCourseById(request.getTargetId());
 
+        // Making Required Degree Impact Report
         Collection<Degree> courseRequiredDegrees = searchService.findDegreesByRequiredCourseId(course.getId());
         ArrayList<Map> updatedList = new ArrayList();
         ArrayList<Map> originalList = new ArrayList();
@@ -48,6 +50,7 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseRequiredImpact", map);
 
+        // Making Elective Degree Impact Report
         Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
         updatedList = new ArrayList();
         originalList = new ArrayList();
@@ -64,6 +67,25 @@ public class ImpactAssessmentCourseService {
         map.put("updated",updatedList);
         map.put("original",originalList);
         responseReport.put("DegreeCourseElectiveImpact", map);
+
+        // Making Program Impact Report
+        Set<String> programCores = getAlldegreeRequirementsCores(courseRequiredDegrees);
+        updatedList = new ArrayList();
+        originalList = new ArrayList();
+        for(String programCore : programCores){
+            Map<String, Object> originalMap = new HashMap();
+            double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+            originalMap.put(programCore, originalCredits);
+            originalList.add(originalMap);
+            Map<String, Object> changedMap = new HashMap();
+            double totalCredits =  originalCredits + course.getCredits();
+            changedMap.put(programCore, totalCredits);
+            updatedList.add(changedMap);
+        }
+        map = new HashMap();
+        map.put("updated",updatedList);
+        map.put("original",originalList);
+        responseReport.put("ProgramImpact", map);
 
         responseReport.put("Name",course.getName());
         responseReport.put("Number",course.getNumber());
@@ -100,7 +122,7 @@ public class ImpactAssessmentCourseService {
             Course parentCourse = requisite.getCourse();
             parentCourses.add(parentCourse.getName()+" " +parentCourse.getNumber());
         }
-
+        // Making Required Degree Impact Report
         Collection<Degree> courseRequiredDegrees = searchService.findDegreesByRequiredCourseId(course.getId());
         ArrayList<Map> updatedList = new ArrayList();
         ArrayList<Map> originalList = new ArrayList();
@@ -118,6 +140,7 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseRequiredImpact", map);
 
+        // Making Elective Degree Impact Report
         Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
         updatedList = new ArrayList();
         originalList = new ArrayList();
@@ -135,6 +158,25 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseElectiveImpact", map);
 
+        // Making Program Impact Report
+        Set<String> programCores = getAlldegreeRequirementsCores(courseRequiredDegrees);
+        updatedList = new ArrayList();
+        originalList = new ArrayList();
+        for(String programCore : programCores){
+            Map<String, Object> originalMap = new HashMap();
+            double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+            originalMap.put(programCore, originalCredits);
+            originalList.add(originalMap);
+            Map<String, Object> changedMap = new HashMap();
+            double totalCredits =  originalCredits - course.getCredits();
+            changedMap.put(programCore, totalCredits);
+            updatedList.add(changedMap);
+        }
+        map = new HashMap();
+        map.put("updated",updatedList);
+        map.put("original",originalList);
+        responseReport.put("ProgramImpact", map);
+
         responseMap.put("Courses",parentCourses);
         responseReport.put("Name",course.getName());
         responseReport.put("Number",course.getNumber());
@@ -144,7 +186,7 @@ public class ImpactAssessmentCourseService {
         return responseReport;
     }
 
-    private Map<String, Object>  getCourseDiffReport(Course originalCourse, Course requestedCourse){
+    private Map<String, Object> getCourseDiffReport(Course originalCourse, Course requestedCourse){
         Map<String, Object> finalResponseMap = new HashMap();
 
         Map<String, Object> responseMap = new HashMap();
@@ -312,8 +354,8 @@ public class ImpactAssessmentCourseService {
         Map<Object, Object> responseMap = new HashMap();
         Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(originalCourse.getId());
         Collection<Degree> targetCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(requestedCourse.getId());
-        Set<String> originalCores = getAlldegreRequirementsCores(originalCourseRequiredDegrees);
-        Set<String> requestedCores = getAlldegreRequirementsCores(targetCourseRequiredDegrees);
+        Set<String> originalCores = getAlldegreeRequirementsCores(originalCourseRequiredDegrees);
+        Set<String> requestedCores = getAlldegreeRequirementsCores(targetCourseRequiredDegrees);
 
         ArrayList<Map> updatedList = new ArrayList();
 
@@ -386,6 +428,7 @@ public class ImpactAssessmentCourseService {
         responseMap.put("original",originalList);
         return responseMap;
     }
+
     private Map<String, Object> requisitesCompare(Course originalCourse, Course requestedCourse){
         Collection<Requisite> originalRequisites = originalCourse.getRequisites();
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
@@ -418,7 +461,7 @@ public class ImpactAssessmentCourseService {
         }
     }
 
-    public Set<String> getAlldegreRequirementsCores(Collection<Degree> requiredDegrees){
+    public Set<String> getAlldegreeRequirementsCores(Collection<Degree> requiredDegrees){
         Set<String> coreSet = new HashSet<String>();
         for(Degree degree: requiredDegrees){
             Collection<DegreeRequirement> requirements = degree.getDegreeRequirements();
@@ -428,6 +471,7 @@ public class ImpactAssessmentCourseService {
         }
         return coreSet;
     }
+
     public void setServiceMock(SearchService course){
         searchService = course;
     }
