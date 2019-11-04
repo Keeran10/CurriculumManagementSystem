@@ -1,6 +1,7 @@
 package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
@@ -23,15 +24,15 @@ public class Department {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"department"})
     @OneToMany(mappedBy = "department")
     private Collection<Program> programs;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"department"})
     @OneToMany(mappedBy = "department")
     private Collection<Calendar> calendars;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"department"})
     @OneToMany(mappedBy = "department")
     private Collection<Package> packages;
 }

@@ -1,6 +1,7 @@
 package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
@@ -21,16 +22,15 @@ public class User {
 
     private String userType;
 
-    // Login credentials - email should be used as username since CMS will actively use emails for notification
     private String email;
 
     private String password;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"user"})
     @OneToMany(mappedBy = "user")
     private Collection<Request> requests;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"user"})
     @OneToMany(mappedBy = "user")
     private Collection<Approval> approvals;
 }
