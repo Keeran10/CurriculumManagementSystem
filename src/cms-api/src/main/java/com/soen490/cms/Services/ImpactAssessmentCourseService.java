@@ -1,9 +1,6 @@
 package com.soen490.cms.Services;
 
-import com.soen490.cms.Models.Course;
-import com.soen490.cms.Models.Degree;
-import com.soen490.cms.Models.Request;
-import com.soen490.cms.Models.Requisite;
+import com.soen490.cms.Models.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -153,19 +150,32 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> responseMap = new HashMap();
         // check name
         if(!(originalCourse.getName().equalsIgnoreCase(requestedCourse.getName())))
-            responseMap.put("Name", requestedCourse.getName());
+            responseMap.put("name", requestedCourse.getName());
         // check number
         if(originalCourse.getNumber() != requestedCourse.getNumber())
-            responseMap.put("Number", Integer.toString(requestedCourse.getNumber()));
+            responseMap.put("number", Integer.toString(requestedCourse.getNumber()));
         // check credit
         if(originalCourse.getCredits() != requestedCourse.getCredits())
-            responseMap.put("Credits", Double.toString(requestedCourse.getCredits()));
+            responseMap.put("credits", Double.toString(requestedCourse.getCredits()));
         // check title
         if(!(originalCourse.getTitle().equalsIgnoreCase(requestedCourse.getTitle())))
-            responseMap.put("Title", requestedCourse.getTitle());
+            responseMap.put("title", requestedCourse.getTitle());
         // check description
         if(!(originalCourse.getDescription().equalsIgnoreCase(requestedCourse.getDescription())))
-            responseMap.put("Description", requestedCourse.getDescription());
+            responseMap.put("description", requestedCourse.getDescription());
+        // check tutorial hour
+        if(originalCourse.getTutorialHours() != requestedCourse.getTutorialHours())
+            responseMap.put("tutorialHours", Double.toString(requestedCourse.getTutorialHours()));
+        // check lab hour
+        if(originalCourse.getLabHours() != requestedCourse.getLabHours())
+            responseMap.put("labHours", Double.toString(requestedCourse.getLabHours()));
+        // check lecture hour
+        if(originalCourse.getLectureHours() != requestedCourse.getLectureHours())
+            responseMap.put("lectureHours", Double.toString(requestedCourse.getLectureHours()));
+        // check level
+        if(originalCourse.getLevel() != requestedCourse.getLevel())
+            responseMap.put("level", Integer.toString(requestedCourse.getLevel()));
+
 
         // check preRequisites
         Map<String, Object> preReqRemovedMap = requisitesCompare(originalCourse,requestedCourse);
@@ -176,18 +186,12 @@ public class ImpactAssessmentCourseService {
         if(!(preReqAddedMap.isEmpty()))
             responseMap.put("RequisitesAdded", preReqAddedMap);
 
-        Map<String, Object> programResponseMap = new HashMap();
-        if(originalCourse.getProgram().getId() != requestedCourse.getProgram().getId()){
-            programResponseMap.put("original", originalCourse.getProgram().getName());
-            programResponseMap.put("change", requestedCourse.getProgram().getName());
-        }
-
 
         finalResponseMap.put("CourseEdits", responseMap);
         finalResponseMap.put("DegreeCourseRequiredImpact",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("DegreeCourseElectiveImpact",getElectiveCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
-        finalResponseMap.put("ProgramImpact",programResponseMap);
+        finalResponseMap.put("ProgramImpact",getProgramImpactUpdatedCourse(originalCourse,requestedCourse));
 
         return finalResponseMap;
     }
@@ -304,6 +308,84 @@ public class ImpactAssessmentCourseService {
         return responseMap;
     }
 
+    private Map<Object, Object> getProgramImpactUpdatedCourse( Course originalCourse, Course requestedCourse){
+        Map<Object, Object> responseMap = new HashMap();
+        Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(originalCourse.getId());
+        Collection<Degree> targetCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(requestedCourse.getId());
+        Set<String> originalCores = getAlldegreRequirementsCores(originalCourseRequiredDegrees);
+        Set<String> requestedCores = getAlldegreRequirementsCores(targetCourseRequiredDegrees);
+
+        ArrayList<Map> updatedList = new ArrayList();
+
+        ArrayList<Map> removedList = new ArrayList();
+        ArrayList<Map> addedList = new ArrayList();
+        ArrayList<Map> originalList = new ArrayList();
+
+        for(String originalCore: originalCores){
+            boolean notFound = true;
+            for(String requestedCore: requestedCores){
+                // When only the credits have changed in a core
+                if(originalCore.equals(requestedCore)){
+                    notFound = false;
+                    if(originalCourse.getCredits() != requestedCourse.getCredits()){
+                        double difference =  Math.abs(originalCourse.getCredits() - requestedCourse.getCredits());
+                        double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+                        double updatedCredits = originalCredits;
+                        //if credits increased else credits decreased
+                        if(originalCourse.getCredits() < requestedCourse.getCredits())
+                            updatedCredits += difference;
+                        else{
+                            updatedCredits -= difference;
+                        }
+                        Map<String, Object> updatedMap = new HashMap();
+                        updatedMap.put(originalCore, updatedCredits);
+                        updatedList.add(updatedMap);
+                        Map<String, Object> originalMap = new HashMap();
+                        originalMap.put(originalCore, originalCredits);
+                        originalList.add(originalMap);
+
+                    }
+                }
+            }
+            // if core not found in modified List then it was removed
+            if(notFound){
+                double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+                double totalCredits = originalCredits - originalCourse.getCredits();
+                Map<String, Object> removedMap = new HashMap();
+                removedMap.put(originalCore, totalCredits);
+                removedList.add(removedMap);
+                Map<String, Object> originalMap = new HashMap();
+                originalMap.put(originalCore, originalCredits);
+                originalList.add(originalMap);
+            }
+        }
+
+        // New course requirement for a degree
+        for(String requestedCore: requestedCores){
+            boolean notFound = true;
+            for(String originalCore: originalCores){
+                if(originalCore.equals(requestedCore)){
+                    notFound = false;
+                }
+            }
+            if(notFound){
+                double originalCredits = searchService.findCreditsTotalOfCoreProgram(requestedCore);
+                double totalCredits = originalCredits + requestedCourse.getCredits();
+                Map<String, Object> addedMap = new HashMap();
+                addedMap.put(requestedCore, totalCredits);
+                addedList.add(addedMap);
+                Map<String, Object> originalMap = new HashMap();
+                originalMap.put(requestedCore, originalCredits);
+                originalList.add(originalMap);
+            }
+        }
+
+        responseMap.put("updated",updatedList);
+        responseMap.put("removed",removedList);
+        responseMap.put("added",addedList);
+        responseMap.put("original",originalList);
+        return responseMap;
+    }
     private Map<String, Object> requisitesCompare(Course originalCourse, Course requestedCourse){
         Collection<Requisite> originalRequisites = originalCourse.getRequisites();
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
@@ -334,6 +416,17 @@ public class ImpactAssessmentCourseService {
             responseMap.put("Courses", coursesList);
             return responseMap;
         }
+    }
+
+    public Set<String> getAlldegreRequirementsCores(Collection<Degree> requiredDegrees){
+        Set<String> coreSet = new HashSet<String>();
+        for(Degree degree: requiredDegrees){
+            Collection<DegreeRequirement> requirements = degree.getDegreeRequirements();
+            for(DegreeRequirement degreeRequirement: requirements){
+                coreSet.add(degreeRequirement.getCore());
+            }
+        }
+        return coreSet;
     }
     public void setServiceMock(SearchService course){
         searchService = course;
