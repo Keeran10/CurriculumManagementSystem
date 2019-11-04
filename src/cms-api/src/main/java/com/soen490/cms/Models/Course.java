@@ -3,13 +3,11 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.ToString;
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"requiredDegrees", "electiveDegrees"})
 public class Course {
 
     @Id
@@ -52,12 +50,8 @@ public class Course {
     private Collection<Requisite> requisites;
 
     @JsonManagedReference
-    @JsonIgnoreProperties("requiredCourses")
-    @ManyToMany(mappedBy = "requiredCourses")
-    Collection<Degree> requiredDegrees;
+    @JsonIgnoreProperties("course")
+    @OneToMany(mappedBy = "course")
+    Collection<DegreeRequirement> degreeRequirements;
 
-    @JsonManagedReference
-    @JsonIgnoreProperties("electiveCourses")
-    @ManyToMany(mappedBy = "electiveCourses")
-    Collection<Degree> electiveDegrees;
 }
