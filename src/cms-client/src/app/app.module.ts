@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './backend-api.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { CourseListComponent } from './course-list/course-list.component';
@@ -15,8 +16,10 @@ import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
@@ -30,12 +33,12 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
 @NgModule({
   declarations: [
     AppComponent,
-    SearchPageComponent,
-    SupportDocumentComponent,
-    EditFormComponent,
+    ApprovalPipelineComponent,
     CourseFormComponent,
     CourseListComponent,
-    SearchPageComponent
+    EditFormComponent,
+    SearchPageComponent,
+    SupportDocumentComponent
   ],
   // Keep imports alphabetical for source control
   imports: [
@@ -53,7 +56,9 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     MatSelectModule,
     ReactiveFormsModule,
     NgxFileDropModule,
-    PdfViewerModule
+    PdfViewerModule,
+    MatCheckboxModule,
+    MatListModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
