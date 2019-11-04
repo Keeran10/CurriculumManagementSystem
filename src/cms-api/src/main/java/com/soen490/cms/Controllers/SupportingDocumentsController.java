@@ -1,7 +1,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.SupportingDocument;
-import com.soen490.cms.Services.RequestService;
+import com.soen490.cms.Services.RequestPackageService;
 import com.soen490.cms.Services.SupportingDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class SupportingDocumentsController {
     SupportingDocumentService supportingDocsService;
 
     @Autowired
-    RequestService requestService;
+    RequestPackageService requestPackageService;
 
     /**
      *
@@ -45,16 +45,16 @@ public class SupportingDocumentsController {
      * path format: /supportingDocuments/add?documentId={id}
      *
      * @param supportingDocumentId
-     * @param requestId
+     * @param packageId
      * @return
      */
     @PostMapping(value = "/addSupportingDocument")
-    public void add(@RequestParam("document") byte[] document, @RequestParam("request_id") Long requestId){
+    public void add(@RequestParam("document") byte[] document, @RequestParam("package_id") Long packageId){
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         SupportingDocument supportingDocument = new SupportingDocument();
         supportingDocument.setDocument(document);
-        supportingDocument.setRequest(requestService.find(requestId));
+        supportingDocument.setRequestPackage(requestPackageService.find(packageId));
         supportingDocument.setTimestamp(timestamp);
 
         supportingDocsService.addSupportingDocument(supportingDocument);

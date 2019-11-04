@@ -19,12 +19,11 @@ public class Degree {
 
     private double credits;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties({"degrees", "courses"})
     @ManyToOne
     @JoinColumn(name = "program_id")
     private Program program;
 
-    @JsonManagedReference
     @JsonIgnoreProperties("degree")
     @OneToMany(mappedBy = "degree")
     Collection<DegreeRequirement> degreeRequirements;

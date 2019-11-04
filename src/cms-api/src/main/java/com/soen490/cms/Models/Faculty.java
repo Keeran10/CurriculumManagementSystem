@@ -1,6 +1,7 @@
 package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 
@@ -17,7 +18,7 @@ public class Faculty {
 
     private String name;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"faculty", "programs"})
     @OneToMany(mappedBy = "faculty")
     private Collection<Department> departments;
 

@@ -82,7 +82,7 @@ public class ImpactStatementUnitTest {
         when(searchService.findAllOccurrencesOfCourseAsRequisite(6)).thenReturn(new ArrayList<Requisite>());
 
         Map<String,Object> mapResponse = impactAssessmentCourse.getCourseImpact(request);
-        assertThat(mapResponse.get("CourseEdits").toString()).isEqualTo("{Number="+courseUpdated.getNumber()+"}");
+        assertThat(mapResponse.get("CourseEdits").toString()).isEqualTo("{number="+courseUpdated.getNumber()+"}");
     }
 
     @Test
