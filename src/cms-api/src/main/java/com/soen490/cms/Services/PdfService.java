@@ -11,7 +11,6 @@ import com.soen490.cms.Models.Request;
 import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
-import javafx.scene.text.TextAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +25,49 @@ public class PdfService {
     @Autowired
     private CourseRepository courseRepository;
 
-    // fonts
+    // preface fonts
+    private static Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 10);
+    private static Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
+    // table fonts
     private static Font arial_10 = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
     private static Font arial_10_bold = FontFactory.getFont("Arial", 10, Font.BOLD);
     private static Font arial_10_italic = FontFactory.getFont("Arial", 10, Font.ITALIC);
     private static Font arial_10_bold_italic = FontFactory.getFont("Arial", 10, Font.BOLDITALIC);
-    private static Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 10);
-    private static Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
 
-    // colors
+    // diffs fonts
+    // for credits & description removals
+    private static Font arial_10_red_strikethrough = FontFactory.getFont
+            ("Arial", 10, Font.STRIKETHRU, BaseColor.RED);
+
+    // for credits & description add-ons
+    private static Font arial_10_blue_underline = FontFactory.getFont
+            ("Arial", 10, Font.UNDERLINE, BaseColor.BLUE);
+
+    // this + chunk.setUnderline(0.1f, 3f) for name & number removal (strikethrough)
+    private static Font arial_10_red_bold = FontFactory.getFont
+            ("Arial", 10, Font.BOLD, BaseColor.RED);
+
+    // this + chunk.setUnderline(0.1f, -1f) for name & number add-ons (underline)
+    private static Font arial_10_blue_bold = FontFactory.getFont
+            ("Arial", 10, Font.BOLD, BaseColor.BLUE);
+
+    // this + chunk.setUnderline(0.1f, 3f) for title removal (strikethrough)
+    private static Font arial_10_red_bold_italic = FontFactory.getFont
+            ("Arial", 10, Font.BOLDITALIC, BaseColor.RED);
+
+    // this + chunk.setUnderline(0.1f, -1f) for title add-ons (underline)
+    private static Font arial_10_blue_bold_italic = FontFactory.getFont
+            ("Arial", 10, Font.BOLDITALIC, BaseColor.BLUE);
+
+    // this + chunk.setUnderline(0.1f, 3f) for note removal (strikethrough)
+    private static Font arial_10_red_italic = FontFactory.getFont
+            ("Arial", 10, Font.ITALIC, BaseColor.RED);
+
+    // this + chunk.setUnderline(0.1f, -1f) for note add-ons (underline)
+    private static Font arial_10_blue_italic = FontFactory.getFont
+            ("Arial", 10, Font.ITALIC, BaseColor.BLUE);
+
+
 
     public Document generatePDF(int package_id){
 
@@ -47,7 +80,7 @@ public class PdfService {
 
         try {
             // package.pdf
-            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_2.pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_3.pdf"));
 
             doc.open();
 
@@ -257,6 +290,7 @@ public class PdfService {
             Phrase original_body_phrase = new Phrase();
             Phrase changed_body_phrase = new Phrase();
 
+            //processCourseDiffs();
             //original_body_phrase.add(new Chunk(o.getRequisites().toString(), arial_10));
             original_body_phrase.add(new Chunk(o.getDescription(), arial_10));
             //changed_body_phrase.add(new Chunk(c.getRequisites().toString(), arial_10));
@@ -320,4 +354,8 @@ public class PdfService {
         }
     }
 
+    private Paragraph processCourseDiffs(Paragraph course_paragraph){
+
+        return course_paragraph;
+    }
 }
