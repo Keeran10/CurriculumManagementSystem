@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Entity
 @Data
-@ToString(exclude= {"programs", "calendars", "requestPackages"})
+@ToString(exclude= {"programs", "calendar", "requestPackages"})
 public class Department {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +32,6 @@ public class Department {
     private Collection<RequestPackage> requestPackages;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "department")
-    private Collection<Calendar> calendars;
+    @OneToOne(mappedBy = "department")
+    private Calendar calendar;
 }

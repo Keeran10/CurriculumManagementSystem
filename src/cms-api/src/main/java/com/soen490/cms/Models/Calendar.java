@@ -28,7 +28,7 @@ public class Calendar {
     private Faculty faculty;
 
     @JsonManagedReference
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "department_id")
     private Department department;
 }

@@ -13,6 +13,9 @@ public class RequestPackage {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Lob
+    private byte[] pdfFile;
+
     @JsonIgnoreProperties("requestPackages")
     @ManyToOne
     @JoinColumn(name = "department_id")

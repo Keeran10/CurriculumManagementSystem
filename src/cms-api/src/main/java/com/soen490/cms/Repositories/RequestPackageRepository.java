@@ -10,4 +10,7 @@ public interface RequestPackageRepository extends JpaRepository<RequestPackage, 
 
     @Query(value = "SELECT * FROM request_package WHERE id=?", nativeQuery = true)
     RequestPackage findById(Long id);
+
+    @Query(value = "SELECT * FROM request_package WHERE id=?", nativeQuery = true)
+    RequestPackage findById(int id);
 }

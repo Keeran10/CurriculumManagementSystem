@@ -24,6 +24,8 @@ public class Request {
 
     private String rationale;
 
+    private String resourceImplications;
+
     private Timestamp timestamp;
 
     @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
