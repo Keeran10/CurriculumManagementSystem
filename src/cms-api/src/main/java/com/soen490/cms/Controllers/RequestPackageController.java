@@ -20,7 +20,14 @@ public class RequestPackageController {
     public int getPDF(@RequestParam int package_id) {
 
         // generate the file
-        Document pdf_file = pdfService.generatePDF(package_id);
+        boolean success = pdfService.generatePDF(package_id);
+
+        if(success) return 0;
+
+        byte[] pdf_bytes;
+
+        if(success)
+            pdf_bytes = pdfService.getPDF(package_id);
         /*
         // retrieve contents of "C:/tmp/report.pdf" that were written in showHelp
         byte[] contents = null;
@@ -36,4 +43,7 @@ public class RequestPackageController {
         */
         return 0;
     }
+
+
+
 }
