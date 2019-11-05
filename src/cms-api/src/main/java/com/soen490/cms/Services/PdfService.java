@@ -36,12 +36,12 @@ public class PdfService {
 
     // diffs fonts
     // for credits & description removals
-    private static Font arial_10_red_strikethrough = FontFactory.getFont
-            ("Arial", 10, Font.STRIKETHRU, BaseColor.RED);
+    private static Font arial_10_red = FontFactory.getFont
+            ("Arial", 10, BaseColor.RED);
 
     // for credits & description add-ons
-    private static Font arial_10_blue_underline = FontFactory.getFont
-            ("Arial", 10, Font.UNDERLINE, BaseColor.BLUE);
+    private static Font arial_10_blue = FontFactory.getFont
+            ("Arial", 10, BaseColor.BLUE);
 
     // this + chunk.setUnderline(0.1f, 3f) for name & number removal (strikethrough)
     private static Font arial_10_red_bold = FontFactory.getFont
@@ -82,7 +82,7 @@ public class PdfService {
         try {
 
             // package.pdf
-            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_4.pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_5.pdf"));
             //PdfWriter.getInstance(doc, byte_stream);
 
             doc.open();
@@ -351,11 +351,11 @@ public class PdfService {
             // original was longer in length, all of which should be red and strikethrough
             if(size == c_credits.length()) {
                 remainder = o_credits.substring(size);
-                original_credits_phrase.add(new Chunk(remainder, arial_10_red_strikethrough));
+                original_credits_phrase.add(new Chunk(remainder, arial_10_red).setUnderline(0.1f, 3f));
             }
             else {
                 remainder = c_credits.substring(size);
-                changed_credits_phrase.add(new Chunk(remainder, arial_10_blue_underline));
+                changed_credits_phrase.add(new Chunk(remainder, arial_10_blue).setUnderline(0.1f, -1f));
             }
 
             // body = chunks of requisites & descriptions
@@ -374,11 +374,11 @@ public class PdfService {
             // original was longer in length, all of which should be red and strikethrough
             if(size == c_body.length()) {
                 remainder = o_body.substring(size);
-                original_body_phrase.add(new Chunk(remainder, arial_10_red_strikethrough));
+                original_body_phrase.add(new Chunk(remainder, arial_10_red).setUnderline(0.1f, 3f));
             }
             else {
                 remainder = c_body.substring(size);
-                changed_body_phrase.add(new Chunk(remainder, arial_10_blue_underline));
+                changed_body_phrase.add(new Chunk(remainder, arial_10_blue).setUnderline(0.1f, -1f));
             }
 
             // notes
@@ -460,7 +460,12 @@ public class PdfService {
 
     private String stringifyRequisites(Collection<Requisite> requisites) {
 
-        StringBuilder r = new StringBuilder("Prerequisite: ");
+        StringBuilder r;
+
+        if(!requisites.isEmpty())
+            r = new StringBuilder("Prerequisite: ");
+        else
+            return "";
 
         boolean equivalent_next = true;
 
@@ -483,9 +488,9 @@ public class PdfService {
                 r.append(name_number);
                 equivalent_next = true;
             }
-            else
-                r.append(". ");
         }
+
+        r.append(". ");
 
         return r.toString();
     }
@@ -517,8 +522,8 @@ public class PdfService {
     private void processCreditAndBodyDifferences(Phrase original, Phrase changed, char o, char c){
 
         if(o != c){
-            original.add(new Chunk(o, arial_10_red_strikethrough));
-            changed.add(new Chunk(c, arial_10_blue_underline));
+            original.add(new Chunk(o, arial_10_red).setUnderline(0.1f, 3f));
+            changed.add(new Chunk(c, arial_10_blue).setUnderline(0.1f, -1f));
         }
         else{
             original.add(new Chunk(o, arial_10));
