@@ -164,17 +164,18 @@ public class PdfService {
             preface1.add(new Chunk(Chunk.NEWLINE));
 
             // academic year phrase - align right requires a new paragraph
+            Paragraph preface2 = new Paragraph();
+
             Phrase years = new Phrase();
             years.add(new Chunk("Calendar for Academic Year: ", times_10_bold));
-            years.add(new Chunk("2020/2021", times_10));
-            years.add(new Chunk(Chunk.NEWLINE));
+            years.add(new Chunk("2020/2021\n", times_10));
             years.add(new Chunk("Implementation Month/Year: ", times_10_bold));
             years.add(new Chunk("May 2020", times_10));
 
-            Paragraph preface2 = new Paragraph();
             preface2.add(years);
             preface2.setAlignment(Element.ALIGN_RIGHT);
 
+            // last preface segment aligned left
             Paragraph preface3 = new Paragraph();
             preface3.setTabSettings(new TabSettings(200f));
 
