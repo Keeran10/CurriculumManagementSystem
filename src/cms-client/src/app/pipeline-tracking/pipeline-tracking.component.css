@@ -1,3 +1,14 @@
 .container {
     margin: 30px;
 }
+
+.item {
+    padding-top: 7%;
+    padding-left: 5%;
+}
+
+.status {
+    font-size: 60%;
+    padding-left: 5%;
+    padding-top: 1%;
+}
