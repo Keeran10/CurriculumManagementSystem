@@ -3,11 +3,14 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Data
+@ToString(exclude= {"degreeRequirements", "program"})
 public class Degree {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)

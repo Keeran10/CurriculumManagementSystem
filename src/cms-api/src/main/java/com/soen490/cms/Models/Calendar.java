@@ -3,11 +3,15 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@ToString(exclude= {"faculty", "department"})
+@EqualsAndHashCode(exclude = {"faculty", "department"})
 public class Calendar {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
