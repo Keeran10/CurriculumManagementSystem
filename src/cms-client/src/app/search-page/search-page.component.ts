@@ -1,10 +1,11 @@
-import {ChangeDetectorRef, Component, DoCheck, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {Course} from '../model/course';
-import {forEachComment} from 'tslint';
 import { ApiService } from '../backend-api.service';
+import { Component, OnInit } from '@angular/core';
+import { Course } from '../model/course';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+
 
 export interface SearchCategory {
   value: string;

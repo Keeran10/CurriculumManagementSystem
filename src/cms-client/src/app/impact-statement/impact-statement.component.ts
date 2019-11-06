@@ -1,5 +1,8 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {ApiService} from '../backend-api.service';
+import {map} from "rxjs/operators";
+import {keyframes} from "@angular/animations";
 
 export interface DialogData {
   animal: string;
@@ -11,12 +14,24 @@ export interface DialogData {
   templateUrl: './impact-statement.component.html',
   styleUrls: ['./impact-statement.component.css']
 })
-export class ImpactStatementComponent {
+export class ImpactStatementComponent implements OnInit {
 
   animal: string;
   name: string;
 
-  constructor(public dialog: MatDialog) {
+  id: string;
+  requests: Map<string, object>;
+  title: 'test';
+
+
+  constructor(public dialog: MatDialog, private apiService: ApiService) {
+  }
+
+  ngOnInit(): void {
+  }
+
+  private getCourseName() {
+
   }
 
   openDialog(): void {
@@ -30,6 +45,8 @@ export class ImpactStatementComponent {
       this.animal = result;
     });
   }
+
+
 }
 
 @Component({
@@ -46,5 +63,4 @@ export class ImpactStatementComponent {
     onNoClick(): void {
       this.dialogRef.close();
     }
-
   }
