@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import com.soen490.cms.Utils.PageEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +77,11 @@ public class PdfService {
     public byte[] getPDF(int package_id) { return requestPackageRepository.findPdfById(package_id); }
 
 
+    /**
+     * Generate the pdf file for a given package.
+     * @param package_id Used to retrieve request_package object.
+     * @return true if a pdf has been generated and saved as pdf_file inside request_package.
+     */
     public boolean generatePDF(int package_id){
 
         Document doc = new Document(PageSize.A4.rotate());
@@ -88,8 +94,11 @@ public class PdfService {
         try {
 
             // package.pdf
-            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_7.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_7.pdf"));
             //PdfWriter.getInstance(doc, byte_stream);
+
+            writer.setBoxSize("corner-box", doc.getPageSize());
+            writer.setPageEvent(new PageEvent());
 
             doc.open();
 
@@ -109,6 +118,8 @@ public class PdfService {
 
                     // program requests
                 }
+
+                doc.newPage();
             }
 
             doc.close();
@@ -127,6 +138,13 @@ public class PdfService {
     }
 
 
+    /**
+     * Adds the course metadata to the document page.
+     * @param doc The document used to write the course preface.
+     * @param request The request object containing the course metadata.
+     * @param o The original course information.
+     * @param c The changed course information.
+     */
     private void addCoursePreface(Document doc, Request request, Course o, Course c){
 
         try{
@@ -267,6 +285,15 @@ public class PdfService {
     }
 
 
+    /**
+     * Adds the course table where the differences between the original and changed course are highlighted.
+     * @param doc The document used to write the course preface.
+     * @param request The request object containing the course metadata.
+     * @param o The original course information.
+     * @param c The changed course information.
+     * @throws FileNotFoundException
+     * @throws DocumentException
+     */
     private void addCourseDiffTable(Document doc, Request request, Course o, Course c) throws FileNotFoundException, DocumentException {
 
         try {
@@ -391,6 +418,11 @@ public class PdfService {
     }
 
 
+    /**
+     * Aggregates a collection of requisites into a string identical to those displayed on the academic calendar.
+     * @param requisites The requisites of a given course.
+     * @return A formatted string of requisites.
+     */
     private String stringifyRequisites(Collection<Requisite> requisites) {
 
         StringBuilder r;
@@ -429,6 +461,12 @@ public class PdfService {
     }
 
 
+    /**
+     * Surrounds substrings with "~" to differentiate the original string from the changed string.
+     * @param original The string of the original text.
+     * @param changed The string of the changed text.
+     * @return An array of strings with the appended "~".
+     */
     public String[] generateDiffs(String original, String changed){
 
         String[] processed_strings = new String[2];
@@ -456,8 +494,15 @@ public class PdfService {
     }
 
 
-    // type corresponds to 1: name_number, 2: title, 3: credits_body, 4: note
-    // compares each word from both original and change. 2 cursors are used.
+    /**
+     * Uses the strings from generateDiffs to highlight substrings with differentiating fonts and colors. This is
+     * then written to the document course table.
+     * @param original_phrase The original section to be written to the document.
+     * @param changed_phrase The changed section to be written to the document.
+     * @param o The original string to be differentiated, highlighted and added to the original phrase.
+     * @param c The changed string to be differentiated, highlighted and added to the changed phrase.
+     * @param type The section in question - 1: name&number, 2: title, 3: credits, 4: description and 5: note
+     */
     private void processDifferences
             (Phrase original_phrase, Phrase changed_phrase, String o, String c, int type) {
 
@@ -466,6 +511,7 @@ public class PdfService {
         String[] o_partitions = processed[0].split("~");
         String[] c_partitions = processed[1].split("~");
 
+        // compose original phrase
         for(String partition : o_partitions){
 
             partition = partition.trim();
@@ -527,8 +573,10 @@ public class PdfService {
             ctr++;
         }
 
+        // reset counter
         ctr = 0;
 
+        // compose changed phrase
         for(String partition : c_partitions){
 
             partition = partition.trim();
