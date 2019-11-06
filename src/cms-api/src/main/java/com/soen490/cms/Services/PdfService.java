@@ -1,6 +1,9 @@
 package com.soen490.cms.Services;
 
 
+import com.github.difflib.algorithm.DiffException;
+import com.github.difflib.text.DiffRow;
+import com.github.difflib.text.DiffRowGenerator;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -14,7 +17,9 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 
 @Service
@@ -82,7 +87,7 @@ public class PdfService {
         try {
 
             // package.pdf
-            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_5.pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_7.pdf"));
             //PdfWriter.getInstance(doc, byte_stream);
 
             doc.open();
@@ -235,7 +240,7 @@ public class PdfService {
                 calendar.add(new Chunk("Graduate Page Number:", times_10_bold));
 
             calendar.add(new Chunk(Chunk.TABBING));
-            calendar.add(new Chunk(c.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
+            calendar.add(new Chunk("§" + c.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
 
             preface3.add(calendar);
             preface3.add(new Chunk(Chunk.NEWLINE));
@@ -294,116 +299,46 @@ public class PdfService {
             Phrase original_name_phrase = new Phrase();
             Phrase changed_name_phrase = new Phrase();
 
-            if(o_name.length() < c_name.length())
-                size = o_name.length();
-            else
-                size = c_name.length();
-
-            for (int i = 0; i < size; i++) {
-                processNameDifferences(original_name_phrase, changed_name_phrase, o_name.charAt(i), c_name.charAt(i));
-            }
-
-            // original was longer in length, all of which should be red and strikethrough
-            if(size == c_name.length()) {
-                remainder = o_name.substring(size);
-                original_name_phrase.add(new Chunk(remainder, arial_10_red_bold).setUnderline(0.1f, 3f));
-            }
-            else {
-                remainder = c_name.substring(size);
-                changed_name_phrase.add(new Chunk(remainder, arial_10_blue_bold).setUnderline(0.1f, -1f));
-            }
+            processDifferences(original_name_phrase, changed_name_phrase, o_name, c_name, 1);
 
             // title
             Phrase original_title_phrase = new Phrase();
             Phrase changed_title_phrase = new Phrase();
 
-            if(o_title.length() < c_title.length())
-                size = o_title.length();
-            else
-                size = c_title.length();
+            processDifferences(original_title_phrase, changed_title_phrase, o_title, c_title, 2);
 
-            for (int i = 0; i < size; i++) {
-                processTitleDifferences(original_title_phrase, changed_title_phrase, o_title.charAt(i), c_title.charAt(i));
-            }
-
-            // original was longer in length, all of which should be red and strikethrough
-            if(size == c_title.length()) {
-                remainder = o_title.substring(size);
-                original_title_phrase.add(new Chunk(remainder, arial_10_red_bold_italic).setUnderline(0.1f, 3f));
-            }
-            else {
-                remainder = c_title.substring(size);
-                changed_title_phrase.add(new Chunk(remainder, arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
-            }
-
-            // credits
+            // credits (special case needs to be partitioned manually)
             Phrase original_credits_phrase = new Phrase();
             Phrase changed_credits_phrase = new Phrase();
 
-            if(o_credits.length() < c_credits.length())
-                size = o_credits.length();
-            else
-                size = c_credits.length();
+            String[] o_credits_words = new String[3];
+            String[] c_credits_words = new String[3];
 
-            for (int i = 0; i < size; i++) {
-                processCreditAndBodyDifferences(original_credits_phrase, changed_credits_phrase, o_credits.charAt(i), c_credits.charAt(i));
-            }
+            String[] ocw = o_credits.split(" ");
+            String[] ccw = c_credits.split(" ");
 
-            // original was longer in length, all of which should be red and strikethrough
-            if(size == c_credits.length()) {
-                remainder = o_credits.substring(size);
-                original_credits_phrase.add(new Chunk(remainder, arial_10_red).setUnderline(0.1f, 3f));
-            }
-            else {
-                remainder = c_credits.substring(size);
-                changed_credits_phrase.add(new Chunk(remainder, arial_10_blue).setUnderline(0.1f, -1f));
-            }
+            o_credits_words[0] = c_credits_words[0] = "(";
+
+            o_credits_words[1] = ocw[1].substring(1);
+            c_credits_words[1] = ccw[1].substring(1);
+
+            o_credits_words[2] = ocw[2];
+            c_credits_words[2] = ccw[2];
+
+            processDifferences(original_credits_phrase, changed_credits_phrase, o_credits, c_credits, 3);
 
             // body = chunks of requisites & descriptions
             Phrase original_body_phrase = new Phrase();
             Phrase changed_body_phrase = new Phrase();
 
-            if(o_body.length() < c_body.length())
-                size = o_body.length();
-            else
-                size = c_body.length();
-
-            for (int i = 0; i < size; i++) {
-                processCreditAndBodyDifferences(original_body_phrase, changed_body_phrase, o_body.charAt(i), c_body.charAt(i));
-            }
-
-            // original was longer in length, all of which should be red and strikethrough
-            if(size == c_body.length()) {
-                remainder = o_body.substring(size);
-                original_body_phrase.add(new Chunk(remainder, arial_10_red).setUnderline(0.1f, 3f));
-            }
-            else {
-                remainder = c_body.substring(size);
-                changed_body_phrase.add(new Chunk(remainder, arial_10_blue).setUnderline(0.1f, -1f));
-            }
+            processDifferences(original_body_phrase, changed_body_phrase, o_body, c_body, 3);
 
             // notes
             Phrase original_note_phrase = new Phrase();
             Phrase changed_note_phrase = new Phrase();
 
-            if(o_note.length() < c_note.length())
-                size = o_note.length();
-            else
-                size = c_note.length();
+            processDifferences(original_note_phrase, changed_note_phrase, o_note, c_note, 4);
 
-            for (int i = 0; i < size; i++) {
-                processNoteDifferences(original_note_phrase, changed_note_phrase, o_note.charAt(i), c_note.charAt(i));
-            }
-
-            // original was longer in length, all of which should be red and strikethrough
-            if(size == c_note.length()) {
-                remainder = o_note.substring(size);
-                original_note_phrase.add(new Chunk(remainder, arial_10_red_italic).setUnderline(0.1f, 3f));
-            }
-            else {
-                remainder = c_note.substring(size);
-                changed_note_phrase.add(new Chunk(remainder, arial_10_blue_italic).setUnderline(0.1f, -1f));
-            }
             // ...
 
             // add all course phrases to paragraph
@@ -496,52 +431,367 @@ public class PdfService {
         return r.toString();
     }
 
-    private void processNameDifferences(Phrase original, Phrase changed, char o, char c){
+    private String[] diffUtil(String o, String c){
 
-        if(o != c){
-            original.add(new Chunk(o, arial_10_red_bold).setUnderline(0.1f, 3f));
-            changed.add(new Chunk(c, arial_10_blue_bold).setUnderline(0.1f, -1f));
+        String[] processed_strings = new String[2];
+
+        DiffRowGenerator generator = DiffRowGenerator.create()
+                .showInlineDiffs(true)
+                .inlineDiffByWord(true)
+                .oldTag(f -> "~")
+                .newTag(f -> "~")
+                .build();
+
+        try {
+            List<DiffRow> rows = generator.generateDiffRows(
+                    Arrays.asList(o),
+                    Arrays.asList(c));
+
+
+            processed_strings[0] = rows.get(0).getOldLine();
+            processed_strings[1] = rows.get(0).getNewLine();
+
+            int x = 0;
+            System.out.println("----------------------------------------");
+            for(String o_ : processed_strings[0].split("~")){
+                System.out.println(x++ + ":" + o_.trim());
+            }
+            x = 0;
+            for(String o_ : processed_strings[1].split("~")){
+                System.out.println(x++ + ":" + o_.trim());
+            }
+
+
+        } catch (DiffException e) {
+            e.printStackTrace();
         }
-        else{
-            original.add(new Chunk(o, arial_10_bold));
-            changed.add(new Chunk(c, arial_10_bold));
-        }
+
+        return processed_strings;
     }
 
-    private void processTitleDifferences(Phrase original, Phrase changed, char o, char c){
+    // type corresponds to 1: name_number, 2: title, 3: credits_body, 4: note
+    // compares each word from both original and change. 2 cursors are used.
+    private void processDifferences
+            (Phrase original_phrase, Phrase changed_phrase, String o, String c, int type) {
 
-        if(o != c){
-            original.add(new Chunk(o, arial_10_red_bold_italic).setUnderline(0.1f, 3f));
-            changed.add(new Chunk(c, arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
+        int ctr = 0;
+        String[] processed = diffUtil(o, c);
+        String[] o_partitions = processed[0].split("~");
+        String[] c_partitions = processed[1].split("~");
+
+        for(String partition : o_partitions){
+
+            partition = partition.trim();
+
+            if(ctr % 2 != 0 && !partition.equals("")){
+
+                if(type == 1)
+                    original_phrase.add(new Chunk(partition + " ",
+                            arial_10_red_bold).setUnderline(0.1f, 3f));
+                if(type == 2)
+                    original_phrase.add(new Chunk(partition + " ",
+                            arial_10_red_bold_italic).setUnderline(0.1f, 3f));
+                if(type == 3)
+                    original_phrase.add(new Chunk(partition + " ",
+                            arial_10_red).setUnderline(0.1f, 3f));
+                if(type == 4)
+                    original_phrase.add(new Chunk(partition + " ",
+                            arial_10_red_italic).setUnderline(0.1f, 3f));
+
+            }
+            else if(!partition.equals("")){
+
+                if(type == 1) {
+                    original_phrase.add(new Chunk(partition + " ", arial_10_bold));
+                }
+                if(type == 2) {
+                    original_phrase.add(new Chunk(partition + " ", arial_10_bold_italic));
+                }
+                if(type == 3) {
+                    original_phrase.add(new Chunk(partition + " ", arial_10));
+                }
+                if(type == 4) {
+                    original_phrase.add(new Chunk(partition + " ", arial_10_italic));
+                }
+
+            }
+
+            ctr++;
+        }
+
+        ctr = 0;
+
+        for(String partition : c_partitions){
+
+            partition = partition.trim();
+
+            if(ctr % 2 != 0 && !partition.equals("")){
+
+                if(type == 1)
+                    changed_phrase.add(new Chunk(partition + " ",
+                            arial_10_blue_bold).setUnderline(0.1f, -1f));
+                if(type == 2)
+                    changed_phrase.add(new Chunk(partition + " ",
+                            arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
+                if(type == 3)
+                    changed_phrase.add(new Chunk(partition + " ",
+                            arial_10_blue).setUnderline(0.1f, -1f));
+                if(type == 4)
+                    changed_phrase.add(new Chunk(partition + " ",
+                            arial_10_blue_italic).setUnderline(0.1f, -1f));
+
+            }
+            else if(!partition.equals("")){
+
+                if(type == 1) {
+                    changed_phrase.add(new Chunk(partition + " ", arial_10_bold));
+                }
+                if(type == 2) {
+                    changed_phrase.add(new Chunk(partition + " ", arial_10_bold_italic));
+                }
+                if(type == 3) {
+                    changed_phrase.add(new Chunk(partition + " ", arial_10));
+                }
+                if(type == 4) {
+                    changed_phrase.add(new Chunk(partition + " ", arial_10_italic));
+                }
+
+            }
+
+            ctr++;
+        }
+        /*
+        int outer_size, inner_size;
+        int cursor;
+        int last_saved = 0;
+        int ctr = 0;
+        int size_diff = 0;
+        boolean o = false;
+        boolean complete = false;
+
+        if(o_words.length > c_words.length) {
+            outer_size = o_words.length;
+            inner_size = c_words.length;
+            size_diff = o_words.length - c_words.length;
+            o = true;
+        }
+        else if(o_words.length == c_words.length) {
+            inner_size = outer_size = o_words.length;
+            o = true;
         }
         else{
-            original.add(new Chunk(o, arial_10_bold_italic));
-            changed.add(new Chunk(c, arial_10_bold_italic));
+            outer_size = c_words.length;
+            inner_size = o_words.length;
+            size_diff = c_words.length - o_words.length;
         }
-    }
 
-    private void processCreditAndBodyDifferences(Phrase original, Phrase changed, char o, char c){
+        if(o) {
 
-        if(o != c){
-            original.add(new Chunk(o, arial_10_red).setUnderline(0.1f, 3f));
-            changed.add(new Chunk(c, arial_10_blue).setUnderline(0.1f, -1f));
+            for (int i = 0; i < outer_size; i++) {
+
+                if(complete)
+                    break;
+
+                cursor = i;
+
+                for(int j = 0; j < inner_size; j++) {
+
+                    if (o_words[cursor].equals(c_words[j])) {
+
+                        for (int k = last_saved; k < j; k++) {
+
+                            if(type == 1)
+                                changed_phrase.add(new Chunk(c_words[k] + " ",
+                                        arial_10_blue_bold).setUnderline(0.1f, -1f));
+                            if(type == 2)
+                                changed_phrase.add(new Chunk(c_words[k] + " ",
+                                        arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
+                            if(type == 3)
+                                changed_phrase.add(new Chunk(c_words[k] + " ",
+                                        arial_10_blue).setUnderline(0.1f, -1f));
+                            if(type == 4)
+                                changed_phrase.add(new Chunk(c_words[k] + " ",
+                                        arial_10_blue_italic).setUnderline(0.1f, -1f));
+
+                        }
+
+                        if(type == 1) {
+                            original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10_bold));
+                            changed_phrase.add(new Chunk(c_words[j] + " ", arial_10_bold));
+                        }
+                        if(type == 2) {
+                            original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10_bold_italic));
+                            changed_phrase.add(new Chunk(c_words[j] + " ", arial_10_bold_italic));
+                        }
+                        if(type == 3) {
+                            if(o_words[cursor].equals("(")){
+                                original_phrase.add(new Chunk(o_words[cursor], arial_10));
+                                changed_phrase.add(new Chunk(c_words[j], arial_10));
+                            }
+                            else {
+                                original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10));
+                                changed_phrase.add(new Chunk(c_words[j] + " ", arial_10));
+                            }
+                        }
+                        if(type == 4) {
+                            original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10_italic));
+                            changed_phrase.add(new Chunk(c_words[j] + " ", arial_10_italic));
+                        }
+
+                        cursor++;
+                        ctr++;
+
+                        last_saved = j + 1;
+
+                        if(j == inner_size - 1) {
+                            complete = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(cursor == i) {
+
+                    if(type == 1)
+                        original_phrase.add(new Chunk(o_words[cursor] + " ",
+                                arial_10_red_bold).setUnderline(0.1f, 3f));
+                    if(type == 2)
+                        original_phrase.add(new Chunk(o_words[cursor] + " ",
+                                arial_10_red_bold_italic).setUnderline(0.1f, 3f));
+                    if(type == 3)
+                        original_phrase.add(new Chunk(o_words[cursor] + " ",
+                                arial_10_red).setUnderline(0.1f, 3f));
+                    if(type == 4)
+                        original_phrase.add(new Chunk(o_words[cursor] + " ",
+                                arial_10_red_italic).setUnderline(0.1f, 3f));
+
+                    ctr++;
+                }
+            }
+
+            if(ctr < o_words.length){
+
+                for(int i = ctr; i < o_words.length; i++) {
+
+                    if(type == 1)
+                        changed_phrase.add(new Chunk(o_words[i] + " ",
+                                arial_10_red_bold).setUnderline(0.1f, 3f));
+                    if(type == 2)
+                        changed_phrase.add(new Chunk(o_words[i] + " ",
+                                arial_10_red_bold_italic).setUnderline(0.1f, 3f));
+                    if(type == 3)
+                        changed_phrase.add(new Chunk(o_words[i] + " ",
+                                arial_10_red).setUnderline(0.1f, 3f));
+                    if(type == 4)
+                        changed_phrase.add(new Chunk(o_words[i] + " ",
+                                arial_10_red_italic).setUnderline(0.1f, 3f));
+                }
+            }
         }
         else{
-            original.add(new Chunk(o, arial_10));
-            changed.add(new Chunk(c, arial_10));
-        }
-    }
 
-    private void processNoteDifferences(Phrase original, Phrase changed, char o, char c){
+            for (int i = 0; i < outer_size; i++) {
 
-        if(o != c){
-            original.add(new Chunk(o, arial_10_red_italic).setUnderline(0.1f, 3f));
-            changed.add(new Chunk(c, arial_10_blue_italic).setUnderline(0.1f, -1f));
+                if(complete)
+                    break;
+
+                cursor = i;
+
+                for(int j = 0; j < inner_size; j++) {
+
+                    if (c_words[cursor].equals(o_words[j])) {
+
+                        for (int k = last_saved; k < j; k++) {
+
+                            if(type == 1)
+                                original_phrase.add(new Chunk(o_words[k] + " ",
+                                        arial_10_red_bold).setUnderline(0.1f, 3f));
+                            if(type == 2)
+                                original_phrase.add(new Chunk(o_words[k] + " ",
+                                        arial_10_red_bold_italic).setUnderline(0.1f, 3f));
+                            if(type == 3)
+                                original_phrase.add(new Chunk(o_words[k] + " ",
+                                        arial_10_red).setUnderline(0.1f, 3f));
+                            if(type == 4)
+                                original_phrase.add(new Chunk(o_words[k] + " ",
+                                        arial_10_red_italic).setUnderline(0.1f, 3f));
+
+                        }
+
+                        if(type == 1) {
+                            original_phrase.add(new Chunk(o_words[j] + " ", arial_10_bold));
+                            changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10_bold));
+                        }
+                        if(type == 2) {
+                            original_phrase.add(new Chunk(o_words[j] + " ", arial_10_bold_italic));
+                            changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10_bold_italic));
+                        }
+                        if(type == 3) {
+                            if(o_words[cursor].equals("(")){
+                                original_phrase.add(new Chunk(o_words[j], arial_10));
+                                changed_phrase.add(new Chunk(c_words[cursor], arial_10));
+                            }
+                            else {
+                                original_phrase.add(new Chunk(o_words[j] + " ", arial_10));
+                                changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10));
+                            }
+                        }
+                        if(type == 4) {
+                            original_phrase.add(new Chunk(o_words[j] + " ", arial_10_italic));
+                            changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10_italic));
+                        }
+
+                        cursor++;
+                        ctr++;
+
+                        last_saved = j + 1;
+
+                        if(size_diff == i - j) {
+                            complete = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(cursor == i) {
+
+                    if(type == 1)
+                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
+                                arial_10_blue_bold).setUnderline(0.1f, -1f));
+                    if(type == 2)
+                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
+                                arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
+                    if(type == 3)
+                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
+                                arial_10_blue).setUnderline(0.1f, -1f));
+                    if(type == 4)
+                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
+                                arial_10_blue_italic).setUnderline(0.1f, -1f));
+
+                    ctr++;
+                }
+            }
+
+            if(ctr < c_words.length){
+
+                for(int i = ctr; i < c_words.length; i++) {
+
+                    if(type == 1)
+                        changed_phrase.add(new Chunk(c_words[i] + " ",
+                                arial_10_blue_bold).setUnderline(0.1f, -1f));
+                    if(type == 2)
+                        changed_phrase.add(new Chunk(c_words[i] + " ",
+                                arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
+                    if(type == 3)
+                        changed_phrase.add(new Chunk(c_words[i] + " ",
+                                arial_10_blue).setUnderline(0.1f, -1f));
+                    if(type == 4)
+                        changed_phrase.add(new Chunk(c_words[i] + " ",
+                                arial_10_blue_italic).setUnderline(0.1f, -1f));
+                }
+            }
         }
-        else{
-            original.add(new Chunk(o, arial_10_italic));
-            changed.add(new Chunk(c, arial_10_italic));
-        }
+*/
     }
 
 }
