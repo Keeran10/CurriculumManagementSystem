@@ -100,11 +100,6 @@
             <artifactId>itextpdf</artifactId>
             <version>5.5.10</version>
         </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>kernel</artifactId>
-            <version>7.0.0</version>
-        </dependency>
         <!-- diff checker for pdf course diffs -->
         <dependency>
             <groupId>io.github.java-diff-utils</groupId>
