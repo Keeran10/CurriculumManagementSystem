@@ -4,6 +4,7 @@ package com.soen490.cms.Services;
 import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.text.DiffRow;
 import com.github.difflib.text.DiffRowGenerator;
+
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -13,7 +14,6 @@ import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -21,8 +21,6 @@ import java.io.FileOutputStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-
 
 @Service
 public class PdfService {
@@ -33,8 +31,8 @@ public class PdfService {
     private CourseRepository courseRepository;
 
     // preface fonts
-    private static Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 10);
-    private static Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
+    private static Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
+    private static Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD);
     // table fonts
     private static Font arial_10 = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
     private static Font arial_10_bold = FontFactory.getFont("Arial", 10, Font.BOLD);
@@ -77,6 +75,7 @@ public class PdfService {
 
     public byte[] getPDF(int package_id) { return requestPackageRepository.findPdfById(package_id); }
 
+
     public boolean generatePDF(int package_id){
 
         Document doc = new Document(PageSize.A4.rotate());
@@ -97,13 +96,19 @@ public class PdfService {
             // for each page
             for(Request request : requestPackage.getRequests()){
 
-                // o for original course
-                Course o = courseRepository.findById(request.getOriginalId());
-                // c for changed course
-                Course c = courseRepository.findById(request.getTargetId());
+                if(request.getTargetType() == 2) {
 
-                addCoursePreface(doc, request, o, c);
-                addCourseDiffTable(doc, request, o, c);
+                    // course requests
+                    Course original_course = courseRepository.findById(request.getOriginalId());
+                    Course changed_course = courseRepository.findById(request.getTargetId());
+
+                    addCoursePreface(doc, request, original_course, changed_course);
+                    addCourseDiffTable(doc, request, original_course, changed_course);
+                }
+                else if(request.getTargetType() == 1){
+
+                    // program requests
+                }
             }
 
             doc.close();
@@ -120,6 +125,7 @@ public class PdfService {
 
         return true;
     }
+
 
     private void addCoursePreface(Document doc, Request request, Course o, Course c){
 
@@ -258,8 +264,8 @@ public class PdfService {
             e.printStackTrace();
         }
 
-
     }
+
 
     private void addCourseDiffTable(Document doc, Request request, Course o, Course c) throws FileNotFoundException, DocumentException {
 
@@ -268,6 +274,7 @@ public class PdfService {
             PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(100);
 
+            float CELL_PADDING = 5f;
             int size = 0;
             String remainder;
 
@@ -288,8 +295,9 @@ public class PdfService {
             String resource_implications = request.getResourceImplications();
 
             // static headers
-            table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold)));
-            table.addCell(new PdfPCell(new Phrase("Proposed Text", times_10_bold)));
+
+            table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold))).setPadding(CELL_PADDING);
+            table.addCell(new PdfPCell(new Phrase("Proposed Text", times_10_bold))).setPadding(CELL_PADDING);
             table.completeRow();
 
             // course paragraph
@@ -319,13 +327,13 @@ public class PdfService {
             Phrase original_body_phrase = new Phrase();
             Phrase changed_body_phrase = new Phrase();
 
-            processDifferences(original_body_phrase, changed_body_phrase, o_body, c_body, 3);
+            processDifferences(original_body_phrase, changed_body_phrase, o_body, c_body, 4);
 
             // notes
             Phrase original_note_phrase = new Phrase();
             Phrase changed_note_phrase = new Phrase();
 
-            processDifferences(original_note_phrase, changed_note_phrase, o_note, c_note, 4);
+            processDifferences(original_note_phrase, changed_note_phrase, o_note, c_note, 5);
 
             // ...
 
@@ -347,8 +355,8 @@ public class PdfService {
             changed_paragraph.add(changed_note_phrase);
 
             // once all course details are done
-            table.addCell(new PdfPCell(original_paragraph));
-            table.addCell(new PdfPCell(changed_paragraph));
+            table.addCell(new PdfPCell(original_paragraph)).setPadding(CELL_PADDING);
+            table.addCell(new PdfPCell(changed_paragraph)).setPadding(CELL_PADDING);
             table.completeRow();
 
             // add rationale cell which spans 2 columns
@@ -360,7 +368,7 @@ public class PdfService {
 
             PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
             rationale_cell.setColspan(2);
-            table.addCell(rationale_cell);
+            table.addCell(rationale_cell).setPadding(CELL_PADDING);
             table.completeRow();
 
             // add resource implications cell which spans 2 columns
@@ -372,7 +380,7 @@ public class PdfService {
 
             PdfPCell resource_cell = new PdfPCell(resource_phrase);
             resource_cell.setColspan(2);
-            table.addCell(resource_cell);
+            table.addCell(resource_cell).setPadding(CELL_PADDING);
             table.completeRow();
 
             doc.add(table);
@@ -381,6 +389,7 @@ public class PdfService {
             e.printStackTrace();
         }
     }
+
 
     private String stringifyRequisites(Collection<Requisite> requisites) {
 
@@ -419,7 +428,8 @@ public class PdfService {
         return r.toString();
     }
 
-    private String[] diffUtil(String o, String c){
+
+    public String[] generateDiffs(String original, String changed){
 
         String[] processed_strings = new String[2];
 
@@ -432,8 +442,8 @@ public class PdfService {
 
         try {
             List<DiffRow> rows = generator.generateDiffRows(
-                    Collections.singletonList(o),
-                    Collections.singletonList(c));
+                    Collections.singletonList(original),
+                    Collections.singletonList(changed));
 
             processed_strings[0] = rows.get(0).getOldLine();
             processed_strings[1] = rows.get(0).getNewLine();
@@ -445,13 +455,14 @@ public class PdfService {
         return processed_strings;
     }
 
+
     // type corresponds to 1: name_number, 2: title, 3: credits_body, 4: note
     // compares each word from both original and change. 2 cursors are used.
     private void processDifferences
             (Phrase original_phrase, Phrase changed_phrase, String o, String c, int type) {
 
         int ctr = 0;
-        String[] processed = diffUtil(o, c);
+        String[] processed = generateDiffs(o, c);
         String[] o_partitions = processed[0].split("~");
         String[] c_partitions = processed[1].split("~");
 
@@ -470,16 +481,16 @@ public class PdfService {
                             arial_10_red_bold_italic).setUnderline(0.1f, 3f));
 
                 if(type == 3) {
-
-                    if(StringUtils.isNumeric(partition))
-                        original_phrase.add(new Chunk(partition,
-                                arial_10_red).setUnderline(0.1f, 3f));
-                    else
-                        original_phrase.add(new Chunk(partition + " ",
-                                arial_10_red).setUnderline(0.1f, 3f));
+                    original_phrase.add(new Chunk(partition,
+                            arial_10_red).setUnderline(0.1f, 3f));
                 }
 
-                if(type == 4)
+                if(type == 4) {
+                    original_phrase.add(new Chunk(partition + " ",
+                            arial_10_red).setUnderline(0.1f, 3f));
+                }
+
+                if(type == 5)
                     original_phrase.add(new Chunk(partition + " ",
                             arial_10_red_italic).setUnderline(0.1f, 3f));
 
@@ -496,17 +507,18 @@ public class PdfService {
 
                 if(type == 3) {
 
-                    if(partition.equals("(") || StringUtils.isNumeric(partition))
-                        original_phrase.add(new Chunk(partition, arial_10));
-
-                    else if(partition.equals("credits)"))
+                    if(partition.equals("credits)"))
                         original_phrase.add(new Chunk(" " + partition, arial_10));
 
                     else
-                        original_phrase.add(new Chunk(partition + " ", arial_10));
+                        original_phrase.add(new Chunk(partition, arial_10));
                 }
 
                 if(type == 4) {
+                    original_phrase.add(new Chunk(partition + " ", arial_10));
+                }
+
+                if(type == 5) {
                     original_phrase.add(new Chunk(partition + " ", arial_10_italic));
                 }
 
@@ -532,17 +544,16 @@ public class PdfService {
                             arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
 
                 if(type == 3) {
-
-                    if(StringUtils.isNumeric(partition))
-                        changed_phrase.add(new Chunk(partition,
-                                arial_10_blue).setUnderline(0.1f, -1f));
-
-                    else
-                        changed_phrase.add(new Chunk(partition + " ",
-                                arial_10_blue).setUnderline(0.1f, -1f));
+                    changed_phrase.add(new Chunk(partition,
+                            arial_10_blue).setUnderline(0.1f, -1f));
                 }
 
-                if(type == 4)
+                if(type == 4) {
+                    changed_phrase.add(new Chunk(partition + " ",
+                            arial_10_blue).setUnderline(0.1f, -1f));
+                }
+
+                if(type == 5)
                     changed_phrase.add(new Chunk(partition + " ",
                             arial_10_blue_italic).setUnderline(0.1f, -1f));
 
@@ -559,17 +570,18 @@ public class PdfService {
 
                 if(type == 3) {
 
-                    if(partition.equals("(") || StringUtils.isNumeric(partition))
-                        changed_phrase.add(new Chunk(partition, arial_10));
-
-                    else if(partition.equals("credits)"))
+                    if(partition.equals("credits)"))
                         changed_phrase.add(new Chunk(" " + partition, arial_10));
 
                     else
-                        changed_phrase.add(new Chunk(partition + " ", arial_10));
+                        changed_phrase.add(new Chunk(partition, arial_10));
                 }
 
                 if(type == 4) {
+                    changed_phrase.add(new Chunk(partition + " ", arial_10));
+                }
+
+                if(type == 5) {
                     changed_phrase.add(new Chunk(partition + " ", arial_10_italic));
                 }
 
