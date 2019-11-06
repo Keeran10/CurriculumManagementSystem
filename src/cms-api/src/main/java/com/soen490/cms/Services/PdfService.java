@@ -13,13 +13,15 @@ import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
 
 
 @Service
@@ -311,20 +313,6 @@ public class PdfService {
             Phrase original_credits_phrase = new Phrase();
             Phrase changed_credits_phrase = new Phrase();
 
-            String[] o_credits_words = new String[3];
-            String[] c_credits_words = new String[3];
-
-            String[] ocw = o_credits.split(" ");
-            String[] ccw = c_credits.split(" ");
-
-            o_credits_words[0] = c_credits_words[0] = "(";
-
-            o_credits_words[1] = ocw[1].substring(1);
-            c_credits_words[1] = ccw[1].substring(1);
-
-            o_credits_words[2] = ocw[2];
-            c_credits_words[2] = ccw[2];
-
             processDifferences(original_credits_phrase, changed_credits_phrase, o_credits, c_credits, 3);
 
             // body = chunks of requisites & descriptions
@@ -444,23 +432,11 @@ public class PdfService {
 
         try {
             List<DiffRow> rows = generator.generateDiffRows(
-                    Arrays.asList(o),
-                    Arrays.asList(c));
-
+                    Collections.singletonList(o),
+                    Collections.singletonList(c));
 
             processed_strings[0] = rows.get(0).getOldLine();
             processed_strings[1] = rows.get(0).getNewLine();
-
-            int x = 0;
-            System.out.println("----------------------------------------");
-            for(String o_ : processed_strings[0].split("~")){
-                System.out.println(x++ + ":" + o_.trim());
-            }
-            x = 0;
-            for(String o_ : processed_strings[1].split("~")){
-                System.out.println(x++ + ":" + o_.trim());
-            }
-
 
         } catch (DiffException e) {
             e.printStackTrace();
@@ -488,12 +464,21 @@ public class PdfService {
                 if(type == 1)
                     original_phrase.add(new Chunk(partition + " ",
                             arial_10_red_bold).setUnderline(0.1f, 3f));
+
                 if(type == 2)
                     original_phrase.add(new Chunk(partition + " ",
                             arial_10_red_bold_italic).setUnderline(0.1f, 3f));
-                if(type == 3)
-                    original_phrase.add(new Chunk(partition + " ",
-                            arial_10_red).setUnderline(0.1f, 3f));
+
+                if(type == 3) {
+
+                    if(StringUtils.isNumeric(partition))
+                        original_phrase.add(new Chunk(partition,
+                                arial_10_red).setUnderline(0.1f, 3f));
+                    else
+                        original_phrase.add(new Chunk(partition + " ",
+                                arial_10_red).setUnderline(0.1f, 3f));
+                }
+
                 if(type == 4)
                     original_phrase.add(new Chunk(partition + " ",
                             arial_10_red_italic).setUnderline(0.1f, 3f));
@@ -504,12 +489,23 @@ public class PdfService {
                 if(type == 1) {
                     original_phrase.add(new Chunk(partition + " ", arial_10_bold));
                 }
+
                 if(type == 2) {
                     original_phrase.add(new Chunk(partition + " ", arial_10_bold_italic));
                 }
+
                 if(type == 3) {
-                    original_phrase.add(new Chunk(partition + " ", arial_10));
+
+                    if(partition.equals("(") || StringUtils.isNumeric(partition))
+                        original_phrase.add(new Chunk(partition, arial_10));
+
+                    else if(partition.equals("credits)"))
+                        original_phrase.add(new Chunk(" " + partition, arial_10));
+
+                    else
+                        original_phrase.add(new Chunk(partition + " ", arial_10));
                 }
+
                 if(type == 4) {
                     original_phrase.add(new Chunk(partition + " ", arial_10_italic));
                 }
@@ -530,12 +526,22 @@ public class PdfService {
                 if(type == 1)
                     changed_phrase.add(new Chunk(partition + " ",
                             arial_10_blue_bold).setUnderline(0.1f, -1f));
+
                 if(type == 2)
                     changed_phrase.add(new Chunk(partition + " ",
                             arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
-                if(type == 3)
-                    changed_phrase.add(new Chunk(partition + " ",
-                            arial_10_blue).setUnderline(0.1f, -1f));
+
+                if(type == 3) {
+
+                    if(StringUtils.isNumeric(partition))
+                        changed_phrase.add(new Chunk(partition,
+                                arial_10_blue).setUnderline(0.1f, -1f));
+
+                    else
+                        changed_phrase.add(new Chunk(partition + " ",
+                                arial_10_blue).setUnderline(0.1f, -1f));
+                }
+
                 if(type == 4)
                     changed_phrase.add(new Chunk(partition + " ",
                             arial_10_blue_italic).setUnderline(0.1f, -1f));
@@ -546,12 +552,23 @@ public class PdfService {
                 if(type == 1) {
                     changed_phrase.add(new Chunk(partition + " ", arial_10_bold));
                 }
+
                 if(type == 2) {
                     changed_phrase.add(new Chunk(partition + " ", arial_10_bold_italic));
                 }
+
                 if(type == 3) {
-                    changed_phrase.add(new Chunk(partition + " ", arial_10));
+
+                    if(partition.equals("(") || StringUtils.isNumeric(partition))
+                        changed_phrase.add(new Chunk(partition, arial_10));
+
+                    else if(partition.equals("credits)"))
+                        changed_phrase.add(new Chunk(" " + partition, arial_10));
+
+                    else
+                        changed_phrase.add(new Chunk(partition + " ", arial_10));
                 }
+
                 if(type == 4) {
                     changed_phrase.add(new Chunk(partition + " ", arial_10_italic));
                 }
@@ -560,238 +577,7 @@ public class PdfService {
 
             ctr++;
         }
-        /*
-        int outer_size, inner_size;
-        int cursor;
-        int last_saved = 0;
-        int ctr = 0;
-        int size_diff = 0;
-        boolean o = false;
-        boolean complete = false;
 
-        if(o_words.length > c_words.length) {
-            outer_size = o_words.length;
-            inner_size = c_words.length;
-            size_diff = o_words.length - c_words.length;
-            o = true;
-        }
-        else if(o_words.length == c_words.length) {
-            inner_size = outer_size = o_words.length;
-            o = true;
-        }
-        else{
-            outer_size = c_words.length;
-            inner_size = o_words.length;
-            size_diff = c_words.length - o_words.length;
-        }
-
-        if(o) {
-
-            for (int i = 0; i < outer_size; i++) {
-
-                if(complete)
-                    break;
-
-                cursor = i;
-
-                for(int j = 0; j < inner_size; j++) {
-
-                    if (o_words[cursor].equals(c_words[j])) {
-
-                        for (int k = last_saved; k < j; k++) {
-
-                            if(type == 1)
-                                changed_phrase.add(new Chunk(c_words[k] + " ",
-                                        arial_10_blue_bold).setUnderline(0.1f, -1f));
-                            if(type == 2)
-                                changed_phrase.add(new Chunk(c_words[k] + " ",
-                                        arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
-                            if(type == 3)
-                                changed_phrase.add(new Chunk(c_words[k] + " ",
-                                        arial_10_blue).setUnderline(0.1f, -1f));
-                            if(type == 4)
-                                changed_phrase.add(new Chunk(c_words[k] + " ",
-                                        arial_10_blue_italic).setUnderline(0.1f, -1f));
-
-                        }
-
-                        if(type == 1) {
-                            original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10_bold));
-                            changed_phrase.add(new Chunk(c_words[j] + " ", arial_10_bold));
-                        }
-                        if(type == 2) {
-                            original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10_bold_italic));
-                            changed_phrase.add(new Chunk(c_words[j] + " ", arial_10_bold_italic));
-                        }
-                        if(type == 3) {
-                            if(o_words[cursor].equals("(")){
-                                original_phrase.add(new Chunk(o_words[cursor], arial_10));
-                                changed_phrase.add(new Chunk(c_words[j], arial_10));
-                            }
-                            else {
-                                original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10));
-                                changed_phrase.add(new Chunk(c_words[j] + " ", arial_10));
-                            }
-                        }
-                        if(type == 4) {
-                            original_phrase.add(new Chunk(o_words[cursor] + " ", arial_10_italic));
-                            changed_phrase.add(new Chunk(c_words[j] + " ", arial_10_italic));
-                        }
-
-                        cursor++;
-                        ctr++;
-
-                        last_saved = j + 1;
-
-                        if(j == inner_size - 1) {
-                            complete = true;
-                            break;
-                        }
-                    }
-                }
-
-                if(cursor == i) {
-
-                    if(type == 1)
-                        original_phrase.add(new Chunk(o_words[cursor] + " ",
-                                arial_10_red_bold).setUnderline(0.1f, 3f));
-                    if(type == 2)
-                        original_phrase.add(new Chunk(o_words[cursor] + " ",
-                                arial_10_red_bold_italic).setUnderline(0.1f, 3f));
-                    if(type == 3)
-                        original_phrase.add(new Chunk(o_words[cursor] + " ",
-                                arial_10_red).setUnderline(0.1f, 3f));
-                    if(type == 4)
-                        original_phrase.add(new Chunk(o_words[cursor] + " ",
-                                arial_10_red_italic).setUnderline(0.1f, 3f));
-
-                    ctr++;
-                }
-            }
-
-            if(ctr < o_words.length){
-
-                for(int i = ctr; i < o_words.length; i++) {
-
-                    if(type == 1)
-                        changed_phrase.add(new Chunk(o_words[i] + " ",
-                                arial_10_red_bold).setUnderline(0.1f, 3f));
-                    if(type == 2)
-                        changed_phrase.add(new Chunk(o_words[i] + " ",
-                                arial_10_red_bold_italic).setUnderline(0.1f, 3f));
-                    if(type == 3)
-                        changed_phrase.add(new Chunk(o_words[i] + " ",
-                                arial_10_red).setUnderline(0.1f, 3f));
-                    if(type == 4)
-                        changed_phrase.add(new Chunk(o_words[i] + " ",
-                                arial_10_red_italic).setUnderline(0.1f, 3f));
-                }
-            }
-        }
-        else{
-
-            for (int i = 0; i < outer_size; i++) {
-
-                if(complete)
-                    break;
-
-                cursor = i;
-
-                for(int j = 0; j < inner_size; j++) {
-
-                    if (c_words[cursor].equals(o_words[j])) {
-
-                        for (int k = last_saved; k < j; k++) {
-
-                            if(type == 1)
-                                original_phrase.add(new Chunk(o_words[k] + " ",
-                                        arial_10_red_bold).setUnderline(0.1f, 3f));
-                            if(type == 2)
-                                original_phrase.add(new Chunk(o_words[k] + " ",
-                                        arial_10_red_bold_italic).setUnderline(0.1f, 3f));
-                            if(type == 3)
-                                original_phrase.add(new Chunk(o_words[k] + " ",
-                                        arial_10_red).setUnderline(0.1f, 3f));
-                            if(type == 4)
-                                original_phrase.add(new Chunk(o_words[k] + " ",
-                                        arial_10_red_italic).setUnderline(0.1f, 3f));
-
-                        }
-
-                        if(type == 1) {
-                            original_phrase.add(new Chunk(o_words[j] + " ", arial_10_bold));
-                            changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10_bold));
-                        }
-                        if(type == 2) {
-                            original_phrase.add(new Chunk(o_words[j] + " ", arial_10_bold_italic));
-                            changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10_bold_italic));
-                        }
-                        if(type == 3) {
-                            if(o_words[cursor].equals("(")){
-                                original_phrase.add(new Chunk(o_words[j], arial_10));
-                                changed_phrase.add(new Chunk(c_words[cursor], arial_10));
-                            }
-                            else {
-                                original_phrase.add(new Chunk(o_words[j] + " ", arial_10));
-                                changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10));
-                            }
-                        }
-                        if(type == 4) {
-                            original_phrase.add(new Chunk(o_words[j] + " ", arial_10_italic));
-                            changed_phrase.add(new Chunk(c_words[cursor] + " ", arial_10_italic));
-                        }
-
-                        cursor++;
-                        ctr++;
-
-                        last_saved = j + 1;
-
-                        if(size_diff == i - j) {
-                            complete = true;
-                            break;
-                        }
-                    }
-                }
-
-                if(cursor == i) {
-
-                    if(type == 1)
-                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
-                                arial_10_blue_bold).setUnderline(0.1f, -1f));
-                    if(type == 2)
-                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
-                                arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
-                    if(type == 3)
-                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
-                                arial_10_blue).setUnderline(0.1f, -1f));
-                    if(type == 4)
-                        changed_phrase.add(new Chunk(c_words[cursor] + " ",
-                                arial_10_blue_italic).setUnderline(0.1f, -1f));
-
-                    ctr++;
-                }
-            }
-
-            if(ctr < c_words.length){
-
-                for(int i = ctr; i < c_words.length; i++) {
-
-                    if(type == 1)
-                        changed_phrase.add(new Chunk(c_words[i] + " ",
-                                arial_10_blue_bold).setUnderline(0.1f, -1f));
-                    if(type == 2)
-                        changed_phrase.add(new Chunk(c_words[i] + " ",
-                                arial_10_blue_bold_italic).setUnderline(0.1f, -1f));
-                    if(type == 3)
-                        changed_phrase.add(new Chunk(c_words[i] + " ",
-                                arial_10_blue).setUnderline(0.1f, -1f));
-                    if(type == 4)
-                        changed_phrase.add(new Chunk(c_words[i] + " ",
-                                arial_10_blue_italic).setUnderline(0.1f, -1f));
-                }
-            }
-        }
-*/
     }
 
 }
