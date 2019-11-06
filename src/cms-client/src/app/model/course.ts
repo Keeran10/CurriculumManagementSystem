@@ -1,8 +1,9 @@
+import { Requisite } from '../model/requisite';
+
 export class Course {
   id: number;
-  antirequisites: string[];
-  corequisites: string[];
   credits: number;
+  degreeRequirements: Object[];
   description: string;
   equivalent: string[];
   isActive: boolean;
@@ -13,8 +14,8 @@ export class Course {
   note: string;
   number: number;
   outline: string;
-  prerequisites: string[];
-  requisites: Object[];
+  program: Object;
+  requisites: Requisite[];
   title: string;
   tutorialHours: number;
 }
