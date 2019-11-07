@@ -98,8 +98,8 @@ public class PdfService {
         try {
 
             // package.pdf
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_8.pdf"));
-            //PdfWriter.getInstance(doc, byte_stream);
+            //PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_8.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(doc, byte_stream);
 
             writer.setBoxSize("corner-box", doc.getPageSize());
             writer.setPageEvent(new PageEvent());
@@ -133,10 +133,10 @@ public class PdfService {
             return false;
         }
 
-        //requestPackage.setPdfFile(byte_stream.toByteArray());
+        requestPackage.setPdfFile(byte_stream.toByteArray());
 
         // this might not be required in active transaction
-        //requestPackageRepository.save(requestPackage);
+        requestPackageRepository.save(requestPackage);
 
         return true;
     }
@@ -164,21 +164,46 @@ public class PdfService {
 
         // request type and course name_number
         String type;
-
-        if(request.getRequestType() == 1)
+        int request_type = request.getRequestType();
+        // if this is a course creation, original course should have fields set to null to avoid exceptions
+        if(request_type == 1) {
             type = "NEW COURSE";
-        else if(request.getRequestType() == 2)
+            o = new Course();
+            o.setName("");
+            o.setNumber(0);
+            o.setCredits(0);
+            o.setDescription("");
+            o.setLevel(0);
+            o.setTitle("");
+            o.setNote("");
+        }
+        else if(request_type == 2) {
             type = "COURSE CHANGE";
-        else if(request.getRequestType() == 3)
+        }
+        // if this is a course deletion, changed course should have fields set to null to avoid exceptions
+        else if(request_type == 3) {
             type = "COURSE DELETION";
+            c = new Course();
+            c.setName("");
+            c.setNumber(0);
+            c.setCredits(0);
+            c.setDescription("");
+            c.setLevel(0);
+            c.setTitle("");
+            c.setNote("");
+        }
         else
             return;
 
-        Phrase request_type = new Phrase();
-        request_type.add(new Chunk(type + ": ", times_10_bold));
-        request_type.add(new Chunk(c.getName() + " " + c.getNumber(), times_10));
+        Phrase request_type_phrase = new Phrase();
+        request_type_phrase.add(new Chunk(type + ": ", times_10_bold));
 
-        preface1.add(request_type);
+        if(request_type == 3)
+            request_type_phrase.add(new Chunk(o.getName() + " " + o.getNumber(), times_10));
+        else
+            request_type_phrase.add(new Chunk(c.getName() + " " + c.getNumber(), times_10));
+
+        preface1.add(request_type_phrase);
         preface1.add(Chunk.NEWLINE);
         preface1.add(Chunk.NEWLINE);
 
@@ -186,12 +211,24 @@ public class PdfService {
         Phrase proposed = new Phrase();
         proposed.add(new Chunk("Proposed: ", times_10_bold));
 
-        if(c.getLevel() == 1 && o.getLevel() == 1)
-            proposed.add(new Chunk("Undergraduate Curriculum Changes", times_10));
-        else if(c.getLevel() > 1 && o.getLevel() > 1)
-            proposed.add(new Chunk("Graduate Curriculum Changes", times_10));
-        else if((c.getLevel() == 1 && o.getLevel() > 1) || (c.getLevel() > 1 && o.getLevel() == 1))
-            proposed.add(new Chunk("Undergraduate And Graduate Curriculum Changes", times_10));
+        if(request_type == 3) {
+
+            if (o.getLevel() == 1)
+                proposed.add(new Chunk("Undergraduate Curriculum Changes", times_10));
+            else if (o.getLevel() > 1)
+                proposed.add(new Chunk("Graduate Curriculum Changes", times_10));
+            else if ((o.getLevel() == 1 && o.getLevel() > 1) || (c.getLevel() > 1 && o.getLevel() == 1))
+                proposed.add(new Chunk("Undergraduate And Graduate Curriculum Changes", times_10));
+        }
+        else{
+
+            if (c.getLevel() == 1)
+                proposed.add(new Chunk("Undergraduate Curriculum Changes", times_10));
+            else if (c.getLevel() > 1)
+                proposed.add(new Chunk("Graduate Curriculum Changes", times_10));
+            else if ((c.getLevel() == 1 && o.getLevel() > 1) || (c.getLevel() > 1 && o.getLevel() == 1))
+                proposed.add(new Chunk("Undergraduate And Graduate Curriculum Changes", times_10));
+        }
 
         preface1.add(proposed);
         preface1.add(new Chunk(Chunk.NEWLINE));
@@ -216,7 +253,11 @@ public class PdfService {
         Phrase faculty = new Phrase();
         faculty.add(new Chunk("Faculty/School:", times_10_bold));
         faculty.add(Chunk.TABBING);
-        faculty.add(new Chunk(c.getProgram().getDepartment().getFaculty().getName(), times_10));
+
+        if(request_type == 3)
+            faculty.add(new Chunk(o.getProgram().getDepartment().getFaculty().getName(), times_10));
+        else
+            faculty.add(new Chunk(c.getProgram().getDepartment().getFaculty().getName(), times_10));
 
         preface3.add(faculty);
         preface3.add(Chunk.NEWLINE);
@@ -225,7 +266,11 @@ public class PdfService {
         Phrase department = new Phrase();
         department.add(new Chunk("Department:", times_10_bold));
         department.add(Chunk.TABBING);
-        department.add(new Chunk(c.getProgram().getDepartment().getName(), times_10));
+
+        if(request_type == 3)
+            department.add(new Chunk(o.getProgram().getDepartment().getName(), times_10));
+        else
+            department.add(new Chunk(c.getProgram().getDepartment().getName(), times_10));
 
         preface3.add(department);
         preface3.add(Chunk.NEWLINE);
@@ -234,7 +279,11 @@ public class PdfService {
         Phrase program = new Phrase();
         program.add(new Chunk("Program:", times_10_bold));
         program.add(Chunk.TABBING);
-        program.add(new Chunk(c.getProgram().getName(), times_10));
+
+        if(request_type == 3)
+            program.add(new Chunk(o.getProgram().getName(), times_10));
+        else
+            program.add(new Chunk(c.getProgram().getName(), times_10));
 
         preface3.add(program);
         preface3.add(Chunk.NEWLINE);
@@ -246,15 +295,49 @@ public class PdfService {
 
         int ctr = 0;
 
-        // @TODO: make sure c also contains degree requirements !
-        for(DegreeRequirement degreeRequirement : o.getDegreeRequirements()) {
-            if(ctr > 0)
-                degree.add(new Chunk(", " + degreeRequirement.getDegree().getName() +
-                        " - " + degreeRequirement.getCore(), times_10));
-            else
-                degree.add(new Chunk(degreeRequirement.getDegree().getName() +
-                        " - " + degreeRequirement.getCore(), times_10));
-            ctr++;
+        if(request_type != 3) {
+
+            int size = c.getDegreeRequirements().size();
+
+            for (DegreeRequirement degreeRequirement : c.getDegreeRequirements()) {
+
+                if(size == 1)
+                    degree.add(new Chunk(degreeRequirement.getDegree().getName() +
+                            " - " + degreeRequirement.getCore(), times_10));
+                else
+                    degree.add(new Chunk("- " + degreeRequirement.getDegree().getName() +
+                            " - " + degreeRequirement.getCore(), times_10));
+
+                if (ctr != size - 1) {
+                    degree.add(Chunk.NEWLINE);
+                    degree.add(Chunk.TABBING);
+                }
+
+                ctr++;
+            }
+
+        }
+        else{
+
+            int size = o.getDegreeRequirements().size();
+
+            for (DegreeRequirement degreeRequirement : o.getDegreeRequirements()) {
+
+                if(size == 1)
+                    degree.add(new Chunk(degreeRequirement.getDegree().getName() +
+                            " - " + degreeRequirement.getCore(), times_10));
+                else
+                    degree.add(new Chunk("- " + degreeRequirement.getDegree().getName() +
+                            " - " + degreeRequirement.getCore(), times_10));
+
+                if (ctr != size - 1) {
+                    degree.add(Chunk.NEWLINE);
+                    degree.add(Chunk.TABBING);
+                }
+
+                ctr++;
+            }
+
         }
 
         preface3.add(degree);
@@ -269,10 +352,13 @@ public class PdfService {
 
         // Todo: calendar needs a better design
         calendar.add(Chunk.TABBING);
-        calendar.add(new Chunk("§" + c.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
+
+        if(request_type == 3)
+            calendar.add(new Chunk("§" + o.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
+        else
+            calendar.add(new Chunk("§" + c.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
 
         preface3.add(calendar);
-        preface3.add(Chunk.NEWLINE);
         preface3.add(Chunk.NEWLINE);
         preface3.add(Chunk.NEWLINE);
 
@@ -325,7 +411,6 @@ public class PdfService {
         String resource_implications = request.getResourceImplications();
 
         // static headers
-
         table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold))).setPadding(CELL_PADDING);
         table.addCell(new PdfPCell(new Phrase("Proposed Text", times_10_bold))).setPadding(CELL_PADDING);
         table.completeRow();
@@ -339,32 +424,49 @@ public class PdfService {
         Phrase original_name_phrase = new Phrase();
         Phrase changed_name_phrase = new Phrase();
 
-        processDifferences(original_name_phrase, changed_name_phrase, o_name, c_name, 1);
-
         // title
         Phrase original_title_phrase = new Phrase();
         Phrase changed_title_phrase = new Phrase();
 
-        processDifferences(original_title_phrase, changed_title_phrase, o_title, c_title, 2);
-
-        // credits (special case needs to be partitioned manually)
+        // credits
         Phrase original_credits_phrase = new Phrase();
         Phrase changed_credits_phrase = new Phrase();
-
-        processDifferences(original_credits_phrase, changed_credits_phrase, o_credits, c_credits, 3);
 
         // body = chunks of requisites & descriptions
         Phrase original_body_phrase = new Phrase();
         Phrase changed_body_phrase = new Phrase();
 
-        processDifferences(original_body_phrase, changed_body_phrase, o_body, c_body, 4);
-
         // notes
         Phrase original_note_phrase = new Phrase();
         Phrase changed_note_phrase = new Phrase();
 
-        processDifferences(original_note_phrase, changed_note_phrase, o_note, c_note, 5);
+        if(request.getRequestType() == 1){
 
+            changed_name_phrase.add(new Chunk(c_name, arial_10_bold));
+            changed_title_phrase.add(new Chunk(c_title, arial_10_bold_italic));
+            changed_credits_phrase.add(new Chunk(c_credits, arial_10));
+            changed_body_phrase.add(new Chunk(c_body, arial_10));
+            changed_note_phrase.add(new Chunk(c_note, arial_10_italic));
+
+        }
+        else if(request.getRequestType() == 2) {
+
+            processDifferences(original_name_phrase, changed_name_phrase, o_name, c_name, 1);
+            processDifferences(original_title_phrase, changed_title_phrase, o_title, c_title, 2);
+            processDifferences(original_credits_phrase, changed_credits_phrase, o_credits, c_credits, 3);
+            processDifferences(original_body_phrase, changed_body_phrase, o_body, c_body, 4);
+            processDifferences(original_note_phrase, changed_note_phrase, o_note, c_note, 5);
+
+        }
+        else if(request.getRequestType() == 3){
+
+            original_name_phrase.add(new Chunk(o_name, arial_10_bold));
+            original_title_phrase.add(new Chunk(o_title, arial_10_bold_italic));
+            original_credits_phrase.add(new Chunk(o_credits, arial_10));
+            original_body_phrase.add(new Chunk(o_body, arial_10));
+            original_note_phrase.add(new Chunk(o_note, arial_10_italic));
+
+        }
         // ...
 
         // add all course phrases to paragraph
@@ -394,7 +496,6 @@ public class PdfService {
 
         rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
         rationale_phrase.add(Chunk.NEWLINE);
-        rationale_phrase.add(Chunk.NEWLINE);
         rationale_phrase.add(new Chunk(rationale, arial_10));
 
         PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
@@ -407,7 +508,6 @@ public class PdfService {
 
         resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
         resource_phrase.add(Chunk.NEWLINE);
-        resource_phrase.add(Chunk.NEWLINE);
         resource_phrase.add(new Chunk(resource_implications, arial_10));
 
         PdfPCell resource_cell = new PdfPCell(resource_phrase);
@@ -415,6 +515,7 @@ public class PdfService {
         table.addCell(resource_cell).setPadding(CELL_PADDING);
         table.completeRow();
 
+        // add impact report cell
         table.addCell(addCourseImpactReport(request)).setPadding(CELL_PADDING);
 
         try {
@@ -432,8 +533,6 @@ public class PdfService {
      */
     private PdfPCell addCourseImpactReport(Request request) {
 
-        int isCreate = request.getRequestType();
-
         Map<String, Object> impact_report = impactAssessmentService.getAssessment(request.getId());
 
         Iterator it = impact_report.entrySet().iterator();
@@ -442,24 +541,14 @@ public class PdfService {
         report_paragraph.setTabSettings(new TabSettings(25f));
         report_paragraph.add(new Chunk("Impact Statements Report:", column_font).setUnderline(0.1f, -1f));
         report_paragraph.add(Chunk.NEWLINE);
-        report_paragraph.add(Chunk.NEWLINE);
 
         String key;
-
-        //String gson_report = new Gson().toJson(impact_report);
-
-        //System.out.println(gson_report);
 
         while(it.hasNext()){
 
             Map.Entry pair = (Map.Entry) it.next();
 
             key = pair.getKey().toString();
-
-            if(key.equals("OriginalCourse") || key.equals("CourseEdits") || key.equals("RequestType"))
-                continue;
-
-            System.out.println(pair.getKey() + ": " + pair.getValue().toString());
 
             if(key.equals("DegreeCourseRequiredImpact")) {
 
@@ -470,89 +559,186 @@ public class PdfService {
                 ArrayList<Map<String, Object>> added = (ArrayList) original_removed_added_updated.get("added");
                 ArrayList<Map<String, Object>> updated = (ArrayList) original_removed_added_updated.get("updated");
 
-                if (0 < original.size()) {
+                if(original == null) {
 
-                    for (int i = 0; i < original.size(); i++) {
+                    if (0 < original.size()) {
 
-                        Iterator it_u = original.get(i).entrySet().iterator();
+                        for (int i = 0; i < original.size(); i++) {
 
-                        while (it_u.hasNext()) {
-
-                            Map.Entry updated_pair = (Map.Entry) it_u.next();
-
-                            String impact_line = ("Original degree to be modified: " +
-                                    updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
-
-                            report_paragraph.add(new Chunk(impact_line, arial_10));
-                            report_paragraph.add(Chunk.NEWLINE);
-                        }
-                    }
-
-                    if (0 < updated.size()) {
-
-                        for (int i = 0; i < updated.size(); i++) {
-
-                            Iterator it_u = updated.get(i).entrySet().iterator();
+                            Iterator it_u = original.get(i).entrySet().iterator();
 
                             while (it_u.hasNext()) {
 
                                 Map.Entry updated_pair = (Map.Entry) it_u.next();
 
-                                String impact_line = ("- Degree credits will be updated to become " +
+                                String impact_line = ("Original degree to be modified: " +
                                         updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
 
-                                report_paragraph.add(Chunk.TABBING);
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
                             }
                         }
-                    }
-                    if (0 < removed.size()) {
+                        if (updated != null) {
+                            if (0 < updated.size()) {
 
-                        for (int i = 0; i < removed.size(); i++) {
+                                for (int i = 0; i < updated.size(); i++) {
 
-                            Iterator it_u = removed.get(i).entrySet().iterator();
+                                    Iterator it_u = updated.get(i).entrySet().iterator();
 
-                            while (it_u.hasNext()) {
+                                    while (it_u.hasNext()) {
 
-                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
 
-                                String impact_line = ("- Degree credits will be removed to become " +
-                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+                                        String impact_line = ("- Degree credits will be updated to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
 
-                                report_paragraph.add(Chunk.TABBING);
-                                report_paragraph.add(new Chunk(impact_line, arial_10));
-                                report_paragraph.add(Chunk.NEWLINE);
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
                             }
                         }
-                    }
-                    if (0 < added.size()) {
+                        if (removed != null) {
+                            if (0 < removed.size()) {
 
-                        for (int i = 0; i < added.size(); i++) {
+                                for (int i = 0; i < removed.size(); i++) {
 
-                            Iterator it_u = added.get(i).entrySet().iterator();
+                                    Iterator it_u = removed.get(i).entrySet().iterator();
 
-                            while (it_u.hasNext()) {
+                                    while (it_u.hasNext()) {
 
-                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
 
-                                String impact_line = ("- Degree credits will be added to become " +
-                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+                                        String impact_line = ("- Degree credits will be removed to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
 
-                                report_paragraph.add(Chunk.TABBING);
-                                report_paragraph.add(new Chunk(impact_line, arial_10));
-                                report_paragraph.add(Chunk.NEWLINE);
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
+                            }
+                        }
+                        if (added != null) {
+                            if (0 < added.size()) {
+
+                                for (int i = 0; i < added.size(); i++) {
+
+                                    Iterator it_u = added.get(i).entrySet().iterator();
+
+                                    while (it_u.hasNext()) {
+
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                        String impact_line = ("- Degree credits will be added to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
             if(key.equals("DegreeCourseElectiveImpact")) {
-                continue;
+                Map<String, Object> original_removed_added_updated = (Map<String, Object>) pair.getValue();
+
+                ArrayList<Map<String, Object>> original = (ArrayList) original_removed_added_updated.get("original");
+                ArrayList<Map<String, Object>> removed = (ArrayList) original_removed_added_updated.get("removed");
+                ArrayList<Map<String, Object>> added = (ArrayList) original_removed_added_updated.get("added");
+                ArrayList<Map<String, Object>> updated = (ArrayList) original_removed_added_updated.get("updated");
+
+                if(original != null) {
+
+                    if (0 < original.size()) {
+
+                        for (int i = 0; i < original.size(); i++) {
+
+                            Iterator it_u = original.get(i).entrySet().iterator();
+
+                            while (it_u.hasNext()) {
+
+                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                String impact_line = ("Original degree to be modified: " +
+                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                report_paragraph.add(Chunk.NEWLINE);
+                                report_paragraph.add(new Chunk(impact_line, arial_10));
+                                report_paragraph.add(Chunk.NEWLINE);
+                            }
+                        }
+                        if (updated != null) {
+                            if (0 < updated.size()) {
+
+                                for (int i = 0; i < updated.size(); i++) {
+
+                                    Iterator it_u = updated.get(i).entrySet().iterator();
+
+                                    while (it_u.hasNext()) {
+
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                        String impact_line = ("- Degree credits will be updated to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
+                            }
+                        }
+                        if (removed != null) {
+                            if (0 < removed.size()) {
+
+                                for (int i = 0; i < removed.size(); i++) {
+
+                                    Iterator it_u = removed.get(i).entrySet().iterator();
+
+                                    while (it_u.hasNext()) {
+
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                        String impact_line = ("- Degree credits will be removed to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
+                            }
+                        }
+                        if (added != null) {
+                            if (0 < added.size()) {
+
+                                for (int i = 0; i < added.size(); i++) {
+
+                                    Iterator it_u = added.get(i).entrySet().iterator();
+
+                                    while (it_u.hasNext()) {
+
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                        String impact_line = ("- Degree credits will be added to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             if(key.equals("ProgramImpact")) {
-
-                report_paragraph.add(Chunk.NEWLINE);
 
                 Map<String, Object> original_removed_added_updated = (Map<String, Object>) pair.getValue();
 
@@ -561,78 +747,87 @@ public class PdfService {
                 ArrayList<Map<String, Object>> added = (ArrayList) original_removed_added_updated.get("added");
                 ArrayList<Map<String, Object>> updated = (ArrayList) original_removed_added_updated.get("updated");
 
-                if (0 < original.size()) {
+                if (original != null) {
 
-                    for (int i = 0; i < original.size(); i++) {
+                    if (0 < original.size()) {
 
-                        Iterator it_u = original.get(i).entrySet().iterator();
+                        for (int i = 0; i < original.size(); i++) {
 
-                        while (it_u.hasNext()) {
-
-                            Map.Entry updated_pair = (Map.Entry) it_u.next();
-
-                            String impact_line = ("Core section to be modified: " +
-                                    updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
-
-                            report_paragraph.add(new Chunk(impact_line, arial_10));
-                            report_paragraph.add(Chunk.NEWLINE);
-                        }
-                    }
-
-                    if (0 < updated.size()) {
-
-                        for (int i = 0; i < updated.size(); i++) {
-
-                            Iterator it_u = updated.get(i).entrySet().iterator();
+                            Iterator it_u = original.get(i).entrySet().iterator();
 
                             while (it_u.hasNext()) {
 
                                 Map.Entry updated_pair = (Map.Entry) it_u.next();
 
-                                String impact_line = ("- Core will be updated to become " +
+                                String impact_line = ("Core section to be modified: " +
                                         updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
 
-                                report_paragraph.add(Chunk.TABBING);
+                                report_paragraph.add(Chunk.NEWLINE);
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
                             }
                         }
-                    }
-                    if (0 < removed.size()) {
+                        if(updated != null) {
+                            if (0 < updated.size()) {
 
-                        for (int i = 0; i < removed.size(); i++) {
+                                for (int i = 0; i < updated.size(); i++) {
 
-                            Iterator it_u = removed.get(i).entrySet().iterator();
+                                    Iterator it_u = updated.get(i).entrySet().iterator();
 
-                            while (it_u.hasNext()) {
+                                    while (it_u.hasNext()) {
 
-                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
 
-                                String impact_line = ("- Core credits will be removed to become " +
-                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+                                        String impact_line = ("- Core will be updated to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
 
-                                report_paragraph.add(Chunk.TABBING);
-                                report_paragraph.add(new Chunk(impact_line, arial_10));
-                                report_paragraph.add(Chunk.NEWLINE);
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
                             }
                         }
-                    }
-                    if (0 < added.size()) {
+                        if(removed != null) {
+                            if (0 < removed.size()) {
 
-                        for (int i = 0; i < added.size(); i++) {
+                                for (int i = 0; i < removed.size(); i++) {
 
-                            Iterator it_u = added.get(i).entrySet().iterator();
+                                    Iterator it_u = removed.get(i).entrySet().iterator();
 
-                            while (it_u.hasNext()) {
+                                    while (it_u.hasNext()) {
 
-                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
 
-                                String impact_line = ("- Core credits will be added to become " +
-                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+                                        String impact_line = ("- Core credits will be removed to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
 
-                                report_paragraph.add(Chunk.TABBING);
-                                report_paragraph.add(new Chunk(impact_line, arial_10));
-                                report_paragraph.add(Chunk.NEWLINE);
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
+                            }
+                        }
+                        if(added != null) {
+                            if (0 < added.size()) {
+
+                                for (int i = 0; i < added.size(); i++) {
+
+                                    Iterator it_u = added.get(i).entrySet().iterator();
+
+                                    while (it_u.hasNext()) {
+
+                                        Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                        String impact_line = ("- Core credits will be added to become: " +
+                                                updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                        report_paragraph.add(Chunk.TABBING);
+                                        report_paragraph.add(new Chunk(impact_line, arial_10));
+                                        report_paragraph.add(Chunk.NEWLINE);
+                                    }
+                                }
                             }
                         }
                     }
@@ -655,6 +850,7 @@ public class PdfService {
     private String stringifyRequisites(Collection<Requisite> requisites) {
 
         StringBuilder r;
+        int ctr = 0;
 
         if(!requisites.isEmpty())
             r = new StringBuilder("Prerequisite: ");
@@ -668,8 +864,14 @@ public class PdfService {
             String type = requisite.getType();
             String name_number = requisite.getName() + " " + requisite.getNumber();
 
-            if(type.equals("prerequisite"))
-                r.append(name_number);
+            if(type.equals("prerequisite")) {
+                if(ctr == 0) {
+                    r.append(name_number);
+                    ctr++;
+                }
+                else
+                    r.append("; ").append(name_number);
+            }
 
             else if(type.equals("corequisite"))
                 r.append("; ").append(name_number).append(" previously or concurrently");

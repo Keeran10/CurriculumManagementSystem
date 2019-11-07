@@ -15,33 +15,38 @@ public class RequestPackageController {
 
     @Autowired
     PdfService pdfService;
-//ResponseEntity<byte[]>
-    @GetMapping(value="/pdf")
-    public int getPDF(@RequestParam int package_id) {
 
-        // generate the file
-        boolean success = pdfService.generatePDF(package_id);
+    /**
+     * Generates a pdf file out of the entire data set for the given package.
+     * @param package_id
+     * @return A boolean detailing if the pdf generation was successful or a failure.
+     */
+    @GetMapping(value="/generate_pdf")
+    public boolean generatePdf(@RequestParam int package_id) { return pdfService.generatePDF(package_id); }
 
-        if(success) return 0;
+    /**
+     * Converts a stored byte array into a pdf file and displays it on the browser.
+     * @param package_id
+     * @return The pdf file to browser.
+     */
+    @GetMapping(value="/get_pdf")
+    public ResponseEntity<byte[]> getPdf(@RequestParam int package_id){
 
-        byte[] pdf_bytes;
+        byte[] pdf_bytes = pdfService.getPDF(package_id);
 
-        if(success)
-            pdf_bytes = pdfService.getPDF(package_id);
-        /*
-        // retrieve contents of "C:/tmp/report.pdf" that were written in showHelp
-        byte[] contents = null;
+        if(pdf_bytes == null) return null;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
 
-        String filename = "package_" + package_id + ".pdf";
-        headers.setContentDispositionFormData(filename, filename);
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String filename = "package_" +  package_id + ".pdf";
+
+        headers.add("content-disposition", "inline;filename=" + filename);
+
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
+
         return response;
-        */
-        return 0;
     }
 
 
