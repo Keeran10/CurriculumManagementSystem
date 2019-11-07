@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,11 +29,11 @@ public class Department {
 
     @JsonIgnoreProperties({"department", "degrees", "courses"})
     @OneToMany(mappedBy = "department")
-    private Collection<Program> programs;
+    private List<Program> programs = new ArrayList<>();
 
     @JsonIgnoreProperties({"department", "requests", "supportingDocuments", "approvals"})
     @OneToMany(mappedBy = "department")
-    private Collection<RequestPackage> requestPackages;
+    private List<RequestPackage> requestPackages = new ArrayList<>();
 
     @JsonBackReference
     @OneToOne(mappedBy = "department")

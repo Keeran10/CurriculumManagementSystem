@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -47,10 +49,10 @@ public class Course {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "course")
-    private Collection<Requisite> requisites;
+    private List<Requisite> requisites = new ArrayList<>();
 
     @JsonIgnoreProperties("course")
     @OneToMany(mappedBy = "course")
-    Collection<DegreeRequirement> degreeRequirements;
+    private List<DegreeRequirement> degreeRequirements = new ArrayList<>();
 
 }

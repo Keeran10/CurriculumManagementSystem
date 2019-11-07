@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,13 +25,13 @@ public class RequestPackage {
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<Request> requests = new ArrayList<>();
+    private List<Request> requests = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<SupportingDocument> supportingDocuments = new ArrayList<>();
+    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<Approval> approvals = new ArrayList<>();
+    private List<Approval> approvals = new ArrayList<>();
 }

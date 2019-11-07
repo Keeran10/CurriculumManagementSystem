@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,5 +22,5 @@ public class Faculty {
 
     @JsonIgnoreProperties({"faculty", "programs"})
     @OneToMany(mappedBy = "faculty")
-    private Collection<Department> departments;
+    private List<Department> departments = new ArrayList<>();
 }
