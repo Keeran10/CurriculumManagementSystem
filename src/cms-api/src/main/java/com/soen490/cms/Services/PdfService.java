@@ -10,7 +10,6 @@ import com.itextpdf.text.pdf.*;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
-import com.soen490.cms.Utils.PageEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,11 +84,12 @@ public class PdfService {
     public boolean generatePDF(int package_id){
 
         Document doc = new Document();
+        // course page specifications
         doc.setPageSize(PageSize.A4.rotate());
         doc.setMargins(25, 25, 10, 25);
 
         ByteArrayOutputStream support_stream = null;
-        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+        ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
@@ -109,15 +109,7 @@ public class PdfService {
 
         try {
 
-            if(support_stream != null)
-                PdfWriter.getInstance(doc, byte_stream);
-
-            else {
-
-                PdfWriter writer = PdfWriter.getInstance(doc, byte_stream);
-                writer.setBoxSize("corner-box", doc.getPageSize());
-                writer.setPageEvent(new PageEvent());
-            }
+            PdfWriter.getInstance(doc, request_stream);
 
             doc.open();
 
@@ -125,8 +117,6 @@ public class PdfService {
             for(Request request : requestPackage.getRequests()){
 
                 if(request.getTargetType() == 2) {
-
-                    // course page specifications
 
                     // course requests
                     Course original_course = courseRepository.findById(request.getOriginalId());
@@ -156,14 +146,23 @@ public class PdfService {
 
             try {
 
-                final_stream = mergeDocs(support_stream, byte_stream);
+                final_stream = mergeDocs(support_stream, request_stream);
 
             } catch (DocumentException | IOException e) {
                 e.printStackTrace();
             }
         }
         else
-            final_stream = byte_stream;
+            final_stream = request_stream;
+
+
+        try {
+
+            final_stream = stampPageXofY(final_stream);
+
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+        }
 
         requestPackage.setPdfFile(final_stream.toByteArray());
 
@@ -171,6 +170,45 @@ public class PdfService {
         requestPackageRepository.save(requestPackage);
 
         return true;
+    }
+
+
+    /**
+     * Numbers the pages for the document.
+     * @param final_stream The final document without page numbering.
+     * @return The final document stream with numbered pages.
+     * @throws IOException
+     * @throws DocumentException
+     */
+    private ByteArrayOutputStream stampPageXofY(ByteArrayOutputStream final_stream) throws IOException, DocumentException {
+
+        PdfReader reader = new PdfReader(final_stream.toByteArray());
+
+        int n = reader.getNumberOfPages();
+
+        PdfStamper stamper = new PdfStamper(reader, final_stream);
+
+        PdfContentByte pagecontent;
+
+        for (int i = 0; i < n; ) {
+
+            pagecontent = stamper.getOverContent(++i);
+
+            if(reader.getPageRotation(i) == 0)
+                ColumnText.showTextAligned(
+                        pagecontent, Element.ALIGN_RIGHT,
+                        new Phrase(String.format("page %s of %s", i, n), arial_10),
+                        reader.getPageSize(i).getRight() - 7, reader.getPageSize(i).getBottom() + 8, 0);
+            else
+                ColumnText.showTextAligned(
+                        pagecontent, Element.ALIGN_RIGHT,
+                        new Phrase(String.format("page %s of %s", i, n), arial_10),
+                        reader.getPageSize(i).getRight() + 241, reader.getPageSize(i).getBottom() + 8, 0);
+        }
+        stamper.close();
+        reader.close();
+
+        return final_stream;
     }
 
 
