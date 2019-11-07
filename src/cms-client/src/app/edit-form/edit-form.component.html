@@ -14,16 +14,29 @@
       <input matInput placeholder="Course Name" [(ngModel)]="courseEditable.title" name="courseName">
     </mat-form-field>
     <mat-form-field class="row3">
-      <textarea matInput placeholder="Prerequisites Courses (Separate with ;)" [(ngModel)]="editedModel.prerequisites"
-        name="prerequisites"></textarea>
+      <textarea matInput placeholder="Prerequisites Courses (Separate with ;)" [(ngModel)]="editedModel.prerequisites" 
+      name="prerequisites"></textarea>
     </mat-form-field>
     <mat-form-field class="row4">
-      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description"
-        name="description"></textarea>
+      <textarea matInput placeholder="Corequisites Courses (Separate with ;)" [(ngModel)]="editedModel.corequisites" 
+      name="corequisites"></textarea>
     </mat-form-field>
     <mat-form-field class="row5">
+      <input matInput placeholder="Antirequisites Courses (Seperate with ,)" [(ngModel)]="editedModel.antirequisites" name="antirequisites">
+    </mat-form-field>
+    <mat-form-field class="row6">
+      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description" name="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="row7">
       <input matInput placeholder="Notes" [(ngModel)]="courseEditable.note" name="notes">
     </mat-form-field>
+    <mat-form-field class="row8">
+      <textarea matInput placeholder="Rationale" [(ngModel)]="editedModel.rationale" name="rationale"></textarea>
+    </mat-form-field>
+    <mat-form-field class="row9">
+      <textarea matInput placeholder="Resource Implications" [(ngModel)]="editedModel.implications" name="implications"></textarea>
+    </mat-form-field>
+
   </form>
 
   <div class="edited-text">
@@ -54,6 +67,11 @@
         <span style="display: inline-block" semanticDiff [left]="model.prerequisites"
           [right]="editedModel.prerequisites"></span>
       </span>
+      <br>
+      <span *ngIf="editedModel.corequisites.length != 0" style="display: inline-block">Corequisite:
+        <span style="display: inline-block" semanticDiff [left]="model.corequisites"
+          [right]="editedModel.corequisites"></span>
+      </span>
       <span style="display: inline-block" semanticDiff [left]="courseOriginal.description"
         [right]="courseEditable.description"></span>
     </span>
@@ -63,9 +81,24 @@
           [right]="courseEditable.note"></span>
       </i>
     </div>
-
+    <div *ngIf="editedModel.antirequisites">
+      <i>NOTE: Students who have received credit for 
+        <span style="display: inline-block" semanticDiff [left]="model.antirequisites"
+          [right]="editedModel.antirequisites"></span>
+          may not take this course for credit.
+      </i>
+    </div>
     <br>
     <button mat-raised-button (click)="highlightChanges()">Highlight Changes</button>
+    <br><br>
+    <span>Rationale:</span>
+    <br>
+    <span>{{editedModel.rationale}}</span>
+    <br>
+    <span>Resource Implications:</span>
+    <br>
+    <span>{{editedModel.implications}}</span>
   </div>
 </div>
 <app-support-documents></app-support-documents>
+<button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
