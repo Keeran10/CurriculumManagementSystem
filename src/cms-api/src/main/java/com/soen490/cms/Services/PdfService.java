@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 @Service
@@ -30,6 +29,8 @@ public class PdfService {
     private RequestPackageRepository requestPackageRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private ImpactAssessmentService impactAssessmentService;
 
     // preface fonts
     private static Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
@@ -39,7 +40,8 @@ public class PdfService {
     private static Font arial_10_bold = FontFactory.getFont("Arial", 10, Font.BOLD);
     private static Font arial_10_italic = FontFactory.getFont("Arial", 10, Font.ITALIC);
     private static Font arial_10_bold_italic = FontFactory.getFont("Arial", 10, Font.BOLDITALIC);
-
+    // table column names share same font
+    private static Font column_font = arial_10;
     // diffs fonts
     // for credits & description removals
     private static Font arial_10_red = FontFactory.getFont
@@ -85,6 +87,8 @@ public class PdfService {
     public boolean generatePDF(int package_id){
 
         Document doc = new Document(PageSize.A4.rotate());
+        doc.setMargins(25, 25, 10, 25);
+
         ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
@@ -94,7 +98,7 @@ public class PdfService {
         try {
 
             // package.pdf
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_7.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_8.pdf"));
             //PdfWriter.getInstance(doc, byte_stream);
 
             writer.setBoxSize("corner-box", doc.getPageSize());
@@ -147,132 +151,132 @@ public class PdfService {
      */
     private void addCoursePreface(Document doc, Request request, Course o, Course c){
 
+        // preface paragraph
+        Paragraph preface1 = new Paragraph();
+
+        Phrase page_header = new Phrase();
+        page_header.add(new Chunk("PACKAGE_" + request.getRequestPackage().getId() + ": " +
+                "REQUEST_" + request.getId(), times_10));
+
+        preface1.add(page_header);
+        preface1.add(Chunk.NEWLINE);
+        preface1.add(Chunk.NEWLINE);
+
+        // request type and course name_number
+        String type;
+
+        if(request.getRequestType() == 1)
+            type = "NEW COURSE";
+        else if(request.getRequestType() == 2)
+            type = "COURSE CHANGE";
+        else if(request.getRequestType() == 3)
+            type = "COURSE DELETION";
+        else
+            return;
+
+        Phrase request_type = new Phrase();
+        request_type.add(new Chunk(type + ": ", times_10_bold));
+        request_type.add(new Chunk(c.getName() + " " + c.getNumber(), times_10));
+
+        preface1.add(request_type);
+        preface1.add(Chunk.NEWLINE);
+        preface1.add(Chunk.NEWLINE);
+
+        // request academic level
+        Phrase proposed = new Phrase();
+        proposed.add(new Chunk("Proposed: ", times_10_bold));
+
+        if(c.getLevel() == 1 && o.getLevel() == 1)
+            proposed.add(new Chunk("Undergraduate Curriculum Changes", times_10));
+        else if(c.getLevel() > 1 && o.getLevel() > 1)
+            proposed.add(new Chunk("Graduate Curriculum Changes", times_10));
+        else if((c.getLevel() == 1 && o.getLevel() > 1) || (c.getLevel() > 1 && o.getLevel() == 1))
+            proposed.add(new Chunk("Undergraduate And Graduate Curriculum Changes", times_10));
+
+        preface1.add(proposed);
+        preface1.add(new Chunk(Chunk.NEWLINE));
+
+        // academic year phrase - align right requires a new paragraph
+        Paragraph preface2 = new Paragraph();
+
+        Phrase years = new Phrase();
+        years.add(new Chunk("Calendar for Academic Year: ", times_10_bold));
+        years.add(new Chunk("2020/2021\n", times_10));
+        years.add(new Chunk("Implementation Month/Year: ", times_10_bold));
+        years.add(new Chunk("May 2020", times_10));
+
+        preface2.add(years);
+        preface2.setAlignment(Element.ALIGN_RIGHT);
+
+        // last preface segment aligned left
+        Paragraph preface3 = new Paragraph();
+        preface3.setTabSettings(new TabSettings(200f));
+
+        // faculty phrase
+        Phrase faculty = new Phrase();
+        faculty.add(new Chunk("Faculty/School:", times_10_bold));
+        faculty.add(Chunk.TABBING);
+        faculty.add(new Chunk(c.getProgram().getDepartment().getFaculty().getName(), times_10));
+
+        preface3.add(faculty);
+        preface3.add(Chunk.NEWLINE);
+
+        // department phrase
+        Phrase department = new Phrase();
+        department.add(new Chunk("Department:", times_10_bold));
+        department.add(Chunk.TABBING);
+        department.add(new Chunk(c.getProgram().getDepartment().getName(), times_10));
+
+        preface3.add(department);
+        preface3.add(Chunk.NEWLINE);
+
+        // program phrase
+        Phrase program = new Phrase();
+        program.add(new Chunk("Program:", times_10_bold));
+        program.add(Chunk.TABBING);
+        program.add(new Chunk(c.getProgram().getName(), times_10));
+
+        preface3.add(program);
+        preface3.add(Chunk.NEWLINE);
+
+        // degree phrase
+        Phrase degree = new Phrase();
+        degree.add(new Chunk("Degree:", times_10_bold));
+        degree.add(Chunk.TABBING);
+
+        int ctr = 0;
+
+        // @TODO: make sure c also contains degree requirements !
+        for(DegreeRequirement degreeRequirement : o.getDegreeRequirements()) {
+            if(ctr > 0)
+                degree.add(new Chunk(", " + degreeRequirement.getDegree().getName() +
+                        " - " + degreeRequirement.getCore(), times_10));
+            else
+                degree.add(new Chunk(degreeRequirement.getDegree().getName() +
+                        " - " + degreeRequirement.getCore(), times_10));
+            ctr++;
+        }
+
+        preface3.add(degree);
+        preface3.add(Chunk.NEWLINE);
+
+        // calendar phrase
+        Phrase calendar = new Phrase();
+        if(c.getLevel() == 1)
+            calendar.add(new Chunk("Undergraduate Calendar Section:", times_10_bold));
+        else
+            calendar.add(new Chunk("Graduate Page Number:", times_10_bold));
+
+        // Todo: calendar needs a better design
+        calendar.add(Chunk.TABBING);
+        calendar.add(new Chunk("§" + c.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
+
+        preface3.add(calendar);
+        preface3.add(Chunk.NEWLINE);
+        preface3.add(Chunk.NEWLINE);
+        preface3.add(Chunk.NEWLINE);
+
         try{
-
-            // preface paragraph
-            Paragraph preface1 = new Paragraph();
-
-            Phrase page_header = new Phrase();
-            page_header.add(new Chunk("PACKAGE_" + request.getRequestPackage().getId() + ": " +
-                    "REQUEST_" + request.getId(), times_10));
-
-            preface1.add(page_header);
-            preface1.add(new Chunk(Chunk.NEWLINE));
-            preface1.add(new Chunk(Chunk.NEWLINE));
-
-            // request type and course name_number
-            String type;
-
-            if(request.getRequestType() == 1)
-                type = "COURSE CREATION";
-            else if(request.getRequestType() == 2)
-                type = "COURSE UPDATE";
-            else if(request.getRequestType() == 3)
-                type = "COURSE REMOVAL";
-            else
-                return;
-
-            Phrase request_type = new Phrase();
-            request_type.add(new Chunk(type + ": ", times_10_bold));
-            request_type.add(new Chunk(c.getName() + " " + c.getNumber(), times_10));
-
-            preface1.add(request_type);
-            preface1.add(new Chunk(Chunk.NEWLINE));
-            preface1.add(new Chunk(Chunk.NEWLINE));
-
-            // request academic level
-            Phrase proposed = new Phrase();
-            proposed.add(new Chunk("Proposed: ", times_10_bold));
-
-            if(c.getLevel() == 1 && o.getLevel() == 1)
-                proposed.add(new Chunk("Undergraduate Curriculum Changes", times_10));
-            else if(c.getLevel() > 1 && o.getLevel() > 1)
-                proposed.add(new Chunk("Graduate Curriculum Changes", times_10));
-            else if((c.getLevel() == 1 && o.getLevel() > 1) || (c.getLevel() > 1 && o.getLevel() == 1))
-                proposed.add(new Chunk("Undergraduate And Graduate Curriculum Changes", times_10));
-
-            preface1.add(proposed);
-            preface1.add(new Chunk(Chunk.NEWLINE));
-
-            // academic year phrase - align right requires a new paragraph
-            Paragraph preface2 = new Paragraph();
-
-            Phrase years = new Phrase();
-            years.add(new Chunk("Calendar for Academic Year: ", times_10_bold));
-            years.add(new Chunk("2020/2021\n", times_10));
-            years.add(new Chunk("Implementation Month/Year: ", times_10_bold));
-            years.add(new Chunk("May 2020", times_10));
-
-            preface2.add(years);
-            preface2.setAlignment(Element.ALIGN_RIGHT);
-
-            // last preface segment aligned left
-            Paragraph preface3 = new Paragraph();
-            preface3.setTabSettings(new TabSettings(200f));
-
-            // faculty phrase
-            Phrase faculty = new Phrase();
-            faculty.add(new Chunk("Faculty/School:", times_10_bold));
-            faculty.add(new Chunk(Chunk.TABBING));
-            faculty.add(new Chunk(c.getProgram().getDepartment().getFaculty().getName(), times_10));
-
-            preface3.add(faculty);
-            preface3.add(new Chunk(Chunk.NEWLINE));
-
-            // department phrase
-            Phrase department = new Phrase();
-            department.add(new Chunk("Department:", times_10_bold));
-            department.add(new Chunk(Chunk.TABBING));
-            department.add(new Chunk(c.getProgram().getDepartment().getName(), times_10));
-
-            preface3.add(department);
-            preface3.add(new Chunk(Chunk.NEWLINE));
-
-            // program phrase
-            Phrase program = new Phrase();
-            program.add(new Chunk("Program:", times_10_bold));
-            program.add(new Chunk(Chunk.TABBING));
-            program.add(new Chunk(c.getProgram().getName(), times_10));
-
-            preface3.add(program);
-            preface3.add(new Chunk(Chunk.NEWLINE));
-
-            // degree phrase
-            Phrase degree = new Phrase();
-            degree.add(new Chunk("Degree:", times_10_bold));
-            degree.add(new Chunk(Chunk.TABBING));
-
-            int ctr = 0;
-
-            // @TODO: make sure c also contains degree requirements !
-            for(DegreeRequirement degreeRequirement : o.getDegreeRequirements()) {
-                if(ctr > 0)
-                    degree.add(new Chunk(", " + degreeRequirement.getDegree().getName() +
-                            " - " + degreeRequirement.getCore(), times_10));
-                else
-                    degree.add(new Chunk(degreeRequirement.getDegree().getName() +
-                            " - " + degreeRequirement.getCore(), times_10));
-                ctr++;
-            }
-
-            preface3.add(degree);
-            preface3.add(new Chunk(Chunk.NEWLINE));
-
-            // calendar phrase
-            Phrase calendar = new Phrase();
-            if(c.getLevel() == 1)
-                calendar.add(new Chunk("Undergraduate Calendar Section:", times_10_bold));
-            else
-                calendar.add(new Chunk("Graduate Page Number:", times_10_bold));
-
-            calendar.add(new Chunk(Chunk.TABBING));
-            calendar.add(new Chunk("§" + c.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
-
-            preface3.add(calendar);
-            preface3.add(new Chunk(Chunk.NEWLINE));
-            preface3.add(new Chunk(Chunk.NEWLINE));
-            preface3.add(new Chunk(Chunk.NEWLINE));
-
             // add preface paragraph to document
             doc.add(preface1);
             doc.add(preface2);
@@ -296,125 +300,350 @@ public class PdfService {
      */
     private void addCourseDiffTable(Document doc, Request request, Course o, Course c) throws FileNotFoundException, DocumentException {
 
+        // Creates a table with 2 column.
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+
+        float CELL_PADDING = 5f;
+        int size = 0;
+        String remainder;
+
+        String o_name = o.getName() + " " + o.getNumber();
+        String o_title = " " + o.getTitle();
+        String o_credits = " (" + o.getCredits() + " credits)";
+        String c_name = c.getName() + " " + c.getNumber();
+        String c_title = " " + c.getTitle();
+        String c_credits = " (" + c.getCredits() + " credits)";
+
+        String o_body = stringifyRequisites(o.getRequisites()) + o.getDescription();
+        String c_body = stringifyRequisites(c.getRequisites()) + c.getDescription();
+
+        String o_note = o.getNote();
+        String c_note = c.getNote();
+
+        String rationale = request.getRationale();
+        String resource_implications = request.getResourceImplications();
+
+        // static headers
+
+        table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold))).setPadding(CELL_PADDING);
+        table.addCell(new PdfPCell(new Phrase("Proposed Text", times_10_bold))).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        // course paragraph
+        Paragraph original_paragraph = new Paragraph();
+        Paragraph changed_paragraph = new Paragraph();
+
+        // course phrases
+        // name and number
+        Phrase original_name_phrase = new Phrase();
+        Phrase changed_name_phrase = new Phrase();
+
+        processDifferences(original_name_phrase, changed_name_phrase, o_name, c_name, 1);
+
+        // title
+        Phrase original_title_phrase = new Phrase();
+        Phrase changed_title_phrase = new Phrase();
+
+        processDifferences(original_title_phrase, changed_title_phrase, o_title, c_title, 2);
+
+        // credits (special case needs to be partitioned manually)
+        Phrase original_credits_phrase = new Phrase();
+        Phrase changed_credits_phrase = new Phrase();
+
+        processDifferences(original_credits_phrase, changed_credits_phrase, o_credits, c_credits, 3);
+
+        // body = chunks of requisites & descriptions
+        Phrase original_body_phrase = new Phrase();
+        Phrase changed_body_phrase = new Phrase();
+
+        processDifferences(original_body_phrase, changed_body_phrase, o_body, c_body, 4);
+
+        // notes
+        Phrase original_note_phrase = new Phrase();
+        Phrase changed_note_phrase = new Phrase();
+
+        processDifferences(original_note_phrase, changed_note_phrase, o_note, c_note, 5);
+
+        // ...
+
+        // add all course phrases to paragraph
+        original_paragraph.add(original_name_phrase);
+        original_paragraph.add(original_title_phrase);
+        original_paragraph.add(original_credits_phrase);
+        original_paragraph.add(Chunk.NEWLINE);
+        original_paragraph.add(original_body_phrase);
+        original_paragraph.add(Chunk.NEWLINE);
+        original_paragraph.add(original_note_phrase);
+
+        changed_paragraph.add(changed_name_phrase);
+        changed_paragraph.add(changed_title_phrase);
+        changed_paragraph.add(changed_credits_phrase);
+        changed_paragraph.add(Chunk.NEWLINE);
+        changed_paragraph.add(changed_body_phrase);
+        changed_paragraph.add(Chunk.NEWLINE);
+        changed_paragraph.add(changed_note_phrase);
+
+        // once all course details are done
+        table.addCell(new PdfPCell(original_paragraph)).setPadding(CELL_PADDING);
+        table.addCell(new PdfPCell(changed_paragraph)).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        // add rationale cell which spans 2 columns
+        Phrase rationale_phrase = new Phrase();
+
+        rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
+        rationale_phrase.add(Chunk.NEWLINE);
+        rationale_phrase.add(Chunk.NEWLINE);
+        rationale_phrase.add(new Chunk(rationale, arial_10));
+
+        PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
+        rationale_cell.setColspan(2);
+        table.addCell(rationale_cell).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        // add resource implications cell which spans 2 columns
+        Phrase resource_phrase = new Phrase();
+
+        resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
+        resource_phrase.add(Chunk.NEWLINE);
+        resource_phrase.add(Chunk.NEWLINE);
+        resource_phrase.add(new Chunk(resource_implications, arial_10));
+
+        PdfPCell resource_cell = new PdfPCell(resource_phrase);
+        resource_cell.setColspan(2);
+        table.addCell(resource_cell).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        table.addCell(addCourseImpactReport(request)).setPadding(CELL_PADDING);
+
         try {
-            // Creates a table with 2 column.
-            PdfPTable table = new PdfPTable(2);
-            table.setWidthPercentage(100);
-
-            float CELL_PADDING = 5f;
-            int size = 0;
-            String remainder;
-
-            String o_name = o.getName() + " " + o.getNumber();
-            String o_title = " " + o.getTitle();
-            String o_credits = " (" + o.getCredits() + " credits)";
-            String c_name = c.getName() + " " + c.getNumber();
-            String c_title = " " + c.getTitle();
-            String c_credits = " (" + c.getCredits() + " credits)";
-
-            String o_body = stringifyRequisites(o.getRequisites()) + o.getDescription();
-            String c_body = stringifyRequisites(c.getRequisites()) + c.getDescription();
-
-            String o_note = o.getNote();
-            String c_note = c.getNote();
-
-            String rationale = request.getRationale();
-            String resource_implications = request.getResourceImplications();
-
-            // static headers
-
-            table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold))).setPadding(CELL_PADDING);
-            table.addCell(new PdfPCell(new Phrase("Proposed Text", times_10_bold))).setPadding(CELL_PADDING);
-            table.completeRow();
-
-            // course paragraph
-            Paragraph original_paragraph = new Paragraph();
-            Paragraph changed_paragraph = new Paragraph();
-
-            // course phrases
-            // name and number
-            Phrase original_name_phrase = new Phrase();
-            Phrase changed_name_phrase = new Phrase();
-
-            processDifferences(original_name_phrase, changed_name_phrase, o_name, c_name, 1);
-
-            // title
-            Phrase original_title_phrase = new Phrase();
-            Phrase changed_title_phrase = new Phrase();
-
-            processDifferences(original_title_phrase, changed_title_phrase, o_title, c_title, 2);
-
-            // credits (special case needs to be partitioned manually)
-            Phrase original_credits_phrase = new Phrase();
-            Phrase changed_credits_phrase = new Phrase();
-
-            processDifferences(original_credits_phrase, changed_credits_phrase, o_credits, c_credits, 3);
-
-            // body = chunks of requisites & descriptions
-            Phrase original_body_phrase = new Phrase();
-            Phrase changed_body_phrase = new Phrase();
-
-            processDifferences(original_body_phrase, changed_body_phrase, o_body, c_body, 4);
-
-            // notes
-            Phrase original_note_phrase = new Phrase();
-            Phrase changed_note_phrase = new Phrase();
-
-            processDifferences(original_note_phrase, changed_note_phrase, o_note, c_note, 5);
-
-            // ...
-
-            // add all course phrases to paragraph
-            original_paragraph.add(original_name_phrase);
-            original_paragraph.add(original_title_phrase);
-            original_paragraph.add(original_credits_phrase);
-            original_paragraph.add(Chunk.NEWLINE);
-            original_paragraph.add(original_body_phrase);
-            original_paragraph.add(Chunk.NEWLINE);
-            original_paragraph.add(original_note_phrase);
-
-            changed_paragraph.add(changed_name_phrase);
-            changed_paragraph.add(changed_title_phrase);
-            changed_paragraph.add(changed_credits_phrase);
-            changed_paragraph.add(Chunk.NEWLINE);
-            changed_paragraph.add(changed_body_phrase);
-            changed_paragraph.add(Chunk.NEWLINE);
-            changed_paragraph.add(changed_note_phrase);
-
-            // once all course details are done
-            table.addCell(new PdfPCell(original_paragraph)).setPadding(CELL_PADDING);
-            table.addCell(new PdfPCell(changed_paragraph)).setPadding(CELL_PADDING);
-            table.completeRow();
-
-            // add rationale cell which spans 2 columns
-            Phrase rationale_phrase = new Phrase();
-
-            rationale_phrase.add(new Chunk("Rationale:", arial_10));
-            rationale_phrase.add(Chunk.NEWLINE);
-            rationale_phrase.add(new Chunk(rationale, arial_10));
-
-            PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
-            rationale_cell.setColspan(2);
-            table.addCell(rationale_cell).setPadding(CELL_PADDING);
-            table.completeRow();
-
-            // add resource implications cell which spans 2 columns
-            Phrase resource_phrase = new Phrase();
-
-            resource_phrase.add(new Chunk("Resource Implications:", arial_10));
-            resource_phrase.add(Chunk.NEWLINE);
-            resource_phrase.add(new Chunk(resource_implications, arial_10));
-
-            PdfPCell resource_cell = new PdfPCell(resource_phrase);
-            resource_cell.setColspan(2);
-            table.addCell(resource_cell).setPadding(CELL_PADDING);
-            table.completeRow();
-
             doc.add(table);
-
         }catch(DocumentException e){
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * Creates a table cell with the impact statement report from the given request.
+     * @param request The request object used to generate impact statements.
+     * @return the last course diff table cell with the impact statements report.
+     */
+    private PdfPCell addCourseImpactReport(Request request) {
+
+        int isCreate = request.getRequestType();
+
+        Map<String, Object> impact_report = impactAssessmentService.getAssessment(request.getId());
+
+        Iterator it = impact_report.entrySet().iterator();
+
+        Paragraph report_paragraph = new Paragraph();
+        report_paragraph.setTabSettings(new TabSettings(25f));
+        report_paragraph.add(new Chunk("Impact Statements Report:", column_font).setUnderline(0.1f, -1f));
+        report_paragraph.add(Chunk.NEWLINE);
+        report_paragraph.add(Chunk.NEWLINE);
+
+        String key;
+
+        //String gson_report = new Gson().toJson(impact_report);
+
+        //System.out.println(gson_report);
+
+        while(it.hasNext()){
+
+            Map.Entry pair = (Map.Entry) it.next();
+
+            key = pair.getKey().toString();
+
+            if(key.equals("OriginalCourse") || key.equals("CourseEdits") || key.equals("RequestType"))
+                continue;
+
+            System.out.println(pair.getKey() + ": " + pair.getValue().toString());
+
+            if(key.equals("DegreeCourseRequiredImpact")) {
+
+                Map<String, Object> original_removed_added_updated = (Map<String, Object>) pair.getValue();
+
+                ArrayList<Map<String, Object>> original = (ArrayList) original_removed_added_updated.get("original");
+                ArrayList<Map<String, Object>> removed = (ArrayList) original_removed_added_updated.get("removed");
+                ArrayList<Map<String, Object>> added = (ArrayList) original_removed_added_updated.get("added");
+                ArrayList<Map<String, Object>> updated = (ArrayList) original_removed_added_updated.get("updated");
+
+                if (0 < original.size()) {
+
+                    for (int i = 0; i < original.size(); i++) {
+
+                        Iterator it_u = original.get(i).entrySet().iterator();
+
+                        while (it_u.hasNext()) {
+
+                            Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                            String impact_line = ("Original degree to be modified: " +
+                                    updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                            report_paragraph.add(new Chunk(impact_line, arial_10));
+                            report_paragraph.add(Chunk.NEWLINE);
+                        }
+                    }
+
+                    if (0 < updated.size()) {
+
+                        for (int i = 0; i < updated.size(); i++) {
+
+                            Iterator it_u = updated.get(i).entrySet().iterator();
+
+                            while (it_u.hasNext()) {
+
+                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                String impact_line = ("- Degree credits will be updated to become " +
+                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                report_paragraph.add(Chunk.TABBING);
+                                report_paragraph.add(new Chunk(impact_line, arial_10));
+                                report_paragraph.add(Chunk.NEWLINE);
+                            }
+                        }
+                    }
+                    if (0 < removed.size()) {
+
+                        for (int i = 0; i < removed.size(); i++) {
+
+                            Iterator it_u = removed.get(i).entrySet().iterator();
+
+                            while (it_u.hasNext()) {
+
+                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                String impact_line = ("- Degree credits will be removed to become " +
+                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                report_paragraph.add(Chunk.TABBING);
+                                report_paragraph.add(new Chunk(impact_line, arial_10));
+                                report_paragraph.add(Chunk.NEWLINE);
+                            }
+                        }
+                    }
+                    if (0 < added.size()) {
+
+                        for (int i = 0; i < added.size(); i++) {
+
+                            Iterator it_u = added.get(i).entrySet().iterator();
+
+                            while (it_u.hasNext()) {
+
+                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                String impact_line = ("- Degree credits will be added to become " +
+                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                report_paragraph.add(Chunk.TABBING);
+                                report_paragraph.add(new Chunk(impact_line, arial_10));
+                                report_paragraph.add(Chunk.NEWLINE);
+                            }
+                        }
+                    }
+                }
+            }
+            if(key.equals("DegreeCourseElectiveImpact")) {
+                continue;
+            }
+            if(key.equals("ProgramImpact")) {
+
+                report_paragraph.add(Chunk.NEWLINE);
+
+                Map<String, Object> original_removed_added_updated = (Map<String, Object>) pair.getValue();
+
+                ArrayList<Map<String, Object>> original = (ArrayList) original_removed_added_updated.get("original");
+                ArrayList<Map<String, Object>> removed = (ArrayList) original_removed_added_updated.get("removed");
+                ArrayList<Map<String, Object>> added = (ArrayList) original_removed_added_updated.get("added");
+                ArrayList<Map<String, Object>> updated = (ArrayList) original_removed_added_updated.get("updated");
+
+                if (0 < original.size()) {
+
+                    for (int i = 0; i < original.size(); i++) {
+
+                        Iterator it_u = original.get(i).entrySet().iterator();
+
+                        while (it_u.hasNext()) {
+
+                            Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                            String impact_line = ("Core section to be modified: " +
+                                    updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                            report_paragraph.add(new Chunk(impact_line, arial_10));
+                            report_paragraph.add(Chunk.NEWLINE);
+                        }
+                    }
+
+                    if (0 < updated.size()) {
+
+                        for (int i = 0; i < updated.size(); i++) {
+
+                            Iterator it_u = updated.get(i).entrySet().iterator();
+
+                            while (it_u.hasNext()) {
+
+                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                String impact_line = ("- Core will be updated to become " +
+                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                report_paragraph.add(Chunk.TABBING);
+                                report_paragraph.add(new Chunk(impact_line, arial_10));
+                                report_paragraph.add(Chunk.NEWLINE);
+                            }
+                        }
+                    }
+                    if (0 < removed.size()) {
+
+                        for (int i = 0; i < removed.size(); i++) {
+
+                            Iterator it_u = removed.get(i).entrySet().iterator();
+
+                            while (it_u.hasNext()) {
+
+                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                String impact_line = ("- Core credits will be removed to become " +
+                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                report_paragraph.add(Chunk.TABBING);
+                                report_paragraph.add(new Chunk(impact_line, arial_10));
+                                report_paragraph.add(Chunk.NEWLINE);
+                            }
+                        }
+                    }
+                    if (0 < added.size()) {
+
+                        for (int i = 0; i < added.size(); i++) {
+
+                            Iterator it_u = added.get(i).entrySet().iterator();
+
+                            while (it_u.hasNext()) {
+
+                                Map.Entry updated_pair = (Map.Entry) it_u.next();
+
+                                String impact_line = ("- Core credits will be added to become " +
+                                        updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
+                                report_paragraph.add(Chunk.TABBING);
+                                report_paragraph.add(new Chunk(impact_line, arial_10));
+                                report_paragraph.add(Chunk.NEWLINE);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        PdfPCell report = new PdfPCell(report_paragraph);
+        report.setColspan(2);
+
+        return report;
     }
 
 
