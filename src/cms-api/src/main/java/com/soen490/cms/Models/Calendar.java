@@ -7,11 +7,11 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Data
-@ToString(exclude= {"faculty", "department"})
-@EqualsAndHashCode(exclude = {"faculty", "department"})
+@EqualsAndHashCode(exclude = "department")
 public class Calendar {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +25,6 @@ public class Calendar {
     private String body;
 
     private String sectionType; // faculty | faculty_list (profs) | courses | general
-
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "faculty_id")
-    private Faculty faculty;
 
     @JsonManagedReference
     @OneToOne
