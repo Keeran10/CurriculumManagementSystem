@@ -247,5 +247,8 @@ INSERT IGNORE INTO request VALUES (1, 7, "rationale", 2, 15, 2, NULL, 1, 1); -- 
 INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, 15, 2, NULL, 1, 1); -- removing request for the course soen 343
 INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, 15, 2, NULL, 1, 1); -- creating request for the course soen 343
 
--- id, apc, dcc, fcc, gdc, senate, ugdc
-INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 1, 2, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
+-- id, apc, department_council, department_curriculum_committee, faculty_council, graduate_studies_committee, school_of_graduate_studies, senate, undergraduate_studies_committee
+INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 0, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
+
+-- position, package_id, pipeline_id
+--INSERT IGNORE INTO approval_pipeline_request_package VALUES ("Department Curriculum Committee", 1, 1);
