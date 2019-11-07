@@ -16,7 +16,7 @@ import java.util.Collection;
 @EqualsAndHashCode(exclude = "calendar")
 public class Department {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;

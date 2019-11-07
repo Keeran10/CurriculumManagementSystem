@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Data
 public class Approval {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String feedback;

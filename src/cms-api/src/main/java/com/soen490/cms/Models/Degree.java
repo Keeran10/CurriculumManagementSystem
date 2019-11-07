@@ -13,7 +13,7 @@ import java.util.Collection;
 @ToString(exclude= {"degreeRequirements", "program"})
 public class Degree {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -23,7 +23,7 @@ public class Degree {
     private double credits;
 
     @JsonIgnoreProperties({"degrees", "courses"})
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id")
     private Program program;
 

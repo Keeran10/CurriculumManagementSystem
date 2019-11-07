@@ -11,7 +11,7 @@ import java.util.Collection;
 @ToString(exclude= {"requests", "approvals"})
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 

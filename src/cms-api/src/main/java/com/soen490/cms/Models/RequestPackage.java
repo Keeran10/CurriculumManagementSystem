@@ -11,7 +11,7 @@ import java.util.Collection;
 @Data
 public class RequestPackage {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Lob

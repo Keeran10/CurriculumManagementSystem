@@ -11,7 +11,7 @@ import javax.persistence.*;
 @ToString(exclude = "course")
 public class Requisite {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -24,6 +24,6 @@ public class Requisite {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "courseId")
     private Course course;
 }

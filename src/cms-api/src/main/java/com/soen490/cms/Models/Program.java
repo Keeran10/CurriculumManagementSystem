@@ -14,7 +14,7 @@ import java.util.Collection;
 @ToString(exclude= {"degrees", "courses"})
 public class Program {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
