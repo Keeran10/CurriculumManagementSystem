@@ -29,4 +29,7 @@ public class RequestPackage {
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
     private Collection<Approval> approvals;
+
+    @OneToMany(mappedBy =  "requestPackage")
+    private Collection<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages;
 }
