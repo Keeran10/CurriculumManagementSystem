@@ -18,12 +18,12 @@ public class DegreeRequirement{
     private String core;
 
     @JsonIgnoreProperties({"program", "degreeRequirements"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "degree_id")
     private Degree degree;
 
     @JsonIgnoreProperties({"program", "degreeRequirements"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 }

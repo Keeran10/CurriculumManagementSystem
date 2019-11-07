@@ -25,7 +25,7 @@ public class Degree {
     private double credits;
 
     @JsonIgnoreProperties({"degrees", "courses"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "program_id")
     private Program program;
 
