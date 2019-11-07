@@ -16,15 +16,19 @@ public class ApprovalPipeline {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private int SENATE;
+    private int departmentCurriculumCommittee;
+
+    private int departmentCouncil;
+
+    private int undergraduateStudiesCommittee; //
+
+    private int facultyCouncil;
 
     private int APC;
 
-    private int DCC;
+    private int senate;
 
-    private int FCC;
+    private int schoolOfGraduateStudies;
 
-    private int UGDC;
-
-    private int GDC;
+    private int graduateStudiesCommittee;
 }
