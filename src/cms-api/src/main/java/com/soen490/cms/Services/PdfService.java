@@ -6,9 +6,7 @@ import com.github.difflib.text.DiffRow;
 import com.github.difflib.text.DiffRowGenerator;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -80,29 +78,46 @@ public class PdfService {
 
 
     /**
-     * Generate the pdf file for a given package.
+     * Generate the pdf file for a given package and saves it to the package database table.
      * @param package_id Used to retrieve request_package object.
      * @return true if a pdf has been generated and saved as pdf_file inside request_package.
      */
     public boolean generatePDF(int package_id){
 
-        Document doc = new Document(PageSize.A4.rotate());
+        Document doc = new Document();
+        doc.setPageSize(PageSize.A4.rotate());
         doc.setMargins(25, 25, 10, 25);
 
+        ByteArrayOutputStream support_stream = null;
         ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
         if(requestPackage == null){ return false;}
 
+
+        if(!requestPackage.getSupportingDocuments().isEmpty()) {
+
+            try {
+
+                support_stream = mergeSupportingDocs(requestPackage);
+
+            } catch (DocumentException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
 
-            // package.pdf
-            //PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\Keeran\\Desktop\\cms\\package_8.pdf"));
-            PdfWriter writer = PdfWriter.getInstance(doc, byte_stream);
+            if(support_stream != null)
+                PdfWriter.getInstance(doc, byte_stream);
 
-            writer.setBoxSize("corner-box", doc.getPageSize());
-            writer.setPageEvent(new PageEvent());
+            else {
+
+                PdfWriter writer = PdfWriter.getInstance(doc, byte_stream);
+                writer.setBoxSize("corner-box", doc.getPageSize());
+                writer.setPageEvent(new PageEvent());
+            }
 
             doc.open();
 
@@ -110,6 +125,8 @@ public class PdfService {
             for(Request request : requestPackage.getRequests()){
 
                 if(request.getTargetType() == 2) {
+
+                    // course page specifications
 
                     // course requests
                     Course original_course = courseRepository.findById(request.getOriginalId());
@@ -133,12 +150,83 @@ public class PdfService {
             return false;
         }
 
-        requestPackage.setPdfFile(byte_stream.toByteArray());
+        ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
+
+        if(support_stream != null){
+
+            try {
+
+                final_stream = mergeDocs(support_stream, byte_stream);
+
+            } catch (DocumentException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+            final_stream = byte_stream;
+
+        requestPackage.setPdfFile(final_stream.toByteArray());
 
         // this might not be required in active transaction
         requestPackageRepository.save(requestPackage);
 
         return true;
+    }
+
+
+    /**
+     * Combines the request package's supporting documents into one pdf stream.
+     * @param requestPackage The package for which pdf generation has been invoked.
+     * @return The aggregated stream of the combined supporting documents.
+     * @throws DocumentException
+     * @throws IOException
+     */
+    private ByteArrayOutputStream mergeSupportingDocs(RequestPackage requestPackage) throws DocumentException, IOException {
+
+        Document doc = new Document();
+        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+
+        // append supporting docs
+        PdfCopy copy = new PdfCopy(doc, byte_stream);
+        copy.setMergeFields();
+
+        doc.open();
+
+        for(SupportingDocument supportingDocument : requestPackage.getSupportingDocuments()){
+
+            copy.addDocument(new PdfReader(supportingDocument.getDocument()));
+
+        }
+
+        doc.close();
+
+        return byte_stream;
+    }
+
+
+    /**
+     * This function merges the supporting documents with the generated course pages into a single pdf stream
+     * @param support_stream The merged supporting documents pdf file in stream format.
+     * @param course_stream The generated course pdf file in stream format.
+     * @return The merged stream
+     * @throws DocumentException
+     * @throws IOException
+     */
+    private ByteArrayOutputStream mergeDocs(ByteArrayOutputStream support_stream, ByteArrayOutputStream course_stream) throws DocumentException, IOException {
+
+        Document doc = new Document();
+        ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
+
+        PdfCopy copy = new PdfCopy(doc, final_stream);
+
+        doc.open();
+
+        copy.addDocument(new PdfReader(support_stream.toByteArray()));
+        copy.addDocument(new PdfReader(course_stream.toByteArray()));
+
+        doc.close();
+
+        return final_stream;
     }
 
 

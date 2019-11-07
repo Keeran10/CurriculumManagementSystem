@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -23,13 +24,13 @@ public class RequestPackage {
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<Request> requests;
+    private Collection<Request> requests = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<SupportingDocument> supportingDocuments;
+    private Collection<SupportingDocument> supportingDocuments = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<Approval> approvals;
+    private Collection<Approval> approvals = new ArrayList<>();
 }
