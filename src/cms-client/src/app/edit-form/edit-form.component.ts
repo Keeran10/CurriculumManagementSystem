@@ -15,21 +15,8 @@ export class EditFormComponent implements OnInit {
   courseOriginal: Course = new Course();
   courseEditable: Course = new Course();
 
-  model = {
-    prerequisites: '',
-    corequisites: '',
-    antirequisites: '',
-    rationale: '',
-    implications: ''
-  };
-
-  editedModel = {
-    prerequisites: '',
-    corequisites: '',
-    antirequisites: '',
-    rationale: '',
-    implications: ''
-  }
+  model = new CourseExtras();
+  editedModel = new CourseExtras();
 
   constructor(private route: ActivatedRoute, private api: ApiService) {
   }
@@ -95,6 +82,22 @@ export class EditFormComponent implements OnInit {
   }
 
   public submitForm(){
-    
+    this.api.submitEditedCourse(this.courseEditable, this.editedModel);
   }
 }
+
+export class CourseExtras {
+  prerequisites: string;
+  corequisites: string;
+  antirequisites: string;
+  rationale: string;
+  implications: string;
+
+  constructor(){
+    this.prerequisites = '';
+    this.corequisites = '';
+    this.antirequisites = '';
+    this.rationale = '';
+    this.implications = '';
+  }
+};
