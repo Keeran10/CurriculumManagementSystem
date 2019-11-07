@@ -24,6 +24,6 @@ public class Requisite {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "courseId")
+    @JoinColumn(name = "course_id")
     private Course course;
 }

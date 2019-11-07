@@ -2,6 +2,7 @@ package com.soen490.cms.Controllers;
 
 import com.itextpdf.text.Document;
 import com.soen490.cms.Services.PdfService;
+import com.soen490.cms.Services.RequestPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ public class RequestPackageController {
 
     @Autowired
     PdfService pdfService;
+    @Autowired
+    RequestPackageService requestPackageService;
 
     /**
      * Generates a pdf file out of the entire data set for the given package.
@@ -47,6 +50,13 @@ public class RequestPackageController {
         ResponseEntity<byte[]> response = new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
 
         return response;
+    }
+
+
+    @GetMapping(value="/save_request")
+    public boolean saveRequest(){
+
+        return requestPackageService.saveCourseRequest();
     }
 
 }
