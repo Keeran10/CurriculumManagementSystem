@@ -1,8 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ApiService} from '../backend-api.service';
-import {map} from "rxjs/operators";
-import {keyframes} from "@angular/animations";
 
 export interface DialogData {
   animal: string;
@@ -20,14 +18,16 @@ export class ImpactStatementComponent implements OnInit {
   name: string;
 
   id: string;
-  requests: Map<string, object>;
+  // tslint:disable-next-line:prefer-const
+  impact;
   title: 'test';
 
 
-  constructor(public dialog: MatDialog, private apiService: ApiService) {
+constructor(public dialog: MatDialog, private apiService: ApiService) {
   }
 
-  ngOnInit(): void {
+ngOnInit(): void {
+    this.apiService.getImpact('1').subscribe(data => this.impact = data);
   }
 
   private getCourseName() {

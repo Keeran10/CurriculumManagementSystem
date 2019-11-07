@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Course } from './model/course';
+import { Course } from './models/course';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +31,9 @@ export class ApiService {
     return this.http.post<Course>(this.url + 'courses', course);
   }
 
-  public getRequest(requestId: string) {
-    return this.http.get<Map<string, object>>(this.url + 'ImpactAssessment', {
-      params: new HttpParams().set('requestId', requestId)
+  public getImpact(id: string) {
+    return this.http.get(this.url + 'ImpactAssessment', {
+      params: new HttpParams().set('requestId', id)
     });
   }
 }

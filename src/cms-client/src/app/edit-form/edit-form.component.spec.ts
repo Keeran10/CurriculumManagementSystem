@@ -5,7 +5,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Course } from '../model/course';
+import { Course } from '../models/course';
 
 describe('EditFormComponent', () => {
   let component: EditFormComponent;
@@ -39,7 +39,7 @@ describe('EditFormComponent', () => {
   it('should not format prerequisites if there are none', () =>{
     let testCourse: Course = new Course();
     testCourse.prerequisites = [];
-    
+
     let result = component.getPrerequisitesString(testCourse);
     expect(result).toBe("")
   });
@@ -51,7 +51,7 @@ describe('EditFormComponent', () => {
         "MECH321",
         "TEST456"
       ];
-    
+
     let result = component.getPrerequisitesString(testCourse);
     expect(result).toBe("SOEN123; MECH321; TEST456; ")
   });
