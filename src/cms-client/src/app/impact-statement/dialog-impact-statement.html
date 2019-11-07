@@ -1,14 +1,14 @@
 <h1 mat-dialog-title>Original course:</h1>
-<p>_SOEN 343 full details</p>
+<p>{{data.OriginalCourseName}} {{data.OriginalCourseNumber}}</p>
 <div mat-dialog-content>
   <h4>IMPACT STATEMENT</h4>
-<p>Course name has been changed to</p><h4>$_COMP343</h4>
-  <p>Course credit has been changed to</p><h4> {{impact.CourseChanges.Credits}}</h4>
-  <p>The course name change signifies that </p><h4>$_COMP343</h4><p> is no longer offered
+<p>Course name has been changed to</p><h4>{{data.NewCourseAdded}}</h4>
+  <p *ngIf="data.Credits">Course credit has been changed to</p><h4> {{data.Credits}}</h4>
+  <p>The course name change signifies that </p><h4>{{data.OriginalCourseName}} {{data.OriginalCourseNumber}}</h4><p> is no longer offered
 by program: </p>
-  <h4>- $_Software Engineering</h4>
+  <h4>{{data.OriginalCourseName}}</h4>
   <p>And is now offered by program: </p>
-  <h4>- $_Computer Science</h4>
+  <h4>{{data.OriginalCourseName}}</h4>
   <p>The following degree requirement(s) is/are affected by the course credit change: </p>
   <h4>- $_Bachelor of Software Engineering - Software Engineering Core (40 credits)</h4>
   <h4>- $_Bachelor of Computer Science - Computer Science Core (33 credits) </h4>

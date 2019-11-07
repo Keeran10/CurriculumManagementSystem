@@ -37,7 +37,10 @@ ngOnInit(): void {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogImpactStatementComponent, {
       width: '900px',
-      data: {name: this.name, animal: this.animal}
+      data: {Credits: this.impact.CourseChanges.Credits,
+      OriginalCourseName: this.impact.CourseName,
+      OriginalCourseNumber: this.impact.CourseNumber,
+      NewCourseAdded: this.impact.CourseChanges.RequisitesAdded.Courses}
     });
 
     dialogRef.afterClosed().subscribe(result => {
