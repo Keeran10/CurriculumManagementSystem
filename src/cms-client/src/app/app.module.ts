@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CookieService } from 'ngx-cookie-service';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
@@ -22,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { PackageComponent } from './package/package.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
@@ -37,6 +39,7 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     CourseFormComponent,
     CourseListComponent,
     EditFormComponent,
+    PackageComponent,
     SearchPageComponent,
     SupportDocumentComponent
   ],
@@ -60,7 +63,10 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     MatCheckboxModule,
     MatListModule
   ],
-  providers: [ApiService],
+  providers: [
+    ApiService,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
