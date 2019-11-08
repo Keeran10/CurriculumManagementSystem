@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -30,6 +31,8 @@ public class RequestPackageService {
     RequisiteRepository requisiteRepository;
     @Autowired
     RequestPackageRepository requestPackageRepository;
+    @Autowired
+    DepartmentRepository departmentRepository;
 
 
     public RequestPackage getRequestPackage(int id){
@@ -190,8 +193,37 @@ public class RequestPackageService {
         return true;
     }
 
+
+    // returns list of packages
     public List<RequestPackage> getRequestPackagesByDepartment(int department_id) {
 
         return requestPackageRepository.findByDepartment(department_id);
+    }
+
+
+    /**
+     * Saves a new request package to the database
+     * @param requestPackageForm contains department name and files (memos, cover letters, supporting docs)
+     * @return True if request package was added to database
+     * @throws JSONException
+     */
+    public boolean saveRequestPackage(JSONObject requestPackageForm) throws JSONException {
+
+        RequestPackage requestPackage = new RequestPackage();
+
+        requestPackage.setDepartment(departmentRepository.findByName((String) requestPackageForm.get("name")));
+
+        List<SupportingDocument> supportingDocuments = new ArrayList<>();
+
+        if(requestPackageForm.get("support_docs") != null){
+
+            // init supporting docs, save them to db and then add them to list
+        }
+
+        requestPackage.setSupportingDocuments(supportingDocuments);
+
+        requestPackageRepository.save(requestPackage);
+
+        return true;
     }
 }

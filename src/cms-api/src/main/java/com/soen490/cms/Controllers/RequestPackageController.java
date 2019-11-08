@@ -90,11 +90,21 @@ public class RequestPackageController {
     }
 
 
-    // returns list of packages from a given department
+    // returns a package from a given id
     @GetMapping(value = "/get_package")
     public RequestPackage getRequestPackage(int package_id){
 
         return requestPackageService.getRequestPackage(package_id);
+    }
+
+
+    // Save package to database
+    @PostMapping(value="/save_package", consumes = "application/json")
+    public boolean saveRequestPackage(@Valid @RequestBody String requestPackageForm, BindingResult bindingResult) throws JSONException{
+
+        JSONObject json = new JSONObject(requestPackageForm);
+
+        return requestPackageService.saveRequestPackage(json);
     }
 
 }
