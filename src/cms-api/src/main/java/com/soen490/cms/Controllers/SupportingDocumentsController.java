@@ -1,5 +1,6 @@
 package com.soen490.cms.Controllers;
 
+import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.RequestPackageService;
 import com.soen490.cms.Services.SupportingDocumentService;
@@ -44,7 +45,7 @@ public class SupportingDocumentsController {
      * Add a new supporting document to a request
      * path format: /supportingDocuments/add?documentId={id}
      *
-     * @param supportingDocumentId
+     * @param document
      * @param packageId
      * @return
      */
@@ -58,5 +59,20 @@ public class SupportingDocumentsController {
         supportingDocument.setTimestamp(timestamp);
 
         supportingDocsService.addSupportingDocument(supportingDocument);
+    }
+
+    @GetMapping(value = "/addSupportDoc")
+    public boolean supportTest(@RequestParam long package_id){
+
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        SupportingDocument supportingDocument = new SupportingDocument();
+        RequestPackage requestPackage = requestPackageService.find(package_id);
+        supportingDocument.setRequestPackage(requestPackage);
+        supportingDocument.setDocument(requestPackage.getPdfFile());
+        supportingDocument.setTimestamp(timestamp);
+
+        supportingDocsService.addSupportingDocument(supportingDocument);
+        return true;
     }
 }

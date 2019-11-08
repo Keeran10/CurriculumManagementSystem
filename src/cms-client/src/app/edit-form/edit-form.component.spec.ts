@@ -38,21 +38,39 @@ describe('EditFormComponent', () => {
 
   it('should not format prerequisites if there are none', () =>{
     let testCourse: Course = new Course();
-    testCourse.prerequisites = [];
+    testCourse.requisites = [];
     
-    let result = component.getPrerequisitesString(testCourse);
-    expect(result).toBe("")
+    component.setRequisitesStrings(testCourse);
+    expect(component.model.prerequisites).toBe("")
   });
 
   it('should format prerequisites if they exist', () => {
     let testCourse: Course = new Course();
-    testCourse.prerequisites = [
-        "SOEN123",
-        "MECH321",
-        "TEST456"
+    testCourse.requisites = [
+        {
+          id: 0,
+          name: "SOEN",
+          type: "prerequisite",
+          number: 123,
+          isActive: true
+        },
+        {
+          id: 0,
+          name: "MECH",
+          type: "prerequisite",
+          number: 321,
+          isActive: true
+        },
+        {
+          id: 0,
+          name: "TEST",
+          type: "prerequisite",
+          number: 456,
+          isActive: true
+        }
       ];
     
-    let result = component.getPrerequisitesString(testCourse);
-    expect(result).toBe("SOEN123; MECH321; TEST456; ")
+    component.setRequisitesStrings(testCourse);
+    expect(component.model.prerequisites).toBe("SOEN123; MECH321; TEST456; ")
   });
 });

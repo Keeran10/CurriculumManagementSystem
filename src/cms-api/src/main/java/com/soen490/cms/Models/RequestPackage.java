@@ -4,14 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
 public class RequestPackage {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Lob
+    private byte[] pdfFile;
 
     @JsonIgnoreProperties("requestPackages")
     @ManyToOne
@@ -20,13 +25,13 @@ public class RequestPackage {
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<Request> requests;
+    private List<Request> requests = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<SupportingDocument> supportingDocuments;
+    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy = "requestPackage")
-    private Collection<Approval> approvals;
+    private List<Approval> approvals = new ArrayList<>();
 }

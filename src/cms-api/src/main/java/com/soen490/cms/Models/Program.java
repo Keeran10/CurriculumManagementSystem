@@ -7,14 +7,16 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
 @ToString(exclude= {"degrees", "courses"})
 public class Program {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -32,9 +34,9 @@ public class Program {
 
     @JsonIgnoreProperties({"program", "degreeRequirements"})
     @OneToMany(mappedBy = "program")
-    private Collection<Degree> degrees;
+    private List<Degree> degrees = new ArrayList<>();
 
     @JsonIgnoreProperties({"program", "degreeRequirements"})
     @OneToMany(mappedBy = "program")
-    private Collection<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 }

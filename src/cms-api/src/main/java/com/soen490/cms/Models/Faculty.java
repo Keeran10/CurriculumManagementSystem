@@ -6,23 +6,21 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"departments", "calendars"})
+@ToString(exclude= "departments")
 public class Faculty {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
 
     @JsonIgnoreProperties({"faculty", "programs"})
     @OneToMany(mappedBy = "faculty")
-    private Collection<Department> departments;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "faculty")
-    private Collection<Calendar> calendars;
+    private List<Department> departments = new ArrayList<>();
 }

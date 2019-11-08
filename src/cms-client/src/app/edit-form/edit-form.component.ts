@@ -15,13 +15,8 @@ export class EditFormComponent implements OnInit {
   courseOriginal: Course = new Course();
   courseEditable: Course = new Course();
 
-  model = {
-    prerequisites: ''
-  };
-
-  editedModel = {
-    prerequisites: ''
-  }
+  model = new CourseExtras();
+  editedModel = new CourseExtras();
 
   constructor(private route: ActivatedRoute, private api: ApiService) {
   }
@@ -34,7 +29,7 @@ export class EditFormComponent implements OnInit {
       console.log(data);
       this.courseOriginal = data;
       this.courseEditable = Object.assign({}, data);
-      this.model.prerequisites = this.getPrerequisitesString(data);
+      this.setRequisitesStrings(data);
       this.editedModel = Object.assign({}, this.model);
     });
   }
@@ -56,15 +51,53 @@ export class EditFormComponent implements OnInit {
     });
   }
 
-  public getPrerequisitesString(course: Course): string {
-    let result = '';
-    if (course.prerequisites.length > 0) {
-      course.prerequisites.forEach(p => result += p + '; ');
+  public setRequisitesStrings(course: Course) {
+    if(course.requisites.length > 0){
+      course.requisites.forEach(r => {
+        if(r.type === 'prerequisite'){
+          this.model.prerequisites += r.name + r.number + '; '; 
+        }
+        else if(r.type === 'corequisite'){
+          this.model.corequisites += r.name + r.number + '; '; 
+        }
+      })
     }
-    return result;
   }
-
+/*
+  public setDegreesStrings(course: Course) {
+    if(course.degreeRequirements.length > 0){
+      course.degreeRequirements.forEach(d => {
+        if(d.type === 'prerequisite'){
+          this.model.prerequisites += p.name + p.number + '; '; 
+        }
+        else if(p.type === 'corequisite'){
+          this.model.corequisites += p.name + p.number + '; '; 
+        }
+      })
+    }
+  }
+*/
   public parsePrerequisitesString(prerequisites: string): Object{
     return {};
   }
+
+  public submitForm(){
+    this.api.submitEditedCourse(this.courseEditable, this.editedModel);
+  }
 }
+
+export class CourseExtras {
+  prerequisites: string;
+  corequisites: string;
+  antirequisites: string;
+  rationale: string;
+  implications: string;
+
+  constructor(){
+    this.prerequisites = '';
+    this.corequisites = '';
+    this.antirequisites = '';
+    this.rationale = '';
+    this.implications = '';
+  }
+};
