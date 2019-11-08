@@ -63,15 +63,17 @@ export class EditFormComponent implements OnInit {
       })
     }
   }
+
+  //There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
 /*
   public setDegreesStrings(course: Course) {
     if(course.degreeRequirements.length > 0){
       course.degreeRequirements.forEach(d => {
-        if(d.type === 'prerequisite'){
-          this.model.prerequisites += p.name + p.number + '; '; 
+        if(d.type === 'degree'){
+          do x
         }
-        else if(p.type === 'corequisite'){
-          this.model.corequisites += p.name + p.number + '; '; 
+        else if(d.type === 'elective'){
+          do y
         }
       })
     }
