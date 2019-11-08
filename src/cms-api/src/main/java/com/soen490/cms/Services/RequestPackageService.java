@@ -3,6 +3,7 @@ package com.soen490.cms.Services;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.*;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +186,13 @@ public class RequestPackageService {
 
         // Supporting Documents
         // initialize supporting doc and save it to its repository
+        if(courseExtras.get("files") != null){
+
+            JSONArray outline = courseExtras.getJSONArray("files");
+
+            System.out.println("this is what I actually receive: " + outline.getJSONObject(0).toString().getBytes());
+            //c.setOutline(outline.getJSONObject(0).toString().getBytes());
+        }
 
         courseRepository.save(c);
 
