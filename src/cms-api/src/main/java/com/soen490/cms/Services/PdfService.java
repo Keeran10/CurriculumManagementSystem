@@ -635,7 +635,11 @@ public class PdfService {
 
         rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
         rationale_phrase.add(Chunk.NEWLINE);
-        rationale_phrase.add(new Chunk(rationale, arial_10));
+
+        if(!rationale.equals(""))
+            rationale_phrase.add(new Chunk(rationale, arial_10));
+        else
+            rationale_phrase.add(new Chunk("None.", arial_10));
 
         PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
         rationale_cell.setColspan(2);
@@ -647,7 +651,10 @@ public class PdfService {
 
         resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
         resource_phrase.add(Chunk.NEWLINE);
-        resource_phrase.add(new Chunk(resource_implications, arial_10));
+        if(!resource_implications.equals(""))
+            resource_phrase.add(new Chunk(resource_implications, arial_10));
+        else
+            resource_phrase.add(new Chunk("None.", arial_10));
 
         PdfPCell resource_cell = new PdfPCell(resource_phrase);
         resource_cell.setColspan(2);
