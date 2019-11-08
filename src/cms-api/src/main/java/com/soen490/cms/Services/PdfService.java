@@ -701,6 +701,8 @@ public class PdfService {
 
         Iterator it = impact_report.entrySet().iterator();
 
+        boolean isNone = true;
+
         Paragraph report_paragraph = new Paragraph();
         report_paragraph.setTabSettings(new TabSettings(25f));
         report_paragraph.add(new Chunk("Impact Statements Report:", column_font).setUnderline(0.1f, -1f));
@@ -740,6 +742,7 @@ public class PdfService {
 
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
+                                isNone = false;
                             }
                         }
                         if (updated != null) {
@@ -834,6 +837,7 @@ public class PdfService {
                                 report_paragraph.add(Chunk.NEWLINE);
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
+                                isNone = false;
                             }
                         }
                         if (updated != null) {
@@ -929,6 +933,7 @@ public class PdfService {
                                 report_paragraph.add(Chunk.NEWLINE);
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
+                                isNone = false;
                             }
                         }
                         if(updated != null) {
@@ -998,6 +1003,9 @@ public class PdfService {
                 }
             }
         }
+
+        if(isNone)
+            report_paragraph.add(new Chunk("None.", arial_10));
 
         PdfPCell report = new PdfPCell(report_paragraph);
         report.setColspan(2);
