@@ -190,7 +190,8 @@ public class RequestPackageService {
 
             JSONArray outline = courseExtras.getJSONArray("files");
 
-            System.out.println("this is what I actually receive: " + outline.getJSONObject(0).toString().getBytes());
+            System.out.println("Upload files data: " + outline);
+            System.out.println("More info on files: " + outline.getJSONObject(0));
             //c.setOutline(outline.getJSONObject(0).toString().getBytes());
         }
 
