@@ -77,6 +77,8 @@ public class RequestPackageController {
         JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
         JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
 
+        System.out.println(requestForm);
+
         return requestPackageService.saveCourseRequest(course, courseExtras);
 
     }
@@ -99,10 +101,12 @@ public class RequestPackageController {
 
 
     // Save package to database
-    @PostMapping(value="/save_package", consumes = "application/json")
+    @PostMapping(value="/save_package")
     public boolean saveRequestPackage(@Valid @RequestBody String requestPackageForm, BindingResult bindingResult) throws JSONException{
 
         JSONObject json = new JSONObject(requestPackageForm);
+
+        System.out.println(requestPackageForm);
 
         return requestPackageService.saveRequestPackage(json);
     }

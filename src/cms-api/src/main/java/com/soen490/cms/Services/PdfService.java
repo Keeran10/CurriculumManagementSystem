@@ -10,6 +10,7 @@ import com.itextpdf.text.pdf.*;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -513,6 +514,8 @@ public class PdfService {
 
     }
 
+    private String o_anti_note = "";
+    private String c_anti_note = "";
 
     /**
      * Adds the course table where the differences between the original and changed course are highlighted.
@@ -540,11 +543,26 @@ public class PdfService {
         String c_title = " " + c.getTitle();
         String c_credits = " (" + c.getCredits() + " credits)";
 
-        String o_body = stringifyRequisites(o.getRequisites()) + o.getDescription();
-        String c_body = stringifyRequisites(c.getRequisites()) + c.getDescription();
+        String o_body = stringifyRequisites(o.getRequisites(), true) + o.getDescription();
+        String c_body = stringifyRequisites(c.getRequisites(), false) + c.getDescription();
 
         String o_note = o.getNote();
         String c_note = c.getNote();
+
+        if(!o_anti_note.equals("")){
+
+            if(!o_note.equals(""))
+                o_note = o_note.substring(6);
+
+            o_note = o_anti_note + o_note;
+        }
+        if(!c_anti_note.equals("")){
+
+            if(!c_note.equals(""))
+                c_note = c_note.substring(6);
+
+            c_note = c_anti_note + c_note;
+        }
 
         String rationale = request.getRationale();
         String resource_implications = request.getResourceImplications();
@@ -993,10 +1011,16 @@ public class PdfService {
      * @param requisites The requisites of a given course.
      * @return A formatted string of requisites.
      */
-    private String stringifyRequisites(Collection<Requisite> requisites) {
+    private String stringifyRequisites(Collection<Requisite> requisites, boolean original) {
 
         StringBuilder r;
         int ctr = 0;
+        int ctr_anti = 0;
+        int ctr2_anti = 0;
+        int ctr_co = 0;
+        int ctr2_co = 0;
+        String anti_store = "";
+        String co_store = "";
 
         if(!requisites.isEmpty())
             r = new StringBuilder("Prerequisite: ");
@@ -1004,6 +1028,14 @@ public class PdfService {
             return "";
 
         boolean equivalent_next = true;
+
+        for(Requisite requisite : requisites){
+
+            if(requisite.getType().equals("antirequisite"))
+                ctr_anti++;
+            if(requisite.getType().equals("corequisite"))
+                ctr_co++;
+        }
 
         for(Requisite requisite : requisites){
 
@@ -1018,10 +1050,6 @@ public class PdfService {
                 else
                     r.append("; ").append(name_number);
             }
-
-            else if(type.equals("corequisite"))
-                r.append("; ").append(name_number).append(" previously or concurrently");
-
             else if(type.equals("equivalent") && equivalent_next) {
                 r.append("; ").append(name_number).append(" or ");
                 equivalent_next = false;
@@ -1030,7 +1058,48 @@ public class PdfService {
                 r.append(name_number);
                 equivalent_next = true;
             }
+            else if(type.equals("corequisite")) {
+
+                if(ctr_co == 1)
+                    co_store = name_number + " previously or concurrently";
+
+                else if(ctr_co == 2)
+                    co_store = co_store + " and " + name_number + " previously or concurrently";
+
+                else if(ctr_co != ctr2_co)
+                    co_store = co_store + ", " + name_number;
+
+                else co_store = co_store + " and " + name_number + " previously or concurrently";
+
+                ctr2_co++;
+
+            }
+            else if(type.equals("antirequisite")){
+
+                if(ctr_anti == 1)
+                    anti_store = name_number;
+
+                else if(ctr_anti == 2)
+                    anti_store = anti_store + " or " + name_number;
+
+                else if(ctr_anti != ctr2_anti)
+                    anti_store = anti_store + ", " + name_number;
+
+                else anti_store = anti_store + " or " + name_number;
+
+                ctr2_anti++;
+            }
         }
+
+        if (original && ctr_anti > 0)
+            o_anti_note = "NOTE: Students who have received credit for " + anti_store +
+                    " may not take this course for credit.";
+        else if (!original && ctr_anti > 0)
+            c_anti_note = "NOTE: Students who have received credit for " + anti_store +
+                    " may not take this course for credit.";
+
+        if(ctr_co > 0)
+            r.append("; ").append(co_store);
 
         r.append(". ");
 
@@ -1109,8 +1178,13 @@ public class PdfService {
                 }
 
                 if(type == 4) {
-                    original_phrase.add(new Chunk(partition + " ",
-                            arial_10_red).setUnderline(0.1f, 3f));
+
+                    if(StringUtils.isNumeric(partition))
+                        original_phrase.add(new Chunk(partition,
+                                arial_10_red).setUnderline(0.1f, 3f));
+                    else
+                        original_phrase.add(new Chunk(partition + " ",
+                                arial_10_red).setUnderline(0.1f, 3f));
                 }
 
                 if(type == 5)
@@ -1174,8 +1248,13 @@ public class PdfService {
                 }
 
                 if(type == 4) {
-                    changed_phrase.add(new Chunk(partition + " ",
-                            arial_10_blue).setUnderline(0.1f, -1f));
+
+                    if(StringUtils.isNumeric(partition))
+                        changed_phrase.add(new Chunk(partition,
+                                arial_10_blue).setUnderline(0.1f, -1f));
+                    else
+                        changed_phrase.add(new Chunk(partition + " ",
+                                arial_10_blue).setUnderline(0.1f, -1f));
                 }
 
                 if(type == 5)
