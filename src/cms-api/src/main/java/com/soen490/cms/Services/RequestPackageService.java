@@ -85,8 +85,8 @@ public class RequestPackageService {
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setRequestPackage(null);
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(1));
-        request.setRequestPackage(requestPackageRepository.findById(1));
+        request.setUser(userRepository.findById(Integer.parseInt((String) courseExtras.get("userId"))));
+        request.setRequestPackage(requestPackageRepository.findById(Integer.parseInt((String) courseExtras.get("packageId"))));
 
         // Degree Requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
@@ -114,12 +114,12 @@ public class RequestPackageService {
         String pre = (String) courseExtras.get("prerequisites");
         String co = (String) courseExtras.get("corequisites");
         String anti = (String) courseExtras.get("antirequisites");
-        // String eq = (String) courseExtras.get();
+        String eq = (String) courseExtras.get("equivalents");
 
         String[] prerequisites = pre.split(";|\\,");
         String[] corequisites = co.split(";|\\,");
         String[] antirequisites = anti.split(";|\\,");
-        //String[] equivalents = pre.split(";|\\,");
+        String[] equivalents = eq.split(";|,|or");
 
         for(String prerequisite : prerequisites){
 
@@ -167,7 +167,6 @@ public class RequestPackageService {
                 requisiteRepository.save(requisite);
             }
         }
-        /*
         for(String equivalent : equivalents){
 
             equivalent = equivalent.trim();
@@ -183,7 +182,6 @@ public class RequestPackageService {
                 requisiteRepository.save(requisite);
             }
         }
-        */
 
         // Supporting Documents
         // initialize supporting doc and save it to its repository
