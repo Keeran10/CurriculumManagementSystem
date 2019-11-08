@@ -50,24 +50,24 @@ public class SupportingDocumentsController {
      * @return
      */
     @PostMapping(value = "/addSupportingDocument")
-    public void add(@RequestParam("document") byte[] document, @RequestParam("package_id") Long packageId){
+    public void add(@RequestParam("document") byte[] document, @RequestParam("package_id") int packageId){
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         SupportingDocument supportingDocument = new SupportingDocument();
         supportingDocument.setDocument(document);
-        supportingDocument.setRequestPackage(requestPackageService.find(packageId));
+        supportingDocument.setRequestPackage(requestPackageService.getRequestPackage(packageId));
         supportingDocument.setTimestamp(timestamp);
 
         supportingDocsService.addSupportingDocument(supportingDocument);
     }
 
     @GetMapping(value = "/addSupportDoc")
-    public boolean supportTest(@RequestParam long package_id){
+    public boolean supportTest(@RequestParam int package_id){
 
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         SupportingDocument supportingDocument = new SupportingDocument();
-        RequestPackage requestPackage = requestPackageService.find(package_id);
+        RequestPackage requestPackage = requestPackageService.getRequestPackage(package_id);
         supportingDocument.setRequestPackage(requestPackage);
         supportingDocument.setDocument(requestPackage.getPdfFile());
         supportingDocument.setTimestamp(timestamp);

@@ -1,5 +1,6 @@
 package com.soen490.cms.Controllers;
 
+import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONArray;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -75,8 +77,38 @@ public class RequestPackageController {
         JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
         JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
 
+        System.out.println(requestForm);
+
         return requestPackageService.saveCourseRequest(course, courseExtras);
 
+    }
+
+
+    // returns list of packages from a given department
+    @GetMapping(value = "/get_packages")
+    public List<RequestPackage> getRequestPackages(int department_id){
+
+        return requestPackageService.getRequestPackagesByDepartment(department_id);
+    }
+
+
+    // returns a package from a given id
+    @GetMapping(value = "/get_package")
+    public RequestPackage getRequestPackage(int package_id){
+
+        return requestPackageService.getRequestPackage(package_id);
+    }
+
+
+    // Save package to database
+    @PostMapping(value="/save_package", consumes = "application/json")
+    public boolean saveRequestPackage(@Valid @RequestBody String requestPackageForm, BindingResult bindingResult) throws JSONException{
+
+        JSONObject json = new JSONObject(requestPackageForm);
+
+        System.out.println(requestPackageForm);
+
+        return requestPackageService.saveRequestPackage(json);
     }
 
 }
