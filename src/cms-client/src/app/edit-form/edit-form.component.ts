@@ -42,49 +42,49 @@ export class EditFormComponent implements OnInit {
     const insElements = document.querySelectorAll('ins');
     const delElements = document.querySelectorAll('del');
 
-    insElements.forEach( (e) => {
+    insElements.forEach((e) => {
       e.style.background = '#bbffbb';
     });
 
-    delElements.forEach( (e) => {
+    delElements.forEach((e) => {
       e.style.background = '#ffbbbb';
     });
   }
 
   public setRequisitesStrings(course: Course) {
-    if(course.requisites.length > 0){
+    if (course.requisites.length > 0) {
       course.requisites.forEach(r => {
-        if(r.type === 'prerequisite'){
-          this.model.prerequisites += r.name + r.number + '; '; 
+        if (r.type === 'prerequisite') {
+          this.model.prerequisites += r.name + r.number + '; ';
         }
-        else if(r.type === 'corequisite'){
-          this.model.corequisites += r.name + r.number + '; '; 
+        else if (r.type === 'corequisite') {
+          this.model.corequisites += r.name + r.number + '; ';
         }
       })
     }
   }
 
   //There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
-/*
-  public setDegreesStrings(course: Course) {
-    if(course.degreeRequirements.length > 0){
-      course.degreeRequirements.forEach(d => {
-        if(d.type === 'degree'){
-          do x
-        }
-        else if(d.type === 'elective'){
-          do y
-        }
-      })
-    }
-  }
-*/
-  public parsePrerequisitesString(prerequisites: string): Object{
+  /*
+    public setDegreesStrings(course: Course) {
+      if(course.degreeRequirements.length > 0){
+        course.degreeRequirements.forEach(d => {
+          if(d.type === 'degree'){
+            do x
+          }
+          else if(d.type === 'elective'){
+            do y
+          }
+        })
+      }
+    */
+  public parsePrerequisitesString(prerequisites: string): Object {
     return {};
   }
 
-  public submitForm(){
-    this.api.submitEditedCourse(this.courseEditable, this.editedModel);
+  public submitForm() {
+    this.api.submitEditedCourse(this.courseEditable, this.editedModel)
+      .subscribe(data => { console.log(data) })
   }
 }
 
@@ -95,7 +95,7 @@ export class CourseExtras {
   rationale: string;
   implications: string;
 
-  constructor(){
+  constructor() {
     this.prerequisites = '';
     this.corequisites = '';
     this.antirequisites = '';

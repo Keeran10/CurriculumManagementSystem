@@ -142,8 +142,8 @@ INSERT IGNORE INTO requisite VALUES (13, 1, "ENGR", 213, "prerequisite", 17);
 INSERT IGNORE INTO requisite VALUES (14, 1, "ENGR", 242, "prerequisite", 17);
 INSERT IGNORE INTO requisite VALUES (15, 1, "ENGR", 213, "prerequisite", 18);
 INSERT IGNORE INTO requisite VALUES (16, 1, "ENGR", 233, "corequisite", 18);
-INSERT IGNORE INTO requisite VALUES (17, 1, "ENGR", 242, "or-prerequisite", 18); -- new type or-prerequisite; you either had to do 242 or 245 as prerequisites
-INSERT IGNORE INTO requisite VALUES (18, 1, "ENGR", 245, "or-prerequisite", 18); -- new type or-prerequisite; you either had to do 242 or 245 as prerequisites
+INSERT IGNORE INTO requisite VALUES (17, 1, "ENGR", 242, "equivalent", 18); -- new type or-prerequisite; you either had to do 242 or 245 as prerequisites
+INSERT IGNORE INTO requisite VALUES (18, 1, "ENGR", 245, "equivalent", 18); -- new type or-prerequisite; you either had to do 242 or 245 as prerequisites
 INSERT IGNORE INTO requisite VALUES (19, 1, "MATH", 203, "prerequisite", 19);
 INSERT IGNORE INTO requisite VALUES (20, 1, "ENGR", 213, "prerequisite", 20);
 INSERT IGNORE INTO requisite VALUES (21, 1, "ENGR", 233, "prerequisite", 20);
@@ -151,8 +151,8 @@ INSERT IGNORE INTO requisite VALUES (22, 1, "ENGR", 213, "prerequisite", 21);
 INSERT IGNORE INTO requisite VALUES (23, 1, "ENGR", 233, "prerequisite", 21);
 INSERT IGNORE INTO requisite VALUES (24, 1, "ENGR", 251, "prerequisite", 21);
 
-INSERT IGNORE INTO requisite VALUES (25, 1, "COMP", 354, "equivalent", 5); -- soen 341 = comp 354
-INSERT IGNORE INTO requisite VALUES (26, 1, "COMP", 228, "equivalent", 5); -- soen 228 = comp 228
+INSERT IGNORE INTO requisite VALUES (25, 1, "COMP", 354, "antirequisite", 5); -- soen 341 = comp 354
+INSERT IGNORE INTO requisite VALUES (26, 1, "COMP", 228, "antirequisite", 5); -- soen 228 = comp 228
 
 INSERT IGNORE INTO requisite VALUES (27, 1, "MATH", 204, "prerequisite", 23);
 INSERT IGNORE INTO requisite VALUES (28, 1, "CHEM", 205, "prerequisite", 24);
@@ -166,26 +166,26 @@ INSERT IGNORE INTO requisite VALUES (35, 1, "ENGR", 244, "prerequisite", 29);
 INSERT IGNORE INTO requisite VALUES (36, 1, "MECH", 313, "prerequisite", 29);
 INSERT IGNORE INTO requisite VALUES (37, 1, "MECH", 321, "corequisite", 29);
 INSERT IGNORE INTO requisite VALUES (38, 1, "MECH", 343, "corequisite", 29);
-INSERT IGNORE INTO requisite VALUES (39, 1, "MECH", 441, "equivalent", 29);
+INSERT IGNORE INTO requisite VALUES (39, 1, "MECH", 441, "antirequisite", 29);
 INSERT IGNORE INTO requisite VALUES (40, 1, "ENGR", 251, "prerequisite", 30);
 INSERT IGNORE INTO requisite VALUES (41, 1, "ENGR", 311, "prerequisite", 31);
 INSERT IGNORE INTO requisite VALUES (42, 1, "ENGR", 361, "prerequisite", 31);
 INSERT IGNORE INTO requisite VALUES (43, 1, "ENGR", 361, "prerequisite", 32);
 INSERT IGNORE INTO requisite VALUES (44, 1, "PHYS", 205, "prerequisite", 33);
 INSERT IGNORE INTO requisite VALUES (45, 1, "ENGR", 311, "corequisite", 33);
-INSERT IGNORE INTO requisite VALUES (46, 1, "MECH", 470, "equivalent", 33);
+INSERT IGNORE INTO requisite VALUES (46, 1, "MECH", 470, "antirequisite", 33);
 INSERT IGNORE INTO requisite VALUES (47, 1, "PHYS", 205, "prerequisite", 34);
 INSERT IGNORE INTO requisite VALUES (48, 1, "ENGR", 213, "prerequisite", 34);
 INSERT IGNORE INTO requisite VALUES (49, 1, "ENGR", 311, "corequisite", 34);
-INSERT IGNORE INTO requisite VALUES (50, 1, "ENGR", 243, "or-prerequisite", 34);
-INSERT IGNORE INTO requisite VALUES (51, 1, "ENGR", 245, "or-prerequisite", 34);
-INSERT IGNORE INTO requisite VALUES (52, 1, "ELEC", 370, "equivalent", 34);
+INSERT IGNORE INTO requisite VALUES (50, 1, "ENGR", 243, "equivalent", 34);
+INSERT IGNORE INTO requisite VALUES (51, 1, "ENGR", 245, "equivalent", 34);
+INSERT IGNORE INTO requisite VALUES (52, 1, "ELEC", 370, "antirequisite", 34);
 INSERT IGNORE INTO requisite VALUES (53, 1, "ENGR", 311, "prerequisite", 35);
 INSERT IGNORE INTO requisite VALUES (54, 1, "MECH", 370, "prerequisite", 35);
-INSERT IGNORE INTO requisite VALUES (55, 1, "ELEC", 372, "equivalent", 35);
-INSERT IGNORE INTO requisite VALUES (56, 1, "AERO", 371, "or-prerequisite", 36);
-INSERT IGNORE INTO requisite VALUES (57, 1, "MECH", 370, "or-prerequisite", 36);
-INSERT IGNORE INTO requisite VALUES (58, 1, "MECH", 443, "equivalent", 36);
+INSERT IGNORE INTO requisite VALUES (55, 1, "ELEC", 372, "antirequisite", 35);
+INSERT IGNORE INTO requisite VALUES (56, 1, "AERO", 371, "equivalent", 36);
+INSERT IGNORE INTO requisite VALUES (57, 1, "MECH", 370, "equivalent", 36);
+INSERT IGNORE INTO requisite VALUES (58, 1, "MECH", 443, "antirequisite", 36);
 INSERT IGNORE INTO requisite VALUES (59, 1, "ENCS", 282, "prerequisite", 37);
 INSERT IGNORE INTO requisite VALUES (60, 1, "MECH", 311, "prerequisite", 37);
 INSERT IGNORE INTO requisite VALUES (61, 1, "MECH", 343, "prerequisite", 37);
