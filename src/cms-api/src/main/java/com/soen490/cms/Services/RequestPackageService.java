@@ -19,8 +19,6 @@ import java.util.*;
 public class RequestPackageService {
 
     @Autowired
-    RequestPackageRepository packageRepo;
-    @Autowired
     CourseRepository courseRepository;
     @Autowired
     RequestRepository requestRepository;
@@ -33,11 +31,10 @@ public class RequestPackageService {
     @Autowired
     RequestPackageRepository requestPackageRepository;
 
-    public RequestPackage find(Long packageId) {
-        log.info("find supporting document with id " + packageId);
-        return packageRepo.findById(packageId);
-    }
 
+    public RequestPackage getRequestPackage(int id){
+        return requestPackageRepository.findById(id);
+    }
 
     /**
      * Saves an edited course to the database.
@@ -193,4 +190,8 @@ public class RequestPackageService {
         return true;
     }
 
+    public List<RequestPackage> getRequestPackagesByDepartment(int department_id) {
+
+        return requestPackageRepository.findByDepartment(department_id);
+    }
 }

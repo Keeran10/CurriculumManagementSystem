@@ -1,5 +1,6 @@
 package com.soen490.cms.Controllers;
 
+import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONArray;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -77,6 +79,22 @@ public class RequestPackageController {
 
         return requestPackageService.saveCourseRequest(course, courseExtras);
 
+    }
+
+
+    // returns list of packages from a given department
+    @GetMapping(value = "/get_packages")
+    public List<RequestPackage> getRequestPackages(int department_id){
+
+        return requestPackageService.getRequestPackagesByDepartment(department_id);
+    }
+
+
+    // returns list of packages from a given department
+    @GetMapping(value = "/get_package")
+    public RequestPackage getRequestPackage(int package_id){
+
+        return requestPackageService.getRequestPackage(package_id);
     }
 
 }
