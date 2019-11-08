@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from './model/course';
-import { CourseExtras } from './edit-form/edit-form.component';
+import { CourseExtras } from './model/course-extras';
 import { Injectable } from '@angular/core';
 
 @Injectable({
