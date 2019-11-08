@@ -1,14 +1,19 @@
 package com.soen490.cms.Controllers;
 
-import com.itextpdf.text.Document;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -53,10 +58,25 @@ public class RequestPackageController {
     }
 
 
-    @GetMapping(value="/save_request")
-    public boolean saveRequest(){
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param requestForm Combined stringified JSON received from front-end.
+     * @param bindingResult Validates requestForm.
+     * @return True if course was successfully added to database.
+     * @throws JSONException
+     */
+    @PostMapping(value="/save_request", consumes = "application/json")
+    public boolean saveRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
 
-        return requestPackageService.saveCourseRequest();
+        JSONObject json = new JSONObject(requestForm);
+
+        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
+
+        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
+        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
+
+        return requestPackageService.saveCourseRequest(course, courseExtras);
+
     }
 
 }

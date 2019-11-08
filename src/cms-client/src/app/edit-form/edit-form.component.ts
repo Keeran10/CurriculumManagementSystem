@@ -43,11 +43,11 @@ export class EditFormComponent {
     const insElements = document.querySelectorAll('ins');
     const delElements = document.querySelectorAll('del');
 
-    insElements.forEach( (e) => {
+    insElements.forEach((e) => {
       e.style.background = '#bbffbb';
     });
 
-    delElements.forEach( (e) => {
+    delElements.forEach((e) => {
       e.style.background = '#ffbbbb';
     });
   }
@@ -59,7 +59,7 @@ export class EditFormComponent {
         switch(r.type){
           case 'equivalent':
             if(isNextEquivalent){
-              this.model.equivalents += r.name + r.number + " or "
+              this.model.equivalents += r.name + r.number + " or ";
             }
             else{
               this.model.equivalents += r.name + r.number + '; '; 
@@ -78,7 +78,7 @@ export class EditFormComponent {
   }
 
   //There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
-/*
+  /*
   public setDegreesStrings(course: Course) {
     if(course.degreeRequirements.length > 0){
       course.degreeRequirements.forEach(d => {
@@ -90,14 +90,11 @@ export class EditFormComponent {
         }
       })
     }
-  }
-*/
-  public parsePrerequisitesString(prerequisites: string): Object{
-    return {};
-  }
+  */
 
-  public submitForm(){
+  public submitForm() {
     this.editedModel.files = this.supportDocumentComponent.documents;
-    this.api.submitEditedCourse(this.courseEditable, this.editedModel);
+    this.api.submitEditedCourse(this.courseEditable, this.editedModel)
+      .subscribe(data => { console.log(data) })
   }
 }

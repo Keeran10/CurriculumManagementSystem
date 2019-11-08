@@ -124,6 +124,17 @@ public class PdfService {
 
                     addCoursePreface(doc, request, original_course, changed_course);
                     addCourseDiffTable(doc, request, original_course, changed_course);
+
+                    // append course outline
+                    if(changed_course.getOutline() != null){
+
+                        ByteArrayOutputStream course_outline_stream =
+                                new ByteArrayOutputStream(changed_course.getOutline().length);
+
+                        course_outline_stream.write(changed_course.getOutline(), 0, changed_course.getOutline().length);
+
+                        mergeDocs(request_stream, course_outline_stream);
+                    }
                 }
                 else if(request.getTargetType() == 1){
 
@@ -138,6 +149,8 @@ public class PdfService {
         } catch (DocumentException | FileNotFoundException e){
             e.printStackTrace();
             return false;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
@@ -622,7 +635,11 @@ public class PdfService {
 
         rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
         rationale_phrase.add(Chunk.NEWLINE);
-        rationale_phrase.add(new Chunk(rationale, arial_10));
+
+        if(!rationale.equals(""))
+            rationale_phrase.add(new Chunk(rationale, arial_10));
+        else
+            rationale_phrase.add(new Chunk("None.", arial_10));
 
         PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
         rationale_cell.setColspan(2);
@@ -634,7 +651,10 @@ public class PdfService {
 
         resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
         resource_phrase.add(Chunk.NEWLINE);
-        resource_phrase.add(new Chunk(resource_implications, arial_10));
+        if(!resource_implications.equals(""))
+            resource_phrase.add(new Chunk(resource_implications, arial_10));
+        else
+            resource_phrase.add(new Chunk("None.", arial_10));
 
         PdfPCell resource_cell = new PdfPCell(resource_phrase);
         resource_cell.setColspan(2);
