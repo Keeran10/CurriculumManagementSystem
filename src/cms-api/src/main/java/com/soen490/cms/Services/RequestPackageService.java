@@ -191,7 +191,6 @@ public class RequestPackageService {
             JSONArray outline = courseExtras.getJSONArray("files");
 
             System.out.println("Upload files data: " + outline);
-            System.out.println("More info on files: " + outline.getJSONObject(0));
             //c.setOutline(outline.getJSONObject(0).toString().getBytes());
         }
 
