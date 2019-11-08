@@ -28,17 +28,17 @@ export class ApiService {
     });
   }
 
-  public saveCourse(course: Course)
-  {
+  public saveCourse(course: Course) {
     return this.http.post<Course>(this.url + "courses", course);
   }
 
-  public submitEditedCourse(course: Course, courseExtras: CourseExtras){
+  public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log('would Post');
-    /*return this.http.post(this.url + urlPath,{
+    return this.http.post(this.url + "save_request", {
       params: new HttpParams().set('course', JSON.stringify(course))
-                              .set('courseExtras', JSON.stringify(courseExtras))
+        .set('courseExtras', JSON.stringify(courseExtras))
     })
-    */
+
   }
+
 }
