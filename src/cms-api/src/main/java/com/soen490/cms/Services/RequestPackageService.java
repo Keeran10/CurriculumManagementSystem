@@ -3,12 +3,14 @@ package com.soen490.cms.Services;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.*;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -18,8 +20,6 @@ import java.util.*;
 
 public class RequestPackageService {
 
-    @Autowired
-    RequestPackageRepository packageRepo;
     @Autowired
     CourseRepository courseRepository;
     @Autowired
@@ -32,12 +32,13 @@ public class RequestPackageService {
     RequisiteRepository requisiteRepository;
     @Autowired
     RequestPackageRepository requestPackageRepository;
+    @Autowired
+    DepartmentRepository departmentRepository;
 
-    public RequestPackage find(Long packageId) {
-        log.info("find supporting document with id " + packageId);
-        return packageRepo.findById(packageId);
+
+    public RequestPackage getRequestPackage(int id){
+        return requestPackageRepository.findById(id);
     }
-
 
     /**
      * Saves an edited course to the database.
@@ -85,8 +86,8 @@ public class RequestPackageService {
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setRequestPackage(null);
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(1));
-        request.setRequestPackage(requestPackageRepository.findById(1));
+        request.setUser(userRepository.findById(Integer.parseInt(String.valueOf(courseExtras.get("userId")))));
+        request.setRequestPackage(requestPackageRepository.findById(Integer.parseInt(String.valueOf(courseExtras.get("packageId")))));
 
         // Degree Requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
@@ -114,12 +115,12 @@ public class RequestPackageService {
         String pre = (String) courseExtras.get("prerequisites");
         String co = (String) courseExtras.get("corequisites");
         String anti = (String) courseExtras.get("antirequisites");
-        // String eq = (String) courseExtras.get();
+        String eq = (String) courseExtras.get("equivalents");
 
         String[] prerequisites = pre.split(";|\\,");
         String[] corequisites = co.split(";|\\,");
         String[] antirequisites = anti.split(";|\\,");
-        //String[] equivalents = pre.split(";|\\,");
+        String[] equivalents = eq.split(";|,|or");
 
         for(String prerequisite : prerequisites){
 
@@ -167,7 +168,6 @@ public class RequestPackageService {
                 requisiteRepository.save(requisite);
             }
         }
-        /*
         for(String equivalent : equivalents){
 
             equivalent = equivalent.trim();
@@ -183,10 +183,16 @@ public class RequestPackageService {
                 requisiteRepository.save(requisite);
             }
         }
-        */
 
         // Supporting Documents
         // initialize supporting doc and save it to its repository
+        if(courseExtras.get("files") != null){
+
+            JSONArray outline = courseExtras.getJSONArray("files");
+
+            System.out.println("Upload files data: " + outline);
+            //c.setOutline(outline.getJSONObject(0).toString().getBytes());
+        }
 
         courseRepository.save(c);
 
@@ -195,4 +201,37 @@ public class RequestPackageService {
         return true;
     }
 
+
+    // returns list of packages
+    public List<RequestPackage> getRequestPackagesByDepartment(int department_id) {
+
+        return requestPackageRepository.findByDepartment(department_id);
+    }
+
+
+    /**
+     * Saves a new request package to the database
+     * @param requestPackageForm contains department name and files (memos, cover letters, supporting docs)
+     * @return True if request package was added to database
+     * @throws JSONException
+     */
+    public boolean saveRequestPackage(JSONObject requestPackageForm) throws JSONException {
+
+        RequestPackage requestPackage = new RequestPackage();
+
+        requestPackage.setDepartment(departmentRepository.findByName((String) requestPackageForm.get("name")));
+
+        List<SupportingDocument> supportingDocuments = new ArrayList<>();
+
+        if(requestPackageForm.get("support_docs") != null){
+
+            // init supporting docs, save them to db and then add them to list
+        }
+
+        requestPackage.setSupportingDocuments(supportingDocuments);
+
+        requestPackageRepository.save(requestPackage);
+
+        return true;
+    }
 }

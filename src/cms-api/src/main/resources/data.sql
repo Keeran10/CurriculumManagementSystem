@@ -135,6 +135,15 @@ INSERT IGNORE INTO requisite VALUES (7, 0, "SOEN", 341, "prerequisite", 15);-- s
 INSERT IGNORE INTO requisite VALUES (8, 0, "SOEN", 331, "prerequisite", 15);-- soen 343 edited needs 331
 INSERT IGNORE INTO requisite VALUES (9, 0, "SOEN", 343, "prerequisite", 10);-- soen 357 edited needs 343 edited
 
+INSERT IGNORE INTO requisite VALUES (68, 0, "ENCS", 282, "prerequisite", 11);
+INSERT IGNORE INTO requisite VALUES (69, 0, "SOEN", 341, "prerequisite", 11);
+INSERT IGNORE INTO requisite VALUES (70, 0, "ENGR", 213, "prerequisite", 12);
+INSERT IGNORE INTO requisite VALUES (71, 0, "ENGR", 233, "prerequisite", 12);
+INSERT IGNORE INTO requisite VALUES (72, 0, "SOEN", 344, "corequisite", 13);
+INSERT IGNORE INTO requisite VALUES (73, 0, "SOEN", 357, "corequisite", 13);
+INSERT IGNORE INTO requisite VALUES (74, 0, "SOEN", 390, "prerequisite", 14);
+INSERT IGNORE INTO requisite VALUES (75, 0, "75 credits in the program", 344, "prerequisite", 14);
+
 INSERT IGNORE INTO requisite VALUES (10, 1, "ENGR", 213, "prerequisite", 16);
 INSERT IGNORE INTO requisite VALUES (11, 1, "PHYS", 204, "prerequisite", 16);
 INSERT IGNORE INTO requisite VALUES (12, 1, "MATH", 204, "prerequisite", 16);

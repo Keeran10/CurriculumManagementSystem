@@ -18,26 +18,32 @@
         name="prerequisites"></textarea>
     </mat-form-field>
     <mat-form-field class="row4">
-      <textarea matInput placeholder="Corequisites Courses (Separate with ;)" [(ngModel)]="editedModel.corequisites"
-        name="corequisites"></textarea>
+      <textarea matInput placeholder="Equivalent Prerequisite Courses (E.g. AERO371 or MECH370;)" 
+      [(ngModel)]="editedModel.equivalents" 
+      name="equivalents"></textarea>
     </mat-form-field>
     <mat-form-field class="row5">
-      <input matInput placeholder="Antirequisites Courses (Seperate with ,)" [(ngModel)]="editedModel.antirequisites"
-        name="antirequisites">
+      <textarea matInput placeholder="Corequisites Courses (Separate with ;)" [(ngModel)]="editedModel.corequisites" 
+      name="corequisites"></textarea>
     </mat-form-field>
     <mat-form-field class="row6">
-      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description"
-        name="description"></textarea>
+      <input matInput placeholder="Antirequisites Courses (Seperate with ,)" [(ngModel)]="editedModel.antirequisites" 
+      name="antirequisites">
     </mat-form-field>
     <mat-form-field class="row7">
-      <input matInput placeholder="Notes" [(ngModel)]="courseEditable.note" name="notes">
+      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description" 
+      name="description"></textarea>
     </mat-form-field>
     <mat-form-field class="row8">
-      <textarea matInput placeholder="Rationale" [(ngModel)]="editedModel.rationale" name="rationale"></textarea>
+      <input matInput placeholder="Notes" [(ngModel)]="courseEditable.note" name="notes">
     </mat-form-field>
     <mat-form-field class="row9">
-      <textarea matInput placeholder="Resource Implications" [(ngModel)]="editedModel.implications"
-        name="implications"></textarea>
+      <textarea matInput placeholder="Rationale" [(ngModel)]="editedModel.rationale" 
+      name="rationale"></textarea>
+    </mat-form-field>
+    <mat-form-field class="row10">
+      <textarea matInput placeholder="Resource Implications" [(ngModel)]="editedModel.implications" 
+      name="implications"></textarea>
     </mat-form-field>
 
   </form>
@@ -66,15 +72,23 @@
 
     <br>
     <span>
-      <span *ngIf="editedModel.prerequisites.length != 0" style="display: inline-block">Prerequisite:
+      <div *ngIf="editedModel.prerequisites.length != 0" style="display: inline-block">
+        Prerequisite:
         <span style="display: inline-block" semanticDiff [left]="model.prerequisites"
           [right]="editedModel.prerequisites"></span>
-      </span>
+      </div>
       <br>
-      <span *ngIf="editedModel.corequisites.length != 0" style="display: inline-block">Corequisite:
+      <div *ngIf="editedModel.equivalents.length != 0" style="display: inline-block">
+        Equivalent Prerequisite:
+        <span style="display: inline-block" semanticDiff [left]="model.equivalents"
+          [right]="editedModel.equivalents"></span>
+      </div>
+      <br>
+      <div *ngIf="editedModel.corequisites.length != 0" style="display: inline-block">
+        Corequisite:
         <span style="display: inline-block" semanticDiff [left]="model.corequisites"
           [right]="editedModel.corequisites"></span>
-      </span>
+      </div>
       <span style="display: inline-block" semanticDiff [left]="courseOriginal.description"
         [right]="courseEditable.description"></span>
     </span>

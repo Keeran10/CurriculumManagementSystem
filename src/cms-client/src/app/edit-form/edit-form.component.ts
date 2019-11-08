@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../backend-api.service';
+import { Component, ViewChild } from '@angular/core';
 import { Course } from '../model/course';
+import { CourseExtras } from '../model/course-extras';
+import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
 @Component({
   selector: 'app-edit-form',
@@ -9,7 +11,10 @@ import { Course } from '../model/course';
   styleUrls: ['./edit-form.component.css']
 })
 
-export class EditFormComponent implements OnInit {
+export class EditFormComponent {
+
+  @ViewChild(SupportDocumentComponent, {static: false}) 
+  supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
   courseOriginal: Course = new Course();
@@ -34,10 +39,6 @@ export class EditFormComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-
-  }
-
   public highlightChanges(): void {
     const insElements = document.querySelectorAll('ins');
     const delElements = document.querySelectorAll('del');
@@ -52,13 +53,25 @@ export class EditFormComponent implements OnInit {
   }
 
   public setRequisitesStrings(course: Course) {
-    if (course.requisites.length > 0) {
+    let isNextEquivalent = false;
+    if(course.requisites.length > 0){
       course.requisites.forEach(r => {
-        if (r.type === 'prerequisite') {
-          this.model.prerequisites += r.name + r.number + '; ';
-        }
-        else if (r.type === 'corequisite') {
-          this.model.corequisites += r.name + r.number + '; ';
+        switch(r.type){
+          case 'equivalent':
+            if(!isNextEquivalent){
+              this.model.equivalents += r.name + r.number + " or ";
+            }
+            else{
+              this.model.equivalents += r.name + r.number + '; '; 
+            }
+            isNextEquivalent = !isNextEquivalent;
+            break;
+          case 'prerequisite':
+            this.model.prerequisites += r.name + r.number + '; '; 
+            break;
+          case 'corequisite':
+            this.model.corequisites += r.name + r.number + '; ';
+            break; 
         }
       })
     }
@@ -66,40 +79,22 @@ export class EditFormComponent implements OnInit {
 
   //There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
   /*
-    public setDegreesStrings(course: Course) {
-      if(course.degreeRequirements.length > 0){
-        course.degreeRequirements.forEach(d => {
-          if(d.type === 'degree'){
-            do x
-          }
-          else if(d.type === 'elective'){
-            do y
-          }
-        })
-      }
-    */
-  public parsePrerequisitesString(prerequisites: string): Object {
-    return {};
-  }
+  public setDegreesStrings(course: Course) {
+    if(course.degreeRequirements.length > 0){
+      course.degreeRequirements.forEach(d => {
+        if(d.type === 'degree'){
+          do x
+        }
+        else if(d.type === 'elective'){
+          do y
+        }
+      })
+    }
+  */
 
   public submitForm() {
+    this.editedModel.files = this.supportDocumentComponent.documents;
     this.api.submitEditedCourse(this.courseEditable, this.editedModel)
       .subscribe(data => { console.log(data) })
   }
 }
-
-export class CourseExtras {
-  prerequisites: string;
-  corequisites: string;
-  antirequisites: string;
-  rationale: string;
-  implications: string;
-
-  constructor() {
-    this.prerequisites = '';
-    this.corequisites = '';
-    this.antirequisites = '';
-    this.rationale = '';
-    this.implications = '';
-  }
-};
