@@ -101,7 +101,7 @@ public class RequestPackageController {
 
 
     // Save package to database
-    @PostMapping(value="/save_package")
+    @PostMapping(value="/save_package", consumes = "application/json")
     public boolean saveRequestPackage(@Valid @RequestBody String requestPackageForm, BindingResult bindingResult) throws JSONException{
 
         JSONObject json = new JSONObject(requestPackageForm);
