@@ -38,7 +38,6 @@ export class ApiService {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     })
-
   }
 
 }

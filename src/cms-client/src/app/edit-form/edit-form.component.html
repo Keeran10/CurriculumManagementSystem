@@ -20,7 +20,7 @@
     <mat-form-field class="row4">
       <textarea matInput placeholder="Equivalent Prerequisite Courses (E.g. AERO371 or MECH370;)" 
       [(ngModel)]="editedModel.equivalents" 
-      name="corequisites"></textarea>
+      name="equivalents"></textarea>
     </mat-form-field>
     <mat-form-field class="row5">
       <textarea matInput placeholder="Corequisites Courses (Separate with ;)" [(ngModel)]="editedModel.corequisites" 
@@ -72,20 +72,23 @@
 
     <br>
     <span>
-      <span *ngIf="editedModel.prerequisites.length != 0" style="display: inline-block">Prerequisite:
+      <div *ngIf="editedModel.prerequisites.length != 0" style="display: inline-block">
+        Prerequisite:
         <span style="display: inline-block" semanticDiff [left]="model.prerequisites"
           [right]="editedModel.prerequisites"></span>
-      </span>
+      </div>
       <br>
-      <span *ngIf="editedModel.equivalents.length != 0" style="display: inline-block">Equivalent Prerequisite:
+      <div *ngIf="editedModel.equivalents.length != 0" style="display: inline-block">
+        Equivalent Prerequisite:
         <span style="display: inline-block" semanticDiff [left]="model.equivalents"
           [right]="editedModel.equivalents"></span>
-      </span>
+      </div>
       <br>
-      <span *ngIf="editedModel.corequisites.length != 0" style="display: inline-block">Corequisite:
+      <div *ngIf="editedModel.corequisites.length != 0" style="display: inline-block">
+        Corequisite:
         <span style="display: inline-block" semanticDiff [left]="model.corequisites"
           [right]="editedModel.corequisites"></span>
-      </span>
+      </div>
       <span style="display: inline-block" semanticDiff [left]="courseOriginal.description"
         [right]="courseEditable.description"></span>
     </span>

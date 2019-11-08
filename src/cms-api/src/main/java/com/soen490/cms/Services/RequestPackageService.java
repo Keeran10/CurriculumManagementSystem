@@ -114,12 +114,12 @@ public class RequestPackageService {
         String pre = (String) courseExtras.get("prerequisites");
         String co = (String) courseExtras.get("corequisites");
         String anti = (String) courseExtras.get("antirequisites");
-        // String eq = (String) courseExtras.get();
+        String eq = (String) courseExtras.get("equivalents");
 
         String[] prerequisites = pre.split(";|\\,");
         String[] corequisites = co.split(";|\\,");
         String[] antirequisites = anti.split(";|\\,");
-        //String[] equivalents = pre.split(";|\\,");
+        String[] equivalents = eq.split(";|\\,");
 
         for(String prerequisite : prerequisites){
 
@@ -167,7 +167,6 @@ public class RequestPackageService {
                 requisiteRepository.save(requisite);
             }
         }
-        /*
         for(String equivalent : equivalents){
 
             equivalent = equivalent.trim();
@@ -183,7 +182,6 @@ public class RequestPackageService {
                 requisiteRepository.save(requisite);
             }
         }
-        */
 
         // Supporting Documents
         // initialize supporting doc and save it to its repository

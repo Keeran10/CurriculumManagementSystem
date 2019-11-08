@@ -58,7 +58,7 @@ export class EditFormComponent {
       course.requisites.forEach(r => {
         switch(r.type){
           case 'equivalent':
-            if(isNextEquivalent){
+            if(!isNextEquivalent){
               this.model.equivalents += r.name + r.number + " or ";
             }
             else{
