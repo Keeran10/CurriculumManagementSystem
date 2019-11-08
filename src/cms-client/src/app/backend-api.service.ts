@@ -34,13 +34,7 @@ export class ApiService {
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log('would Post');
-<<<<<<< HEAD
     return this.http.post(this.url + "save_request", {
-=======
-    // The following code is commented out as the backend route has yet to be implemented. This will be changed to meet the implementation but
-    // provides a general idea of what the call would look like.
-    /*return this.http.post(this.url + urlPath,{
->>>>>>> 2f8f8171a62a4e0e00642b5b41ff592703786ca3
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     })
