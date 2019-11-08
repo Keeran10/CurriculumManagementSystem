@@ -124,6 +124,17 @@ public class PdfService {
 
                     addCoursePreface(doc, request, original_course, changed_course);
                     addCourseDiffTable(doc, request, original_course, changed_course);
+
+                    // append course outline
+                    if(changed_course.getOutline() != null){
+
+                        ByteArrayOutputStream course_outline_stream =
+                                new ByteArrayOutputStream(changed_course.getOutline().length);
+
+                        course_outline_stream.write(changed_course.getOutline(), 0, changed_course.getOutline().length);
+
+                        mergeDocs(request_stream, course_outline_stream);
+                    }
                 }
                 else if(request.getTargetType() == 1){
 
@@ -138,6 +149,8 @@ public class PdfService {
         } catch (DocumentException | FileNotFoundException e){
             e.printStackTrace();
             return false;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
