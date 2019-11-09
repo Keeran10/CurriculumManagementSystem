@@ -249,6 +249,14 @@ public class PdfService {
         return byte_stream;
     }
 
+
+    /**
+     * Aggregate all request docs into one pdf file.
+     * @param request_docs List of all request documents generated.
+     * @return The combined pdf file of all requests.
+     * @throws DocumentException
+     * @throws IOException
+     */
     private ByteArrayOutputStream mergeRequestDocs(ArrayList<ByteArrayOutputStream> request_docs) throws DocumentException, IOException {
 
         Document doc = new Document();
@@ -272,6 +280,13 @@ public class PdfService {
     }
 
 
+    /**
+     * Combines a request document with the course outline
+     * @param course Course that contains a proposed outline
+     * @return A combined document of the request followed by its proposed outline
+     * @throws DocumentException
+     * @throws IOException
+     */
     private ByteArrayOutputStream mergeOutline(Course course) throws DocumentException, IOException {
 
         Document doc = new Document();
@@ -289,6 +304,7 @@ public class PdfService {
 
         return byte_stream;
     }
+
 
     /**
      * This function merges the supporting documents with the generated course pages into a single pdf stream
@@ -1082,7 +1098,12 @@ public class PdfService {
         for(Requisite requisite : requisites){
 
             String type = requisite.getType();
-            String name_number = requisite.getName() + " " + requisite.getNumber();
+            String name_number;
+
+            if(requisite.getNumber() == 0)
+                name_number= requisite.getName() + " ";
+            else
+                name_number= requisite.getName() + " " + requisite.getNumber();
 
             if(type.equals("prerequisite")) {
                 if(ctr == 0) {

@@ -1,5 +1,6 @@
 package com.soen490.cms.Controllers;
 
+import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
@@ -33,7 +34,7 @@ public class RequestPackageController {
      * @return A boolean detailing if the pdf generation was successful or a failure.
      */
     @GetMapping(value="/generate_pdf")
-    public boolean generatePdf(@RequestParam int package_id) { return pdfService.generatePDF(package_id); }
+    public boolean generatePdf(@RequestParam int package_id) throws IOException, DocumentException { return pdfService.generatePDF(package_id); }
 
 
     /**
