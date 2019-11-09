@@ -13,7 +13,7 @@ import { SupportDocumentComponent } from '../support-documents/support-documents
 
 export class EditFormComponent {
 
-  @ViewChild(SupportDocumentComponent, {static: false}) 
+  @ViewChild(SupportDocumentComponent, {static: false})
   supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
@@ -62,16 +62,16 @@ export class EditFormComponent {
               this.model.equivalents += r.name + r.number + " or ";
             }
             else{
-              this.model.equivalents += r.name + r.number + '; '; 
+              this.model.equivalents += r.name + r.number + '; ';
             }
             isNextEquivalent = !isNextEquivalent;
             break;
           case 'prerequisite':
-            this.model.prerequisites += r.name + r.number + '; '; 
+            this.model.prerequisites += r.name + r.number + '; ';
             break;
           case 'corequisite':
             this.model.corequisites += r.name + r.number + '; ';
-            break; 
+            break;
         }
       })
     }

@@ -29,15 +29,21 @@ export class ApiService {
   }
 
   public saveCourse(course: Course) {
-    return this.http.post<Course>(this.url + "courses", course);
+    return this.http.post<Course>(this.url + 'courses', course);
+  }
+
+  public getCredentials(email: string, password: string) {
+    return this.http.get(this.url +  'login' ,{
+      params: new HttpParams().set('email', email).set('password', password)
+    });
   }
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log('would Post');
-    return this.http.post(this.url + "save_request", {
+    return this.http.post(this.url + 'save_request', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
-    })
+    });
   }
 
 }
