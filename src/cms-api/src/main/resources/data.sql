@@ -3,9 +3,6 @@ ALTER DATABASE cms
   DEFAULT COLLATE utf8_general_ci;
 
 USE cms;
--- id, email, firstname, lastname, password, user_type
-INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin');
-INSERT IGNORE INTO user VALUES (2, 'felix@soen.com', 'Felix', 'Rosinante','123', 'admin');
 
 -- id, name
 INSERT IGNORE INTO faculty VALUES (1, 'Faculty of Arts and Science');
@@ -23,6 +20,12 @@ INSERT IGNORE INTO department VALUES (5, 'Concordia Institute for Information Sy
 INSERT IGNORE INTO department VALUES (6, 'Concordia Institute for Aerospace Design and Innovation', 2);
 INSERT IGNORE INTO department VALUES (7, 'Electrical and Computer Engineering', 2);
 INSERT IGNORE INTO department VALUES (8, 'Mechanical, Industrial and Aerospace Engineering', 2);
+
+
+-- id, email, firstname, lastname, password, user_type
+INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin', 4);
+INSERT IGNORE INTO user VALUES (2, 'felix@soen.com', 'Felix', 'Rosinante','123', 'admin', 8);
+
 
 -- id, desc, active, name, department_id
 INSERT IGNORE INTO program VALUES (1, "The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics. The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.",
