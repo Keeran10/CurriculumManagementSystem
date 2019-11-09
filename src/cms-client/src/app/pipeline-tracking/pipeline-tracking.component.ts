@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../backend-api.service';
 
 @Component({
   selector: 'app-pipeline-tracking',
@@ -8,24 +9,34 @@ import { Component, OnInit } from '@angular/core';
 
 export class PipelineTrackingComponent implements OnInit {
 
+  constructor(private api: ApiService) {
+  }
+
   public id = 0;
-  public packageLocation = 0;
-  public pipeline = ['Department Curriculum Committee',
-                                    'Department Council',
-                                    'Associate Dean Academic Programs Under Graduate Studies Committee',
-                                    'Faculty Council',
-                                    'APC',
-                                    'Senate'];
+  public packageLocation = '';
+  public pipelineId = 0;
+  // public pipeline = ['Department Curriculum Committee',
+  //                                   'Department Council',
+  //                                   'Associate Dean Academic Programs Under Graduate Studies Committee',
+  //                                   'Faculty Council',
+  //                                   'APC',
+  //                                   'Senate'];
+  public pipeline = [];
+  public getPipelineID() {
+    this.pipelineId = 1; // will be replaced when connected to Packages
+  }
   public getPackageID() {
-    this.id = 3; // will be replaced with backend call
+    this.id = 1; // will be replaced when connected to Packages
   }
   public getPipeline() {
-    // placeholder for when the backend code is ready
+    this.api.getApprovalPipeline(this.pipelineId).subscribe(data => { this.pipeline = data;
+    });
   }
   public getPackageLocation() {
-    // placeholder to get package location in approval pipeline
-    // location = get from backend, for now hardcoded
-    const location = 'Associate Dean Academic Programs Under Graduate Studies Committee';
+    let location;
+    this.api.getCurrentPosition(this.id.toString(), this.pipelineId.toString()).subscribe(
+      data => { location = data;
+      });
     let i;
     for (i in this.pipeline) {
         if (this.pipeline[i] === location) {
@@ -34,8 +45,9 @@ export class PipelineTrackingComponent implements OnInit {
     }
   }
   public ngOnInit() {
+    this.getPipelineID();
     this.getPackageID();
-    // this.getPipeline();
+    this.getPipeline();
     this.getPackageLocation();
   }
 }

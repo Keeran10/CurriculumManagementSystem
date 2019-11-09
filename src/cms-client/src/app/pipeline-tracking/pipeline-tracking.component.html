@@ -6,7 +6,7 @@
         <tbody>
             <tr *ngFor="let item of pipeline; let i=index">
               
-                <td  *ngIf="i < packageLocation">
+                <td  *ngIf="i < packageLocation && item !== null">
                     <i *ngIf="i != 0" class="material-icons" id="vertical">
                         more_vert
                     </i>
@@ -16,7 +16,7 @@
                     </i>
                 </td>
               
-                <td  *ngIf="i == packageLocation">
+                <td  *ngIf="i == packageLocation && item !== null">
                     <i *ngIf="i != 0" class="material-icons" id="vertical">
                         more_vert
                     </i>
@@ -26,7 +26,7 @@
                     </i>
                 </td>
                 
-                <td  *ngIf="i > packageLocation">
+                <td  *ngIf="i > packageLocation && item !== null">
                     <i *ngIf="i != 0" class="material-icons" id="vertical">
                         more_vert
                     </i>
@@ -37,7 +37,7 @@
                 </td>
 
                 <td>
-                    <div class="item">{{ item }}</div>
+                    <div class="item" >{{ item }}</div>
                     <div *ngIf="i < packageLocation" class="status">package (edit | view pdf)</div>
                     <div *ngIf="i == packageLocation" class="status">package under review...</div>
                 </td> 
