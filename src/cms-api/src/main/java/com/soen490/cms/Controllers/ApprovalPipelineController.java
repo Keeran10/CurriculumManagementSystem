@@ -52,7 +52,7 @@ public class ApprovalPipelineController {
     @PostMapping(value = "/setApprovalPipeline")
     public void setApprovalPipeline(@RequestParam("approval_pipeline") String[] pipeline, @RequestParam("package_id") int packageId) {
         ApprovalPipeline approvalPipeline = approvalPipelineService.createApprovalPipeline(pipeline);
-        RequestPackage requestPackage = requestPackageService.find((long)packageId);
+        RequestPackage requestPackage = requestPackageService.findById(packageId);
         List<String> pipelineList = approvalPipelineService.getPipeline(approvalPipeline.getId());
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = new ApprovalPipelineRequestPackage();
 
