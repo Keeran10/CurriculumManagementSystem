@@ -2,18 +2,25 @@
 <h2>Here are your packages:</h2>
 
 <div *ngFor="let package of packages">
-    <mat-card>
-        <span>Package {{package.id}}</span>
-        <div>Progress</div>
-        
-        <div *ngFor="let request of package.requests">
-            {{request.id}}
-            <a (click)="packageSelect(package.id, request.id)" href="editForm/{{request.originalId}}">request</a>
+    <mat-card class="container">
+        <div class="left">
+            <span>Package {{package.id}}</span>
+            <div>Progress</div>
+            
+            <div *ngFor="let request of package.requests">
+                {{request.id}}
+                <a (click)="packageSelect(package.id, request.id)" href="editForm/{{request.originalId}}">request</a>
+            </div>
+            <div>
+                <a (click)="packageSelect(package.id, 0)" href="search">Create new request</a>
+            </div>
         </div>
-        <div>
-            <a (click)="packageSelect(package.id, 0)" href="search">Create new request</a>
+        <div class="right">
+            <button mat-raised-button color="primary">Generate PDF</button>
+            <br><br>
+            <button mat-raised-button color="primary">Submit for Approval</button>
         </div>
-        <button mat-raised-button color="primary">Submit</button>
     </mat-card>
+    <br>
 </div>
 <button mat-raised-button color="primary" (click)="createNewPackage()">Create new Package</button>

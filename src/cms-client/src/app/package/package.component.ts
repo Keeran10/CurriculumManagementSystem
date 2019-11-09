@@ -31,6 +31,7 @@ export class PackageComponent implements OnInit {
 
   public createNewPackage(){
     this.api.getPackage('0', '4').subscribe(data => console.log(data));
+    this.ngOnInit();
   }
 
 }
