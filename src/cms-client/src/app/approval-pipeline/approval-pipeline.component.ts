@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../backend-api.service';
 
 @Component({
     selector: 'app-approval-pipeline',
@@ -8,6 +9,10 @@ import { Component } from '@angular/core';
 
 export class ApprovalPipelineComponent {
 
+    constructor(private api: ApiService) {
+    }
+
+    public id = 1;
     // if user selects to create a custom pipeline, store here
     public customPipeline = [];
     // predefined pipeline order
@@ -17,6 +22,9 @@ export class ApprovalPipelineComponent {
                                     'Faculty Council',
                                     'APC',
                                     'Senate'];
+    ngOnInit() {
+        //id = get package ID
+    }
     public custom(opt: string[]) {
         let i;
         if (opt.length === 0) {
@@ -24,13 +32,15 @@ export class ApprovalPipelineComponent {
         } else {
             for (i of opt) {
                 this.customPipeline.push(i.value);
-                console.log(i.value);
             }
+            this.api.savePipeline(this.customPipeline, this.id)
+      .subscribe(data => { console.log(data); });
         }
     }
-    // placeholder logs user selected predefined pipeline until next page is created that will need this information
     public predefined() {
         console.log('User selected predefined pipeline');
+        this.api.savePipeline(this.predefinedPipeline, this.id)
+      .subscribe(data => { console.log(data); });
     }
 
 }

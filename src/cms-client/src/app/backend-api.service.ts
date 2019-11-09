@@ -40,4 +40,12 @@ export class ApiService {
     })
   }
 
+  public savePipeline(pipeline: string[], id: any) {
+    console.log('set approval pipeline');
+    return this.http.post(this.url + 'setApprovalPipeline', {
+      params: new HttpParams().set('approval_pipeline', JSON.stringify(pipeline))
+        .set('package_id', id)
+    });
+  }
+
 }
