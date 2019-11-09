@@ -43,11 +43,6 @@ public class ApprovalPipelineController {
         return approvalPipelineRequestPackage.getPosition();
     }
 
-    @GetMapping(value = "/lol")
-    public String lol() {
-        return getCurrentPosition(1,1);
-    }
-
     /**
      * Creates a new Approval Pipeline if the requested approval pipeline does not exist and associates it to a request package
      *
