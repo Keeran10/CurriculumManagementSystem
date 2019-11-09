@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"requests", "approvals"})
+@ToString(exclude= {"requests", "approvals", "department"})
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

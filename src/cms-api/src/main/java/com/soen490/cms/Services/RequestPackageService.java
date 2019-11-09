@@ -10,14 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.*;
 
 @Service
 @Transactional
 @Log4j2
-
 public class RequestPackageService {
 
     @Autowired
@@ -34,8 +35,11 @@ public class RequestPackageService {
     RequestPackageRepository requestPackageRepository;
     @Autowired
     DepartmentRepository departmentRepository;
+    @Autowired
+    SupportingDocumentRepository supportingDocumentsRepository;
 
 
+    // Return package with right id, if id given is 0, a new package is created and returned
     public RequestPackage getRequestPackage(int package_id, int department_id){
 
         if(package_id == 0)
@@ -47,12 +51,20 @@ public class RequestPackageService {
     /**
      * Saves an edited course to the database.
      * Todo: Equivalent, package_id, and user are set to defaults, commented out or still missing.
-     * @param course JSON object with course data.
-     * @param courseExtras JSON object with request, requisite, supporting doc and package data.
+     * @param requestForm Stringified JSON received from client
      * @return True if course has been successfully added to database.
      * @throws JSONException
      */
-    public boolean saveCourseRequest(JSONObject course, JSONObject courseExtras) throws JSONException {
+    public boolean saveCourseRequest(String requestForm) throws JSONException {
+
+        JSONObject json = new JSONObject(requestForm);
+
+        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
+
+        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
+        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
+
+        System.out.println(requestForm);
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId((Integer) course.get("id"));
@@ -215,11 +227,15 @@ public class RequestPackageService {
 
     /**
      * Saves a new request package to the database
-     * @param requestPackageForm contains department name and files (memos, cover letters, supporting docs)
+     * @param requestPackageString contains department name and files (memos, cover letters, supporting docs)
      * @return True if request package was added to database
      * @throws JSONException
      */
-    public boolean saveRequestPackage(JSONObject requestPackageForm) throws JSONException {
+    public boolean saveRequestPackage(String requestPackageString) throws JSONException {
+
+        JSONObject requestPackageForm = new JSONObject(requestPackageString);
+
+        System.out.println(requestPackageForm);
 
         RequestPackage requestPackage = new RequestPackage();
 
@@ -240,6 +256,7 @@ public class RequestPackageService {
     }
 
 
+    // Called when package id received is 0.
     private RequestPackage getNewPackage(int department_id){
 
         RequestPackage requestPackage = new RequestPackage();
@@ -249,6 +266,42 @@ public class RequestPackageService {
         requestPackageRepository.save(requestPackage);
 
         return requestPackage;
+    }
+
+
+    // retrieves all supporting document for a given package
+    public List<SupportingDocument> getAllDocuments(int package_id) {
+        log.info("find all supporting docs");
+        return supportingDocumentsRepository.findByPackage(package_id);
+    }
+
+
+    // retrieves a supporting document
+    public SupportingDocument find(int documentId) {
+        log.info("find supporting document with id " + documentId);
+        return supportingDocumentsRepository.findBySupportingDocumentId(documentId);
+    }
+
+
+    /**
+     * Adds support document to an existing package
+     * @param document The file to be added.
+     * @param packageId The designated package.
+     * @return The saved supporting document object.
+     * @throws IOException
+     */
+    public SupportingDocument addSupportingDocument(File document, int packageId) throws IOException {
+
+        log.info("add supporting document " + document.getName());
+
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        SupportingDocument supportingDocument = new SupportingDocument();
+        supportingDocument.setDocument(Files.readAllBytes(document.toPath()));
+        supportingDocument.setRequestPackage(requestPackageRepository.findById(packageId));
+        supportingDocument.setTimestamp(timestamp);
+
+        return supportingDocumentsRepository.save(supportingDocument);
     }
 
 }
