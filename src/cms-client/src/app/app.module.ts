@@ -23,10 +23,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
-
 
 
 
@@ -37,6 +37,7 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     CourseFormComponent,
     CourseListComponent,
     EditFormComponent,
+    PipelineTrackingComponent,
     SearchPageComponent,
     SupportDocumentComponent
   ],
