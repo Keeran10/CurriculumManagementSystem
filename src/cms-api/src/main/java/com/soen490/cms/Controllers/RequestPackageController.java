@@ -86,7 +86,7 @@ public class RequestPackageController {
 
     // returns list of packages from a given department
     @GetMapping(value = "/get_packages")
-    public List<RequestPackage> getRequestPackages(int department_id){
+    public List<RequestPackage> getRequestPackages(@RequestParam int department_id){
 
         return requestPackageService.getRequestPackagesByDepartment(department_id);
     }
@@ -94,9 +94,9 @@ public class RequestPackageController {
 
     // returns a package from a given id
     @GetMapping(value = "/get_package")
-    public RequestPackage getRequestPackage(int package_id){
+    public RequestPackage getRequestPackage(@RequestParam int package_id, @RequestParam int department_id){
 
-        return requestPackageService.getRequestPackage(package_id);
+        return requestPackageService.getRequestPackage(package_id, department_id);
     }
 
 

@@ -36,8 +36,12 @@ public class RequestPackageService {
     DepartmentRepository departmentRepository;
 
 
-    public RequestPackage getRequestPackage(int id){
-        return requestPackageRepository.findById(id);
+    public RequestPackage getRequestPackage(int package_id, int department_id){
+
+        if(package_id == 0)
+            return getNewPackage(department_id);
+
+        return requestPackageRepository.findById(package_id);
     }
 
     /**
@@ -234,4 +238,17 @@ public class RequestPackageService {
 
         return true;
     }
+
+
+    private RequestPackage getNewPackage(int department_id){
+
+        RequestPackage requestPackage = new RequestPackage();
+
+        requestPackage.setDepartment(departmentRepository.findById(department_id));
+
+        requestPackageRepository.save(requestPackage);
+
+        return requestPackage;
+    }
+
 }
