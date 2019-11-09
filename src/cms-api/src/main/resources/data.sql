@@ -259,11 +259,11 @@ INSERT IGNORE INTO calendar VALUES (3, "Please note that the current version of 
 INSERT IGNORE INTO request_package VALUES (1, NULL, 4); -- creating a package for department of CS & SE
 INSERT IGNORE INTO request_package VALUES (2, NULL, 8); -- used for pdf generation
 
--- id, original id, rationale, request type, target id, target type, timestamp, package id, user id
-INSERT IGNORE INTO request VALUES (1, 7, "rationale", 2, "resource implications", 15, 2, NULL, 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, "resource implications", 15, 2, NULL, 1, 1); -- removing request for the course soen 343
-INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, "resource implications", 15, 2, NULL, 1, 1); -- creating request for the course soen 343
-INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, 2, 1); -- thermodynamics II updated
+-- id, original id, rationale, request type, target id, target type, timestamp, title, package id, user id
+INSERT IGNORE INTO request VALUES (1, 7, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN343_update", 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, "resource implications", 15, 2, NULL, "SOEN343_removal", 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, "resource implications", 15, 2, NULL, "SOEN343_new", 1, 1); -- creating request for the course soen 343
+INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
 
 -- id, apc, dcc, fcc, gdc, senate, ugdc
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 1, 2, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
