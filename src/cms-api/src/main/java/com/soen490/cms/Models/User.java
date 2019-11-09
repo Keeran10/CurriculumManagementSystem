@@ -27,6 +27,11 @@ public class User {
 
     private String password;
 
+    @JsonIgnoreProperties("users")
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private List<Request> requests = new ArrayList<>();
