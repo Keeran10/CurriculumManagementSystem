@@ -1,5 +1,6 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class ApprovalPipeline {
 
     private int senate;
 
+    @JsonIgnoreProperties("approvalPipeline")
     @OneToMany(mappedBy = "approvalPipeline")
     Collection<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages;
 

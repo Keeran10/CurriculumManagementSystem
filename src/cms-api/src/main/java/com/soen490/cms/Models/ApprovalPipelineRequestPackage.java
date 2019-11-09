@@ -17,6 +17,7 @@ public class ApprovalPipelineRequestPackage implements Serializable {
     @JoinColumn(name = "pipeline_id")
     private ApprovalPipeline approvalPipeline;
 
+    @JsonIgnoreProperties({"requests", "approvalPipelineRequestPackages"})
     @Id
     @ManyToOne
     @JoinColumn(name = "package_id")
