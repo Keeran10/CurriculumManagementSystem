@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../backend-api.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -9,21 +11,51 @@ import {ApiService} from '../backend-api.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private api: ApiService) { }
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private api: ApiService,
+              ) {
+  }
 
-  email: string;
+  email = new FormControl('', [Validators.required, Validators.email]);
+  login: string;
   password: string;
+  loginForm: FormGroup;
+  loading = false;
+  submitted = false;
+  hide = true;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.email = params.get('email'), this.password = params.get('password');
+      this.login = params.get('email'), this.password = params.get('password');
     });
-    this.api.getCredentials(this.email, this.password).subscribe(data => {
+    this.api.getCredentials(this.login, this.password).subscribe(data => {
       console.log(data);
     });
+
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
-  login(): void {
+  getErrorMessage() {
+    return this.email.hasError('required') ? 'You must enter a value' :
+      this.email.hasError('email') ? 'Not a valid email' :
+        '';
   }
 
+  // convenience getter for easy access to form fields
+  get f() { return this.loginForm.controls; }
+
+
+  onSubmit(): void {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+  }
+    this.loading = true;
+}
 }
