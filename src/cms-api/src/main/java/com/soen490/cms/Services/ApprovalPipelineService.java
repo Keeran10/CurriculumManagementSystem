@@ -2,6 +2,7 @@ package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.ApprovalPipeline;
 import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
+import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
 import lombok.extern.log4j.Log4j2;
@@ -14,14 +15,29 @@ import java.util.*;
 @Service
 public class ApprovalPipelineService {
 
-    //Add pipeline service which holds a datastructure with order of approving bodies.
-    private ArrayList<String> pipeline;
-
     @Autowired
     private ApprovalPipelineRepository approvalPipelineRepository;
 
     @Autowired
     private ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
+
+    @Autowired
+    private SenateService senateService;
+
+    @Autowired
+    private DCCService dccService;
+
+    @Autowired
+    private DepartmentCouncilService departmentCouncilService;
+
+    @Autowired
+    private APCService apcService;
+
+    @Autowired
+    private FacultyCouncilService facultyCouncilService;
+
+    @Autowired
+    UndergradStudiesCommitteeService undergradStudiesCommitteeService;
 
     public ApprovalPipeline findApprovalPipeline(int id) {
         log.info("find approval pipeline with id " + id);
@@ -34,31 +50,116 @@ public class ApprovalPipelineService {
     }
 
     /**
-     * Adds a new ApprovalPipeline to the database
-     * Updates one if one already exists
-     *
-     * @param approvalPipeline
-     * @return
-     */
-    public ApprovalPipeline addUpdateApprovalPipeline(ApprovalPipeline approvalPipeline) {
-        log.info("add approval pipeline " + approvalPipeline.getId());
-        return approvalPipelineRepository.save(approvalPipeline);
-    }
-
-    /**
-     * Adds a new ApprovalPipelineRequestPackage to the database
-     * Updates one if one already exists
+     * Adds a new one-to-one relationship between an approval pipeline and a request package
      *
      * @param approvalPipelineRequestPackage
      * @return
      */
-    public ApprovalPipelineRequestPackage addUpdateApprovalPipelineRequestPackage(ApprovalPipelineRequestPackage approvalPipelineRequestPackage) {
+    public ApprovalPipelineRequestPackage addApprovalPipelineRequestPackage(ApprovalPipelineRequestPackage approvalPipelineRequestPackage) {
         log.info("add approval pipeline request package, package id: " + approvalPipelineRequestPackage.getRequestPackage().getId() + ", pipeline id: " + approvalPipelineRequestPackage.getApprovalPipeline().getId());
         return approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
     }
 
+    /**
+     * Pushes an approval package from one approving body to the next in the approval pipeline
+     *
+     * @param packageId
+     * @param pipelineId
+     * @param pipeline
+     * @param currentPosition
+     */
+    public void pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+        String position = pipeline.get(currentPosition);
+        String nextPosition = pipeline.get(currentPosition + 1);
+        RequestPackage requestPackage = null;
+        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
+
+        if(position.equals("Department Curriculum Committee")) {
+            requestPackage = dccService.sendPackage(packageId);
+        } else if(position.equals("Department Council")) {
+            requestPackage = departmentCouncilService.sendPackage(packageId);
+        } else if(position.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+            requestPackage = undergradStudiesCommitteeService.sendPackage(packageId);
+        } else if(position.equals("Faculty Council")) {
+            requestPackage = facultyCouncilService.sendPackage(packageId);
+        } else if(position.equals("APC")) {
+            requestPackage = apcService.sendPackage(packageId);
+        } else if(position.equals("Senate")) {
+            requestPackage = senateService.sendPackage(packageId);
+        }
+
+        // push package to next service, update one-to-one relationship
+        if(nextPosition.equals("Department Curriculum Committee")) {
+            dccService.receivePackage(requestPackage);
+        } else if(nextPosition.equals("Department Council")) {
+            departmentCouncilService.receivePackage(requestPackage);
+        } else if(nextPosition.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+            undergradStudiesCommitteeService.receivePackage(requestPackage);
+        } else if(nextPosition.equals("Faculty Council")) {
+            facultyCouncilService.receivePackage(requestPackage);
+        } else if(nextPosition.equals("APC")) {
+            apcService.receivePackage(requestPackage);
+        } else if(nextPosition.equals("Senate")) {
+            senateService.receivePackage(requestPackage);
+        }
+        approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
+        approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
+    }
+
+    /**
+     * Pushes an approval package from one approving body to the previous one in the approval pipeline
+     *
+     * @param packageId
+     * @param pipelineId
+     * @param pipeline
+     * @param currentPosition
+     */
+    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+        String position = pipeline.get(currentPosition);
+        String previousPosition = pipeline.get(currentPosition + 1);
+        RequestPackage requestPackage = null;
+        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
+
+        if(position.equals("Department Curriculum Committee")) {
+            requestPackage = dccService.sendPackage(packageId);
+        } else if(position.equals("Department Council")) {
+            requestPackage = departmentCouncilService.sendPackage(packageId);
+        } else if(position.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+            requestPackage = undergradStudiesCommitteeService.sendPackage(packageId);
+        } else if(position.equals("Faculty Council")) {
+            requestPackage = facultyCouncilService.sendPackage(packageId);
+        } else if(position.equals("APC")) {
+            requestPackage = apcService.sendPackage(packageId);
+        } else if(position.equals("Senate")) {
+            requestPackage = senateService.sendPackage(packageId);
+        }
+
+        // push package to next service, update one-to-one relationship
+        if(previousPosition.equals("Department Curriculum Committee")) {
+            dccService.receivePackage(requestPackage);
+        } else if(previousPosition.equals("Department Council")) {
+            departmentCouncilService.receivePackage(requestPackage);
+        } else if(previousPosition.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+            undergradStudiesCommitteeService.receivePackage(requestPackage);
+        } else if(previousPosition.equals("Faculty Council")) {
+            facultyCouncilService.receivePackage(requestPackage);
+        } else if(previousPosition.equals("APC")) {
+            apcService.receivePackage(requestPackage);
+        } else if(previousPosition.equals("Senate")) {
+            senateService.receivePackage(requestPackage);
+        }
+        approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
+        approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
+    }
+
+    /**
+     * TODO
+     * Commits the changes of a request package
+     *
+     * @param id
+     * @return
+     */
     public boolean executeUpdate(int id) {
-        // TODO
         return true;
     }
 
@@ -71,7 +172,7 @@ public class ApprovalPipelineService {
      * @return
      */
     public ApprovalPipeline createApprovalPipeline(String[] pipeline) {
-        ArrayList<ApprovalPipeline> pipelines = approvalPipelineRepository.findAll();
+        List<ApprovalPipeline> pipelines = approvalPipelineRepository.findAll();
         ApprovalPipeline approvalPipeline = new ApprovalPipeline();
 
         for(int i = 0; i < pipeline.length; i++) {
@@ -81,7 +182,7 @@ public class ApprovalPipelineService {
             if(pipeline[i].equals("Department Council")){
                 approvalPipeline.setDepartmentCouncil(i + 1);
             }
-            if(pipeline[i].equals("Associate Dean Academic Programs Under Graduate Studies Committee") {
+            if(pipeline[i].equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
                 approvalPipeline.setUndergraduateStudiesCommittee(i + 1);
             }
             if(pipeline[i].equals("Faculty Council")) {
@@ -111,37 +212,32 @@ public class ApprovalPipelineService {
      * @param id
      * @return
      */
-    public ArrayList<String> getPipeline(int id) {
-        ArrayList<String> pipeline = new ArrayList<>();
+    public List<String> getPipeline(int id) {
+        List<String> pipeline = new ArrayList<>();
+        String[] pipelineArray = new String[6]; // max number of academic bodies == 6
         ApprovalPipeline approvalPipeline = approvalPipelineRepository.findApprovalPipeline(id);
 
         // adds an academic body to an index in desired order of the pipeline
         if(approvalPipeline.getAPC() != 0) {
-            pipeline.add(approvalPipeline.getAPC(), "APC");
+            pipelineArray[approvalPipeline.getAPC() - 1] = "APC";
         }
         if(approvalPipeline.getSenate() != 0) {
-            pipeline.add(approvalPipeline.getSenate(), "Senate");
+            pipelineArray[approvalPipeline.getSenate() - 1] = "Senate";
         }
         if(approvalPipeline.getDepartmentCurriculumCommittee() != 0) {
-            pipeline.add(approvalPipeline.getDepartmentCurriculumCommittee(), "Department Curriculum Committee");
+            pipelineArray[approvalPipeline.getDepartmentCurriculumCommittee() - 1] = "Department Curriculum Committee";
         }
         if(approvalPipeline.getDepartmentCouncil() != 0) {
-            pipeline.add(approvalPipeline.getDepartmentCouncil(), "Department Council");
+            pipelineArray[approvalPipeline.getDepartmentCouncil() - 1] = "Department Council";
         }
         if(approvalPipeline.getUndergraduateStudiesCommittee() != 0) {
-            pipeline.add(approvalPipeline.getUndergraduateStudiesCommittee(), "Associate Dean Academic Programs Under Graduate Studies Committee");
+            pipelineArray[approvalPipeline.getUndergraduateStudiesCommittee() - 1] = "Associate Dean Academic Programs Under Graduate Studies Committee";
         }
         if(approvalPipeline.getFacultyCouncil() != 0) {
-            pipeline.add(approvalPipeline.getFacultyCouncil(), "Faculty Council");
+            pipelineArray[approvalPipeline.getFacultyCouncil() - 1] = "Faculty Council";
         }
 
-        if(approvalPipeline.getSchoolOfGraduateStudies() != 0) {
-            pipeline.add(approvalPipeline.getSchoolOfGraduateStudies(), "School of Graduate Studies");
-        }
-
-        if(approvalPipeline.getGraduateStudiesCommittee() != 0) {
-            pipeline.add(approvalPipeline.getGraduateStudiesCommittee(), "Associate Dean Research Graduate Studies Committee");
-        }
+        pipeline = Arrays.asList(pipelineArray);
 
         return pipeline;
     }

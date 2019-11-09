@@ -19,17 +19,13 @@ public class ApprovalPipeline {
 
     private int departmentCouncil;
 
-    private int undergraduateStudiesCommittee; //
+    private int undergraduateStudiesCommittee; // Associate Dean Academic Programs Under Graduate Studies Committee
 
     private int facultyCouncil;
 
     private int APC;
 
     private int senate;
-
-    private int schoolOfGraduateStudies;
-
-    private int graduateStudiesCommittee;
 
     @OneToMany(mappedBy = "approvalPipeline")
     Collection<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages;
@@ -47,9 +43,7 @@ public class ApprovalPipeline {
             || this.undergraduateStudiesCommittee != approvalPipeline.undergraduateStudiesCommittee
             || this.facultyCouncil != approvalPipeline.facultyCouncil
             || this.APC != approvalPipeline.APC
-            || this.senate != approvalPipeline.senate
-            || this.schoolOfGraduateStudies != approvalPipeline.schoolOfGraduateStudies
-            || this.graduateStudiesCommittee != approvalPipeline.graduateStudiesCommittee) {
+            || this.senate != approvalPipeline.senate) {
             return false;
         } else {
             return true;
