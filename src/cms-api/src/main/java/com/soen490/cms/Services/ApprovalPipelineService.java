@@ -16,25 +16,25 @@ import java.util.*;
 public class ApprovalPipelineService {
 
     @Autowired
-    private ApprovalPipelineRepository approvalPipelineRepository;
+    ApprovalPipelineRepository approvalPipelineRepository;
 
     @Autowired
-    private ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
+    ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
 
     @Autowired
-    private SenateService senateService;
+    SenateService senateService;
 
     @Autowired
-    private DCCService dccService;
+    DCCService dccService;
 
     @Autowired
-    private DepartmentCouncilService departmentCouncilService;
+    DepartmentCouncilService departmentCouncilService;
 
     @Autowired
-    private APCService apcService;
+    APCService apcService;
 
     @Autowired
-    private FacultyCouncilService facultyCouncilService;
+    FacultyCouncilService facultyCouncilService;
 
     @Autowired
     UndergradStudiesCommitteeService undergradStudiesCommitteeService;
@@ -69,6 +69,7 @@ public class ApprovalPipelineService {
      * @param currentPosition
      */
     public void pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+        log.info("pushing package " + packageId + " to next position in pipeline");
         String position = pipeline.get(currentPosition);
         String nextPosition = pipeline.get(currentPosition + 1);
         RequestPackage requestPackage = null;
@@ -115,6 +116,7 @@ public class ApprovalPipelineService {
      * @param currentPosition
      */
     public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+        log.info("push package " + packageId + " to previous position in pipeline");
         String position = pipeline.get(currentPosition);
         String previousPosition = pipeline.get(currentPosition + 1);
         RequestPackage requestPackage = null;
