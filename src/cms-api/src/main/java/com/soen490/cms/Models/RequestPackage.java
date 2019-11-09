@@ -18,7 +18,7 @@ public class RequestPackage {
     @Lob
     private byte[] pdfFile;
 
-    @JsonIgnoreProperties("requestPackages")
+    @JsonIgnoreProperties({"requestPackages", "users"})
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
