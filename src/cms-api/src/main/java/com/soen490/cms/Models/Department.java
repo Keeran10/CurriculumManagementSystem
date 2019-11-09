@@ -27,6 +27,10 @@ public class Department {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
+    @JsonIgnoreProperties("department")
+    @OneToMany(mappedBy = "department")
+    private List<User> users = new ArrayList<>();
+
     @JsonIgnoreProperties({"department", "degrees", "courses"})
     @OneToMany(mappedBy = "department")
     private List<Program> programs = new ArrayList<>();
