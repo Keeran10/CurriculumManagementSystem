@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -32,4 +33,26 @@ public class ApprovalPipeline {
 
     @OneToMany(mappedBy = "approvalPipeline")
     Collection<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages;
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+
+        if(o.getClass() != this.getClass() || o == null) return false;
+
+        ApprovalPipeline approvalPipeline = (ApprovalPipeline)o;
+
+        if(this.departmentCurriculumCommittee != approvalPipeline.departmentCurriculumCommittee
+            || this.departmentCouncil != approvalPipeline.departmentCouncil
+            || this.undergraduateStudiesCommittee != approvalPipeline.undergraduateStudiesCommittee
+            || this.facultyCouncil != approvalPipeline.facultyCouncil
+            || this.APC != approvalPipeline.APC
+            || this.senate != approvalPipeline.senate
+            || this.schoolOfGraduateStudies != approvalPipeline.schoolOfGraduateStudies
+            || this.graduateStudiesCommittee != approvalPipeline.graduateStudiesCommittee) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

@@ -8,10 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -36,11 +33,25 @@ public class ApprovalPipelineService {
         return approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(approvalPipelineId, requestPackageId);
     }
 
+    /**
+     * Adds a new ApprovalPipeline to the database
+     * Updates one if one already exists
+     *
+     * @param approvalPipeline
+     * @return
+     */
     public ApprovalPipeline addUpdateApprovalPipeline(ApprovalPipeline approvalPipeline) {
         log.info("add approval pipeline " + approvalPipeline.getId());
         return approvalPipelineRepository.save(approvalPipeline);
     }
 
+    /**
+     * Adds a new ApprovalPipelineRequestPackage to the database
+     * Updates one if one already exists
+     *
+     * @param approvalPipelineRequestPackage
+     * @return
+     */
     public ApprovalPipelineRequestPackage addUpdateApprovalPipelineRequestPackage(ApprovalPipelineRequestPackage approvalPipelineRequestPackage) {
         log.info("add approval pipeline request package, package id: " + approvalPipelineRequestPackage.getRequestPackage().getId() + ", pipeline id: " + approvalPipelineRequestPackage.getApprovalPipeline().getId());
         return approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
@@ -51,7 +62,55 @@ public class ApprovalPipelineService {
         return true;
     }
 
+    /**
+     * Receives a list of academic bodies in order for an approval pipeline
+     * Will return an existing approval pipeline if one already exists in the database
+     * Saves the new approval pipeline in the database if it does not exist and returns it
+     *
+     * @param pipeline
+     * @return
+     */
+    public ApprovalPipeline createApprovalPipeline(String[] pipeline) {
+        ArrayList<ApprovalPipeline> pipelines = approvalPipelineRepository.findAll();
+        ApprovalPipeline approvalPipeline = new ApprovalPipeline();
 
+        for(int i = 0; i < pipeline.length; i++) {
+            if(pipeline[i].equals("Department Curriculum Committee")) {
+                approvalPipeline.setDepartmentCurriculumCommittee(i + 1);
+            }
+            if(pipeline[i].equals("Department Council")){
+                approvalPipeline.setDepartmentCouncil(i + 1);
+            }
+            if(pipeline[i].equals("Associate Dean Academic Programs Under Graduate Studies Committee") {
+                approvalPipeline.setUndergraduateStudiesCommittee(i + 1);
+            }
+            if(pipeline[i].equals("Faculty Council")) {
+                approvalPipeline.setFacultyCouncil(i + 1);
+            }
+            if(pipeline[i].equals("APC")) {
+                approvalPipeline.setAPC(i + 1);
+            }
+            if(pipeline[i].equals("Senate")) {
+                approvalPipeline.setSenate(i + 1);
+            }
+        }
+
+        // check if the one of the pipelines currently in the database is the same as the new one
+        if(pipelines.contains(approvalPipeline)) {
+            return pipelines.get(pipelines.indexOf(approvalPipeline));
+        } else {
+            approvalPipelineRepository.save(approvalPipeline);
+        }
+
+        return approvalPipeline;
+    }
+
+    /**
+     * Returns a list representation of an approval pipeline
+     *
+     * @param id
+     * @return
+     */
     public ArrayList<String> getPipeline(int id) {
         ArrayList<String> pipeline = new ArrayList<>();
         ApprovalPipeline approvalPipeline = approvalPipelineRepository.findApprovalPipeline(id);
