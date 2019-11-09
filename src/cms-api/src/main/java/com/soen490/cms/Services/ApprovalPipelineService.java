@@ -5,6 +5,7 @@ import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
 import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
+import com.soen490.cms.Repositories.RequestPackageRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class ApprovalPipelineService {
 
     @Autowired
     ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
+
+    @Autowired
+    RequestPackageRepository requestPackageRepository;
 
     @Autowired
     SenateService senateService;
@@ -38,6 +42,11 @@ public class ApprovalPipelineService {
 
     @Autowired
     UndergradStudiesCommitteeService undergradStudiesCommitteeService;
+
+    public RequestPackage findRequestPackage(int id) {
+        log.info("find request package with id " + id);
+        return requestPackageRepository.findById(id);
+    }
 
     public ApprovalPipeline findApprovalPipeline(int id) {
         log.info("find approval pipeline with id " + id);

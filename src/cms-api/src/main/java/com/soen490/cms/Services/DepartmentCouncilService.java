@@ -3,6 +3,7 @@ package com.soen490.cms.Services;
 import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
 import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
+import com.soen490.cms.Repositories.RequestPackageRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class DepartmentCouncilService implements ApprovingBody {
     ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
 
     @Autowired
-    RequestPackageService requestPackageService;
+    RequestPackageRepository requestPackageRepository;
 
     private HashMap<Integer, RequestPackage> requestPackages = new HashMap<>();
 
@@ -44,7 +45,7 @@ public class DepartmentCouncilService implements ApprovingBody {
         for(ApprovalPipelineRequestPackage approvalPipelineRequestPackage : approvalPipelineRequestPackages) {
             if(approvalPipelineRequestPackage.getPosition().equals("Department Council")) {
                 int packageId = approvalPipelineRequestPackage.getRequestPackage().getId();
-                requestPackages.put(packageId, requestPackageService.find((long)packageId));
+                requestPackages.put(packageId, requestPackageRepository.findById(packageId));
             }
         }
     }
