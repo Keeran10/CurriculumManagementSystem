@@ -147,8 +147,14 @@ public class RequestPackageService {
                 Requisite requisite = new Requisite();
                 requisite.setCourse(c);
                 requisite.setIsActive(0);
-                requisite.setName(prerequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
+                if(prerequisite.startsWith("credits", 3)){
+                    requisite.setName(prerequisite);
+                    requisite.setNumber(0);
+                }
+                else{
+                    requisite.setName(prerequisite.substring(0, 4).trim());
+                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
+                }
                 requisite.setType("prerequisite");
                 requisiteRepository.save(requisite);
             }
