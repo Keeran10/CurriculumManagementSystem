@@ -25,9 +25,22 @@ public class ApprovalPipelineController {
      * @param approvalPipelineId
      * @return
      */
-    @GetMapping(value = "/approvalPipeline")
+    @GetMapping(value = "/approvalPipelineObject")
     public ApprovalPipeline getApprovalPipeline(@RequestParam("approval_pipeline_id") int approvalPipelineId) {
         return approvalPipelineService.findApprovalPipeline(approvalPipelineId);
+    }
+
+    /**
+     * Returns an array representation of the approval pipeline
+     *
+     * @param approvalPipelineId
+     * @return
+     */
+    @GetMapping(value = "/approvalPipeline")
+    public String[] getApprovalPipelineList(@RequestParam("approval_pipeline_id") int approvalPipelineId) {
+        List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
+        String[] pipelineArray = new String[pipeline.size()];
+        return pipeline.toArray(pipelineArray);
     }
 
     /**
