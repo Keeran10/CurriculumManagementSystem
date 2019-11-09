@@ -71,9 +71,10 @@ public class ApprovalPipelineController {
      * @param packageId
      * @param approvalPipelineId
      * @param isApproved
+     * @return (true|false) depending on whether the user has the required permission to approve/deny at the current step in the approval pipeline
      */
     @PostMapping(value = "/validatePackage")
-    public void setApprove(User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId, @RequestParam("is_approved") boolean isApproved) {
+    public boolean setApprove(User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId, @RequestParam("is_approved") boolean isApproved) {
         String type = user.getUserType();
         String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
@@ -89,28 +90,36 @@ public class ApprovalPipelineController {
             } else { // not approved - move back a step
                 approvalPipelineService.pushToPrevious(packageId, approvalPipelineId, pipeline, index);
             }
+            return true;
+        } else {
+            return false;
         }
     }
 
-    @GetMapping(value = "/lol")
-    public void lol() {
-        User user = new User();
-        int packageId = 1;
-        int approvalPipelineId = 1;
-        boolean isApproved = true;
-
-        getCurrentPosition(1, 1);
-    }
-
-    // TODO
     /**
-     *
+     * Returns true if the user is able to approve/request changes at the current approval position
      *
      * @param userType
      * @param position
      * @return
      */
     private boolean isCorrectUserType(String userType, String position) {
-        return true;
+        if(userType.equals("admin")) {
+            return true;
+        } else if(userType.equals("senate") && position.equals("Senate")) {
+            return true;
+        } else if(userType.equals("fcc") && position.equals("Faculty Council")) {
+            return true;
+        } else if(userType.equals("dcc") && position.equals("Department Curriculum Committee")) {
+            return true;
+        } else if(userType.equals("apc") && position.equals("APC")) {
+            return true;
+        } else if(userType.equals("departmentCouncil") && position.equals("Department Council")) {
+            return true;
+        } else if(userType.equals("ugsc") && position.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
