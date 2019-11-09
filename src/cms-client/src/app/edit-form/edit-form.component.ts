@@ -1,6 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { Component, ViewChild } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Course } from '../model/course';
 import { CourseExtras } from '../model/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
@@ -23,20 +24,37 @@ export class EditFormComponent {
   model = new CourseExtras();
   editedModel = new CourseExtras();
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {
+  constructor(private route: ActivatedRoute, private api: ApiService, private cookieService: CookieService) {
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
-    this.api.getCourse(this.id).subscribe(data => {
-      console.log(data);
-      this.courseOriginal = data;
-      this.courseEditable = Object.assign({}, data);
-      this.setRequisitesStrings(data);
-      this.editedModel = Object.assign({}, this.model);
-    });
+    let requestId = this.cookieService.get('request');
+    if(requestId === '0'){
+      this.api.getCourse(this.id).subscribe(data => {
+        console.log(data);
+        this.courseOriginal = data;
+        this.courseEditable = Object.assign({}, data);
+        this.setRequisitesStrings(data, this.model);
+        this.setRequisitesStrings(data, this.editedModel)
+      });
+    }
+    else {
+      let originalId = this.cookieService.get('originalCourse');
+      let editedId = this.cookieService.get('editedCourse');
+      this.api.getCourse(originalId).subscribe(data => {
+        this.courseOriginal = data;
+        console.log(data);
+        this.setRequisitesStrings(data, this.model);
+      });
+      this.api.getCourse(editedId).subscribe(data => {
+        this.courseEditable = data;
+        console.log(data);
+        this.setRequisitesStrings(data, this.editedModel);
+      });
+    }
   }
 
   public highlightChanges(): void {
@@ -52,25 +70,25 @@ export class EditFormComponent {
     });
   }
 
-  public setRequisitesStrings(course: Course) {
+  public setRequisitesStrings(course: Course, courseExtras: CourseExtras) {
     let isNextEquivalent = false;
     if(course.requisites.length > 0){
       course.requisites.forEach(r => {
         switch(r.type){
           case 'equivalent':
             if(!isNextEquivalent){
-              this.model.equivalents += r.name + r.number + " or ";
+              courseExtras.equivalents += r.name + r.number + " or ";
             }
             else{
-              this.model.equivalents += r.name + r.number + '; '; 
+              courseExtras.equivalents += r.name + r.number + '; '; 
             }
             isNextEquivalent = !isNextEquivalent;
             break;
           case 'prerequisite':
-            this.model.prerequisites += r.name + r.number + '; '; 
+            courseExtras.prerequisites += r.name + r.number + '; '; 
             break;
           case 'corequisite':
-            this.model.corequisites += r.name + r.number + '; ';
+            courseExtras.corequisites += r.name + r.number + '; ';
             break; 
         }
       })

@@ -9,14 +9,28 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class PackageComponent implements OnInit {
 
+  packages;
+
   constructor(private cookieService: CookieService, private api: ApiService) { }
 
   ngOnInit() {
-    //get packages
+    // let departmentId = this.cookieService.get('department'); //replace 4 with department id
+    this.api.getAllPackages('4').subscribe(data => {
+      console.log(data);
+      this.packages = data;
+    });
   }
 
-  public packageSelect(){
-    this.cookieService.set('package', '')
+  public packageSelect(packageId, requestId){
+    this.cookieService.set('package', packageId);
+    this.cookieService.set('request', requestId);
+    let request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
+    this.cookieService.set('originalCourse', request.originalId);
+    this.cookieService.set('editedCourse', request.targetId);
+  }
+
+  public createNewPackage(){
+    this.api.getPackage('0', '4').subscribe(data => console.log(data));
   }
 
 }

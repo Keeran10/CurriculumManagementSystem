@@ -33,11 +33,23 @@ export class ApiService {
   }
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
-    console.log('would Post');
     return this.http.post(this.url + "save_request", {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     })
+  }
+
+  public getAllPackages(departmentId: string){
+    return this.http.get(this.url + 'get_packages', {
+      params: new HttpParams().set('department_id', departmentId)
+    });
+  }
+
+  public getPackage(packageId: string, departmentId: string){
+    return this.http.get(this.url + 'get_package', {
+      params: new HttpParams().set('package_id', packageId)
+        .set('department_id', departmentId)
+    });
   }
 
 }
