@@ -14,10 +14,6 @@ export class AppComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getFeatureFlagTest().subscribe((val: string) => {
-        console.log(val);
-        this.featureFlagTest = val;
-      });
   }
 
 }

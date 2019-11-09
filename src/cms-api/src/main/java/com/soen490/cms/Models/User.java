@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
 @ToString(exclude= {"requests", "approvals"})
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
@@ -27,13 +29,13 @@ public class User {
 
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
-    private Collection<Request> requests;
+    private List<Request> requests = new ArrayList<>();
 
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
-    private Collection<Approval> approvals;
+    private List<Approval> approvals = new ArrayList<>();
 
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
-    private Collection<SupportingDocument> supportingDocuments;
+    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
 }

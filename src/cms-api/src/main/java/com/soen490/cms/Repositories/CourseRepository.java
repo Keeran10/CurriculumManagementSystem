@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer>{
@@ -15,4 +17,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
 
     @Query(value = "SELECT * FROM course WHERE id=?1", nativeQuery = true)
     Course findById(int number);
+
+    @Query(value = "SELECT * FROM course WHERE id=?1 AND is_active=1", nativeQuery = true)
+    List<Course> findByJsonId(Integer id);
 }

@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 public class SupportingDocument {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private Timestamp timestamp;

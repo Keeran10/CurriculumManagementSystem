@@ -67,11 +67,50 @@
   grid-row-end: 5;
 }
 
+.row6{
+  grid-column: span 3;
+  grid-row-start: 5;
+  grid-row-end: 6;
+}
+
+.row7{
+  grid-column: span 3;
+  grid-row-start: 6;
+  grid-row-end: 7;
+}
+
+.row8{
+  grid-column: span 3;
+  grid-row-start: 7;
+  grid-row-end: 8;
+}
+
+.row9{
+  grid-column: span 3;
+  grid-row-start: 8;
+  grid-row-end: 9;
+}
+
+.row10{
+  grid-column: span 3;
+  grid-row-start: 9;
+  grid-row-end: 10;
+}
+
 .edited-text{
   grid-column-start: 3;
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 2;
+}
+
+.submitButton{
+  float: right;
+  height: 100px;
+  width: 400px;
+  font-size: 20px;
+  margin-right: 50px;
+  margin-bottom: 50px;
 }
 
 ins, ins * {

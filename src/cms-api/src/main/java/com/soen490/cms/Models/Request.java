@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @ToString(exclude= {"requestPackage"})
 public class Request {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int targetId;
@@ -23,6 +23,8 @@ public class Request {
     private int requestType; // 1: create, 2: update, 3: remove
 
     private String rationale;
+
+    private String resourceImplications;
 
     private Timestamp timestamp;
 

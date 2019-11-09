@@ -12,7 +12,7 @@ import java.util.Collection;
 @Data
 public class ApprovalPipeline {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int departmentCurriculumCommittee;
