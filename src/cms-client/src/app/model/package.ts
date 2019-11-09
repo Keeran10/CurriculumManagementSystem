@@ -1,8 +1,10 @@
+import { RequestObj } from './requestObj';
+
 export class Package {
     id: number;
     approvals;
     department;
     pdfFile: File;
-    requests: Request[];
+    requests: RequestObj[];
     supportingDocuments: File[];
 }

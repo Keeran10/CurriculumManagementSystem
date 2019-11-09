@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from './model/course';
 import { CourseExtras } from './model/course-extras';
 import { Injectable } from '@angular/core';
+import { Package } from './model/package';
 
 @Injectable({
   providedIn: 'root'
@@ -39,14 +40,14 @@ export class ApiService {
     })
   }
 
-  public getAllPackages(departmentId: string){
-    return this.http.get(this.url + 'get_packages', {
+  public getAllPackages(departmentId: string) {
+    return this.http.get<Package[]>(this.url + 'get_packages', {
       params: new HttpParams().set('department_id', departmentId)
     });
   }
 
   public getPackage(packageId: string, departmentId: string){
-    return this.http.get(this.url + 'get_package', {
+    return this.http.get<Package>(this.url + 'get_package', {
       params: new HttpParams().set('package_id', packageId)
         .set('department_id', departmentId)
     });

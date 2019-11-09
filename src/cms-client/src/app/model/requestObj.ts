@@ -1,4 +1,4 @@
-export class Request {
+export class RequestObj {
     id: number;
     originalId: number;
     rationale: string;
@@ -7,6 +7,7 @@ export class Request {
     resourceImplications: string;
     targetId: number;
     targetType: number;
+    title:string;
     timestamp;
     user;
 }

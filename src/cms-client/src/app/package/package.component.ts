@@ -1,6 +1,7 @@
 import { ApiService } from '../backend-api.service';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { Package } from '../model/package';
 
 @Component({
   selector: 'app-package',
@@ -9,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class PackageComponent implements OnInit {
 
-  packages;
+  packages: Package[];
 
   constructor(private cookieService: CookieService, private api: ApiService) { }
 
@@ -24,14 +25,14 @@ export class PackageComponent implements OnInit {
   public packageSelect(packageId, requestId){
     this.cookieService.set('package', packageId);
     this.cookieService.set('request', requestId);
-    let request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
-    this.cookieService.set('originalCourse', request.originalId);
-    this.cookieService.set('editedCourse', request.targetId);
+    if(requestId != 0){
+      let request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
+      this.cookieService.set('originalCourse', request.originalId.toString());
+      this.cookieService.set('editedCourse', request.targetId.toString());
+    }
   }
 
   public createNewPackage(){
-    this.api.getPackage('0', '4').subscribe(data => console.log(data));
-    this.ngOnInit();
+    this.api.getPackage('0', '4').subscribe(data => this.packages.push(data));
   }
-
 }
