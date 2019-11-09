@@ -55,7 +55,7 @@ public class SupportingDocumentsController {
         Timestamp timestamp = new Timestamp(date.getTime());
         SupportingDocument supportingDocument = new SupportingDocument();
         supportingDocument.setDocument(document);
-        supportingDocument.setRequestPackage(requestPackageService.getRequestPackage(packageId));
+        supportingDocument.setRequestPackage(requestPackageService.getRequestPackage(packageId, 4));
         supportingDocument.setTimestamp(timestamp);
 
         supportingDocsService.addSupportingDocument(supportingDocument);
@@ -67,7 +67,7 @@ public class SupportingDocumentsController {
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         SupportingDocument supportingDocument = new SupportingDocument();
-        RequestPackage requestPackage = requestPackageService.getRequestPackage(package_id);
+        RequestPackage requestPackage = requestPackageService.getRequestPackage(package_id, 4);
         supportingDocument.setRequestPackage(requestPackage);
         supportingDocument.setDocument(requestPackage.getPdfFile());
         supportingDocument.setTimestamp(timestamp);
