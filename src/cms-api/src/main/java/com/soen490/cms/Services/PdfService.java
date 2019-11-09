@@ -82,15 +82,12 @@ public class PdfService {
      * @param package_id Used to retrieve request_package object.
      * @return true if a pdf has been generated and saved as pdf_file inside request_package.
      */
-    public boolean generatePDF(int package_id){
+    public boolean generatePDF(int package_id) throws IOException, DocumentException {
 
-        Document doc = new Document();
-        // course page specifications
-        doc.setPageSize(PageSize.A4.rotate());
-        doc.setMargins(25, 25, 10, 25);
-
+        ByteArrayOutputStream course_outline_stream;
         ByteArrayOutputStream support_stream = null;
-        ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
+        ArrayList<ByteArrayOutputStream> request_streams = new ArrayList<>();
+        ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
@@ -109,13 +106,20 @@ public class PdfService {
         }
 
         try {
-
-            PdfWriter.getInstance(doc, request_stream);
-
-            doc.open();
-
             // for each page
             for(Request request : requestPackage.getRequests()){
+
+                Document doc = new Document();
+                // course page specifications
+                doc.setPageSize(PageSize.A4.rotate());
+                doc.setMargins(25, 25, 10, 25);
+
+                ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
+
+                PdfWriter.getInstance(doc, request_stream);
+
+                doc.open();
+
 
                 if(request.getTargetType() == 2) {
 
@@ -129,12 +133,16 @@ public class PdfService {
                     // append course outline
                     if(changed_course.getOutline() != null){
 
-                        ByteArrayOutputStream course_outline_stream =
-                                new ByteArrayOutputStream(changed_course.getOutline().length);
+                        course_outline_stream = mergeOutline(changed_course);
 
-                        course_outline_stream.write(changed_course.getOutline(), 0, changed_course.getOutline().length);
+                        doc.close();
 
-                        mergeDocs(request_stream, course_outline_stream);
+                        request_stream = mergeDocs(request_stream, course_outline_stream);
+
+                        request_streams.add(request_stream);
+
+                        continue;
+
                     }
                 }
                 else if(request.getTargetType() == 1){
@@ -142,10 +150,11 @@ public class PdfService {
                     // program requests
                 }
 
-                doc.newPage();
-            }
+                doc.close();
 
-            doc.close();
+                request_streams.add(request_stream);
+
+            }
 
         } catch (DocumentException | FileNotFoundException e){
             e.printStackTrace();
@@ -154,29 +163,14 @@ public class PdfService {
             e.printStackTrace();
         }
 
-        ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
 
-        if(support_stream != null){
-
-            try {
-
-                final_stream = mergeDocs(support_stream, request_stream);
-
-            } catch (DocumentException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-            final_stream = request_stream;
+        final_stream = mergeRequestDocs(request_streams);
 
 
-        try {
+        if(support_stream != null)
+            final_stream = mergeDocs(support_stream, final_stream);
 
-            final_stream = stampPageXofY(final_stream);
-
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-        }
+        final_stream = stampPageXofY(final_stream);
 
         requestPackage.setPdfFile(final_stream.toByteArray());
 
@@ -255,6 +249,46 @@ public class PdfService {
         return byte_stream;
     }
 
+    private ByteArrayOutputStream mergeRequestDocs(ArrayList<ByteArrayOutputStream> request_docs) throws DocumentException, IOException {
+
+        Document doc = new Document();
+        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+
+        // append supporting docs
+        PdfCopy copy = new PdfCopy(doc, byte_stream);
+        copy.setMergeFields();
+
+        doc.open();
+
+        for(ByteArrayOutputStream request_doc : request_docs){
+
+            copy.addDocument(new PdfReader(request_doc.toByteArray()));
+
+        }
+
+        doc.close();
+
+        return byte_stream;
+    }
+
+
+    private ByteArrayOutputStream mergeOutline(Course course) throws DocumentException, IOException {
+
+        Document doc = new Document();
+        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+
+        // append supporting docs
+        PdfCopy copy = new PdfCopy(doc, byte_stream);
+        copy.setMergeFields();
+
+        doc.open();
+
+        copy.addDocument(new PdfReader(course.getOutline()));
+
+        doc.close();
+
+        return byte_stream;
+    }
 
     /**
      * This function merges the supporting documents with the generated course pages into a single pdf stream
