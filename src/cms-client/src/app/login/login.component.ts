@@ -41,8 +41,9 @@ export class LoginComponent implements OnInit {
 
 
   OnSubmit(username, password) {
-    this.api.setCredentials(username, password).subscribe((data: any) => {
-      localStorage.setItem('userToken', data.access_token), console.log(data);
-    });
+    this.api.setCredentials(username, password).subscribe((data => {
+      console.log(data);
+      }
+    ));
   }
 }
