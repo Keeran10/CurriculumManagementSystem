@@ -8,7 +8,7 @@
             <mat-card class="inner-container">
                 <div class="left">
                     <span>Package {{package.id}}</span>
-                    <div>Progress</div>
+                    <div><a href="pipeline" (click)="packageSelect(package.id, 0)">Progress</a></div>
                     
                     <div *ngFor="let request of package.requests">
                         <a (click)="packageSelect(package.id, request.id)" href="editForm/{{request.originalId}}">Request: {{request.title}}</a>

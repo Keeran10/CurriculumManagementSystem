@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { Component, ViewChild } from '@angular/core';
@@ -24,7 +24,9 @@ export class EditFormComponent {
   model = new CourseExtras();
   editedModel = new CourseExtras();
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private api: ApiService, 
+    private cookieService: CookieService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -113,6 +115,7 @@ export class EditFormComponent {
 
   public submitForm() {
     this.editedModel.files = this.supportDocumentComponent.documents;
-    this.api.submitEditedCourse(this.courseEditable, this.editedModel).subscribe(data => console.log(data))
+    this.api.submitEditedCourse(this.courseEditable, this.editedModel)
+    .subscribe(() => this.router.navigate(['']))
   }
 }
