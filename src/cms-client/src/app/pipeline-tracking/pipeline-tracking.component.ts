@@ -44,6 +44,17 @@ export class PipelineTrackingComponent implements OnInit {
         }
     }
   }
+  // public getPDF() {
+  //   this.api.getPDF(this.id).subscribe(data => {
+  //       const blob = new Blob([data], { type: 'application/pdf' });
+  //       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+  //         window.navigator.msSaveOrOpenBlob(blob);
+  //       } else {
+  //         const objectUrl = URL.createObjectURL(blob);
+  //         window.open(objectUrl);
+  //       }
+  //    });
+  // }
   public ngOnInit() {
     this.getPipelineID();
     this.getPackageID();

@@ -1,5 +1,4 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ApprovalPipeline } from './model/approvalpipeline';
 import { Course } from './model/course';
 import { CourseExtras } from './model/course-extras';
 import { Injectable } from '@angular/core';
@@ -41,10 +40,10 @@ export class ApiService {
     })
   }
 
-  public savePipeline(pipeline: string[], packageId: any) {
+  public savePipeline(pipeline: string, packageId: any) {
     console.log('set approval pipeline');
     return this.http.post(this.url + 'setApprovalPipeline', {
-      params: new HttpParams().set('approval_pipeline', JSON.stringify(pipeline))
+      params: new HttpParams().set('approval_pipeline', pipeline)
         .set('package_id', packageId)
     });
   }
@@ -58,6 +57,12 @@ export class ApiService {
   public getCurrentPosition(packageId: string, approvalPipelineId: string) {
     return this.http.get<string>(this.url + 'approvalPipelinePosition', {
       params: new HttpParams().set('package_id', packageId).set('approval_pipeline_id', approvalPipelineId)
+    });
+  }
+
+  public getPDF(packageId: any) {
+    return this.http.get<any>(this.url + 'get_pdf', {
+      params: new HttpParams().set('package_id', packageId)
     });
   }
 
