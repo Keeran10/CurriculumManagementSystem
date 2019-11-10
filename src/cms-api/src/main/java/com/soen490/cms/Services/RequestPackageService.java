@@ -80,6 +80,8 @@ public class RequestPackageService {
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
 
+        RequestPackage requestPackage = requestPackageRepository.findById(package_id);
+
         Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
 
         if(request == null)
@@ -112,7 +114,7 @@ public class RequestPackageService {
         request.setRequestPackage(null);
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
         request.setUser(userRepository.findById(user_id));
-        request.setRequestPackage(requestPackageRepository.findById(package_id));
+        request.setRequestPackage(requestPackage);
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
         // Degree Requirements
@@ -221,8 +223,12 @@ public class RequestPackageService {
 
         requestRepository.save(request);
 
+
         log.info("course saved: " + c);
         log.info("request saved: " + request);
+
+        requestPackage.getRequests().add(request); 
+
 
         return request.getId();
     }
