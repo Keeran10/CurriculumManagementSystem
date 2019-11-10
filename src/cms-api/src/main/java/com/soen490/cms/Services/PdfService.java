@@ -1,5 +1,26 @@
-package com.soen490.cms.Services;
+// MIT License
 
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+package com.soen490.cms.Services;
 
 import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.text.DiffRow;
@@ -10,6 +31,7 @@ import com.itextpdf.text.pdf.*;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +43,7 @@ import java.util.*;
 import java.util.List;
 
 @Service
+@Log4j2
 public class PdfService {
 
     @Autowired
@@ -97,7 +120,7 @@ public class PdfService {
         if(!requestPackage.getSupportingDocuments().isEmpty()) {
 
             try {
-
+                log.info("Supporting docs found. Merging them together...");
                 support_stream = mergeSupportingDocs(requestPackage);
 
             } catch (DocumentException | IOException e) {
@@ -108,6 +131,8 @@ public class PdfService {
         try {
             // for each page
             for(Request request : requestPackage.getRequests()){
+
+                log.info("Generating pdf page for " + request.getTitle());
 
                 Document doc = new Document();
                 // course page specifications
@@ -132,6 +157,8 @@ public class PdfService {
 
                     // append course outline
                     if(changed_course.getOutline() != null){
+
+                        log.info("Appending course outline for " + changed_course.getName() + changed_course.getNumber());
 
                         course_outline_stream = mergeOutline(changed_course);
 
@@ -189,6 +216,8 @@ public class PdfService {
      * @throws DocumentException
      */
     private ByteArrayOutputStream stampPageXofY(ByteArrayOutputStream final_stream) throws IOException, DocumentException {
+
+        log.info("Numbering final document pages...");
 
         PdfReader reader = new PdfReader(final_stream.toByteArray());
 
