@@ -63,12 +63,22 @@ public class ApprovalPipelineController {
     /**
      * Creates a new Approval Pipeline if the requested approval pipeline does not exist and associates it to a request package
      *
-     * @param pipeline
-     * @param packageId
+     * @param pipeline_info
      */
     @PostMapping(value = "/setApprovalPipeline")
-    public void setApprovalPipeline(@RequestParam("approval_pipeline") String pipeline, @RequestParam("package_id") int packageId) throws JSONException {
-        ApprovalPipeline approvalPipeline = approvalPipelineService.createApprovalPipeline(pipeline);
+    public void setApprovalPipeline(@RequestBody String pipeline_info) throws JSONException {
+        JSONObject json = new JSONObject(pipeline_info);
+
+        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
+
+        String pipeline = (String) array.getJSONObject(0).get("value");
+        int packageId = Integer.valueOf(String.valueOf(array.getJSONObject(1).get("value")));
+
+        String[] pipeline_array = pipeline.split(",");
+
+        pipeline_array[0] = pipeline_array[0].substring(1);
+        pipeline_array[pipeline_array.length - 1] = pipeline_array[pipeline_array.length - 1].substring(0, pipeline_array[pipeline_array.length - 1].length() - 1);
+        ApprovalPipeline approvalPipeline = approvalPipelineService.createApprovalPipeline(pipeline_array);
         RequestPackage requestPackage = requestPackageService.findById(packageId);
         List<String> pipelineList = approvalPipelineService.getPipeline(approvalPipeline.getId());
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = new ApprovalPipelineRequestPackage();

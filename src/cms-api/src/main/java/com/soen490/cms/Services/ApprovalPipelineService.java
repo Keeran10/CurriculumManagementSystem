@@ -184,36 +184,29 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @return
      */
-    public ApprovalPipeline createApprovalPipeline(String pipeline) throws JSONException {
+    public ApprovalPipeline createApprovalPipeline(String[] pipeline) throws JSONException {
         List<ApprovalPipeline> pipelines = approvalPipelineRepository.findAll();
         ApprovalPipeline approvalPipeline = new ApprovalPipeline();
-        JSONObject json = new JSONObject(pipeline);
-        Iterator iterator = json.keys();
-        int position = 1;
 
-        while(iterator.hasNext()) {
-
-            String key = (String) iterator.next();
-            if(key.equals("Department Curriculum Committee")) {
-                approvalPipeline.setDepartmentCurriculumCommittee(position);
+        for(int i = 0; i < pipeline.length; i++) {
+            if(pipeline[i].contains("Department Curriculum Committee")) {
+                approvalPipeline.setDepartmentCurriculumCommittee(i + 1);
             }
-            if(key.equals("Department Council")){
-                approvalPipeline.setDepartmentCouncil(position);
+            if(pipeline[i].contains("Department Council")){
+                approvalPipeline.setDepartmentCouncil(i + 1);
             }
-            if(key.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
-                approvalPipeline.setUndergraduateStudiesCommittee(position);
+            if(pipeline[i].contains("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+                approvalPipeline.setUndergraduateStudiesCommittee(i + 1);
             }
-            if(key.equals("Faculty Council")) {
-                approvalPipeline.setFacultyCouncil(position);
+            if(pipeline[i].contains("Faculty Council")) {
+                approvalPipeline.setFacultyCouncil(i + 1);
             }
-            if(key.equals("APC")) {
-                approvalPipeline.setAPC(position);
+            if(pipeline[i].contains("APC")) {
+                approvalPipeline.setAPC(i + 1);
             }
-            if(key.equals("Senate")) {
-                approvalPipeline.setSenate(position);
+            if(pipeline[i].contains("Senate")) {
+                approvalPipeline.setSenate(i + 1);
             }
-
-            position++;
         }
 
         // check if the one of the pipelines currently in the database is the same as the new one
