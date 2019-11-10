@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../backend-api.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {first} from 'rxjs/operators';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -17,45 +16,33 @@ export class LoginComponent implements OnInit {
               ) {
   }
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  isLoginError = false;
+  email: string;
   login: string;
   password: string;
   loginForm: FormGroup;
-  loading = false;
-  submitted = false;
-  hide = true;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.login = params.get('email'), this.password = params.get('password');
+      this.email = params.get('email'), this.password = params.get('password');
     });
-    this.api.setCredentials(this.login, this.password).subscribe(data => {
+    this.api.setCredentials(this.email, this.password).subscribe(data => {
       console.log(data);
     });
 
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
       password: ['', Validators.required]
     });
-  }
-
-  getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-      this.email.hasError('email') ? 'Not a valid email' :
-        '';
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
 
-  onSubmit(): void {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
+  OnSubmit(username, password) {
+    this.api.setCredentials(username, password).subscribe((data: any) => {
+      localStorage.setItem('userToken', data.access_token);
+    });
   }
-    this.loading = true;
-}
 }

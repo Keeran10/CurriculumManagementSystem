@@ -1,26 +1,9 @@
-.example-container {
-  display: flex;
-  flex-direction: column;
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
 }
 
-.example-container > * {
-  width: 20%;
-}
-
-.example-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.example-right-align {
-  text-align: right;
-}
-
-input.example-right-align::-webkit-outer-spin-button,
-input.example-right-align::-webkit-inner-spin-button {
-  display: none;
-}
-
-input.example-right-align {
-  -moz-appearance: textfield;
+.example-full-width {
+  width: 100%;
 }

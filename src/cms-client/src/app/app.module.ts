@@ -26,11 +26,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
-import { LoginComponent } from './login/login.component';
-import { UserComponent } from './user/user.component';
-import {MatIconModule} from "@angular/material/icon";
-import {MatMenuModule} from "@angular/material/menu";
-import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {LoginComponent} from './login/login.component';
 
 
 
@@ -45,7 +44,6 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     SearchPageComponent,
     SupportDocumentComponent,
     LoginComponent,
-    UserComponent
   ],
   // Keep imports alphabetical for source control
   imports: [
