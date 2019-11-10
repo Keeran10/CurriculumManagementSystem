@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from './model/course';
 import { CourseExtras } from './model/course-extras';
 import { Injectable } from '@angular/core';
+import {User} from "./model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class ApiService {
   }
 
   public setCredentials(email: string, password: string) {
-    return this.http.get(this.url +  'login', {
+    return this.http.get<User[]>(this.url +  'login', {
       params: new HttpParams().set('email', email).set('password', password)
     });
   }
