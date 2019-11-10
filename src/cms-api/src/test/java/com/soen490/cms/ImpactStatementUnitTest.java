@@ -1,6 +1,7 @@
 package com.soen490.cms;
 
 import com.soen490.cms.Models.Course;
+import com.soen490.cms.Models.Program;
 import com.soen490.cms.Models.Request;
 import com.soen490.cms.Models.Requisite;
 import com.soen490.cms.Services.SearchService;
@@ -29,6 +30,10 @@ public class ImpactStatementUnitTest {
         course.setNumber(362);
         course.setCredits(5);
         course.setDescription("test");
+        course.setLabHours(5);
+        course.setTutorialHours(3);
+        course.setLectureHours(1);
+        course.setLevel(2);
         course.setTitle("Math");
         course.setRequisites(new ArrayList<>());
         when(searchService.findCourseById(1)).thenReturn(course);
@@ -55,14 +60,21 @@ public class ImpactStatementUnitTest {
         request.setRequestType(2);
         request.setTargetId(2);
         request.setOriginalId(1);
-
+        Program program = new Program();
+        program.setId(1);
+        course.setProgram(program);
         Course courseUpdated = new Course();
+        courseUpdated.setProgram(program);
         courseUpdated.setId(6);
         courseUpdated.setName("COMP");
         courseUpdated.setNumber(363);
         courseUpdated.setTitle("Math");
         courseUpdated.setCredits(5);
         courseUpdated.setDescription("test");
+        courseUpdated.setLabHours(5);
+        courseUpdated.setTutorialHours(3);
+        courseUpdated.setLectureHours(1);
+        courseUpdated.setLevel(2);
         courseUpdated.setRequisites(new ArrayList<>());
 
         when(searchService.findCourseById(2)).thenReturn(courseUpdated);
@@ -70,7 +82,7 @@ public class ImpactStatementUnitTest {
         when(searchService.findAllOccurrencesOfCourseAsRequisite(6)).thenReturn(new ArrayList<Requisite>());
 
         Map<String,Object> mapResponse = impactAssessmentCourse.getCourseImpact(request);
-        assertThat(mapResponse.get("CourseChanges").toString()).isEqualTo("{Number="+courseUpdated.getNumber()+"}");
+        assertThat(mapResponse.get("CourseEdits").toString()).isEqualTo("{number="+courseUpdated.getNumber()+"}");
     }
 
     @Test

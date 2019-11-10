@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './backend-api.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { CourseListComponent } from './course-list/course-list.component';
@@ -15,8 +16,10 @@ import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
@@ -33,14 +36,18 @@ import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
-    SearchPageComponent,
-    SupportDocumentComponent,
-    EditFormComponent,
+    ApprovalPipelineComponent,
     CourseFormComponent,
     CourseListComponent,
+<<<<<<< HEAD
     SearchPageComponent,
     DialogImpactStatementComponent,
     ImpactStatementComponent
+=======
+    EditFormComponent,
+    SearchPageComponent,
+    SupportDocumentComponent
+>>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
@@ -60,7 +67,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     ReactiveFormsModule,
     NgxFileDropModule,
     PdfViewerModule,
+<<<<<<< HEAD
     MatDialogModule
+=======
+    MatCheckboxModule,
+    MatListModule
+>>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

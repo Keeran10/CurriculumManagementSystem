@@ -1,6 +1,6 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 public class SupportingDocument {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private Timestamp timestamp;
@@ -17,8 +17,13 @@ public class SupportingDocument {
     @Lob
     private byte[] document;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals"})
     @ManyToOne
-    @JoinColumn(name = "request_id")
-    private Request request;
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals"})
+    @ManyToOne
+    @JoinColumn(name = "package_id")
+    private RequestPackage requestPackage;
 }

@@ -8,9 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer>{
 
-    @Query(value = "SELECT * FROM request WHERE id=?", nativeQuery = true)
-    Request findByRequestId(Long id);
-
     @Query(value = "SELECT * FROM request WHERE id=?1", nativeQuery = true)
     Request findByRequestId(int id);
 }

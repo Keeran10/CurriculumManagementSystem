@@ -1,19 +1,19 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.ToString;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"requirements", "electives"})
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -26,6 +26,14 @@ public class Course {
 
     private String note;
 
+    private int level;
+
+    private double lectureHours;
+
+    private double tutorialHours;
+
+    private double labHours;
+
     @Lob
     private String description;
 
@@ -34,20 +42,17 @@ public class Course {
 
     private int isActive;
 
-    @JsonManagedReference
+    @JsonIgnoreProperties({"courses", "degrees"})
     @ManyToOne
     @JoinColumn(name = "program_id")
     private Program program;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "course")
-    private Collection<Requisite> requisites;
+    private List<Requisite> requisites = new ArrayList<>();
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "requiredCourses")
-    Collection<Degree> requirements;
+    @JsonIgnoreProperties("course")
+    @OneToMany(mappedBy = "course")
+    private List<DegreeRequirement> degreeRequirements = new ArrayList<>();
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "electiveCourses")
-    Collection<Degree> electives;
 }

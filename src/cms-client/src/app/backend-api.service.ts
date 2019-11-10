@@ -1,6 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+<<<<<<< HEAD
 import { Course } from './models/course';
+=======
+import { Course } from './model/course';
+import { CourseExtras } from './model/course-extras';
+import { Injectable } from '@angular/core';
+>>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +33,7 @@ export class ApiService {
   }
 
   public saveCourse(course: Course) {
+<<<<<<< HEAD
     return this.http.post<Course>(this.url + 'courses', course);
   }
 
@@ -35,5 +41,17 @@ export class ApiService {
     return this.http.get(this.url + 'ImpactAssessment', {
       params: new HttpParams().set('requestId', id)
     });
+=======
+    return this.http.post<Course>(this.url + "courses", course);
+>>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
   }
+
+  public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
+    console.log('would Post');
+    return this.http.post(this.url + "save_request", {
+      params: new HttpParams().set('course', JSON.stringify(course))
+        .set('courseExtras', JSON.stringify(courseExtras))
+    })
+  }
+
 }

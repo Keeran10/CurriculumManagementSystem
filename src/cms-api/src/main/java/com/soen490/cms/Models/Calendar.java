@@ -1,15 +1,20 @@
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = "department")
 public class Calendar {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String sectionId;
@@ -19,15 +24,10 @@ public class Calendar {
     @Lob
     private String body;
 
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "faculty_id")
-    private Faculty faculty;
+    private String sectionType; // faculty | faculty_list (profs) | courses | general
 
     @JsonManagedReference
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "department_id")
     private Department department;
-
-    private String sectionType; // faculty | faculty_list (profs) | courses | general
 }

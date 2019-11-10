@@ -1,17 +1,19 @@
 package com.soen490.cms.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"requests", "approvals"})
+@ToString(exclude= {"requests", "approvals", "department"})
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
@@ -21,16 +23,24 @@ public class User {
 
     private String userType;
 
-    // Login credentials - email should be used as username since CMS will actively use emails for notification
     private String email;
 
     private String password;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "user")
-    private Collection<Request> requests;
+    @JsonIgnoreProperties("users")
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
-    @JsonBackReference
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
-    private Collection<Approval> approvals;
+    private List<Request> requests = new ArrayList<>();
+
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user")
+    private List<Approval> approvals = new ArrayList<>();
+
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user")
+    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
 }
