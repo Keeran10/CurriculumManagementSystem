@@ -1,11 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-<<<<<<< HEAD
 import { Course } from './models/course';
-=======
-import { Course } from './model/course';
 import { CourseExtras } from './model/course-extras';
 import { Injectable } from '@angular/core';
->>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
 
 @Injectable({
   providedIn: 'root'
@@ -33,17 +29,17 @@ export class ApiService {
   }
 
   public saveCourse(course: Course) {
-<<<<<<< HEAD
     return this.http.post<Course>(this.url + 'courses', course);
   }
 
-  public getImpact(id: string) {
-    return this.http.get(this.url + 'ImpactAssessment', {
-      params: new HttpParams().set('requestId', id)
+  public getImpact(course: Course, courseExtras: CourseExtras) {
+
+    console.log('Impact endpoint called.');
+
+    return this.http.post(this.url + "get_impact", {
+      params: new HttpParams().set('course', JSON.stringify(course))
+        .set('courseExtras', JSON.stringify(courseExtras))
     });
-=======
-    return this.http.post<Course>(this.url + "courses", course);
->>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
   }
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {

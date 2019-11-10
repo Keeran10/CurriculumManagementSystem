@@ -18,32 +18,30 @@
         name="prerequisites"></textarea>
     </mat-form-field>
     <mat-form-field class="row4">
-      <textarea matInput placeholder="Equivalent Prerequisite Courses (E.g. AERO371 or MECH370;)" 
-      [(ngModel)]="editedModel.equivalents" 
-      name="equivalents"></textarea>
+      <textarea matInput placeholder="Equivalent Prerequisite Courses (E.g. AERO371 or MECH370;)"
+        [(ngModel)]="editedModel.equivalents" name="equivalents"></textarea>
     </mat-form-field>
     <mat-form-field class="row5">
-      <textarea matInput placeholder="Corequisites Courses (Separate with ;)" [(ngModel)]="editedModel.corequisites" 
-      name="corequisites"></textarea>
+      <textarea matInput placeholder="Corequisites Courses (Separate with ;)" [(ngModel)]="editedModel.corequisites"
+        name="corequisites"></textarea>
     </mat-form-field>
     <mat-form-field class="row6">
-      <input matInput placeholder="Antirequisites Courses (Seperate with ,)" [(ngModel)]="editedModel.antirequisites" 
-      name="antirequisites">
+      <input matInput placeholder="Antirequisites Courses (Seperate with ,)" [(ngModel)]="editedModel.antirequisites"
+        name="antirequisites">
     </mat-form-field>
     <mat-form-field class="row7">
-      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description" 
-      name="description"></textarea>
+      <textarea matInput placeholder="Description" [(ngModel)]="courseEditable.description"
+        name="description"></textarea>
     </mat-form-field>
     <mat-form-field class="row8">
       <input matInput placeholder="Notes" [(ngModel)]="courseEditable.note" name="notes">
     </mat-form-field>
     <mat-form-field class="row9">
-      <textarea matInput placeholder="Rationale" [(ngModel)]="editedModel.rationale" 
-      name="rationale"></textarea>
+      <textarea matInput placeholder="Rationale" [(ngModel)]="editedModel.rationale" name="rationale"></textarea>
     </mat-form-field>
     <mat-form-field class="row10">
-      <textarea matInput placeholder="Resource Implications" [(ngModel)]="editedModel.implications" 
-      name="implications"></textarea>
+      <textarea matInput placeholder="Resource Implications" [(ngModel)]="editedModel.implications"
+        name="implications"></textarea>
     </mat-form-field>
 
   </form>
@@ -118,4 +116,5 @@
   </div>
 </div>
 <app-support-documents></app-support-documents>
+<app-impact-statement [course]="courseEditable" [courseExtras]="editedModel"></app-impact-statement>
 <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>

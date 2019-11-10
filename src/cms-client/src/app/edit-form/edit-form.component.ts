@@ -1,13 +1,9 @@
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../backend-api.service';
-<<<<<<< HEAD
 import { Course } from '../models/course';
-=======
 import { Component, ViewChild } from '@angular/core';
-import { Course } from '../model/course';
 import { CourseExtras } from '../model/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
->>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
 
 @Component({
   selector: 'app-edit-form',
@@ -17,7 +13,7 @@ import { SupportDocumentComponent } from '../support-documents/support-documents
 
 export class EditFormComponent {
 
-  @ViewChild(SupportDocumentComponent, {static: false}) 
+  @ViewChild(SupportDocumentComponent, { static: false })
   supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
@@ -58,24 +54,24 @@ export class EditFormComponent {
 
   public setRequisitesStrings(course: Course) {
     let isNextEquivalent = false;
-    if(course.requisites.length > 0){
+    if (course.requisites.length > 0) {
       course.requisites.forEach(r => {
-        switch(r.type){
+        switch (r.type) {
           case 'equivalent':
-            if(!isNextEquivalent){
+            if (!isNextEquivalent) {
               this.model.equivalents += r.name + r.number + " or ";
             }
-            else{
-              this.model.equivalents += r.name + r.number + '; '; 
+            else {
+              this.model.equivalents += r.name + r.number + '; ';
             }
             isNextEquivalent = !isNextEquivalent;
             break;
           case 'prerequisite':
-            this.model.prerequisites += r.name + r.number + '; '; 
+            this.model.prerequisites += r.name + r.number + '; ';
             break;
           case 'corequisite':
             this.model.corequisites += r.name + r.number + '; ';
-            break; 
+            break;
         }
       })
     }

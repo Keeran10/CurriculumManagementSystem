@@ -26,9 +26,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
-import {DialogImpactStatementComponent, ImpactStatementComponent
+import {
+  DialogImpactStatementComponent, ImpactStatementComponent
 } from './impact-statement/impact-statement.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -39,15 +40,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     ApprovalPipelineComponent,
     CourseFormComponent,
     CourseListComponent,
-<<<<<<< HEAD
     SearchPageComponent,
     DialogImpactStatementComponent,
-    ImpactStatementComponent
-=======
+    ImpactStatementComponent,
     EditFormComponent,
-    SearchPageComponent,
     SupportDocumentComponent
->>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
@@ -67,12 +64,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     ReactiveFormsModule,
     NgxFileDropModule,
     PdfViewerModule,
-<<<<<<< HEAD
-    MatDialogModule
-=======
+    MatDialogModule,
     MatCheckboxModule,
     MatListModule
->>>>>>> 2ea01ee62fff1b675031c29d84f4e6e20e3f099f
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
