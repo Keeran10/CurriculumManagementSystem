@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
 
 
   OnSubmit(username, password) {
+    // user is captured and stored here
     this.api.setCredentials(username, password).subscribe((data => this.user = data));
     console.log(this.user);
   }
