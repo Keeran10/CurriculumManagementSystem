@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../backend-api.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {first} from "rxjs/operators";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
