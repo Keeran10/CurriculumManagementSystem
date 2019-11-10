@@ -72,19 +72,30 @@ public class PdfServiceTests {
                 c_different_substrings[ctr2++] = changed_processed[i];
         }
 
-        log.info(c_different_substrings.length);
-        log.info(c_identical_substrings.length);
-
         boolean isValid = false;
 
         if (o_identical_substrings.length <= c_identical_substrings.length) {
 
             for (String c_identical_substring : c_identical_substrings) {
+
+                if(c_identical_substring == null)
+                    break;
+
+                log.info(c_identical_substring + "|| placehodler");
+
                 for (String o_identical_substring : o_identical_substrings) {
 
-                    if (c_identical_substring.contains(o_identical_substring)) {
+                    if(o_identical_substring == null)
+                        break;
+
+                    log.info(c_identical_substring + "||"  + o_identical_substring);
+
+                    if (c_identical_substring.contains(o_identical_substring) || o_identical_substring.contains(c_identical_substring)) {
+
                         log.info(c_identical_substring + "||"  + o_identical_substring);
+
                         isValid = true;
+
                         break;
                     }
                 }
