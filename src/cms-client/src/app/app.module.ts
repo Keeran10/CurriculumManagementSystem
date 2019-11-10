@@ -27,14 +27,13 @@ import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {LoginComponent} from './login/login.component';
-import {
-  DialogImpactStatementComponent, ImpactStatementComponent
-} from './impact-statement/impact-statement.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginComponent } from './login/login.component';
+import { DialogImpactStatementComponent, ImpactStatementComponent } from './impact-statement/impact-statement.component';
 import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 
@@ -75,7 +74,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatIconModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

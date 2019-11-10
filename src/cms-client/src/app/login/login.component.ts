@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
   email: string;
   login: string;
   password: string;
-  loginForm: FormGroup;
   user: User[];
 
   ngOnInit() {
@@ -31,16 +30,7 @@ export class LoginComponent implements OnInit {
     this.api.setCredentials(this.email, this.password).subscribe(data => {
       console.log(data);
     });
-
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required]
-    });
   }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
-
 
   OnSubmit(username, password) {
     // user is captured and stored here
