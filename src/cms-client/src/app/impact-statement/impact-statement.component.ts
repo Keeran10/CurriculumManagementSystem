@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
-import { CourseExtras } from '../model/course-extras';
+import { CourseExtras } from '../models/course-extras';
 import {first} from 'rxjs/operators';
 
 export interface DialogData {

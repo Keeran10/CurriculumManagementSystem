@@ -1,3 +1,25 @@
+// MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
@@ -42,6 +64,8 @@ public class RequestPackageService {
     // Return package with right id, if id given is 0, a new package is created and returned
     public RequestPackage getRequestPackage(int package_id, int department_id){
 
+        log.info("getRequestPackage called with package_id " + package_id + " and department_id " + department_id + ".");
+
         if(package_id == 0)
             return getNewPackage(department_id);
 
@@ -57,7 +81,7 @@ public class RequestPackageService {
      */
     public int saveCourseRequest(String requestForm) throws JSONException {
 
-        System.out.println(requestForm);
+        log.info("Json received: " + requestForm);
 
         JSONObject json = new JSONObject(requestForm);
 
@@ -132,8 +156,6 @@ public class RequestPackageService {
 
             list.add(cdr);
 
-            System.out.println(dr);
-            System.out.println(cdr);
         }
         c.setDegreeRequirements(list);
 
@@ -223,7 +245,12 @@ public class RequestPackageService {
 
         requestRepository.save(request);
 
+
+        log.info("course saved: " + c);
+        log.info("request saved: " + request);
+
         requestPackage.getRequests().add(request); 
+
 
         return request.getId();
     }

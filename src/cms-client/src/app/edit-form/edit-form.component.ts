@@ -1,9 +1,31 @@
+// MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { Component, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { CourseExtras } from '../model/course-extras';
+import { CourseExtras } from '../models/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
 @Component({
@@ -15,6 +37,7 @@ import { SupportDocumentComponent } from '../support-documents/support-documents
 export class EditFormComponent {
 
   @ViewChild(SupportDocumentComponent, { static: false })
+
   supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
@@ -29,15 +52,18 @@ export class EditFormComponent {
     private router: Router) {
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
     let requestId = this.cookieService.get('request');
     let packageId = this.cookieService.get('package');
-    //let UserId = this.cookieService.get('user');
+    let userId = this.cookieService.get('user');
     this.model.packageId = Number(packageId);
     this.editedModel.packageId = Number(packageId);
+    this.model.userId = Number(userId);
+    this.editedModel.userId = Number(userId);
     if(requestId === '0'){
       this.api.getCourse(this.id).subscribe(data => {
         this.courseOriginal = data;
@@ -79,11 +105,10 @@ export class EditFormComponent {
       course.requisites.forEach(r => {
         switch (r.type) {
           case 'equivalent':
-            if(!isNextEquivalent){
-              courseExtras.equivalents += r.name + r.number + " or ";
-            }
-            else{
-              courseExtras.equivalents += r.name + r.number + '; '; 
+            if (!isNextEquivalent) {
+              this.model.equivalents += r.name + r.number + ' or ';
+            } else {
+              this.model.equivalents += r.name + r.number + '; ';
             }
             isNextEquivalent = !isNextEquivalent;
             break;
@@ -94,11 +119,11 @@ export class EditFormComponent {
             courseExtras.corequisites += r.name + r.number + '; ';
             break; 
         }
-      })
+      });
     }
   }
 
-  //There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
+  // There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
   /*
   public setDegreesStrings(course: Course) {
     if(course.degreeRequirements.length > 0){
@@ -116,6 +141,6 @@ export class EditFormComponent {
   public submitForm() {
     this.editedModel.files = this.supportDocumentComponent.documents;
     this.api.submitEditedCourse(this.courseEditable, this.editedModel)
-    .subscribe(() => this.router.navigate(['']))
+    .subscribe(() => this.router.navigate(['package']))
   }
 }

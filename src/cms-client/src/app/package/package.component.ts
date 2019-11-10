@@ -1,7 +1,7 @@
 import { ApiService } from '../backend-api.service';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Package } from '../model/package';
+import { Package } from '../models/package';
 
 @Component({
   selector: 'app-package',
@@ -12,6 +12,7 @@ export class PackageComponent implements OnInit {
 
   packages: Package[];
   isPdfAvailable = [];
+  userName = 'User';
 
   constructor(private cookieService: CookieService, private api: ApiService) { }
 
@@ -22,6 +23,7 @@ export class PackageComponent implements OnInit {
       this.packages = data;
       this.packages.forEach(()=> this.isPdfAvailable.push(false));
     });
+    this.userName = this.cookieService.get('userName');
   }
 
   public packageSelect(packageId, requestId){

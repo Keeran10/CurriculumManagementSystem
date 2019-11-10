@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.soen490.cms.FeatureFlagTest;
-
-public class FeatureFlagOff implements IFeatureFlagTest{
-    public String getData(){
-        return "Feature Flag Off";
-    }
+export class Requisite {
+    id: number;
+    isActive: boolean;
+    name: string;
+    number: number;
+    type: string;
 }
