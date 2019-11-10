@@ -113,6 +113,6 @@ export class EditFormComponent {
 
   public submitForm() {
     this.editedModel.files = this.supportDocumentComponent.documents;
-    this.api.submitEditedCourse(this.courseEditable, this.editedModel).subscribe(data => { console.log(data) })
+    this.api.submitEditedCourse(this.courseEditable, this.editedModel).subscribe(data => console.log(data))
   }
 }

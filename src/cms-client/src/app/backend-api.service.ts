@@ -44,6 +44,8 @@ export class ApiService {
   }
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
+    console.log(course);
+    console.log(courseExtras);
     return this.http.post(this.url + "save_request", {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))

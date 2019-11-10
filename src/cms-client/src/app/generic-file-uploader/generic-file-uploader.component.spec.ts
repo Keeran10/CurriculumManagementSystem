@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GenericFileUploaderComponent } from './generic-file-uploader.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('GenericFileUploaderComponent', () => {
   let component: GenericFileUploaderComponent;
@@ -8,7 +9,8 @@ describe('GenericFileUploaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GenericFileUploaderComponent ]
+      declarations: [ GenericFileUploaderComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
   }));
