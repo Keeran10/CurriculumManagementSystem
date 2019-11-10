@@ -7,6 +7,8 @@ import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -182,29 +184,36 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @return
      */
-    public ApprovalPipeline createApprovalPipeline(String[] pipeline) {
+    public ApprovalPipeline createApprovalPipeline(String pipeline) throws JSONException {
         List<ApprovalPipeline> pipelines = approvalPipelineRepository.findAll();
         ApprovalPipeline approvalPipeline = new ApprovalPipeline();
+        JSONObject json = new JSONObject(pipeline);
+        Iterator iterator = json.keys();
+        int position = 1;
 
-        for(int i = 0; i < pipeline.length; i++) {
-            if(pipeline[i].equals("Department Curriculum Committee")) {
-                approvalPipeline.setDepartmentCurriculumCommittee(i + 1);
+        while(iterator.hasNext()) {
+
+            String key = (String) iterator.next();
+            if(key.equals("Department Curriculum Committee")) {
+                approvalPipeline.setDepartmentCurriculumCommittee(position);
             }
-            if(pipeline[i].equals("Department Council")){
-                approvalPipeline.setDepartmentCouncil(i + 1);
+            if(key.equals("Department Council")){
+                approvalPipeline.setDepartmentCouncil(position);
             }
-            if(pipeline[i].equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
-                approvalPipeline.setUndergraduateStudiesCommittee(i + 1);
+            if(key.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+                approvalPipeline.setUndergraduateStudiesCommittee(position);
             }
-            if(pipeline[i].equals("Faculty Council")) {
-                approvalPipeline.setFacultyCouncil(i + 1);
+            if(key.equals("Faculty Council")) {
+                approvalPipeline.setFacultyCouncil(position);
             }
-            if(pipeline[i].equals("APC")) {
-                approvalPipeline.setAPC(i + 1);
+            if(key.equals("APC")) {
+                approvalPipeline.setAPC(position);
             }
-            if(pipeline[i].equals("Senate")) {
-                approvalPipeline.setSenate(i + 1);
+            if(key.equals("Senate")) {
+                approvalPipeline.setSenate(position);
             }
+
+            position++;
         }
 
         // check if the one of the pipelines currently in the database is the same as the new one

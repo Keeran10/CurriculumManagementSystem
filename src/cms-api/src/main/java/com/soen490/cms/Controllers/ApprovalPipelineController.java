@@ -3,10 +3,14 @@ package com.soen490.cms.Controllers;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Services.ApprovalPipelineService;
 import com.soen490.cms.Services.RequestPackageService;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -63,7 +67,7 @@ public class ApprovalPipelineController {
      * @param packageId
      */
     @PostMapping(value = "/setApprovalPipeline")
-    public void setApprovalPipeline(@RequestParam("approval_pipeline") String[] pipeline, @RequestParam("package_id") int packageId) {
+    public void setApprovalPipeline(@RequestParam("approval_pipeline") String pipeline, @RequestParam("package_id") int packageId) throws JSONException {
         ApprovalPipeline approvalPipeline = approvalPipelineService.createApprovalPipeline(pipeline);
         RequestPackage requestPackage = requestPackageService.findById(packageId);
         List<String> pipelineList = approvalPipelineService.getPipeline(approvalPipeline.getId());
