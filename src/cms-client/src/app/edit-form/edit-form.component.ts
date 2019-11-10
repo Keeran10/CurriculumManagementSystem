@@ -38,7 +38,6 @@ export class EditFormComponent {
     this.editedModel.packageId = Number(packageId);
     if(requestId === '0'){
       this.api.getCourse(this.id).subscribe(data => {
-        console.log(data);
         this.courseOriginal = data;
         this.courseEditable = Object.assign({}, data);
         this.setRequisitesStrings(data, this.model);
@@ -50,12 +49,10 @@ export class EditFormComponent {
       let editedId = this.cookieService.get('editedCourse');
       this.api.getCourse(originalId).subscribe(data => {
         this.courseOriginal = data;
-        console.log(data);
         this.setRequisitesStrings(data, this.model);
       });
       this.api.getCourse(editedId).subscribe(data => {
         this.courseEditable = data;
-        console.log(data);
         this.setRequisitesStrings(data, this.editedModel);
       });
     }
@@ -116,7 +113,6 @@ export class EditFormComponent {
 
   public submitForm() {
     this.editedModel.files = this.supportDocumentComponent.documents;
-    this.api.submitEditedCourse(this.courseEditable, this.editedModel)
-      .subscribe(data => { console.log(data) })
+    this.api.submitEditedCourse(this.courseEditable, this.editedModel).subscribe(data => { console.log(data) })
   }
 }
