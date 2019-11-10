@@ -55,7 +55,9 @@ public class RequestPackageService {
      * @return True if course has been successfully added to database.
      * @throws JSONException
      */
-    public boolean saveCourseRequest(String requestForm) throws JSONException {
+    public int saveCourseRequest(String requestForm) throws JSONException {
+
+        System.out.println(requestForm);
 
         JSONObject json = new JSONObject(requestForm);
 
@@ -73,7 +75,7 @@ public class RequestPackageService {
 
         if(!o.isEmpty())
             original = o.get(0);
-        else return false;
+        else return 0;
 
         Course c = new Course();
 
@@ -209,19 +211,12 @@ public class RequestPackageService {
 
         // Supporting Documents
         // initialize supporting doc and save it to its repository
-        if(courseExtras.get("files") != null){
-
-            JSONArray outline = courseExtras.getJSONArray("files");
-
-            System.out.println("Upload files data: " + outline);
-            //c.setOutline(outline.getJSONObject(0).toString().getBytes());
-        }
 
         courseRepository.save(c);
 
         requestRepository.save(request);
 
-        return true;
+        return request.getId();
     }
 
 

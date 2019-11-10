@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,6 +28,8 @@ public class RequestPackageController {
     PdfService pdfService;
     @Autowired
     RequestPackageService requestPackageService;
+    @Autowired
+    ImpactAssessmentController impactAssessmentController;
 
     /**
      * Generates a pdf file out of the entire data set for the given package.
@@ -70,7 +73,7 @@ public class RequestPackageController {
      * @throws JSONException
      */
     @PostMapping(value="/save_request", consumes = "application/json")
-    public boolean saveRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+    public int saveRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
 
         return requestPackageService.saveCourseRequest(requestForm);
     }
@@ -111,6 +114,15 @@ public class RequestPackageController {
     public SupportingDocument add(@RequestParam File document, @RequestParam int packageId) throws IOException {
 
         return requestPackageService.addSupportingDocument(document, packageId);
+    }
+
+
+    @PostMapping(value = "/get_impact")
+    public Map<String, Object> sendRequestId(@RequestBody String requestForm) throws JSONException {
+
+        int request_id = requestPackageService.saveCourseRequest(requestForm);
+
+        return impactAssessmentController.getImpactAssessment(request_id);
     }
 
 }
