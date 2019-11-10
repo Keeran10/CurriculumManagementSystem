@@ -105,6 +105,7 @@
     </div>
     <br>
     <button mat-raised-button (click)="highlightChanges()">Highlight Changes</button>
+    <app-impact-statement [course]="courseEditable" [courseExtras]="editedModel"></app-impact-statement>
     <br><br>
     <span>Rationale:</span>
     <br>
@@ -116,5 +117,5 @@
   </div>
 </div>
 <app-support-documents></app-support-documents>
-<app-impact-statement [course]="courseEditable" [courseExtras]="editedModel"></app-impact-statement>
+
 <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
