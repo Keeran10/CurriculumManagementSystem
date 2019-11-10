@@ -47,7 +47,41 @@ export class ApiService {
     return this.http.post(this.url + 'save_request', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
-    })
+    });
+  }
+
+  public savePipeline(pipeline: string, packageId: any) {
+    console.log('set approval pipeline');
+    return this.http.post(this.url + 'setApprovalPipeline', {
+      params: new HttpParams().set('approval_pipeline', pipeline)
+        .set('package_id', packageId)
+    });
+  }
+
+  public getApprovalPipeline(pipelineId: any) {
+    return this.http.get<string[]>(this.url + 'approvalPipeline', {
+      params: new HttpParams().set('approval_pipeline_id', pipelineId)
+    });
+  }
+
+  public getCurrentPosition(packageId: string, approvalPipelineId: string) {
+    return this.http.get<any>(this.url + 'approvalPipelinePosition', {
+      params: new HttpParams().set('package_id', packageId).set('approval_pipeline_id', approvalPipelineId),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
+
+  public generatePdf(packageId: string){
+    return this.http.get<boolean>(this.url + 'generate_pdf', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public viewPdf(packageId: string){
+    return this.http.get<BlobPart>(this.url + 'get_pdf', {
+      params: new HttpParams().set('package_id', packageId),
+      responseType: 'arraybuffer' as 'json'
+    });
   }
 
 }

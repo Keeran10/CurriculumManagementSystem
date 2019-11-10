@@ -240,6 +240,10 @@ public class RequestPackageService {
         return requestPackageRepository.findByDepartment(department_id);
     }
 
+    public RequestPackage findById(int id) {
+        return requestPackageRepository.findById(id);
+    }
+
 
     /**
      * Saves a new request package to the database

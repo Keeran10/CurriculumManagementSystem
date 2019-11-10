@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { CourseExtras } from '../model/course-extras';
-import {first} from "rxjs/operators";
+import {first} from 'rxjs/operators';
 
 export interface DialogData {
   animal: string;
@@ -24,6 +24,7 @@ export class ImpactStatementComponent implements OnInit {
   // tslint:disable-next-line:prefer-const
   impact;
   title: 'test';
+  keys;
 
   @Input() course: Course;
   @Input() courseExtras: CourseExtras;
@@ -37,13 +38,7 @@ export class ImpactStatementComponent implements OnInit {
 
   showImpact(): void {
     this.apiService.getImpact(this.course, this.courseExtras).subscribe(data => this.impact = data);
-    if (this.impact != null) {
-      this.openDialog();
-    }
-  }
-
-  private getCourseName() {
-
+    this.openDialog();
   }
 
   openDialog(): void {
@@ -55,16 +50,25 @@ export class ImpactStatementComponent implements OnInit {
         OriginalCourseNumber: this.impact.OriginalCourse.number,
         OriginalCourseProgram: this.impact.OriginalCourse.program.name,
         OriginalCourseDepartment: this.impact.OriginalCourse.program.department.name,
+
         DegreeCourseRequiredImpactOriginal: this.impact.DegreeCourseRequiredImpact.original[0],
-        DegreeCourseRequiredImpactRemoved: this.impact.DegreeCourseRequiredImpact.removed,
-        DegreeCourseRequiredImpactAdded: this.impact.DegreeCourseRequiredImpact.added,
-        DegreeCourseRequiredImpactUpdated: this.impact.DegreeCourseRequiredImpact.updated,
-        DegreeCourseElectiveImpactRemoved: this.impact.DegreeCourseElectiveImpact.removed,
-        DegreeCourseElectiveImpactAdded: this.impact.DegreeCourseElectiveImpact.added,
-        ProgramImpactOriginal: this.impact.ProgramImpact.original,
-        ProgramImpactRemoved: this.impact.ProgramImpact.removed,
-        ProgramImpactAdded: this.impact.ProgramImpact.added,
-        ProgramImpactUpdated: this.impact.ProgramImpact.updated,
+        DegreeCourseRequiredImpactOriginalKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.original[0] || {}),
+        DegreeCourseRequiredImpactRemoved: this.impact.DegreeCourseRequiredImpact.removed[0],
+        DegreeCourseRequiredImpactAdded: this.impact.DegreeCourseRequiredImpact.added[0],
+        DegreeCourseRequiredImpactUpdated: this.impact.DegreeCourseRequiredImpact.updated[0],
+        DegreeCourseRequiredImpactUpdatedKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.updated[0] || {}),
+
+
+        DegreeCourseElectiveImpactRemoved: this.impact.DegreeCourseElectiveImpact.removed[0],
+        DegreeCourseElectiveImpactAdded: this.impact.DegreeCourseElectiveImpact.added[0],
+
+        ProgramImpactOriginal: this.impact.ProgramImpact.original[0],
+        ProgramImpactOriginalKeys: Object.keys(this.impact.ProgramImpact.original[0] || {}),
+        ProgramImpactRemoved: this.impact.ProgramImpact.removed[0],
+        ProgramImpactAdded: this.impact.ProgramImpact.added[0],
+        ProgramImpactUpdated: this.impact.ProgramImpact.updated[0],
+        ProgramImpactUpdatedKeys: Object.keys(this.impact.ProgramImpact.updated[0] || {}),
+
         CourseEditsName: this.impact.CourseEdits.name,
         CourseEditsNumber: this.impact.CourseEdits.number,
         CourseEditsCredits: this.impact.CourseEdits.credits,
@@ -91,9 +95,5 @@ export class DialogImpactStatementComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogImpactStatementComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }

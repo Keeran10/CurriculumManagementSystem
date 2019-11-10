@@ -1,44 +1,52 @@
 <h1 mat-dialog-title>Impact statement for changes in:</h1>
-<p>{{data.OriginalCourseName}} {{data.OriginalCourseNumber}}</p>
+{{data.OriginalCourseName}} {{data.OriginalCourseNumber}}
 <div mat-dialog-content>
   <h4>IMPACT STATEMENT</h4>
-
-
-    <ng-template [ngIf]="data.DegreeCourseRequiredImpactRemoved !=0 || data.DegreeCourseRequiredImpactAdded !=0 || data.DegreeCourseRequiredImpactUpdated !=0" [ngIfElse]="NoDegreeRequiredChanges">
+    <ng-template [ngIf]="data.DegreeCourseRequiredImpactRemoved != null ||
+    data.DegreeCourseRequiredImpactAdded != null ||
+    data.DegreeCourseRequiredImpactUpdated != null" [ngIfElse]="NoDegreeRequiredChanges">
       <div>
-        <h5>Degree Course Electives Changes have been made.</h5>
-      </div>
-      <div>
-<p>Degree Course was: </p>
-    <h4>{{data.DegreeCourseRequiredImpactOriginal}}</h4>
-  <h4 *ngIf="data.DegreeCourseElectiveImpactRemoved !=0">Degree Course was removed.</h4>
-  <h4 *ngIf="data.DegreeCourseElectiveImpactAdded !=0">Degree Course was added.</h4>
-  <h4 *ngIf="data.DegreeCourseElectiveImpactUpdated != null">Degree Course was updated.</h4>
+<h5>Degree changes have been made. Degree was: </h5>
+    <div> <div *ngFor="let key of data.DegreeCourseRequiredImpactOriginalKeys">
+      {{key}} with {{data.DegreeCourseRequiredImpactOriginal[key]}} credits
+    </div></div>
+  <div *ngIf="data.DegreeCourseRequiredImpactRemoved != null">Degree course was removed.</div>
+  <div *ngIf="data.DegreeCourseRequiredImpactAdded != null">Degree course was added.</div>
+        <div *ngIf="data.DegreeCourseRequiredImpactUpdated != null"><h5>Degree is now:</h5>
+    <div> <div *ngFor="let key of data.DegreeCourseRequiredImpactUpdatedKeys">
+    <p>{{key}} with {{data.DegreeCourseRequiredImpactUpdated[key]}} credits</p>
+  </div></div></div>
   </div>
     </ng-template>
 
-  <ng-template [ngIf]="data.DegreeCourseElectiveImpactRemoved !=0 || data.DegreeCourseElectiveImpactAdded !=0" [ngIfElse]="NoElectiveChanges">
-    <div>
-      <h5>Degree Course Electives Changes have been made.</h5>
-    </div>
+  <ng-template [ngIf]="data.ProgramImpactRemoved != null ||
+  data.ProgramImpactAdded != null||
+  data.ProgramImpactUpdated !=null" [ngIfElse]="NoProgramChanges">
   <div>
-    <p>Degree Course Elective changes:  </p>
-    <h4 *ngIf="data.DegreeCourseElectiveImpactRemoved !=0">Degree Course Elective was removed.</h4>
-    <h4 *ngIf="data.DegreeCourseElectiveImpactAdded !=0">Degree Course Elective was added.</h4>
+    <h5>Core section has changed. Core section originally was:  </h5>
+    <div> <div *ngFor="let key of data.ProgramImpactOriginalKeys">
+      {{key}} with {{data.ProgramImpactOriginal[key]}} credits
+    </div></div>
+    <div *ngIf="data.ProgramImpactRemoved != null">Core section will be removed.</div>
+    <div *ngIf="data.ProgramImpactAdded != null">Core section will be added.</div>
+    <div *ngIf="data.ProgramImpactUpdated != null"><h5>Core section is now:</h5>
+      <div> <div *ngFor="let key of data.ProgramImpactUpdatedKeys">
+        <p>{{key}} with {{data.ProgramImpactUpdated[key]}} credits</p>
+      </div></div>
+    </div>
   </div>
   </ng-template>
 
-  <ng-template [ngIf]="data.ProgramImpactRemoved !=0 || data.ProgramImpactAdded !=0|| data.ProgramImpactUpdated!=0 " [ngIfElse]="NoProgramChanges">
+  <ng-template [ngIf]="data.DegreeCourseElectiveImpactRemoved != null
+  || data.DegreeCourseElectiveImpactAdded !=null " [ngIfElse]="NoElectiveChanges">
     <div>
-      <h5>Program Changes have been made.</h5>
+      <div>Degree course electives changes have been made.</div>
     </div>
-  <div>
-    <p>Program originally was:  </p>
-    <h4>{{data.ProgramImpactOriginal}}</h4>
-    <h4 *ngIf="data.ProgramImpactRemoved != 0">Program will be removed.</h4>
-    <h4 *ngIf="data.ProgramImpactAdded != 0">Program will be added.</h4>
-    <h4 *ngIf="data.ProgramImpactUpdated != 0">Program will be updated.</h4>
-  </div>
+    <div>
+      <p>Degree course electives changes:  </p>
+      <div *ngIf="data.DegreeCourseElectiveImpactRemoved !=0">Degree course electives were removed.</div>
+      <div *ngIf="data.DegreeCourseElectiveImpactAdded !=0">Degree course electives were added.</div>
+    </div>
   </ng-template>
 
   <ng-template [ngIf]="data.CourseEditsName != null ||
@@ -46,47 +54,47 @@
                       data.CourseEditsCredits != null ||
                       data.CourseEditsTitle != null ||
                       data.CourseEditsDescription != null" [ngIfElse]="NoCourseChanges">
-    <div>
-      <h5>Course Changes have been made.</h5>
-    </div>
   <div>
-    <p *ngIf="data.CourseEdits !=0"><h5>Course changes:</h5>
-    <h4 *ngIf="data.CourseEditsName != null && data.CourseEditsNumber == null ">Course is now: {{data.CourseEditsName}} {{data.OriginalCourseNumber}} </h4>
-    <h4 *ngIf="data.CourseEditsNumber != null && data.CourseEditsName == null">Course is now: {{data.OriginalCourseName}} {{data.CourseEditsNumber}}</h4>
-    <h4 *ngIf="data.CourseEditsNumber != null && data.CourseEditsName != null">Course is now: {{data.CourseEditsName}} {{data.CourseEditsNumber}}</h4>
-    <h4 *ngIf="data.CourseEditsCredits != null">Course credits are now: {{data.CourseEditsCredits}} credits.</h4>
-    <h4 *ngIf="data.CourseEditsTitle != null">Course title is now: {{data.CourseEditsTitle}}</h4>
-    <h4 *ngIf="data.CourseEditsDescription != null">Course description is now: {{data.CourseEditsDescription}}</h4>
+    <p *ngIf="data.CourseEdits !=0"><h5>Course Changes have been made. Those changes are:</h5>
+    <div *ngIf="data.CourseEditsName != null && data.CourseEditsNumber == null ">Course is now: {{data.CourseEditsName}} {{data.OriginalCourseNumber}} </div>
+    <div *ngIf="data.CourseEditsNumber != null && data.CourseEditsName == null">Course is now: {{data.OriginalCourseName}} {{data.CourseEditsNumber}}</div>
+    <div *ngIf="data.CourseEditsNumber != null && data.CourseEditsName != null">Course is now: {{data.CourseEditsName}} {{data.CourseEditsNumber}}</div>
+    <div *ngIf="data.CourseEditsCredits != null">Course credits are now: {{data.CourseEditsCredits}} credits.</div>
+    <div *ngIf="data.CourseEditsTitle != null">Course title is now: {{data.CourseEditsTitle}}</div>
+    <div *ngIf="data.CourseEditsDescription != null">Course description is now: {{data.CourseEditsDescription}}</div>
   </div>
   </ng-template>
 
-  <ng-template #NoElectiveChanges>
-    <div>
-      No Degree Course Electives Changes have been made.
-    </div>
-  </ng-template>
-  <ng-template #NoProgramChanges>
-    <div>
-      No Program Changes have been made.
-    </div>
-  </ng-template>
-  <ng-template #NoDegreeRequiredChanges>
-    <div>
-      No Degree Course Electives Changes have been made.
-    </div>
-  </ng-template>
-  <ng-template #NoCourseChanges>
-    <div>
-     No Course Changes have been made.
-    </div>
+  <!-- Degree no changes -->
+  <ng-template [ngIf]="data.DegreeCourseRequiredImpactRemoved == null
+  && data.DegreeCourseRequiredImpactAdded == null
+  && data.DegreeCourseRequiredImpactUpdated == null">
+     <h5 style="color:red;">No degree changes have been made.</h5>
   </ng-template>
 
-  <div *ngFor="let test of data.DegreeCourseRequiredImpactOriginal ; let i = index">
-    {{test}} Will remove once I figure this out
-  </div>
+  <!-- Core no changes -->
+  <ng-template [ngIf]="data.ProgramImpactRemoved == null
+  && data.ProgramImpactAdded == null
+  && data.ProgramImpactUpdated == null ">
+    <h5 style="color:red;">No core changes have been made.</h5>
+  </ng-template>
+
+  <!-- course elective no changes -->
+  <ng-template [ngIf]="data.DegreeCourseElectiveImpactRemoved == null
+  && data.DegreeCourseElectiveImpactAdded == null">
+      <h5 style="color:red;">No course electives changes have been made.</h5>
+  </ng-template>
+
+  <!-- Course no changes -->
+  <ng-template [ngIf]="data.CourseEditsName == null &&
+                      data.CourseEditsNumber == null &&
+                      data.CourseEditsCredits == null &&
+                      data.CourseEditsTitle == null &&
+                      data.CourseEditsDescription == null">
+      <h5 style="color:red;">No course changes have been made.</h5>
+  </ng-template>
 
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
   <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
 </div>

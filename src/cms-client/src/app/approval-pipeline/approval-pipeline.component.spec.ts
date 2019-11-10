@@ -4,6 +4,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { ApiService } from '../backend-api.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ApprovalPipelineComponent', () => {
   let component: ApprovalPipelineComponent;
@@ -15,9 +17,13 @@ describe('ApprovalPipelineComponent', () => {
         MatCheckboxModule,
         MatListModule,
         MatCardModule,
-        MatButtonModule
+        MatButtonModule,
+        HttpClientTestingModule
       ],
-      declarations: [ ApprovalPipelineComponent ]
+      declarations: [ ApprovalPipelineComponent ],
+      providers: [
+        ApiService
+      ]
     })
     .compileComponents();
   }));
