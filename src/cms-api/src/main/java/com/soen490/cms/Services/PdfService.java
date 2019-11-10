@@ -10,6 +10,7 @@ import com.itextpdf.text.pdf.*;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.*;
 import java.util.List;
 
 @Service
+@Log4j2
 public class PdfService {
 
     @Autowired
@@ -97,7 +99,7 @@ public class PdfService {
         if(!requestPackage.getSupportingDocuments().isEmpty()) {
 
             try {
-
+                log.info("Supporting docs found. Merging them together...");
                 support_stream = mergeSupportingDocs(requestPackage);
 
             } catch (DocumentException | IOException e) {
@@ -108,6 +110,8 @@ public class PdfService {
         try {
             // for each page
             for(Request request : requestPackage.getRequests()){
+
+                log.info("Generating pdf page for " + request.getTitle());
 
                 Document doc = new Document();
                 // course page specifications
@@ -132,6 +136,8 @@ public class PdfService {
 
                     // append course outline
                     if(changed_course.getOutline() != null){
+
+                        log.info("Appending course outline for " + changed_course.getName() + changed_course.getNumber());
 
                         course_outline_stream = mergeOutline(changed_course);
 
@@ -189,6 +195,8 @@ public class PdfService {
      * @throws DocumentException
      */
     private ByteArrayOutputStream stampPageXofY(ByteArrayOutputStream final_stream) throws IOException, DocumentException {
+
+        log.info("Numbering final document pages...");
 
         PdfReader reader = new PdfReader(final_stream.toByteArray());
 
