@@ -65,14 +65,22 @@ export class ApiService {
   }
 
   public getCurrentPosition(packageId: string, approvalPipelineId: string) {
-    return this.http.get<string>(this.url + 'approvalPipelinePosition', {
-      params: new HttpParams().set('package_id', packageId).set('approval_pipeline_id', approvalPipelineId)
+    return this.http.get<any>(this.url + 'approvalPipelinePosition', {
+      params: new HttpParams().set('package_id', packageId).set('approval_pipeline_id', approvalPipelineId),
+      responseType: 'arraybuffer' as 'json'
     });
   }
 
-  public getPDF(packageId: any) {
-    return this.http.get<any>(this.url + 'get_pdf', {
+  public generatePdf(packageId: string){
+    return this.http.get<boolean>(this.url + 'generate_pdf', {
       params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public viewPdf(packageId: string){
+    return this.http.get<BlobPart>(this.url + 'get_pdf', {
+      params: new HttpParams().set('package_id', packageId),
+      responseType: 'arraybuffer' as 'json'
     });
   }
 

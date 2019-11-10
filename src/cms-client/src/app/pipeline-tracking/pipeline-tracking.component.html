@@ -38,7 +38,7 @@
 
                 <td>
                     <div class="item" >{{ item }}</div>
-                    <div *ngIf="i < packageLocation" class="status">package (edit | view pdf)</div>
+                    <div *ngIf="i < packageLocation" class="status">package (edit | <button class="view" (click)="viewPdf()">view pdf</button>)</div>
                     <div *ngIf="i == packageLocation" class="status">package under review...</div>
                 </td> 
 

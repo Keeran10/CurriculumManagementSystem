@@ -15,12 +15,6 @@ export class PipelineTrackingComponent implements OnInit {
   public id = 0;
   public packageLocation = '';
   public pipelineId = 0;
-  // public pipeline = ['Department Curriculum Committee',
-  //                                   'Department Council',
-  //                                   'Associate Dean Academic Programs Under Graduate Studies Committee',
-  //                                   'Faculty Council',
-  //                                   'APC',
-  //                                   'Senate'];
   public pipeline = [];
   public getPipelineID() {
     this.pipelineId = 1; // will be replaced when connected to Packages
@@ -44,17 +38,18 @@ export class PipelineTrackingComponent implements OnInit {
         }
     }
   }
-  // public getPDF() {
-  //   this.api.getPDF(this.id).subscribe(data => {
-  //       const blob = new Blob([data], { type: 'application/pdf' });
-  //       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-  //         window.navigator.msSaveOrOpenBlob(blob);
-  //       } else {
-  //         const objectUrl = URL.createObjectURL(blob);
-  //         window.open(objectUrl);
-  //       }
-  //    });
-  // }
+  public generatePDF() {
+    this.api.generatePdf(this.id.toString()).subscribe(data => console.log(data));
+  }
+  public viewPdf() {
+    this.generatePDF();
+    this.api.viewPdf(this.id.toString()).subscribe(data => {
+      const file = new Blob([data], {type: 'application/pdf'});
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL, '_blank');
+      // for Mac: window.location.assign(fileURL); instead of .open
+    });
+  }
   public ngOnInit() {
     this.getPipelineID();
     this.getPackageID();

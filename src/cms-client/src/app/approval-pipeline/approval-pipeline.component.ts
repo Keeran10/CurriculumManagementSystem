@@ -33,16 +33,14 @@ export class ApprovalPipelineComponent {
             for (i of opt) {
                 this.customPipeline.push(i.value);
             }
-            console.log(JSON.stringify(this.customPipeline));
             this.api.savePipeline(JSON.stringify(this.customPipeline), this.packageId)
-      .subscribe(data => { console.log('data' + data); });
+      .subscribe(data => { console.log(data); });
         }
     }
     public predefined() {
         console.log('User selected predefined pipeline');
-        console.log(JSON.stringify(this.predefinedPipeline));
         this.api.savePipeline(JSON.stringify(this.predefinedPipeline), this.packageId)
-      .subscribe(data => { console.log('data' + data); });
+      .subscribe(data => { console.log(data); });
     }
 
 }
