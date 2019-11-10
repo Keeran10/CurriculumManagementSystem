@@ -8,9 +8,9 @@ describe('ImpactStatementComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImpactStatementComponent ]
+      declarations: [ImpactStatementComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -18,8 +18,8 @@ describe('ImpactStatementComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  /*
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });*/
 });
