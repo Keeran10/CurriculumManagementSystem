@@ -36,7 +36,7 @@ export class ImpactStatementComponent implements OnInit {
 
   showImpact(): void {
     this.apiService.getImpact(this.course, this.courseExtras).subscribe(data => this.impact = data);
-    if (this.course != null) {
+    if (this.impact != null) {
       this.openDialog();
     }
   }
