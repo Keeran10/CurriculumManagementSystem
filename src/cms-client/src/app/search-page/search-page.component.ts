@@ -20,13 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import {ChangeDetectorRef, Component, DoCheck, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {Course} from '../model/course';
-import {forEachComment} from 'tslint';
 import { ApiService } from '../backend-api.service';
+import { Component, OnInit } from '@angular/core';
+import { Course } from '../models/course';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import {Degree} from "../models/degree";
+
+
 
 export interface SearchCategory {
   value: string;
@@ -47,6 +49,7 @@ export class SearchPageComponent implements OnInit {
   descriptionList: string [] = [];
   storedCourseNames: string[] = [];
   courses: Course[];
+  degrees: Degree[];
   isResultShown = false;
   searchFormPlaceholder = 'Select Search Category';
 

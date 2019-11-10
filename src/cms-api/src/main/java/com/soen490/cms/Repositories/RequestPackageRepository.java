@@ -27,15 +27,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RequestPackageRepository extends JpaRepository<RequestPackage, Integer>{
-
-    @Query(value = "SELECT * FROM request_package WHERE id=?", nativeQuery = true)
-    RequestPackage findById(Long id);
 
     @Query(value = "SELECT * FROM request_package WHERE id=?", nativeQuery = true)
     RequestPackage findById(int id);
 
     @Query(value = "SELECT pdf_file FROM request_package WHERE id=?", nativeQuery = true)
     byte[] findPdfById(int package_id);
+
+    @Query(value = "SELECT * FROM request_package WHERE department_id=?", nativeQuery = true)
+    List<RequestPackage> findByDepartment(int department_id);
 }

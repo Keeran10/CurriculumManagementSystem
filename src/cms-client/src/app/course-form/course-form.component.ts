@@ -23,7 +23,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../backend-api.service';
-import { Course } from '../model/course';
+import { Course } from '../models/course';
 
 @Component({
   selector: 'app-course-form',

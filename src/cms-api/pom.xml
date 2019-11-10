@@ -129,10 +129,17 @@ SOFTWARE.
             <artifactId>java-diff-utils</artifactId>
             <version>4.0</version>
         </dependency>
+		<!-- process JSON objects -->
 		<dependency>
 			<groupId>com.vaadin.external.google</groupId>
 			<artifactId>android-json</artifactId>
 			<version>0.0.20131108.vaadin1</version>
+		</dependency>
+		<!-- Validate String numerical -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
 		</dependency>
 	</dependencies>
 
@@ -168,18 +175,6 @@ SOFTWARE.
 	
 	<reporting>
 	  <plugins>
-		<plugin>
-		  <groupId>org.apache.maven.plugins</groupId>
-		  <artifactId>maven-checkstyle-plugin</artifactId>
-		  <version>3.1.0</version>
-		  <reportSets>
-			<reportSet>
-			  <reports>
-				<report>checkstyle</report>
-			  </reports>
-			</reportSet>
-		  </reportSets>
-		</plugin>
 	  </plugins>
 	</reporting>
 </project>

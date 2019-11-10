@@ -48,7 +48,7 @@ public class Program {
 
     private int isActive;
 
-    @JsonIgnoreProperties({"programs", "calendars", "requestPackages"})
+    @JsonIgnoreProperties({"programs", "calendars", "requestPackages", "users"})
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;

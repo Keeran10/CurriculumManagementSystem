@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 import { Component, OnInit } from '@angular/core';
-import { Course } from '../model/course';
+import { Course } from '../models/course';
 import { ApiService } from '../backend-api.service';
 
 @Component({

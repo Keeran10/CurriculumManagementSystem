@@ -31,6 +31,7 @@ import com.itextpdf.text.pdf.*;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,15 +103,12 @@ public class PdfService {
      * @param package_id Used to retrieve request_package object.
      * @return true if a pdf has been generated and saved as pdf_file inside request_package.
      */
-    public boolean generatePDF(int package_id){
+    public boolean generatePDF(int package_id) throws IOException, DocumentException {
 
-        Document doc = new Document();
-        // course page specifications
-        doc.setPageSize(PageSize.A4.rotate());
-        doc.setMargins(25, 25, 10, 25);
-
+        ByteArrayOutputStream course_outline_stream;
         ByteArrayOutputStream support_stream = null;
-        ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
+        ArrayList<ByteArrayOutputStream> request_streams = new ArrayList<>();
+        ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
@@ -129,13 +127,20 @@ public class PdfService {
         }
 
         try {
-
-            PdfWriter.getInstance(doc, request_stream);
-
-            doc.open();
-
             // for each page
             for(Request request : requestPackage.getRequests()){
+
+                Document doc = new Document();
+                // course page specifications
+                doc.setPageSize(PageSize.A4.rotate());
+                doc.setMargins(25, 25, 10, 25);
+
+                ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
+
+                PdfWriter.getInstance(doc, request_stream);
+
+                doc.open();
+
 
                 if(request.getTargetType() == 2) {
 
@@ -149,12 +154,16 @@ public class PdfService {
                     // append course outline
                     if(changed_course.getOutline() != null){
 
-                        ByteArrayOutputStream course_outline_stream =
-                                new ByteArrayOutputStream(changed_course.getOutline().length);
+                        course_outline_stream = mergeOutline(changed_course);
 
-                        course_outline_stream.write(changed_course.getOutline(), 0, changed_course.getOutline().length);
+                        doc.close();
 
-                        mergeDocs(request_stream, course_outline_stream);
+                        request_stream = mergeDocs(request_stream, course_outline_stream);
+
+                        request_streams.add(request_stream);
+
+                        continue;
+
                     }
                 }
                 else if(request.getTargetType() == 1){
@@ -162,10 +171,11 @@ public class PdfService {
                     // program requests
                 }
 
-                doc.newPage();
-            }
+                doc.close();
 
-            doc.close();
+                request_streams.add(request_stream);
+
+            }
 
         } catch (DocumentException | FileNotFoundException e){
             e.printStackTrace();
@@ -174,29 +184,14 @@ public class PdfService {
             e.printStackTrace();
         }
 
-        ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
 
-        if(support_stream != null){
-
-            try {
-
-                final_stream = mergeDocs(support_stream, request_stream);
-
-            } catch (DocumentException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-            final_stream = request_stream;
+        final_stream = mergeRequestDocs(request_streams);
 
 
-        try {
+        if(support_stream != null)
+            final_stream = mergeDocs(support_stream, final_stream);
 
-            final_stream = stampPageXofY(final_stream);
-
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-        }
+        final_stream = stampPageXofY(final_stream);
 
         requestPackage.setPdfFile(final_stream.toByteArray());
 
@@ -269,6 +264,62 @@ public class PdfService {
             copy.addDocument(new PdfReader(supportingDocument.getDocument()));
 
         }
+
+        doc.close();
+
+        return byte_stream;
+    }
+
+
+    /**
+     * Aggregate all request docs into one pdf file.
+     * @param request_docs List of all request documents generated.
+     * @return The combined pdf file of all requests.
+     * @throws DocumentException
+     * @throws IOException
+     */
+    private ByteArrayOutputStream mergeRequestDocs(ArrayList<ByteArrayOutputStream> request_docs) throws DocumentException, IOException {
+
+        Document doc = new Document();
+        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+
+        // append supporting docs
+        PdfCopy copy = new PdfCopy(doc, byte_stream);
+        copy.setMergeFields();
+
+        doc.open();
+
+        for(ByteArrayOutputStream request_doc : request_docs){
+
+            copy.addDocument(new PdfReader(request_doc.toByteArray()));
+
+        }
+
+        doc.close();
+
+        return byte_stream;
+    }
+
+
+    /**
+     * Combines a request document with the course outline
+     * @param course Course that contains a proposed outline
+     * @return A combined document of the request followed by its proposed outline
+     * @throws DocumentException
+     * @throws IOException
+     */
+    private ByteArrayOutputStream mergeOutline(Course course) throws DocumentException, IOException {
+
+        Document doc = new Document();
+        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+
+        // append supporting docs
+        PdfCopy copy = new PdfCopy(doc, byte_stream);
+        copy.setMergeFields();
+
+        doc.open();
+
+        copy.addDocument(new PdfReader(course.getOutline()));
 
         doc.close();
 
@@ -534,6 +585,8 @@ public class PdfService {
 
     }
 
+    private String o_anti_note = "";
+    private String c_anti_note = "";
 
     /**
      * Adds the course table where the differences between the original and changed course are highlighted.
@@ -561,11 +614,26 @@ public class PdfService {
         String c_title = " " + c.getTitle();
         String c_credits = " (" + c.getCredits() + " credits)";
 
-        String o_body = stringifyRequisites(o.getRequisites()) + o.getDescription();
-        String c_body = stringifyRequisites(c.getRequisites()) + c.getDescription();
+        String o_body = stringifyRequisites(o.getRequisites(), true) + o.getDescription();
+        String c_body = stringifyRequisites(c.getRequisites(), false) + c.getDescription();
 
         String o_note = o.getNote();
         String c_note = c.getNote();
+
+        if(!o_anti_note.equals("")){
+
+            if(!o_note.equals(""))
+                o_note = o_note.substring(6);
+
+            o_note = o_anti_note + o_note;
+        }
+        if(!c_anti_note.equals("")){
+
+            if(!c_note.equals(""))
+                c_note = c_note.substring(6);
+
+            c_note = c_anti_note + c_note;
+        }
 
         String rationale = request.getRationale();
         String resource_implications = request.getResourceImplications();
@@ -704,6 +772,8 @@ public class PdfService {
 
         Iterator it = impact_report.entrySet().iterator();
 
+        boolean isNone = true;
+
         Paragraph report_paragraph = new Paragraph();
         report_paragraph.setTabSettings(new TabSettings(25f));
         report_paragraph.add(new Chunk("Impact Statements Report:", column_font).setUnderline(0.1f, -1f));
@@ -743,6 +813,7 @@ public class PdfService {
 
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
+                                isNone = false;
                             }
                         }
                         if (updated != null) {
@@ -837,6 +908,7 @@ public class PdfService {
                                 report_paragraph.add(Chunk.NEWLINE);
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
+                                isNone = false;
                             }
                         }
                         if (updated != null) {
@@ -932,6 +1004,7 @@ public class PdfService {
                                 report_paragraph.add(Chunk.NEWLINE);
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
+                                isNone = false;
                             }
                         }
                         if(updated != null) {
@@ -1002,6 +1075,9 @@ public class PdfService {
             }
         }
 
+        if(isNone)
+            report_paragraph.add(new Chunk("None.", arial_10));
+
         PdfPCell report = new PdfPCell(report_paragraph);
         report.setColspan(2);
 
@@ -1014,10 +1090,16 @@ public class PdfService {
      * @param requisites The requisites of a given course.
      * @return A formatted string of requisites.
      */
-    private String stringifyRequisites(Collection<Requisite> requisites) {
+    private String stringifyRequisites(Collection<Requisite> requisites, boolean original) {
 
         StringBuilder r;
         int ctr = 0;
+        int ctr_anti = 0;
+        int ctr2_anti = 0;
+        int ctr_co = 0;
+        int ctr2_co = 0;
+        String anti_store = "";
+        String co_store = "";
 
         if(!requisites.isEmpty())
             r = new StringBuilder("Prerequisite: ");
@@ -1028,8 +1110,21 @@ public class PdfService {
 
         for(Requisite requisite : requisites){
 
+            if(requisite.getType().equals("antirequisite"))
+                ctr_anti++;
+            if(requisite.getType().equals("corequisite"))
+                ctr_co++;
+        }
+
+        for(Requisite requisite : requisites){
+
             String type = requisite.getType();
-            String name_number = requisite.getName() + " " + requisite.getNumber();
+            String name_number;
+
+            if(requisite.getNumber() == 0)
+                name_number= requisite.getName() + " ";
+            else
+                name_number= requisite.getName() + " " + requisite.getNumber();
 
             if(type.equals("prerequisite")) {
                 if(ctr == 0) {
@@ -1039,10 +1134,6 @@ public class PdfService {
                 else
                     r.append("; ").append(name_number);
             }
-
-            else if(type.equals("corequisite"))
-                r.append("; ").append(name_number).append(" previously or concurrently");
-
             else if(type.equals("equivalent") && equivalent_next) {
                 r.append("; ").append(name_number).append(" or ");
                 equivalent_next = false;
@@ -1051,7 +1142,48 @@ public class PdfService {
                 r.append(name_number);
                 equivalent_next = true;
             }
+            else if(type.equals("corequisite")) {
+
+                if(ctr_co == 1)
+                    co_store = name_number + " previously or concurrently";
+
+                else if(ctr_co == 2)
+                    co_store = co_store + " and " + name_number + " previously or concurrently";
+
+                else if(ctr_co != ctr2_co)
+                    co_store = co_store + ", " + name_number;
+
+                else co_store = co_store + " and " + name_number + " previously or concurrently";
+
+                ctr2_co++;
+
+            }
+            else if(type.equals("antirequisite")){
+
+                if(ctr_anti == 1)
+                    anti_store = name_number;
+
+                else if(ctr_anti == 2)
+                    anti_store = anti_store + " or " + name_number;
+
+                else if(ctr_anti != ctr2_anti)
+                    anti_store = anti_store + ", " + name_number;
+
+                else anti_store = anti_store + " or " + name_number;
+
+                ctr2_anti++;
+            }
         }
+
+        if (original && ctr_anti > 0)
+            o_anti_note = "NOTE: Students who have received credit for " + anti_store +
+                    " may not take this course for credit.";
+        else if (!original && ctr_anti > 0)
+            c_anti_note = "NOTE: Students who have received credit for " + anti_store +
+                    " may not take this course for credit.";
+
+        if(ctr_co > 0)
+            r.append("; ").append(co_store);
 
         r.append(". ");
 
@@ -1130,8 +1262,13 @@ public class PdfService {
                 }
 
                 if(type == 4) {
-                    original_phrase.add(new Chunk(partition + " ",
-                            arial_10_red).setUnderline(0.1f, 3f));
+
+                    if(StringUtils.isNumeric(partition))
+                        original_phrase.add(new Chunk(partition,
+                                arial_10_red).setUnderline(0.1f, 3f));
+                    else
+                        original_phrase.add(new Chunk(partition + " ",
+                                arial_10_red).setUnderline(0.1f, 3f));
                 }
 
                 if(type == 5)
@@ -1195,8 +1332,13 @@ public class PdfService {
                 }
 
                 if(type == 4) {
-                    changed_phrase.add(new Chunk(partition + " ",
-                            arial_10_blue).setUnderline(0.1f, -1f));
+
+                    if(StringUtils.isNumeric(partition))
+                        changed_phrase.add(new Chunk(partition,
+                                arial_10_blue).setUnderline(0.1f, -1f));
+                    else
+                        changed_phrase.add(new Chunk(partition + " ",
+                                arial_10_blue).setUnderline(0.1f, -1f));
                 }
 
                 if(type == 5)

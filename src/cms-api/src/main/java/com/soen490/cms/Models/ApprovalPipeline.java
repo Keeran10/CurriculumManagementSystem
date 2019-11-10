@@ -22,14 +22,14 @@
 
 package com.soen490.cms.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -38,15 +38,39 @@ public class ApprovalPipeline {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int SENATE;
+    private int departmentCurriculumCommittee;
+
+    private int departmentCouncil;
+
+    private int undergraduateStudiesCommittee; // Associate Dean Academic Programs Under Graduate Studies Committee
+
+    private int facultyCouncil;
 
     private int APC;
 
-    private int DCC;
+    private int senate;
 
-    private int FCC;
+    @JsonIgnoreProperties("approvalPipeline")
+    @OneToMany(mappedBy = "approvalPipeline")
+    Collection<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages;
 
-    private int UGDC;
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
 
-    private int GDC;
+        if(o.getClass() != this.getClass() || o == null) return false;
+
+        ApprovalPipeline approvalPipeline = (ApprovalPipeline)o;
+
+        if(this.departmentCurriculumCommittee != approvalPipeline.departmentCurriculumCommittee
+            || this.departmentCouncil != approvalPipeline.departmentCouncil
+            || this.undergraduateStudiesCommittee != approvalPipeline.undergraduateStudiesCommittee
+            || this.facultyCouncil != approvalPipeline.facultyCouncil
+            || this.APC != approvalPipeline.APC
+            || this.senate != approvalPipeline.senate) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

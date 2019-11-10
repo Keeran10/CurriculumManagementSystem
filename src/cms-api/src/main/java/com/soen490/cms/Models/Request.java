@@ -50,6 +50,8 @@ public class Request {
 
     private Timestamp timestamp;
 
+    private String title;
+
     @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "user_id")
