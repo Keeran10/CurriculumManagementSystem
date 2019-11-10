@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Log4j2
-public class AppTests {
+public class LogTests {
 
 	@Test
 	public void contextLoads() {

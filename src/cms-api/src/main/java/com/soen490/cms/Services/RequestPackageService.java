@@ -42,6 +42,8 @@ public class RequestPackageService {
     // Return package with right id, if id given is 0, a new package is created and returned
     public RequestPackage getRequestPackage(int package_id, int department_id){
 
+        log.info("getRequestPackage called with package_id " + package_id + " and department_id " + department_id + ".");
+
         if(package_id == 0)
             return getNewPackage(department_id);
 
@@ -57,7 +59,7 @@ public class RequestPackageService {
      */
     public int saveCourseRequest(String requestForm) throws JSONException {
 
-        System.out.println(requestForm);
+        log.info("Json received: " + requestForm);
 
         JSONObject json = new JSONObject(requestForm);
 
@@ -132,8 +134,6 @@ public class RequestPackageService {
 
             list.add(cdr);
 
-            System.out.println(dr);
-            System.out.println(cdr);
         }
         c.setDegreeRequirements(list);
 
@@ -223,7 +223,12 @@ public class RequestPackageService {
 
         requestRepository.save(request);
 
+
+        log.info("course saved: " + c);
+        log.info("request saved: " + request);
+
         requestPackage.getRequests().add(request); 
+
 
         return request.getId();
     }
