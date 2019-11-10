@@ -24,6 +24,7 @@ public class ImpactAssessmentCourseService {
      * @return Map<String, Object> Impact report object
      */
     public Map<String, Object> getCourseImpact(Request request){
+        log.info("Getting course Impact for Request Package: ", request);
         Map<String, Object> responseMap = new HashMap();
         switch (request.getRequestType()){
             case 1: return courseCreationImpactReport(request);
@@ -109,6 +110,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Number",course.getNumber());
         responseReport.put("Course", course);
         responseReport.put("RequestType", request.getRequestType());
+        log.info("Impact Report for a course creation: ", responseReport);
         return responseReport;
     }
 
@@ -124,6 +126,7 @@ public class ImpactAssessmentCourseService {
         if(originalCourse == null){
             Map<String, Object> responseMap = new HashMap();
             responseMap.put("error","Original course not referred in request");
+            log.info("Impact Report Error for course Update Request: Original course does not exist");
             return responseMap;
         }
         else{
@@ -218,6 +221,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Course",course);
         responseReport.put("RemovingFromParentCourses",responseMap);
         responseReport.put("RequestType",request.getRequestType());
+        log.info("Impact Report for a course Removal: ", responseReport);
         return responseReport;
     }
 
@@ -280,7 +284,7 @@ public class ImpactAssessmentCourseService {
         finalResponseMap.put("DegreeCourseElectiveImpact",getElectiveCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
         finalResponseMap.put("ProgramImpact",getProgramImpactUpdatedCourse(originalCourse,requestedCourse));
-
+        log.info("Impact Report for a course Update: ", finalResponseMap);
         return finalResponseMap;
     }
 
@@ -361,6 +365,7 @@ public class ImpactAssessmentCourseService {
         responseMap.put("removed",removedList);
         responseMap.put("added",addedList);
         responseMap.put("original",originalList);
+        log.info("Impact Report for a course Update on the Required Degrees: ", responseMap);
         return responseMap;
     }
 
@@ -405,6 +410,7 @@ public class ImpactAssessmentCourseService {
 
         responseMap.put("removed", removedList);
         responseMap.put("added", addedList);
+        log.info("Impact Report for a course Update on the Elective Degrees: ", responseMap);
         return responseMap;
     }
 
@@ -490,6 +496,7 @@ public class ImpactAssessmentCourseService {
         responseMap.put("removed",removedList);
         responseMap.put("added",addedList);
         responseMap.put("original",originalList);
+        log.info("Impact Report for a course Update on Program Cores: ", responseMap);
         return responseMap;
     }
 
