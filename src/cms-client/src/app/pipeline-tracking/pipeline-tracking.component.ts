@@ -27,16 +27,16 @@ export class PipelineTrackingComponent implements OnInit {
     });
   }
   public getPackageLocation() {
-    let location;
     this.api.getCurrentPosition(this.id.toString(), this.pipelineId.toString()).subscribe(
-      data => { location = data;
-      });
-    let i;
-    for (i in this.pipeline) {
-        if (this.pipeline[i] === location) {
-            this.packageLocation = i;
+      data => {
+        const utf8decoder = new TextDecoder();
+        let i;
+        for (i in this.pipeline) {
+          if (this.pipeline[i] === utf8decoder.decode(data)) {
+                this.packageLocation = i;
+            }
         }
-    }
+      });
   }
   public generatePDF() {
     this.api.generatePdf(this.id.toString()).subscribe(data => console.log(data));
