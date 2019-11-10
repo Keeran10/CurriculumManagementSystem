@@ -36,7 +36,7 @@ export class ApiService {
 
     console.log('Impact endpoint called.');
 
-    return this.http.post(this.url + "get_impact", {
+    return this.http.post(this.url + 'get_impact', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     });
@@ -44,7 +44,7 @@ export class ApiService {
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log('would Post');
-    return this.http.post(this.url + "save_request", {
+    return this.http.post(this.url + 'save_request', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     })

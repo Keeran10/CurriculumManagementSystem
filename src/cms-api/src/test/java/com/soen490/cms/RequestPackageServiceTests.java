@@ -3,8 +3,6 @@ package com.soen490.cms;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.*;
 import com.soen490.cms.Services.RequestPackageService;
-import jdk.nashorn.internal.objects.Global;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;

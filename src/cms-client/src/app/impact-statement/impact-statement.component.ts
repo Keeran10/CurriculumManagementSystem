@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { CourseExtras } from '../model/course-extras';
+import {first} from "rxjs/operators";
 
 export interface DialogData {
   animal: string;
@@ -31,7 +32,7 @@ export class ImpactStatementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.apiService.getImpact().subscribe(data => this.impact = data);
+    // this.apiService.getImpact().subscribe(data => this.impact = data);
   }
 
   showImpact(): void {
@@ -50,11 +51,26 @@ export class ImpactStatementComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogImpactStatementComponent, {
       width: '900px',
       data: {
-        Credits: this.impact.CourseChanges.Credits,
-        OriginalCourseName: this.impact.CourseName,
-        OriginalCourseNumber: this.impact.CourseNumber,
-        NewCourseAdded: this.impact.CourseChanges.RequisitesAdded.Courses
-      }
+        OriginalCourseName: this.impact.OriginalCourse.name,
+        OriginalCourseNumber: this.impact.OriginalCourse.number,
+        OriginalCourseProgram: this.impact.OriginalCourse.program.name,
+        OriginalCourseDepartment: this.impact.OriginalCourse.program.department.name,
+        DegreeCourseRequiredImpactOriginal: this.impact.DegreeCourseRequiredImpact.original[0],
+        DegreeCourseRequiredImpactRemoved: this.impact.DegreeCourseRequiredImpact.removed,
+        DegreeCourseRequiredImpactAdded: this.impact.DegreeCourseRequiredImpact.added,
+        DegreeCourseRequiredImpactUpdated: this.impact.DegreeCourseRequiredImpact.updated,
+        DegreeCourseElectiveImpactRemoved: this.impact.DegreeCourseElectiveImpact.removed,
+        DegreeCourseElectiveImpactAdded: this.impact.DegreeCourseElectiveImpact.added,
+        ProgramImpactOriginal: this.impact.ProgramImpact.original,
+        ProgramImpactRemoved: this.impact.ProgramImpact.removed,
+        ProgramImpactAdded: this.impact.ProgramImpact.added,
+        ProgramImpactUpdated: this.impact.ProgramImpact.updated,
+        CourseEditsName: this.impact.CourseEdits.name,
+        CourseEditsNumber: this.impact.CourseEdits.number,
+        CourseEditsCredits: this.impact.CourseEdits.credits,
+        CourseEditsTitle: this.impact.CourseEdits.title,
+        CourseEditsDescription: this.impact.CourseEdits.description,
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
