@@ -1,8 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../backend-api.service';
+import { Course } from '../models/course';
 import { Component, ViewChild } from '@angular/core';
-import { Course } from '../model/course';
-import { CourseExtras } from '../model/course-extras';
+import { CourseExtras } from '../models/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
 @Component({
@@ -13,7 +13,8 @@ import { SupportDocumentComponent } from '../support-documents/support-documents
 
 export class EditFormComponent {
 
-  @ViewChild(SupportDocumentComponent, {static: false})
+  @ViewChild(SupportDocumentComponent, { static: false })
+
   supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
@@ -26,6 +27,7 @@ export class EditFormComponent {
   constructor(private route: ActivatedRoute, private api: ApiService) {
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
@@ -54,14 +56,13 @@ export class EditFormComponent {
 
   public setRequisitesStrings(course: Course) {
     let isNextEquivalent = false;
-    if(course.requisites.length > 0){
+    if (course.requisites.length > 0) {
       course.requisites.forEach(r => {
-        switch(r.type){
+        switch (r.type) {
           case 'equivalent':
-            if(!isNextEquivalent){
-              this.model.equivalents += r.name + r.number + " or ";
-            }
-            else{
+            if (!isNextEquivalent) {
+              this.model.equivalents += r.name + r.number + ' or ';
+            } else {
               this.model.equivalents += r.name + r.number + '; ';
             }
             isNextEquivalent = !isNextEquivalent;
@@ -73,11 +74,11 @@ export class EditFormComponent {
             this.model.corequisites += r.name + r.number + '; ';
             break;
         }
-      })
+      });
     }
   }
 
-  //There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
+  // There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
   /*
   public setDegreesStrings(course: Course) {
     if(course.degreeRequirements.length > 0){

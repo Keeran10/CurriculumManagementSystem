@@ -23,6 +23,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
@@ -30,7 +31,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {LoginComponent} from './login/login.component';
-
+import {
+  DialogImpactStatementComponent, ImpactStatementComponent
+} from './impact-statement/impact-statement.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -40,11 +44,15 @@ import {LoginComponent} from './login/login.component';
     ApprovalPipelineComponent,
     CourseFormComponent,
     CourseListComponent,
-    EditFormComponent,
+    PipelineTrackingComponent,
     SearchPageComponent,
     SupportDocumentComponent,
     LoginComponent,
+    DialogImpactStatementComponent,
+    ImpactStatementComponent,
+    EditFormComponent,
   ],
+  entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
   imports: [
     AppRoutingModule,
@@ -62,6 +70,7 @@ import {LoginComponent} from './login/login.component';
     ReactiveFormsModule,
     NgxFileDropModule,
     PdfViewerModule,
+    MatDialogModule,
     MatCheckboxModule,
     MatListModule,
     MatIconModule,

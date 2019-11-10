@@ -3,9 +3,6 @@ ALTER DATABASE cms
   DEFAULT COLLATE utf8_general_ci;
 
 USE cms;
--- id, email, firstname, lastname, password, user_type
-INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin');
-INSERT IGNORE INTO user VALUES (2, 'felix@soen.com', 'Felix', 'Rosinante','123', 'admin');
 
 -- id, name
 INSERT IGNORE INTO faculty VALUES (1, 'Faculty of Arts and Science');
@@ -23,6 +20,12 @@ INSERT IGNORE INTO department VALUES (5, 'Concordia Institute for Information Sy
 INSERT IGNORE INTO department VALUES (6, 'Concordia Institute for Aerospace Design and Innovation', 2);
 INSERT IGNORE INTO department VALUES (7, 'Electrical and Computer Engineering', 2);
 INSERT IGNORE INTO department VALUES (8, 'Mechanical, Industrial and Aerospace Engineering', 2);
+
+
+-- id, email, firstname, lastname, password, user_type
+INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin', 4);
+INSERT IGNORE INTO user VALUES (2, 'felix@soen.com', 'Felix', 'Rosinante','123', 'admin', 8);
+
 
 -- id, desc, active, name, department_id
 INSERT IGNORE INTO program VALUES (1, "The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics. The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.",
@@ -256,11 +259,14 @@ INSERT IGNORE INTO calendar VALUES (3, "Please note that the current version of 
 INSERT IGNORE INTO request_package VALUES (1, NULL, 4); -- creating a package for department of CS & SE
 INSERT IGNORE INTO request_package VALUES (2, NULL, 8); -- used for pdf generation
 
--- id, original id, rationale, request type, target id, target type, timestamp, package id, user id
-INSERT IGNORE INTO request VALUES (1, 7, "rationale", 2, "resource implications", 15, 2, NULL, 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, "resource implications", 15, 2, NULL, 1, 1); -- removing request for the course soen 343
-INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, "resource implications", 15, 2, NULL, 1, 1); -- creating request for the course soen 343
-INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, 2, 1); -- thermodynamics II updated
+-- id, original id, rationale, request type, target id, target type, timestamp, title, package id, user id
+INSERT IGNORE INTO request VALUES (1, 7, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN343_update", 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, "resource implications", 15, 2, NULL, "SOEN343_removal", 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, "resource implications", 15, 2, NULL, "SOEN343_new", 1, 1); -- creating request for the course soen 343
+INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
 
--- id, apc, dcc, fcc, gdc, senate, ugdc
-INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 1, 2, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
+-- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
+INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
+
+-- pipeline_id, package_id, position
+INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department Curriculum Committee");

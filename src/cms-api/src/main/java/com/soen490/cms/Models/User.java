@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"requests", "approvals"})
+@ToString(exclude= {"requests", "approvals", "department"})
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,16 @@ public class User {
 
     private String lastName;
 
-    private String userType;
+    private String userType; // values = ("admin" | "user" | "senate" | "dcc" | "departmentCouncil" | "apc" | "fcc" | "ugsc"
 
     private String email;
 
     private String password;
+
+    @JsonIgnoreProperties("users")
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")

@@ -10,14 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.*;
 
 @Service
 @Transactional
 @Log4j2
-
 public class RequestPackageService {
 
     @Autowired
@@ -34,21 +35,36 @@ public class RequestPackageService {
     RequestPackageRepository requestPackageRepository;
     @Autowired
     DepartmentRepository departmentRepository;
+    @Autowired
+    SupportingDocumentRepository supportingDocumentsRepository;
 
 
-    public RequestPackage getRequestPackage(int id){
-        return requestPackageRepository.findById(id);
+    // Return package with right id, if id given is 0, a new package is created and returned
+    public RequestPackage getRequestPackage(int package_id, int department_id){
+
+        if(package_id == 0)
+            return getNewPackage(department_id);
+
+        return requestPackageRepository.findById(package_id);
     }
 
     /**
      * Saves an edited course to the database.
      * Todo: Equivalent, package_id, and user are set to defaults, commented out or still missing.
-     * @param course JSON object with course data.
-     * @param courseExtras JSON object with request, requisite, supporting doc and package data.
+     * @param requestForm Stringified JSON received from client
      * @return True if course has been successfully added to database.
      * @throws JSONException
      */
-    public boolean saveCourseRequest(JSONObject course, JSONObject courseExtras) throws JSONException {
+    public int saveCourseRequest(String requestForm) throws JSONException {
+
+        System.out.println(requestForm);
+
+        JSONObject json = new JSONObject(requestForm);
+
+        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
+
+        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
+        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId((Integer) course.get("id"));
@@ -57,7 +73,17 @@ public class RequestPackageService {
 
         if(!o.isEmpty())
             original = o.get(0);
-        else return false;
+        else return 0;
+
+        int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
+        int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+
+        RequestPackage requestPackage = requestPackageRepository.findById(package_id);
+
+        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+
+        if(request == null)
+            request = new Request();
 
         Course c = new Course();
 
@@ -77,7 +103,6 @@ public class RequestPackageService {
         courseRepository.save(c);
 
         // Requests
-        Request request = new Request();
         request.setRequestType(2);
         request.setTargetType(2);
         request.setTargetId(c.getId());
@@ -86,9 +111,10 @@ public class RequestPackageService {
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setRequestPackage(null);
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(Integer.parseInt(String.valueOf(courseExtras.get("userId")))));
-        request.setRequestPackage(requestPackageRepository.findById(Integer.parseInt(String.valueOf(courseExtras.get("packageId")))));
+        request.setUser(userRepository.findById(user_id));
+        request.setRequestPackage(requestPackage);
 
+        request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
         // Degree Requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
 
@@ -131,8 +157,14 @@ public class RequestPackageService {
                 Requisite requisite = new Requisite();
                 requisite.setCourse(c);
                 requisite.setIsActive(0);
-                requisite.setName(prerequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
+                if(prerequisite.startsWith("credits", 3)){
+                    requisite.setName(prerequisite);
+                    requisite.setNumber(0);
+                }
+                else{
+                    requisite.setName(prerequisite.substring(0, 4).trim());
+                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
+                }
                 requisite.setType("prerequisite");
                 requisiteRepository.save(requisite);
             }
@@ -186,19 +218,14 @@ public class RequestPackageService {
 
         // Supporting Documents
         // initialize supporting doc and save it to its repository
-        if(courseExtras.get("files") != null){
-
-            JSONArray outline = courseExtras.getJSONArray("files");
-
-            System.out.println("Upload files data: " + outline);
-            //c.setOutline(outline.getJSONObject(0).toString().getBytes());
-        }
 
         courseRepository.save(c);
 
         requestRepository.save(request);
 
-        return true;
+        requestPackage.getRequests().add(request); 
+
+        return request.getId();
     }
 
 
@@ -208,14 +235,22 @@ public class RequestPackageService {
         return requestPackageRepository.findByDepartment(department_id);
     }
 
+    public RequestPackage findById(int id) {
+        return requestPackageRepository.findById(id);
+    }
+
 
     /**
      * Saves a new request package to the database
-     * @param requestPackageForm contains department name and files (memos, cover letters, supporting docs)
+     * @param requestPackageString contains department name and files (memos, cover letters, supporting docs)
      * @return True if request package was added to database
      * @throws JSONException
      */
-    public boolean saveRequestPackage(JSONObject requestPackageForm) throws JSONException {
+    public boolean saveRequestPackage(String requestPackageString) throws JSONException {
+
+        JSONObject requestPackageForm = new JSONObject(requestPackageString);
+
+        System.out.println(requestPackageForm);
 
         RequestPackage requestPackage = new RequestPackage();
 
@@ -234,4 +269,54 @@ public class RequestPackageService {
 
         return true;
     }
+
+
+    // Called when package id received is 0.
+    private RequestPackage getNewPackage(int department_id){
+
+        RequestPackage requestPackage = new RequestPackage();
+
+        requestPackage.setDepartment(departmentRepository.findById(department_id));
+
+        requestPackageRepository.save(requestPackage);
+
+        return requestPackage;
+    }
+
+
+    // retrieves all supporting document for a given package
+    public List<SupportingDocument> getAllDocuments(int package_id) {
+        log.info("find all supporting docs");
+        return supportingDocumentsRepository.findByPackage(package_id);
+    }
+
+
+    // retrieves a supporting document
+    public SupportingDocument find(int documentId) {
+        log.info("find supporting document with id " + documentId);
+        return supportingDocumentsRepository.findBySupportingDocumentId(documentId);
+    }
+
+
+    /**
+     * Adds support document to an existing package
+     * @param document The file to be added.
+     * @param packageId The designated package.
+     * @return The saved supporting document object.
+     * @throws IOException
+     */
+    public SupportingDocument addSupportingDocument(File document, int packageId) throws IOException {
+
+        log.info("add supporting document " + document.getName());
+
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        SupportingDocument supportingDocument = new SupportingDocument();
+        supportingDocument.setDocument(Files.readAllBytes(document.toPath()));
+        supportingDocument.setRequestPackage(requestPackageRepository.findById(packageId));
+        supportingDocument.setTimestamp(timestamp);
+
+        return supportingDocumentsRepository.save(supportingDocument);
+    }
+
 }

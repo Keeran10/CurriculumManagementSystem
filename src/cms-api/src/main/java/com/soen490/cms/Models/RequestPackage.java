@@ -18,20 +18,24 @@ public class RequestPackage {
     @Lob
     private byte[] pdfFile;
 
-    @JsonIgnoreProperties("requestPackages")
+    @JsonIgnoreProperties({"requestPackages", "users"})
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @JsonIgnoreProperties("requestPackages")
+    @JsonIgnoreProperties("requestPackage")
     @OneToMany(mappedBy = "requestPackage")
     private List<Request> requests = new ArrayList<>();
 
-    @JsonIgnoreProperties("requestPackages")
+    @JsonIgnoreProperties("requestPackage")
     @OneToMany(mappedBy = "requestPackage")
     private List<SupportingDocument> supportingDocuments = new ArrayList<>();
 
-    @JsonIgnoreProperties("requestPackages")
+    @JsonIgnoreProperties("requestPackage")
     @OneToMany(mappedBy = "requestPackage")
     private List<Approval> approvals = new ArrayList<>();
+
+    @JsonIgnoreProperties("requestPackages")
+    @OneToMany(mappedBy =  "requestPackage")
+    private List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = new ArrayList<>();
 }

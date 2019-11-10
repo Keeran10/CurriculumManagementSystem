@@ -1,11 +1,11 @@
 package com.soen490.cms.Controllers;
 
+import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.RequestPackage;
+import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,6 +28,8 @@ public class RequestPackageController {
     PdfService pdfService;
     @Autowired
     RequestPackageService requestPackageService;
+    @Autowired
+    ImpactAssessmentController impactAssessmentController;
 
     /**
      * Generates a pdf file out of the entire data set for the given package.
@@ -32,7 +37,8 @@ public class RequestPackageController {
      * @return A boolean detailing if the pdf generation was successful or a failure.
      */
     @GetMapping(value="/generate_pdf")
-    public boolean generatePdf(@RequestParam int package_id) { return pdfService.generatePDF(package_id); }
+    public boolean generatePdf(@RequestParam int package_id) throws IOException, DocumentException { return pdfService.generatePDF(package_id); }
+
 
     /**
      * Converts a stored byte array into a pdf file and displays it on the browser.
@@ -54,9 +60,8 @@ public class RequestPackageController {
         headers.add("content-disposition", "inline;filename=" + filename);
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
 
-        return response;
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
 
@@ -68,25 +73,15 @@ public class RequestPackageController {
      * @throws JSONException
      */
     @PostMapping(value="/save_request", consumes = "application/json")
-    public boolean saveRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+    public int saveRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
 
-        JSONObject json = new JSONObject(requestForm);
-
-        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
-
-        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
-        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
-
-        System.out.println(requestForm);
-
-        return requestPackageService.saveCourseRequest(course, courseExtras);
-
+        return requestPackageService.saveCourseRequest(requestForm);
     }
 
 
     // returns list of packages from a given department
     @GetMapping(value = "/get_packages")
-    public List<RequestPackage> getRequestPackages(int department_id){
+    public List<RequestPackage> getRequestPackages(@RequestParam int department_id){
 
         return requestPackageService.getRequestPackagesByDepartment(department_id);
     }
@@ -94,9 +89,9 @@ public class RequestPackageController {
 
     // returns a package from a given id
     @GetMapping(value = "/get_package")
-    public RequestPackage getRequestPackage(int package_id){
+    public RequestPackage getRequestPackage(@RequestParam int package_id, @RequestParam int department_id){
 
-        return requestPackageService.getRequestPackage(package_id);
+        return requestPackageService.getRequestPackage(package_id, department_id);
     }
 
 
@@ -104,11 +99,30 @@ public class RequestPackageController {
     @PostMapping(value="/save_package", consumes = "application/json")
     public boolean saveRequestPackage(@Valid @RequestBody String requestPackageForm, BindingResult bindingResult) throws JSONException{
 
-        JSONObject json = new JSONObject(requestPackageForm);
+        return requestPackageService.saveRequestPackage(requestPackageForm);
+    }
 
-        System.out.println(requestPackageForm);
 
-        return requestPackageService.saveRequestPackage(json);
+    /**
+     * Add a new supporting document to a request
+     * path format: /addSupportingDocument?documentId={id}
+     * @param document
+     * @param packageId
+     * @return
+     */
+    @PostMapping(value = "/addSupportingDocument")
+    public SupportingDocument add(@RequestParam File document, @RequestParam int packageId) throws IOException {
+
+        return requestPackageService.addSupportingDocument(document, packageId);
+    }
+
+
+    @PostMapping(value = "/get_impact")
+    public Map<String, Object> sendRequestId(@RequestBody String requestForm) throws JSONException {
+
+        int request_id = requestPackageService.saveCourseRequest(requestForm);
+
+        return impactAssessmentController.getImpactAssessment(request_id);
     }
 
 }

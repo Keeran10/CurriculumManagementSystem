@@ -1,4 +1,4 @@
-import { Requisite } from '../model/requisite';
+import { Requisite } from './requisite';
 
 export class Course {
   id: number;

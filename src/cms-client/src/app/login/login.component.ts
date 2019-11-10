@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '../model/user';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-login',

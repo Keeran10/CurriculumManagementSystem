@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"programs", "calendar", "requestPackages"})
+@ToString(exclude= {"programs", "calendar", "requestPackages", "users"})
 @EqualsAndHashCode(exclude = "calendar")
 public class Department {
 
@@ -26,6 +26,10 @@ public class Department {
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+
+    @JsonIgnoreProperties("department")
+    @OneToMany(mappedBy = "department")
+    private List<User> users = new ArrayList<>();
 
     @JsonIgnoreProperties({"department", "degrees", "courses"})
     @OneToMany(mappedBy = "department")
