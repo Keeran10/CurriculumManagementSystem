@@ -66,8 +66,6 @@ public class RequestPackageService {
         JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
         JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
 
-        System.out.println(requestForm);
-
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId((Integer) course.get("id"));
 
@@ -76,6 +74,14 @@ public class RequestPackageService {
         if(!o.isEmpty())
             original = o.get(0);
         else return 0;
+
+        int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
+        int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+
+        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+
+        if(request == null)
+            request = new Request();
 
         Course c = new Course();
 
@@ -95,7 +101,6 @@ public class RequestPackageService {
         courseRepository.save(c);
 
         // Requests
-        Request request = new Request();
         request.setRequestType(2);
         request.setTargetType(2);
         request.setTargetId(c.getId());
@@ -104,8 +109,8 @@ public class RequestPackageService {
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setRequestPackage(null);
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(Integer.parseInt(String.valueOf(courseExtras.get("userId")))));
-        request.setRequestPackage(requestPackageRepository.findById(Integer.parseInt(String.valueOf(courseExtras.get("packageId")))));
+        request.setUser(userRepository.findById(user_id));
+        request.setRequestPackage(requestPackageRepository.findById(package_id));
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
         // Degree Requirements
