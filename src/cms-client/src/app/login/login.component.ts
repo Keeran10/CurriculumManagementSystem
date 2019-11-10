@@ -29,12 +29,12 @@ export class LoginComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.login = params.get('email'), this.password = params.get('password');
     });
-    this.api.getCredentials(this.login, this.password).subscribe(data => {
+    this.api.setCredentials(this.login, this.password).subscribe(data => {
       console.log(data);
     });
 
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }

@@ -32,8 +32,8 @@ export class ApiService {
     return this.http.post<Course>(this.url + 'courses', course);
   }
 
-  public getCredentials(email: string, password: string) {
-    return this.http.get(this.url +  'login' ,{
+  public setCredentials(email: string, password: string) {
+    return this.http.get(this.url +  'login', {
       params: new HttpParams().set('email', email).set('password', password)
     });
   }
