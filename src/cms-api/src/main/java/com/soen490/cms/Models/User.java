@@ -21,7 +21,7 @@ public class User {
 
     private String lastName;
 
-    private String userType;
+    private String userType; // values = ("admin" | "user" | "senate" | "dcc" | "departmentCouncil" | "apc" | "fcc" | "ugsc"
 
     private String email;
 

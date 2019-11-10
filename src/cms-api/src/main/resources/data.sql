@@ -265,5 +265,8 @@ INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, "resource implications"
 INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, "resource implications", 15, 2, NULL, "SOEN343_new", 1, 1); -- creating request for the course soen 343
 INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
 
--- id, apc, dcc, fcc, gdc, senate, ugdc
-INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 1, 2, 0, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
+-- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
+INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
+
+-- pipeline_id, package_id, position
+INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department Curriculum Committee");
