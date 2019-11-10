@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Original course:</h1>
+<p>{{data.OriginalCourseName}} {{data.OriginalCourseNumber}}</p>
+<div mat-dialog-content>
+  <h4>IMPACT STATEMENT</h4>
+<p>Course name has been changed to</p><h4>{{data.NewCourseAdded}}</h4>
+  <p *ngIf="data.Credits">Course credit has been changed to</p><h4> {{data.Credits}}</h4>
+  <p>The course name change signifies that </p><h4>{{data.OriginalCourseName}} {{data.OriginalCourseNumber}}</h4><p> is no longer offered
+by program: </p>
+  <h4>{{data.OriginalCourseName}}</h4>
+  <p>And is now offered by program: </p>
+  <h4>{{data.OriginalCourseName}}</h4>
+  <p>The following degree requirement(s) is/are affected by the course credit change: </p>
+  <h4>- $_Bachelor of Software Engineering - Software Engineering Core (40 credits)</h4>
+  <h4>- $_Bachelor of Computer Science - Computer Science Core (33 credits) </h4>
+  <p>Degree requirements will subsequently become:</p>
+  <h4>- $_Software Engineering Core (37 credits) </h4>
+  <h4>- $_Computer Science Core (37 credits)</h4>
+  <p> No impact on Department has been found.</p>
+  <p> No impact on Faculty has been found.</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div>

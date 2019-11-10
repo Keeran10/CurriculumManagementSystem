@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Course } from './model/course';
+import { Course } from './models/course';
 import { CourseExtras } from './model/course-extras';
 import { Injectable } from '@angular/core';
 import { Package } from './model/package';
@@ -30,7 +30,17 @@ export class ApiService {
   }
 
   public saveCourse(course: Course) {
-    return this.http.post<Course>(this.url + "courses", course);
+    return this.http.post<Course>(this.url + 'courses', course);
+  }
+
+  public getImpact(course: Course, courseExtras: CourseExtras) {
+
+    console.log('Impact endpoint called.');
+
+    return this.http.post(this.url + "get_impact", {
+      params: new HttpParams().set('course', JSON.stringify(course))
+        .set('courseExtras', JSON.stringify(courseExtras))
+    });
   }
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {

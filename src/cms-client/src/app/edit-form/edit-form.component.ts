@@ -1,8 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../backend-api.service';
+import { Course } from '../models/course';
 import { Component, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Course } from '../model/course';
 import { CourseExtras } from '../model/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
@@ -14,7 +14,7 @@ import { SupportDocumentComponent } from '../support-documents/support-documents
 
 export class EditFormComponent {
 
-  @ViewChild(SupportDocumentComponent, {static: false}) 
+  @ViewChild(SupportDocumentComponent, { static: false })
   supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
@@ -76,9 +76,9 @@ export class EditFormComponent {
 
   public setRequisitesStrings(course: Course, courseExtras: CourseExtras) {
     let isNextEquivalent = false;
-    if(course.requisites.length > 0){
+    if (course.requisites.length > 0) {
       course.requisites.forEach(r => {
-        switch(r.type){
+        switch (r.type) {
           case 'equivalent':
             if(!isNextEquivalent){
               courseExtras.equivalents += r.name + r.number + " or ";

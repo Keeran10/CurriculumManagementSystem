@@ -11,8 +11,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { CourseListComponent } from './course-list/course-list.component';
+import { DialogImpactStatementComponent, ImpactStatementComponent } from './impact-statement/impact-statement.component';
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
 import { EditFormComponent } from './edit-form/edit-form.component';
+import { GenericFileUploaderComponent } from './generic-file-uploader/generic-file-uploader.component';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +30,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
-import { GenericFileUploaderComponent } from './generic-file-uploader/generic-file-uploader.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -39,12 +41,15 @@ import { GenericFileUploaderComponent } from './generic-file-uploader/generic-fi
     ApprovalPipelineComponent,
     CourseFormComponent,
     CourseListComponent,
+    DialogImpactStatementComponent,
     EditFormComponent,
+    ImpactStatementComponent,
     PackageComponent,
     SearchPageComponent,
     SupportDocumentComponent,
     GenericFileUploaderComponent
   ],
+  entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
   imports: [
     AppRoutingModule,
@@ -62,6 +67,7 @@ import { GenericFileUploaderComponent } from './generic-file-uploader/generic-fi
     ReactiveFormsModule,
     NgxFileDropModule,
     PdfViewerModule,
+    MatDialogModule,
     MatCheckboxModule,
     MatListModule
   ],
