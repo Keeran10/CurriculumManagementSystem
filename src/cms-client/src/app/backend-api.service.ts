@@ -37,7 +37,7 @@ export class ApiService {
 
     console.log('Impact endpoint called.');
 
-    return this.http.post(this.url + "get_impact", {
+    return this.http.post(this.url + 'get_impact', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     });
@@ -49,19 +49,27 @@ export class ApiService {
     return this.http.post(this.url + "save_request", {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
-    })
-  }
-
-  public getAllPackages(departmentId: string) {
-    return this.http.get<Package[]>(this.url + 'get_packages', {
-      params: new HttpParams().set('department_id', departmentId)
     });
   }
 
-  public getPackage(packageId: string, departmentId: string){
-    return this.http.get<Package>(this.url + 'get_package', {
-      params: new HttpParams().set('package_id', packageId)
-        .set('department_id', departmentId)
+  public savePipeline(pipeline: string, packageId: any) {
+    console.log('set approval pipeline');
+    return this.http.post(this.url + 'setApprovalPipeline', {
+      params: new HttpParams().set('approval_pipeline', pipeline)
+        .set('package_id', packageId)
+    });
+  }
+
+  public getApprovalPipeline(pipelineId: any) {
+    return this.http.get<string[]>(this.url + 'approvalPipeline', {
+      params: new HttpParams().set('approval_pipeline_id', pipelineId)
+    });
+  }
+
+  public getCurrentPosition(packageId: string, approvalPipelineId: string) {
+    return this.http.get<any>(this.url + 'approvalPipelinePosition', {
+      params: new HttpParams().set('package_id', packageId).set('approval_pipeline_id', approvalPipelineId),
+      responseType: 'arraybuffer' as 'json'
     });
   }
 
@@ -75,6 +83,19 @@ export class ApiService {
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'
+    });
+  }
+
+  public getAllPackages(departmentId: string) {
+    return this.http.get<Package[]>(this.url + 'get_packages', {
+      params: new HttpParams().set('department_id', departmentId)
+    });
+  }
+
+  public getPackage(packageId: string, departmentId: string){
+    return this.http.get<Package>(this.url + 'get_package', {
+      params: new HttpParams().set('package_id', packageId)
+        .set('department_id', departmentId)
     });
   }
 }

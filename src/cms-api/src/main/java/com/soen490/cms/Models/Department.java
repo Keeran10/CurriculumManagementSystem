@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"programs", "calendar", "requestPackages"})
+@ToString(exclude= {"programs", "calendar", "requestPackages", "users"})
 @EqualsAndHashCode(exclude = "calendar")
 public class Department {
 

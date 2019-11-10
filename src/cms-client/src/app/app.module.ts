@@ -27,11 +27,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { PackageComponent } from './package/package.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
 
 
 
@@ -45,6 +45,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     EditFormComponent,
     ImpactStatementComponent,
     PackageComponent,
+    PipelineTrackingComponent,
     SearchPageComponent,
     SupportDocumentComponent,
     GenericFileUploaderComponent
