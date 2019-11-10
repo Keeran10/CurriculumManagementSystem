@@ -35,4 +35,14 @@ export class PackageComponent implements OnInit {
   public createNewPackage(){
     this.api.getPackage('0', '4').subscribe(data => this.packages.push(data));
   }
+
+  public generatePdf(packageId){
+    this.api.generatePdf(packageId).subscribe(data => {
+      let file = new Blob([data], {type: 'application/pdf'});
+      var fileURL = URL.createObjectURL(file);
+      console.log(file);
+      console.log(fileURL);
+      window.open(fileURL);
+    });
+  }
 }

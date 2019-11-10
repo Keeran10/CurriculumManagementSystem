@@ -32,6 +32,10 @@ export class EditFormComponent {
       this.id = params.get('id');
     });
     let requestId = this.cookieService.get('request');
+    let packageId = this.cookieService.get('package');
+    //let UserId = this.cookieService.get('user');
+    this.model.packageId = Number(packageId);
+    this.editedModel.packageId = Number(packageId);
     if(requestId === '0'){
       this.api.getCourse(this.id).subscribe(data => {
         console.log(data);

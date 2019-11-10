@@ -53,4 +53,10 @@ export class ApiService {
     });
   }
 
+  public generatePdf(packageId: string){
+    return this.http.get<BlobPart>(this.url + 'get_pdf', {
+      params: new HttpParams().set('package_id', packageId),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
 }
