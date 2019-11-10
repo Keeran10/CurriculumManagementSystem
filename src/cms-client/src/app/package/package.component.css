@@ -1,7 +1,34 @@
 .container{
     display: grid;
+    grid-template-columns: 300px auto;
+    grid-template-rows: 150px auto 100px;
+}
+
+.title{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.packages{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.bottom{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.inner-container{
+    display: grid;
     grid-template-columns: 4fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto;
 }
 
 .left{

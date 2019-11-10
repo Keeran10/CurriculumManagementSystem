@@ -1,0 +1,26 @@
+.container{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 40px;
+}
+
+.drop{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    height: 0px!important;
+}
+
+.file{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: left;
+    margin-left: 10px;
+    align-self: center;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -11,6 +11,7 @@ import { Package } from '../model/package';
 export class PackageComponent implements OnInit {
 
   packages: Package[];
+  isPdfAvailable = [];
 
   constructor(private cookieService: CookieService, private api: ApiService) { }
 
@@ -19,6 +20,7 @@ export class PackageComponent implements OnInit {
     this.api.getAllPackages('4').subscribe(data => {
       console.log(data);
       this.packages = data;
+      this.packages.forEach(()=> this.isPdfAvailable.push(false));
     });
   }
 
@@ -36,13 +38,15 @@ export class PackageComponent implements OnInit {
     this.api.getPackage('0', '4').subscribe(data => this.packages.push(data));
   }
 
-  public generatePdf(packageId){
-    this.api.generatePdf(packageId).subscribe(data => {
+  public generatePdf(packageId, index){
+    this.api.generatePdf(packageId).subscribe(data => this.isPdfAvailable[index] = data);
+  }
+
+  public viewPdf(packageId){
+    this.api.viewPdf(packageId).subscribe(data => {
       let file = new Blob([data], {type: 'application/pdf'});
       var fileURL = URL.createObjectURL(file);
-      console.log(file);
-      console.log(fileURL);
-      window.open(fileURL);
+      window.open(fileURL, '_blank');
     });
   }
 }

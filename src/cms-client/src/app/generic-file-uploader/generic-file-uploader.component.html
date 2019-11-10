@@ -1,0 +1,12 @@
+<div class="container">
+    <ngx-file-drop class="drop" style="height: 0px!important;" dropZoneLabel="Add Supporting Documents" (onFileDrop)="dropped($event)"
+                    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        Upload {{documentName}}
+        </ng-template>
+    </ngx-file-drop>
+    <div class="file" *ngIf="document">
+        {{document.name}}
+    </div>
+</div>
+      

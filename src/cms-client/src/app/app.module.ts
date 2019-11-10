@@ -28,6 +28,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
+import { GenericFileUploaderComponent } from './generic-file-uploader/generic-file-uploader.component';
 
 
 
@@ -41,7 +42,8 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
     EditFormComponent,
     PackageComponent,
     SearchPageComponent,
-    SupportDocumentComponent
+    SupportDocumentComponent,
+    GenericFileUploaderComponent
   ],
   // Keep imports alphabetical for source control
   imports: [
