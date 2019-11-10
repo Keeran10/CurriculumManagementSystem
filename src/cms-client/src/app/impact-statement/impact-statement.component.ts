@@ -59,8 +59,11 @@ export class ImpactStatementComponent implements OnInit {
   }
 
   showImpact(): void {
-    this.apiService.getImpact(this.course, this.courseExtras).subscribe(data => this.impact = data);
-    this.openDialog();
+    this.apiService.getImpact(this.course, this.courseExtras).subscribe(data => {
+      console.log(data);
+      this.impact = data;
+      this.openDialog();
+    });
   }
 
   openDialog(): void {

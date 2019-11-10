@@ -24,6 +24,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PipelineTrackingComponent } from './pipeline-tracking.component';
 import { ApiService } from '../backend-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CookieService } from 'ngx-cookie-service';
 
 describe('PipelineTrackingComponent', () => {
   let component: PipelineTrackingComponent;
@@ -36,7 +37,8 @@ describe('PipelineTrackingComponent', () => {
       ],
       declarations: [ PipelineTrackingComponent ],
       providers: [
-        ApiService
+        ApiService,
+        CookieService
       ]
     })
     .compileComponents();
