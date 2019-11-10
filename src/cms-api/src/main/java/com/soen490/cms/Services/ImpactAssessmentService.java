@@ -18,6 +18,14 @@ public class ImpactAssessmentService {
     @Autowired
     ImpactAssessmentCourseService impactAssessmentCourseService;
 
+    /**
+     * Based on the requestId gets the Impact statement of the specific report
+     * case 1: Program Request type
+     * case 2: Course Request type
+     *
+     * @param requestId
+     * @return Map<String, Object> Json
+     */
     public Map<String, Object> getAssessment(int requestId){
         Map<String, Object> responseMap = new HashMap();
         Request request = requestRepository.findByRequestId(requestId);

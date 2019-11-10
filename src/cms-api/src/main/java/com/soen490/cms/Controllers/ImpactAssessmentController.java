@@ -16,6 +16,13 @@ public class ImpactAssessmentController {
     @Autowired
     ImpactAssessmentService impactAssessmentService;
 
+    /**
+     * endpoint of: /ImpactAssessment
+     * takes as parameter the request Id 
+     *
+     * @param requestId
+     * @return Map<String, Object> Impact report object
+     */
     @GetMapping(value = "/ImpactAssessment")
     public Map<String, Object> getImpactAssessment(@RequestParam int requestId){
         return impactAssessmentService.getAssessment(requestId);
