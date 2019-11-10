@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../backend-api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   login: string;
   password: string;
   loginForm: FormGroup;
+  user: User[]
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
