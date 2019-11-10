@@ -22,8 +22,9 @@
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from './models/course';
-import { CourseExtras } from './model/course-extras';
+import { CourseExtras } from './models/course-extras';
 import { Injectable } from '@angular/core';
+import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,13 @@ export class ApiService {
 
   public saveCourse(course: Course) {
     return this.http.post<Course>(this.url + 'courses', course);
+  }
+
+
+  public setCredentials(email: string, password: string) {
+    return this.http.get<User[]>(this.url +  'login', {
+      params: new HttpParams().set('email', email).set('password', password)
+    });
   }
 
   public getImpact(course: Course, courseExtras: CourseExtras) {
@@ -93,13 +101,13 @@ export class ApiService {
     });
   }
 
-  public generatePdf(packageId: string){
+  public generatePdf(packageId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
       params: new HttpParams().set('package_id', packageId)
     });
   }
 
-  public viewPdf(packageId: string){
+  public viewPdf(packageId: string) {
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'

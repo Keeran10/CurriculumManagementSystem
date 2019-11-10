@@ -49,10 +49,13 @@ import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
-import {
-  DialogImpactStatementComponent, ImpactStatementComponent
-} from './impact-statement/impact-statement.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginComponent } from './login/login.component';
+import { DialogImpactStatementComponent, ImpactStatementComponent } from './impact-statement/impact-statement.component';
 import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 
@@ -64,10 +67,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     CourseListComponent,
     PipelineTrackingComponent,
     SearchPageComponent,
+    SupportDocumentComponent,
+    LoginComponent,
     DialogImpactStatementComponent,
     ImpactStatementComponent,
     EditFormComponent,
-    SupportDocumentComponent
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
@@ -89,7 +93,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     PdfViewerModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatListModule
+    MatListModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
