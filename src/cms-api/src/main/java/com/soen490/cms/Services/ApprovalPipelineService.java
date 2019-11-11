@@ -254,4 +254,10 @@ public class ApprovalPipelineService {
 
         return pipeline;
     }
+
+
+    public List<ApprovalPipeline> getPipelineByPackageId(int package_id) {
+
+        return approvalPipelineRepository.findByPackageId(package_id);
+    }
 }

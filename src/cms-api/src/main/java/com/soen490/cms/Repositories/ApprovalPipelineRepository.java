@@ -27,9 +27,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ApprovalPipelineRepository extends JpaRepository<ApprovalPipeline, Integer>{
 
     @Query(value = "SELECT * FROM approval_pipeline WHERE id=?", nativeQuery = true)
     ApprovalPipeline findApprovalPipeline(int id);
+
+    @Query(value = "SELECT * FROM approval_pipeline LEFT JOIN approval_pipeline_request_package p ON " +
+            "p.pipeline_id = approval_pipeline.id WHERE p.package_id=?", nativeQuery = true)
+    List<ApprovalPipeline> findByPackageId(int package_id);
 }
