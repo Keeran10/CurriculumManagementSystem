@@ -1,4 +1,4 @@
-// MIT License
+/* // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,31 +18,49 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE. */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { LoginComponent } from './login.component';
+.container{
+    display: grid;
+    grid-template-columns: 300px auto;
+    grid-template-rows: 150px auto 100px;
+}
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+.title{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-    })
-    .compileComponents();
-  }));
+.packages{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+.bottom{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
 
-  xit('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+.inner-container{
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: auto;
+}
+
+.left{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.right{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    justify-self: center;
+    align-self: center;
+}

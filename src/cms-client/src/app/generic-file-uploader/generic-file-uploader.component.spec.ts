@@ -21,28 +21,29 @@
 // SOFTWARE.
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { LoginComponent } from './login.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+import { GenericFileUploaderComponent } from './generic-file-uploader.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+
+describe('GenericFileUploaderComponent', () => {
+  let component: GenericFileUploaderComponent;
+  let fixture: ComponentFixture<GenericFileUploaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [ GenericFileUploaderComponent ],
       schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(GenericFileUploaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

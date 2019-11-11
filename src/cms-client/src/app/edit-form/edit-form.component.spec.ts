@@ -28,6 +28,8 @@ import { RouterModule } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Course } from '../models/course';
+import { CourseExtras } from '../models/course-extras';
+import { CookieService } from 'ngx-cookie-service';
 
 describe('EditFormComponent', () => {
   let component: EditFormComponent;
@@ -42,7 +44,8 @@ describe('EditFormComponent', () => {
       declarations: [EditFormComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        ApiService
+        ApiService,
+        CookieService
       ]
     })
       .compileComponents();
@@ -60,14 +63,16 @@ describe('EditFormComponent', () => {
 
   it('should not format prerequisites if there are none', () => {
     let testCourse: Course = new Course();
+    let testCourseExtras = new CourseExtras();
     testCourse.requisites = [];
 
-    component.setRequisitesStrings(testCourse);
+    component.setRequisitesStrings(testCourse, testCourseExtras);
     expect(component.model.prerequisites).toBe("")
   });
 
   it('should format prerequisites if they exist', () => {
     let testCourse: Course = new Course();
+    let testCourseExtras = new CourseExtras();
     testCourse.requisites = [
       {
         id: 0,
@@ -92,7 +97,7 @@ describe('EditFormComponent', () => {
       }
     ];
 
-    component.setRequisitesStrings(testCourse);
-    expect(component.model.prerequisites).toBe("SOEN123; MECH321; TEST456; ")
+    component.setRequisitesStrings(testCourse, testCourseExtras);
+    expect(testCourseExtras.prerequisites).toBe("SOEN123; MECH321; TEST456; ")
   });
 });

@@ -1,4 +1,4 @@
-// MIT License
+<!-- // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,31 +18,17 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE. -->
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { LoginComponent } from './login.component';
-
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  xit('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+<div class="container">
+    <ngx-file-drop class="drop" style="height: 0px!important;" dropZoneLabel="Add Supporting Documents" (onFileDrop)="dropped($event)"
+                    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        Upload {{documentName}}
+        </ng-template>
+    </ngx-file-drop>
+    <div class="file" *ngIf="document">
+        {{document.name}}
+    </div>
+</div>
+      

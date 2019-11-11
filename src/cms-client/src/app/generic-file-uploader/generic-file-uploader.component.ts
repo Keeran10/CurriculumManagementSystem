@@ -20,22 +20,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Component } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
-import { getDocument } from 'pdfjs-dist';
 
 @Component({
-  selector: 'app-support-documents',
-  templateUrl: './support-documents.component.html',
-  styleUrls: ['./support-documents.component.css']
+  selector: 'app-generic-file-uploader',
+  templateUrl: './generic-file-uploader.component.html',
+  styleUrls: ['./generic-file-uploader.component.css']
 })
+export class GenericFileUploaderComponent implements AfterViewInit{
 
-export class SupportDocumentComponent {
+  @Input() documentName: string;
 
   public files: NgxFileDropEntry[] = [];
-  public documents: File[] = [];
+  public document: File;
   public fileObjectArray: File[];
   public pdfSrc;
+
+  ngAfterViewInit(){
+    let el1 = document.querySelectorAll('.ngx-file-drop__content');
+    let el2 = document.querySelectorAll('.ngx-file-drop__drop-zone');
+    el1.forEach((e) => {
+      (<HTMLElement>e).style.height = '30px';
+    });
+    el2.forEach((e) => {
+      (<HTMLElement>e).style.height = '30px';
+    });
+  }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -45,10 +56,7 @@ export class SupportDocumentComponent {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-          this.documents.push(file);
+          this.document = file;
         });
       }
     }

@@ -24,6 +24,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from './models/course';
 import { CourseExtras } from './models/course-extras';
 import { Injectable } from '@angular/core';
+import { Package } from './models/package';
 import { User } from './models/user';
 
 @Injectable({
@@ -57,7 +58,7 @@ export class ApiService {
 
 
   public setCredentials(email: string, password: string) {
-    return this.http.get<User[]>(this.url +  'login', {
+    return this.http.get<User>(this.url +  'login', {
       params: new HttpParams().set('email', email).set('password', password)
     });
   }
@@ -73,8 +74,9 @@ export class ApiService {
   }
 
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
-    console.log('would Post');
-    return this.http.post(this.url + 'save_request', {
+    console.log(course);
+    console.log(courseExtras);
+    return this.http.post(this.url + "save_request", {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     });
@@ -114,4 +116,16 @@ export class ApiService {
     });
   }
 
+  public getAllPackages(departmentId: string) {
+    return this.http.get<Package[]>(this.url + 'get_packages', {
+      params: new HttpParams().set('department_id', departmentId)
+    });
+  }
+
+  public getPackage(packageId: string, departmentId: string){
+    return this.http.get<Package>(this.url + 'get_package', {
+      params: new HttpParams().set('package_id', packageId)
+        .set('department_id', departmentId)
+    });
+  }
 }

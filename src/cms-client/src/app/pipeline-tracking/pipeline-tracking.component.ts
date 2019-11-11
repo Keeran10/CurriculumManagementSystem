@@ -1,5 +1,28 @@
+// MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-pipeline-tracking',
@@ -9,7 +32,7 @@ import { ApiService } from '../backend-api.service';
 
 export class PipelineTrackingComponent implements OnInit {
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private cookieService: CookieService) {
   }
 
   public id = 0;
@@ -20,7 +43,7 @@ export class PipelineTrackingComponent implements OnInit {
     this.pipelineId = 1; // will be replaced when connected to Packages
   }
   public getPackageID() {
-    this.id = 1; // will be replaced when connected to Packages
+    this.id = Number(this.cookieService.get('package'));
   }
   public getPipeline() {
     this.api.getApprovalPipeline(this.pipelineId).subscribe(data => { this.pipeline = data;
