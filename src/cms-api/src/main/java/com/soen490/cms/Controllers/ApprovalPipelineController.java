@@ -44,6 +44,7 @@ public class ApprovalPipelineController {
      */
     @GetMapping(value = "/approvalPipeline")
     public String[] getApprovalPipelineList(@RequestParam("approval_pipeline_id") int approvalPipelineId) {
+        log.info("getApprovalPipelineList " + approvalPipelineId);
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
         String[] pipelineArray = new String[pipeline.size()];
         return pipeline.toArray(pipelineArray);
@@ -58,6 +59,7 @@ public class ApprovalPipelineController {
      */
     @GetMapping(value = "/approvalPipelinePosition")
     public String getCurrentPosition(@RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
+        log.info(packageId + " " + approvalPipelineId);
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineService.findApprovalPipelineRequestPackage(approvalPipelineId, packageId);
         return approvalPipelineRequestPackage.getPosition();
     }

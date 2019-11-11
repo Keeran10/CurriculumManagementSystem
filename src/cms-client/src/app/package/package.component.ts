@@ -24,6 +24,7 @@ import { ApiService } from '../backend-api.service';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Package } from '../models/package';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-package',
@@ -36,7 +37,9 @@ export class PackageComponent implements OnInit {
   isPdfAvailable = [];
   userName = 'User';
 
-  constructor(private cookieService: CookieService, private api: ApiService) { }
+  constructor(private cookieService: CookieService,
+    private api: ApiService,
+    private router: Router) { }
 
   ngOnInit() {
     // let departmentId = this.cookieService.get('department'); //replace 4 with department id
@@ -48,14 +51,16 @@ export class PackageComponent implements OnInit {
     this.userName = this.cookieService.get('userName');
   }
 
-  public packageSelect(packageId, requestId) {
+  public packageSelect(packageId, requestId, href) {
     this.cookieService.set('package', packageId);
+    console.log(packageId);
     this.cookieService.set('request', requestId);
     if (requestId != 0) {
       let request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
       this.cookieService.set('originalCourse', request.originalId.toString());
       this.cookieService.set('editedCourse', request.targetId.toString());
     }
+    this.router.navigate([href]);
   }
 
   public createNewPackage() {

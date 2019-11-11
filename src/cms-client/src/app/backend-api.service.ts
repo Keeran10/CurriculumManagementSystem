@@ -134,7 +134,8 @@ export class ApiService {
 
     console.log("api-getPipeline:" + packageId);
     return this.http.get<any>(this.url + 'get_pipeline', {
-      params: new HttpParams().set('package_id', packageId)
+      params: new HttpParams().set('package_id', packageId),
+      responseType: 'arraybuffer' as 'json'
     });
 
   }

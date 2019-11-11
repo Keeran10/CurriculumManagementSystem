@@ -228,6 +228,7 @@ public class ApprovalPipelineService {
     public List<String> getPipeline(int id) {
         List<String> pipeline = new ArrayList<>();
         String[] pipelineArray = new String[6]; // max number of academic bodies == 6
+        log.info(id);
         ApprovalPipeline approvalPipeline = approvalPipelineRepository.findApprovalPipeline(id);
 
         // adds an academic body to an index in desired order of the pipeline

@@ -35,13 +35,18 @@ export class PipelineTrackingComponent implements OnInit {
   constructor(private api: ApiService, private cookieService: CookieService) {
   }
 
-  public id = 0;
+  public id = 1;
   public packageLocation = '';
   public pipelineId = 0;
   public pipeline = [];
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
   //}
+
+  public delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   public getPackageID() {
     this.id = Number(this.cookieService.get('package'));
     console.log('getPackageID: ' + this.id);
@@ -77,15 +82,16 @@ export class PipelineTrackingComponent implements OnInit {
   }
 
   public getNewPipelineId() {
+    //await this.delay(5000);
     console.log('getNewPipelineId ' + this.id.toString());
     this.api.getPipeline(this.id).subscribe(data => this.pipelineId = data);
   }
 
   public ngOnInit() {
-    this.getNewPipelineId();
     //this.getPipelineID();
     this.getPackageID();
     this.getPipeline();
     this.getPackageLocation();
+    this.getNewPipelineId();
   }
 }
