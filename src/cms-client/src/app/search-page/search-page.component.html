@@ -19,7 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-
+<h1>Enter your search criteria below</h1>
 <form class="example-form" id="searchForm">
   <mat-form-field class="example-full-width">
       <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
@@ -29,7 +29,7 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class = "example-select">
     <mat-label>Search Category</mat-label>
     <mat-select [(ngModel)]="selectedValue" name="searchCategory" [formControl]="myChildControl">
       <mat-option *ngFor="let searchCategory of searchCategories" [value]="searchCategory.value">
@@ -38,7 +38,8 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <button mat-raised-button (click)="showResults()">Search</button>
+  <button class="mat-search" mat-raised-button (click)="showResults()">Search
+  </button>
 </form>
 
 
