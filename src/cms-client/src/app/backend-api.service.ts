@@ -130,10 +130,13 @@ export class ApiService {
     });
   }
 
-  public getPipeline(packageId: string) {
+  public getPipeline(packageId: any) {
+
+    console.log("api-getPipeline:" + packageId);
     return this.http.get<any>(this.url + 'get_pipeline', {
       params: new HttpParams().set('package_id', packageId)
     });
+
   }
 
 }

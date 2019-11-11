@@ -44,6 +44,7 @@ export class PipelineTrackingComponent implements OnInit {
   //}
   public getPackageID() {
     this.id = Number(this.cookieService.get('package'));
+    console.log('getPackageID: ' + this.id);
   }
   public getPipeline() {
     this.api.getApprovalPipeline(this.pipelineId).subscribe(data => {
@@ -76,7 +77,8 @@ export class PipelineTrackingComponent implements OnInit {
   }
 
   public getNewPipelineId() {
-    this.api.getPipeline(this.id.toString()).subscribe(data => this.pipelineId = data);
+    console.log('getNewPipelineId ' + this.id.toString());
+    this.api.getPipeline(this.id).subscribe(data => this.pipelineId = data);
   }
 
   public ngOnInit() {
