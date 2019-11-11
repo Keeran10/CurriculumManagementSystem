@@ -35,18 +35,25 @@ export class PipelineTrackingComponent implements OnInit {
   constructor(private api: ApiService, private cookieService: CookieService) {
   }
 
-  public id = 0;
+  public id = 1;
   public packageLocation = '';
-  public pipelineId = 0;
+  public pipelineId = 1;
   public pipeline = [];
-  public getPipelineID() {
-    this.pipelineId = 1; // will be replaced when connected to Packages
+  //public getPipelineID() {
+  //this.pipelineId = 1; // will be replaced when connected to Packages
+  //}
+
+  public delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
+
   public getPackageID() {
     this.id = Number(this.cookieService.get('package'));
+    console.log('getPackageID: ' + this.id);
   }
   public getPipeline() {
-    this.api.getApprovalPipeline(this.pipelineId).subscribe(data => { this.pipeline = data;
+    this.api.getApprovalPipeline(this.pipelineId).subscribe(data => {
+      this.pipeline = data;
     });
   }
   public getPackageLocation() {
@@ -56,8 +63,8 @@ export class PipelineTrackingComponent implements OnInit {
         let i;
         for (i in this.pipeline) {
           if (this.pipeline[i] === utf8decoder.decode(data)) {
-                this.packageLocation = i;
-            }
+            this.packageLocation = i;
+          }
         }
       });
   }
@@ -67,16 +74,24 @@ export class PipelineTrackingComponent implements OnInit {
   public viewPdf() {
     this.generatePDF();
     this.api.viewPdf(this.id.toString()).subscribe(data => {
-      const file = new Blob([data], {type: 'application/pdf'});
+      const file = new Blob([data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
       window.open(fileURL, '_blank');
       // for Mac: window.location.assign(fileURL); instead of .open
     });
   }
+
+  public getNewPipelineId() {
+    //await this.delay(5000);
+    console.log('getNewPipelineId ' + this.id.toString());
+    this.api.getPipeline(this.id).subscribe(data => this.pipelineId = data);
+  }
+
   public ngOnInit() {
-    this.getPipelineID();
+    //this.getPipelineID();
     this.getPackageID();
     this.getPipeline();
     this.getPackageLocation();
+    this.getNewPipelineId();
   }
 }
