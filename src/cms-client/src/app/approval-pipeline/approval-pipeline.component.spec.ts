@@ -28,6 +28,8 @@ import { MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiService } from '../backend-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CookieService } from 'ngx-cookie-service';
 
 describe('ApprovalPipelineComponent', () => {
   let component: ApprovalPipelineComponent;
@@ -40,11 +42,13 @@ describe('ApprovalPipelineComponent', () => {
         MatListModule,
         MatCardModule,
         MatButtonModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [ ApprovalPipelineComponent ],
       providers: [
-        ApiService
+        ApiService,
+        CookieService
       ]
     })
     .compileComponents();
