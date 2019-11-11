@@ -27,6 +27,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ApiService } from '../backend-api.service';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PackageComponent', () => {
   let component: PackageComponent;
@@ -34,7 +35,10 @@ describe('PackageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
       declarations: [ PackageComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
