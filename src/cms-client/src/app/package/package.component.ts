@@ -43,34 +43,34 @@ export class PackageComponent implements OnInit {
     this.api.getAllPackages('4').subscribe(data => {
       console.log(data);
       this.packages = data;
-      this.packages.forEach(()=> this.isPdfAvailable.push(false));
+      this.packages.forEach(() => this.isPdfAvailable.push(false));
     });
     this.userName = this.cookieService.get('userName');
   }
 
-  public packageSelect(packageId, requestId){
+  public packageSelect(packageId, requestId) {
     this.cookieService.set('package', packageId);
     this.cookieService.set('request', requestId);
-    if(requestId != 0){
+    if (requestId != 0) {
       let request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
       this.cookieService.set('originalCourse', request.originalId.toString());
       this.cookieService.set('editedCourse', request.targetId.toString());
     }
   }
 
-  public createNewPackage(){
+  public createNewPackage() {
     this.api.getPackage('0', '4').subscribe(data => this.packages.push(data));
   }
 
-  public generatePdf(packageId, index){
+  public generatePdf(packageId, index) {
     this.api.generatePdf(packageId).subscribe(data => this.isPdfAvailable[index] = data);
   }
 
-  public viewPdf(packageId){
+  public viewPdf(packageId) {
     this.api.viewPdf(packageId).subscribe(data => {
-      let file = new Blob([data], {type: 'application/pdf'});
+      let file = new Blob([data], { type: 'application/pdf' });
       var fileURL = URL.createObjectURL(file);
-      window.open(fileURL, '_blank');
+      window.location.assign(fileURL);
     });
   }
 }

@@ -128,11 +128,15 @@ public class ApprovalPipelineController {
 
     @GetMapping(value = "/get_pipeline")
     public int get(@RequestParam int package_id){
+
         log.info("get pipeline for package " + package_id);
 
         List<ApprovalPipeline> approvalPipelines = approvalPipelineService.getPipelineByPackageId(package_id);
 
         ApprovalPipeline approvalPipeline = approvalPipelines.get(approvalPipelines.size() - 1);
+
+        if(approvalPipeline == null)
+            return 0;
 
         return approvalPipeline.getId();
     }

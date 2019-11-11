@@ -58,7 +58,7 @@ export class ApiService {
 
 
   public setCredentials(email: string, password: string) {
-    return this.http.get<User>(this.url +  'login', {
+    return this.http.get<User>(this.url + 'login', {
       params: new HttpParams().set('email', email).set('password', password)
     });
   }
@@ -110,6 +110,7 @@ export class ApiService {
   }
 
   public viewPdf(packageId: string) {
+    window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'
@@ -122,10 +123,17 @@ export class ApiService {
     });
   }
 
-  public getPackage(packageId: string, departmentId: string){
+  public getPackage(packageId: string, departmentId: string) {
     return this.http.get<Package>(this.url + 'get_package', {
       params: new HttpParams().set('package_id', packageId)
         .set('department_id', departmentId)
     });
   }
+
+  public getPipeline(packageId: string) {
+    return this.http.get<any>(this.url + 'get_pipeline', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
 }

@@ -39,14 +39,15 @@ export class PipelineTrackingComponent implements OnInit {
   public packageLocation = '';
   public pipelineId = 0;
   public pipeline = [];
-  public getPipelineID() {
-    this.pipelineId = 1; // will be replaced when connected to Packages
-  }
+  //public getPipelineID() {
+  //this.pipelineId = 1; // will be replaced when connected to Packages
+  //}
   public getPackageID() {
     this.id = Number(this.cookieService.get('package'));
   }
   public getPipeline() {
-    this.api.getApprovalPipeline(this.pipelineId).subscribe(data => { this.pipeline = data;
+    this.api.getApprovalPipeline(this.pipelineId).subscribe(data => {
+      this.pipeline = data;
     });
   }
   public getPackageLocation() {
@@ -56,8 +57,8 @@ export class PipelineTrackingComponent implements OnInit {
         let i;
         for (i in this.pipeline) {
           if (this.pipeline[i] === utf8decoder.decode(data)) {
-                this.packageLocation = i;
-            }
+            this.packageLocation = i;
+          }
         }
       });
   }
@@ -67,14 +68,20 @@ export class PipelineTrackingComponent implements OnInit {
   public viewPdf() {
     this.generatePDF();
     this.api.viewPdf(this.id.toString()).subscribe(data => {
-      const file = new Blob([data], {type: 'application/pdf'});
+      const file = new Blob([data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
       window.open(fileURL, '_blank');
       // for Mac: window.location.assign(fileURL); instead of .open
     });
   }
+
+  public getNewPipelineId() {
+    this.api.getPipeline(this.id.toString()).subscribe(data => this.pipelineId = data);
+  }
+
   public ngOnInit() {
-    this.getPipelineID();
+    this.getNewPipelineId();
+    //this.getPipelineID();
     this.getPackageID();
     this.getPipeline();
     this.getPackageLocation();
