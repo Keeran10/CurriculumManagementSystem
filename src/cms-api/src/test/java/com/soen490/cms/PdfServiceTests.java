@@ -48,6 +48,9 @@ public class PdfServiceTests {
     String changed_eye_test = "This string should ~also ~be the ~same,~ ~once~ ~processed,~ ~as~ ~its~ ~own ~eye test~ string defined below~.";
 
 
+    /**
+     * Assert how the diff tool works
+     */
     @Test
     public void generateDiffsTest(){
 
@@ -58,6 +61,9 @@ public class PdfServiceTests {
     }
 
 
+    /**
+     * Confirms that diff tool follows a specific pattern in diff storage
+     */
     @Test
     public void confirmDiffPattern() {
 
@@ -103,18 +109,14 @@ public class PdfServiceTests {
                 if(c_identical_substring == null)
                     break;
 
-                log.info(c_identical_substring + "|| placehodler");
 
                 for (String o_identical_substring : o_identical_substrings) {
 
                     if(o_identical_substring == null)
                         break;
 
-                    log.info(c_identical_substring + "||"  + o_identical_substring);
 
                     if (c_identical_substring.contains(o_identical_substring) || o_identical_substring.contains(c_identical_substring)) {
-
-                        log.info(c_identical_substring + "||"  + o_identical_substring);
 
                         isValid = true;
 
@@ -125,7 +127,36 @@ public class PdfServiceTests {
                 if (!isValid) assertFalse(true);
             }
 
-            log.info("Diff pattern successfully discovered.");
+            log.info("identical pattern successfully discovered.");
+            //assertFalse(false);
+        }
+
+        if (o_different_substrings.length <= c_different_substrings.length) {
+
+            for (String c_different_substring : c_different_substrings) {
+
+                if(c_different_substring == null)
+                    break;
+
+
+                for (String o_different_substring : o_different_substrings) {
+
+                    if(o_different_substring == null)
+                        break;
+
+
+                    if (c_different_substring.contains(o_different_substring) || o_different_substring.contains(c_different_substring)) {
+
+                        isValid = true;
+
+                        break;
+                    }
+                }
+
+                if (!isValid) assertFalse(true);
+            }
+
+            log.info("diff pattern successfully discovered.");
             assertFalse(false);
         }
 
