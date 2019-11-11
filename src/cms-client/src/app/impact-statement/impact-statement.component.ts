@@ -55,7 +55,6 @@ export class ImpactStatementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.apiService.getImpact().subscribe(data => this.impact = data);
   }
 
   showImpact(): void {
