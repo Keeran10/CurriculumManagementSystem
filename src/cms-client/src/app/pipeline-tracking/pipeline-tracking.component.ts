@@ -37,7 +37,7 @@ export class PipelineTrackingComponent implements OnInit {
 
   public id = 1;
   public packageLocation = '';
-  public pipelineId = 0;
+  public pipelineId = 1;
   public pipeline = [];
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
