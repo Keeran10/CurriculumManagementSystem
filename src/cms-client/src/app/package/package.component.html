@@ -48,7 +48,9 @@
                     <br><br>
                     <button mat-raised-button color="primary" *ngIf="isPdfAvailable[i]" (click)="viewPdf(package.id)">View PDF</button>
                     <br><br>
-                    <button mat-raised-button color="primary">Submit for Approval</button>
+                    <a href="approval">
+                        <button mat-raised-button color="primary">Submit for Approval</button>
+                    </a>
                 </div>
             </mat-card>
             <br>

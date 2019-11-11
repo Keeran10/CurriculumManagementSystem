@@ -43,7 +43,7 @@ export class PipelineTrackingComponent implements OnInit {
     this.pipelineId = 1; // will be replaced when connected to Packages
   }
   public getPackageID() {
-    this.id = Number(this.cookieService.get('package')); // will be replaced when connected to Packages
+    this.id = Number(this.cookieService.get('package'));
   }
   public getPipeline() {
     this.api.getApprovalPipeline(this.pipelineId).subscribe(data => { this.pipeline = data;

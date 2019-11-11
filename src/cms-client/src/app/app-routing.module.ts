@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
 import { CommonModule } from '@angular/common';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { EditFormComponent } from './edit-form/edit-form.component';
@@ -32,6 +33,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 
 const routes: Routes = [
   { path: 'addcourse', component: CourseFormComponent },
+  { path: 'approval', component: ApprovalPipelineComponent},
   { path: 'search', component: SearchPageComponent },
   { path: 'editForm/:id', component: EditFormComponent },
   { path: 'pipeline', component: PipelineTrackingComponent },
