@@ -64,3 +64,9 @@
     justify-self: center;
     align-self: center;
 }
+
+a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
