@@ -1106,8 +1106,9 @@ public class PdfService {
         int ctr2_anti = 0;
         int ctr_co = 0;
         int ctr2_co = 0;
+        int ctr_pre = 0;
         String anti_store = "";
-        String co_store = "";
+        StringBuilder co_store = new StringBuilder();
 
         if(!requisites.isEmpty())
             r = new StringBuilder("Prerequisite: ");
@@ -1122,6 +1123,8 @@ public class PdfService {
                 ctr_anti++;
             if(requisite.getType().equals("corequisite"))
                 ctr_co++;
+            if(requisite.getType().equals("prerequisite"))
+                ctr_pre++;
         }
 
         for(Requisite requisite : requisites){
@@ -1133,6 +1136,7 @@ public class PdfService {
                 name_number= requisite.getName() + " ";
             else
                 name_number= requisite.getName() + " " + requisite.getNumber();
+
 
             if(type.equals("prerequisite")) {
                 if(ctr == 0) {
@@ -1153,15 +1157,21 @@ public class PdfService {
             else if(type.equals("corequisite")) {
 
                 if(ctr_co == 1)
-                    co_store = name_number + " previously or concurrently";
+                    co_store = new StringBuilder(name_number + " previously or concurrently");
 
-                else if(ctr_co == 2)
-                    co_store = co_store + " and " + name_number + " previously or concurrently";
+                else if(ctr_co == 2 && ctr2_co == 0)
+                    co_store = new StringBuilder(name_number);
 
-                else if(ctr_co != ctr2_co)
-                    co_store = co_store + ", " + name_number;
+                else if(ctr_co == 2 && ctr2_co == 1)
+                    co_store.append(" and ").append(name_number).append(" previously or concurrently");
 
-                else co_store = co_store + " and " + name_number + " previously or concurrently";
+                else if(ctr_co > 2 && ctr2_co == 0)
+                    co_store = new StringBuilder(name_number);
+
+                else if(ctr_co > 2 && ctr_co != ctr2_co + 1)
+                    co_store.append(", ").append(name_number);
+
+                else co_store.append(" and ").append(name_number).append("  previously or concurrently");
 
                 ctr2_co++;
 
@@ -1171,10 +1181,16 @@ public class PdfService {
                 if(ctr_anti == 1)
                     anti_store = name_number;
 
-                else if(ctr_anti == 2)
+                else if(ctr_anti == 2 && ctr2_anti == 0)
+                    anti_store = name_number;
+
+                else if(ctr_anti == 2 && ctr2_anti == 1)
                     anti_store = anti_store + " or " + name_number;
 
-                else if(ctr_anti != ctr2_anti)
+                else if(ctr_anti > 2 && ctr2_anti == 0)
+                    anti_store = name_number;
+
+                else if(ctr_anti != ctr2_anti + 1)
                     anti_store = anti_store + ", " + name_number;
 
                 else anti_store = anti_store + " or " + name_number;
@@ -1190,8 +1206,11 @@ public class PdfService {
             c_anti_note = "NOTE: Students who have received credit for " + anti_store +
                     " may not take this course for credit.";
 
-        if(ctr_co > 0)
+        if(ctr_co > 0 && ctr_pre > 0)
             r.append("; ").append(co_store);
+
+        if(ctr_co > 0 && ctr_pre == 0)
+            r.append(co_store);
 
         r.append(". ");
 
