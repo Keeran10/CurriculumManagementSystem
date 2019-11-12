@@ -153,10 +153,9 @@ public class PdfService {
                     Course changed_course = courseRepository.findById(request.getTargetId());
 
                     addCoursePreface(doc, request, original_course, changed_course);
-                    addCourseDiffTable(doc, request, original_course, changed_course);
 
                     // append course outline
-                    if(changed_course.getOutline() != null){
+                    if(changed_course != null && changed_course.getOutline() != null){
 
                         log.info("Appending course outline for " + changed_course.getName() + changed_course.getNumber());
 
@@ -591,6 +590,12 @@ public class PdfService {
             e.printStackTrace();
         }
 
+        try {
+            addCourseDiffTable(doc, request, o, c);
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private String o_anti_note = "";
@@ -906,7 +911,7 @@ public class PdfService {
                     if (0 < original.size()) {
 
                         report_paragraph.add(Chunk.NEWLINE);
-                        
+
                         for (int i = 0; i < original.size(); i++) {
 
                             Iterator it_u = original.get(i).entrySet().iterator();

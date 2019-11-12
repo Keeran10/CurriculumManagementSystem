@@ -115,7 +115,11 @@ public class ImpactAssessmentCourseService {
         originalList = new ArrayList();
         for(String programCore : programCores){
             Map<String, Object> originalMap = new HashMap();
-            double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+            Double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+
+            if(originalCredits == null)
+                originalCredits = (double) 0;
+
             originalMap.put(programCore, originalCredits);
             originalList.add(originalMap);
             Map<String, Object> changedMap = new HashMap();
@@ -171,7 +175,8 @@ public class ImpactAssessmentCourseService {
      */
     private Map<String,Object> courseRemovalImpactReport(Request request){
         Map<String, Object> responseReport = new HashMap();
-        Course course = searchService.findCourseById(request.getTargetId());
+        // used to be get targetId() which is wrong as course removals do not have any target_ids.
+        Course course = searchService.findCourseById(request.getOriginalId());
         int courseId = course.getId();
 
         Collection<Requisite> coursesInReference = searchService.findAllOccurrencesOfCourseAsRequisite(courseId);
@@ -224,7 +229,11 @@ public class ImpactAssessmentCourseService {
         originalList = new ArrayList();
         for(String programCore : programCores){
             Map<String, Object> originalMap = new HashMap();
-            double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+            Double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+
+            if(originalCredits == null)
+                originalCredits = (double) 0;
+
             originalMap.put(programCore, originalCredits);
             originalList.add(originalMap);
             Map<String, Object> changedMap = new HashMap();
@@ -483,7 +492,11 @@ public class ImpactAssessmentCourseService {
             }
             // if core not found in modified List then it was removed
             if(notFound){
-                double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+                Double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+
+                if(originalCredits == null)
+                    originalCredits = (double) 0;
+
                 double totalCredits = originalCredits - originalCourse.getCredits();
                 Map<String, Object> removedMap = new HashMap();
                 removedMap.put(originalCore, totalCredits);

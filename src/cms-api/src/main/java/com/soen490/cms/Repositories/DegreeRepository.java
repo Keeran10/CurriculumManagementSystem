@@ -41,6 +41,6 @@ public interface DegreeRepository extends JpaRepository<Degree, Integer>{
     Collection<Degree> findDegreeByElectiveCourseId(int course_id);
 
     @Query(value = "SELECT SUM(c.credits) FROM course c INNER JOIN degree_requirement ON c.id = degree_requirement.course_id WHERE degree_requirement.core=?1 AND c.is_active=1 ", nativeQuery = true)
-    double findCreditsTotalOfCoreProgram(String name);
+    Double findCreditsTotalOfCoreProgram(String name);
 
 }

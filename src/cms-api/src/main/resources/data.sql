@@ -96,8 +96,8 @@ INSERT IGNORE INTO course VALUES (13, 3.50, 'Students work in teams to design an
 -- SOEN 490 needs 75 credits in the program as prerequisite. Not handled yet.
 INSERT IGNORE INTO course VALUES (14, 4.00, 'Students work in teams of at least four members to construct a significant software application. The class meets at regular intervals. Team members will give a presentation of their contribution to the project. Lectures: one hour per week. Laboratory: two hours per week. Two terms.',
 1, 2, 1, 1, 'SOEN', "",  490, NULL, 'Capstone Software Engineering Design Project', 0, 1);
-INSERT IGNORE INTO course VALUES (15, 3.50, 'From requirements to design to implementation. Planned vs. evolutionary design and refactoring. Model‑driven design and Unified Modelling Language (UML). Structural and behavioural design descriptions and specifications. General and domain‑specific design principles, patterns and idioms. Object‑oriented design concepts such as interfaces vs. abstract types, polymorphism, generics, and delegation vs. subclassing. Introduction to software architecture (styles and view models). Design quality. Design rationale. Design methodologies (e.g. based on responsibility assignment). Test‑driven development. Lectures: three hours per week. Tutorial: one hour per week.',
-0, 0, 3, 2, 'SOEN', "", 343, NULL, 'Software Architecture and Design I extreme', 1, 1);
+INSERT IGNORE INTO course VALUES (15, 4.00, 'Architectural activities, roles, and deliverables. Architectural view models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, process control) and frameworks. Architectural analysis and the interplay with requirements elicitation. Notations for expressing architectural designs, structural and behavioural specifications. From architectural design to detailed design. Domain specific architectures and design patterns. Evaluation and performance estimation of designs. Advanced object‑oriented design patterns and idioms. Lectures: three hours per week. Tutorial: one hour per week.',
+0, 0, 3, 2, 'SOEN', "", 6441, NULL, 'Advanced Software Architecture and Design', 1, 1);
 
 INSERT IGNORE INTO course VALUES (16, 3.00, 'Resultant of force systems; equilibrium of particles and rigid bodies; distributed forces; statically determinate systems; trusses; friction; moments of inertia; virtual work. Shear and bending moment diagrams. Lectures: three hours per week. Tutorial: two hours per week.',
 1, 0, 3, 1, 'ENGR', "", 242, NULL, 'Statics', 2, 3);
@@ -149,6 +149,10 @@ INSERT IGNORE INTO course VALUES (38, 4.00, 'A supervised design, simulation or 
 INSERT IGNORE INTO course VALUES (39, 4.00, 'No review of ideal gas processes. Students should be aware of this beforehand. Semi-perfect gases and the gas tables. Mixtures of gases, gases and vapours, air conditioning processes. Combustion and combustion equilibrium. Applications of thermo­dynamics to power production and utilization systems: study of basic and advanced cycles for gas compression, internal combustion engines, power from steam, gas turbine cycles, and refrigeration. Real gases. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
 0, 2, 3, 1, 'MECH', "NOTE: Students will not perform any cool experiments unfortunately.", 351, NULL, 'Thermodynamics II', 1, 3);
 
+-- new course soen 346
+INSERT IGNORE INTO course VALUES (40, 3.00, 'Prerequisite: COMP 352. This course covers the following topics: introduction to the current data ecosystem; relational databases; key-value databases; document databases; column databases; graph databases; RDF stores; parallel and distributed file systems, data processing engines; data stream analytics; and data infrastructure. Lectures: three hours per week. Tutorial: one hour per week',
+0, 0, 3, 2, 'SOEN', "", 363, NULL, 'Data Systems for Software Engineers', 1, 1);
+
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
 INSERT IGNORE INTO requisite VALUES (2, 1, "SOEN", 341, "prerequisite", 7);-- soen 343 needs 341
@@ -156,8 +160,8 @@ INSERT IGNORE INTO requisite VALUES (3, 1, "SOEN", 342, "corequisite", 7);-- soe
 INSERT IGNORE INTO requisite VALUES (4, 1, "SOEN", 343, "prerequisite", 8);-- soen 344 needs 343
 INSERT IGNORE INTO requisite VALUES (5, 1, "SOEN", 343, "prerequisite", 9);-- soen 345 needs 343
 INSERT IGNORE INTO requisite VALUES (6, 1, "SOEN", 341, "prerequisite", 10);-- soen 357 needs 341
-INSERT IGNORE INTO requisite VALUES (7, 0, "SOEN", 341, "prerequisite", 15);-- soen 343 edited needs 341
-INSERT IGNORE INTO requisite VALUES (8, 0, "SOEN", 331, "prerequisite", 15);-- soen 343 edited needs 331
+INSERT IGNORE INTO requisite VALUES (7, 0, "SOEN", 343, "prerequisite", 15);-- soen 344 edited needs 343
+INSERT IGNORE INTO requisite VALUES (8, 0, "SOEN", 384, "prerequisite", 15);-- soen 344 edited needs 384
 INSERT IGNORE INTO requisite VALUES (9, 0, "SOEN", 343, "prerequisite", 10);-- soen 357 edited needs 343 edited
 
 INSERT IGNORE INTO requisite VALUES (68, 0, "ENCS", 282, "prerequisite", 11);
@@ -230,7 +234,7 @@ INSERT IGNORE INTO requisite VALUES (65, 1, "MECH", 344, "prerequisite", 38);
 INSERT IGNORE INTO requisite VALUES (66, 1, "MECH", 390, "corequisite", 38);
 INSERT IGNORE INTO requisite VALUES (67, 1, "75 credits in the program", 000, "prerequisite", 38);
 
--- degree_id, course_id
+-- id, core, course_id, degree_id
 INSERT IGNORE INTO degree_requirement VALUES (1, "Software Engineering Core", 1, 1);
 INSERT IGNORE INTO degree_requirement VALUES (2, "Software Engineering Core", 2, 1);
 INSERT IGNORE INTO degree_requirement VALUES (3, "Software Engineering Core", 3, 1);
@@ -246,7 +250,7 @@ INSERT IGNORE INTO degree_requirement VALUES (12, "Software Engineering Core", 1
 INSERT IGNORE INTO degree_requirement VALUES (13, "Software Engineering Core", 13, 1);
 INSERT IGNORE INTO degree_requirement VALUES (14, "Software Engineering Core", 14, 1);
 INSERT IGNORE INTO degree_requirement VALUES (15, "Software Engineering Core", 15, 2);
-INSERT IGNORE INTO degree_requirement VALUES (16, "Electives", 15, 4);
+INSERT IGNORE INTO degree_requirement VALUES (16, "Computer Science Electives", 15, 1);
 INSERT IGNORE INTO degree_requirement VALUES (17, "Mechanical Engineering Core", 16, 5);
 INSERT IGNORE INTO degree_requirement VALUES (18, "Mechanical Engineering Core", 17, 5);
 INSERT IGNORE INTO degree_requirement VALUES (19, "Mechanical Engineering Core", 18, 5);
@@ -271,6 +275,7 @@ INSERT IGNORE INTO degree_requirement VALUES (37, "Mechanical Engineering Core",
 INSERT IGNORE INTO degree_requirement VALUES (38, "Mechanical Engineering Core", 37, 5);
 INSERT IGNORE INTO degree_requirement VALUES (39, "Mechanical Engineering Core", 38, 5);
 INSERT IGNORE INTO degree_requirement VALUES (40, "Mechanical Engineering Core", 39, 5);
+INSERT IGNORE INTO degree_requirement VALUES (41, "Software Engineering Core", 40, 1);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
@@ -281,10 +286,10 @@ INSERT IGNORE INTO calendar VALUES (3, "Please note that the current version of 
 INSERT IGNORE INTO request_package VALUES (1, NULL, 4); -- creating a package for department of CS & SE
 INSERT IGNORE INTO request_package VALUES (2, NULL, 8); -- used for pdf generation
 
--- id, original id, rationale, request type, target id, target type, timestamp, title, package id, user id
-INSERT IGNORE INTO request VALUES (1, 7, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN343_update", 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 7, "rationale", 3, "resource implications", 15, 2, NULL, "SOEN343_removal", 1, 1); -- removing request for the course soen 343
-INSERT IGNORE INTO request VALUES (3, 7, "rationale", 1, "resource implications", 15, 2, NULL, "SOEN343_new", 1, 1); -- creating request for the course soen 343
+-- id, original id, rationale, request type, resource, target id, target type, timestamp, title, package id, user id
+INSERT IGNORE INTO request VALUES (1, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
 INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
 
 -- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
