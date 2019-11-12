@@ -804,9 +804,11 @@ public class PdfService {
                 ArrayList<Map<String, Object>> added = (ArrayList) original_removed_added_updated.get("added");
                 ArrayList<Map<String, Object>> updated = (ArrayList) original_removed_added_updated.get("updated");
 
-                if(original == null) {
+                if(original != null) {
 
                     if (0 < original.size()) {
+
+                        report_paragraph.add(Chunk.NEWLINE);
 
                         for (int i = 0; i < original.size(); i++) {
 
@@ -818,6 +820,7 @@ public class PdfService {
 
                                 String impact_line = ("Original degree to be modified: " +
                                         updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
+
 
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
@@ -902,6 +905,8 @@ public class PdfService {
 
                     if (0 < original.size()) {
 
+                        report_paragraph.add(Chunk.NEWLINE);
+                        
                         for (int i = 0; i < original.size(); i++) {
 
                             Iterator it_u = original.get(i).entrySet().iterator();
@@ -913,7 +918,7 @@ public class PdfService {
                                 String impact_line = ("Original degree to be modified: " +
                                         updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
 
-                                report_paragraph.add(Chunk.NEWLINE);
+
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
                                 isNone = false;
