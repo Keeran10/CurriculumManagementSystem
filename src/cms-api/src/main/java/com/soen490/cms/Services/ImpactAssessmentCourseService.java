@@ -91,23 +91,6 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseRequiredImpact", map);
 
-        // Making Elective Degree Impact Report
-        Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
-        updatedList = new ArrayList();
-        originalList = new ArrayList();
-        for(Degree degree : courseElectiveDegrees){
-            Map<String, Object> originalMap = new HashMap();
-            originalMap.put(degree.getName(), 0.0);
-            originalList.add(originalMap);
-            Map<String, Object> changedMap = new HashMap();
-            changedMap.put(degree.getName(), 0.0);
-            updatedList.add(changedMap);
-        }
-        map = new HashMap();
-        map.put("updated",updatedList);
-        map.put("original",originalList);
-        responseReport.put("DegreeCourseElectiveImpact", map);
-
         // Making Program Impact Report
         Collection<String> programCores = searchService.findPorgramCoreCourseId(course.getId());
         updatedList = new ArrayList();
@@ -206,23 +189,6 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseRequiredImpact", map);
 
-        // Making Elective Degree Impact Report
-        Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
-        updatedList = new ArrayList();
-        originalList = new ArrayList();
-        for(Degree degree : courseElectiveDegrees){
-            Map<String, Object> originalMap = new HashMap();
-            originalMap.put(degree.getName(),0.0);
-            originalList.add(originalMap);
-            Map<String, Object> changedMap = new HashMap();
-            changedMap.put(degree.getName(), 0.0);
-            updatedList.add(changedMap);
-        }
-        map = new HashMap();
-        map.put("updated",updatedList);
-        map.put("original",originalList);
-        responseReport.put("DegreeCourseElectiveImpact", map);
-
         // Making Program Impact Report
         Collection<String> programCores = searchService.findPorgramCoreCourseId(course.getId());
         updatedList = new ArrayList();
@@ -313,7 +279,6 @@ public class ImpactAssessmentCourseService {
 
         finalResponseMap.put("CourseEdits", responseMap);
         finalResponseMap.put("DegreeCourseRequiredImpact",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
-        finalResponseMap.put("DegreeCourseElectiveImpact",getElectiveCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
         finalResponseMap.put("ProgramImpact",getProgramImpactUpdatedCourse(originalCourse,requestedCourse));
         log.info("Impact Report for a course Update: ", finalResponseMap);
@@ -401,54 +366,6 @@ public class ImpactAssessmentCourseService {
         return responseMap;
     }
 
-    /**
-     * Finds the differences of elective Degrees of an updated course and its original
-     *
-     * @param originalCourse, requestedCourse
-     * @return Map<String, Object> Impact report object
-     */
-    private Map<Object, Object> getElectiveCourseDegreeImpactUpdatedCourse(Course originalCourse,Course requestedCourse) {
-        Map<Object, Object> responseMap = new HashMap();
-
-        Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByElectiveCourseId(originalCourse.getId());
-        Collection<Degree> targetCourseRequiredDegrees = searchService.findDegreesByElectiveCourseId(requestedCourse.getId());
-
-        ArrayList removedList = new ArrayList();
-        ArrayList addedList = new ArrayList();
-        // List of Degrees elective is removed from
-        for(Degree originalReqdegree: originalCourseRequiredDegrees) {
-            boolean notFound = true;
-            for (Degree requestedReqDegree : targetCourseRequiredDegrees) {
-                if (originalReqdegree.getId() == requestedReqDegree.getId()) {
-                    notFound = false;
-                }
-            }
-            if(notFound){
-                Map<Object, Object> removeMap = new HashMap();
-                removeMap.put(originalReqdegree.getName(), 0.0);
-                removedList.add(removeMap);
-            }
-        }
-        // List of Degrees elective is added to
-        for (Degree requestedReqDegree : targetCourseRequiredDegrees) {
-            boolean notFound = true;
-            for(Degree originalReqdegree: originalCourseRequiredDegrees) {
-                if (originalReqdegree.getId() == requestedReqDegree.getId()) {
-                    notFound = false;
-                }
-            }
-            if(notFound){
-                Map<Object, Object> addedeMap = new HashMap();
-                addedeMap.put(requestedReqDegree.getName(), 0.0);
-                addedList.add(addedeMap);
-            }
-        }
-
-        responseMap.put("removed", removedList);
-        responseMap.put("added", addedList);
-        log.info("Impact Report for a course Update on the Elective Degrees: ", responseMap);
-        return responseMap;
-    }
 
     /**
      * Finds the differences of a core Program of an updated course and its original
@@ -591,27 +508,6 @@ public class ImpactAssessmentCourseService {
         }
     }
 
-    /**
-     * Gets all Program cores of a list of required Degrees
-     *
-     * @param requiredDegrees
-     * @return Set<String> list of programs
-     */
-    public Set<String> getAlldegreeRequirementsCores(Collection<Degree> requiredDegrees, Course course){
-        Set<String> coreSet = new HashSet<String>();
-        for(Degree degree: requiredDegrees){
-            Collection<DegreeRequirement> requirements = degree.getDegreeRequirements();
-            System.err.println("degree: "+degree+" requirements");
-            for(DegreeRequirement degreeRequirement: requirements){
-                System.err.println(degreeRequirement);
-                if(course.getId() == degreeRequirement.getCourse().getId()){
-                    coreSet.add(degreeRequirement.getCore());
-                }
-            }
-        }
-        System.err.println("DONE");
-        return coreSet;
-    }
 
     /**
      * Inputs a mock object for Search Service to use in Junit Tests

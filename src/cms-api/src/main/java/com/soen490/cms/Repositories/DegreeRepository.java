@@ -37,7 +37,7 @@ public interface DegreeRepository extends JpaRepository<Degree, Integer>{
     @Query(value = "SELECT * FROM degree d INNER JOIN degree_requirement ON d.id = degree_requirement.degree_id WHERE degree_requirement.course_id=?1 AND core LIKE '% Core'", nativeQuery = true)
     Collection<Degree> findDegreeByRequiredCourseId(int course_id);
 
-    @Query(value = "SELECT * FROM degree d INNER JOIN degree_requirement ON d.id = degree_requirement.degree_id WHERE degree_requirement.course_id=?1 AND core NOT LIKE '% Electives'", nativeQuery = true)
+    @Query(value = "SELECT * FROM degree d INNER JOIN degree_requirement ON d.id = degree_requirement.degree_id WHERE degree_requirement.course_id=?1 AND core LIKE '% Electives'", nativeQuery = true)
     Collection<Degree> findDegreeByElectiveCourseId(int course_id);
 
 
