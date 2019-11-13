@@ -249,7 +249,7 @@ INSERT IGNORE INTO degree_requirement VALUES (11, "Software Engineering Core", 1
 INSERT IGNORE INTO degree_requirement VALUES (12, "Software Engineering Core", 12, 1);
 INSERT IGNORE INTO degree_requirement VALUES (13, "Software Engineering Core", 13, 1);
 INSERT IGNORE INTO degree_requirement VALUES (14, "Software Engineering Core", 14, 1);
-INSERT IGNORE INTO degree_requirement VALUES (15, "Software Engineering Core", 15, 2);
+INSERT IGNORE INTO degree_requirement VALUES (15, "", 15, 2);
 INSERT IGNORE INTO degree_requirement VALUES (16, "Computer Science Electives", 15, 1);
 INSERT IGNORE INTO degree_requirement VALUES (17, "Mechanical Engineering Core", 16, 5);
 INSERT IGNORE INTO degree_requirement VALUES (18, "Mechanical Engineering Core", 17, 5);

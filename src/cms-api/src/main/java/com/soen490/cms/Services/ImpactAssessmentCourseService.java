@@ -97,11 +97,10 @@ public class ImpactAssessmentCourseService {
         originalList = new ArrayList();
         for(Degree degree : courseElectiveDegrees){
             Map<String, Object> originalMap = new HashMap();
-            originalMap.put(degree.getName(), degree.getCredits());
+            originalMap.put(degree.getName(), 0.0);
             originalList.add(originalMap);
             Map<String, Object> changedMap = new HashMap();
-            double totaCredits =  degree.getCredits() + course.getCredits();
-            changedMap.put(degree.getName(), totaCredits);
+            changedMap.put(degree.getName(), 0.0);
             updatedList.add(changedMap);
         }
         map = new HashMap();
@@ -110,7 +109,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("DegreeCourseElectiveImpact", map);
 
         // Making Program Impact Report
-        Set<String> programCores = getAlldegreeRequirementsCores(courseRequiredDegrees);
+        Collection<String> programCores = searchService.findPorgramCoreCourseId(course.getId());
         updatedList = new ArrayList();
         originalList = new ArrayList();
         for(String programCore : programCores){
@@ -120,8 +119,10 @@ public class ImpactAssessmentCourseService {
             if(originalCredits == null)
                 originalCredits = (double) 0;
 
-            originalMap.put(programCore, originalCredits);
-            originalList.add(originalMap);
+            if(!(programCore.endsWith(" Electives"))) {
+                originalMap.put(programCore, originalCredits);
+                originalList.add(originalMap);
+            }
             Map<String, Object> changedMap = new HashMap();
             double totalCredits =  originalCredits + course.getCredits();
             changedMap.put(programCore, totalCredits);
@@ -211,11 +212,10 @@ public class ImpactAssessmentCourseService {
         originalList = new ArrayList();
         for(Degree degree : courseElectiveDegrees){
             Map<String, Object> originalMap = new HashMap();
-            originalMap.put(degree.getName(), degree.getCredits());
+            originalMap.put(degree.getName(),0.0);
             originalList.add(originalMap);
             Map<String, Object> changedMap = new HashMap();
-            double totaCredits =  degree.getCredits() - course.getCredits();
-            changedMap.put(degree.getName(), totaCredits);
+            changedMap.put(degree.getName(), 0.0);
             updatedList.add(changedMap);
         }
         map = new HashMap();
@@ -224,7 +224,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("DegreeCourseElectiveImpact", map);
 
         // Making Program Impact Report
-        Set<String> programCores = getAlldegreeRequirementsCores(courseRequiredDegrees);
+        Collection<String> programCores = searchService.findPorgramCoreCourseId(course.getId());
         updatedList = new ArrayList();
         originalList = new ArrayList();
         for(String programCore : programCores){
@@ -233,9 +233,10 @@ public class ImpactAssessmentCourseService {
 
             if(originalCredits == null)
                 originalCredits = (double) 0;
-
-            originalMap.put(programCore, originalCredits);
-            originalList.add(originalMap);
+            if(!(programCore.endsWith(" Electives"))){
+                originalMap.put(programCore, originalCredits);
+                originalList.add(originalMap);
+            }
             Map<String, Object> changedMap = new HashMap();
             double totalCredits =  originalCredits - course.getCredits();
             changedMap.put(programCore, totalCredits);
@@ -423,7 +424,9 @@ public class ImpactAssessmentCourseService {
                 }
             }
             if(notFound){
-                removedList.add(originalReqdegree.getName());
+                Map<Object, Object> removeMap = new HashMap();
+                removeMap.put(originalReqdegree.getName(), 0.0);
+                removedList.add(removeMap);
             }
         }
         // List of Degrees elective is added to
@@ -435,7 +438,9 @@ public class ImpactAssessmentCourseService {
                 }
             }
             if(notFound){
-                addedList.add(requestedReqDegree.getName());
+                Map<Object, Object> addedeMap = new HashMap();
+                addedeMap.put(requestedReqDegree.getName(), 0.0);
+                addedList.add(addedeMap);
             }
         }
 
@@ -453,39 +458,43 @@ public class ImpactAssessmentCourseService {
      */
     private Map<Object, Object> getProgramImpactUpdatedCourse( Course originalCourse, Course requestedCourse){
         Map<Object, Object> responseMap = new HashMap();
-        Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(originalCourse.getId());
-        Collection<Degree> targetCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(requestedCourse.getId());
-        Set<String> originalCores = getAlldegreeRequirementsCores(originalCourseRequiredDegrees);
-        Set<String> requestedCores = getAlldegreeRequirementsCores(targetCourseRequiredDegrees);
+        Collection<String> originalCourseProgramCore = searchService.findPorgramCoreCourseId(originalCourse.getId());
+        Collection<String> targetCourseProgramCore = searchService.findPorgramCoreCourseId(requestedCourse.getId());
 
         ArrayList<Map> updatedList = new ArrayList();
-
         ArrayList<Map> removedList = new ArrayList();
         ArrayList<Map> addedList = new ArrayList();
         ArrayList<Map> originalList = new ArrayList();
 
-        for(String originalCore: originalCores){
+        for(String originalCore: originalCourseProgramCore){
             boolean notFound = true;
-            for(String requestedCore: requestedCores){
+            for(String requestedCore: targetCourseProgramCore){
                 // When only the credits have changed in a core
                 if(originalCore.equals(requestedCore)){
                     notFound = false;
                     if(originalCourse.getCredits() != requestedCourse.getCredits()){
                         double difference =  Math.abs(originalCourse.getCredits() - requestedCourse.getCredits());
-                        double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
-                        double updatedCredits = originalCredits;
-                        //if credits increased else credits decreased
-                        if(originalCourse.getCredits() < requestedCourse.getCredits())
-                            updatedCredits += difference;
-                        else{
-                            updatedCredits -= difference;
-                        }
-                        Map<String, Object> updatedMap = new HashMap();
-                        updatedMap.put(originalCore, updatedCredits);
-                        updatedList.add(updatedMap);
-                        Map<String, Object> originalMap = new HashMap();
-                        originalMap.put(originalCore, originalCredits);
-                        originalList.add(originalMap);
+                        Double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+                        double originalCredit = 0.0;
+                        double updatedCredits = 0.0;
+                       if(originalCredits != null) {
+                           originalCredit = originalCredits.doubleValue();
+                            updatedCredits = originalCredit;
+                           //if credits increased else credits decreased
+                           if (originalCourse.getCredits() < requestedCourse.getCredits())
+                               updatedCredits += difference;
+                           else {
+                               updatedCredits -= difference;
+                           }
+                       }
+                       if(!(originalCore.endsWith(" Electives"))) {
+                           Map<String, Object> updatedMap = new HashMap();
+                           updatedMap.put(originalCore, updatedCredits);
+                           updatedList.add(updatedMap);
+                           Map<String, Object> originalMap = new HashMap();
+                           originalMap.put(originalCore, originalCredit);
+                           originalList.add(originalMap);
+                       }
 
                     }
                 }
@@ -501,29 +510,38 @@ public class ImpactAssessmentCourseService {
                 Map<String, Object> removedMap = new HashMap();
                 removedMap.put(originalCore, totalCredits);
                 removedList.add(removedMap);
-                Map<String, Object> originalMap = new HashMap();
-                originalMap.put(originalCore, originalCredits);
-                originalList.add(originalMap);
+                if(!(originalCore.endsWith(" Electives"))) {
+                    Map<String, Object> originalMap = new HashMap();
+                    originalMap.put(originalCore, originalCredits);
+                    originalList.add(originalMap);
+                }
             }
         }
 
-        // New course requirement for a degree
-        for(String requestedCore: requestedCores){
+        // course is part of a new program core
+        for(String requestedCore: targetCourseProgramCore){
             boolean notFound = true;
-            for(String originalCore: originalCores){
+            for(String originalCore: originalCourseProgramCore){
                 if(originalCore.equals(requestedCore)){
                     notFound = false;
                 }
             }
             if(notFound){
-                double originalCredits = searchService.findCreditsTotalOfCoreProgram(requestedCore);
-                double totalCredits = originalCredits + requestedCourse.getCredits();
+                Double originalCredits = searchService.findCreditsTotalOfCoreProgram(requestedCore);
+                double totalCredits = 0.0;
+                double originalCredit = 0.0;
+                if(originalCredits != null){
+                    originalCredit = originalCredits.doubleValue();
+                    totalCredits = originalCredits.doubleValue() + requestedCourse.getCredits();
+                }
                 Map<String, Object> addedMap = new HashMap();
                 addedMap.put(requestedCore, totalCredits);
                 addedList.add(addedMap);
-                Map<String, Object> originalMap = new HashMap();
-                originalMap.put(requestedCore, originalCredits);
-                originalList.add(originalMap);
+                if(!(requestedCore.endsWith(" Electives"))) {
+                    Map<String, Object> originalMap = new HashMap();
+                    originalMap.put(requestedCore, originalCredit);
+                    originalList.add(originalMap);
+                }
             }
         }
 
@@ -579,14 +597,19 @@ public class ImpactAssessmentCourseService {
      * @param requiredDegrees
      * @return Set<String> list of programs
      */
-    public Set<String> getAlldegreeRequirementsCores(Collection<Degree> requiredDegrees){
+    public Set<String> getAlldegreeRequirementsCores(Collection<Degree> requiredDegrees, Course course){
         Set<String> coreSet = new HashSet<String>();
         for(Degree degree: requiredDegrees){
             Collection<DegreeRequirement> requirements = degree.getDegreeRequirements();
+            System.err.println("degree: "+degree+" requirements");
             for(DegreeRequirement degreeRequirement: requirements){
-                coreSet.add(degreeRequirement.getCore());
+                System.err.println(degreeRequirement);
+                if(course.getId() == degreeRequirement.getCourse().getId()){
+                    coreSet.add(degreeRequirement.getCore());
+                }
             }
         }
+        System.err.println("DONE");
         return coreSet;
     }
 

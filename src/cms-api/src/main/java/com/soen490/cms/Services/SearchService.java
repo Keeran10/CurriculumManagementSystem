@@ -76,6 +76,10 @@ public class SearchService {
         return degreeRepository.findDegreeByElectiveCourseId(id);
     }
 
+    public Collection<String> findPorgramCoreCourseId(int id){
+        return degreeRepository.findProgramCoreCourseId(id);
+    }
+
     public Double findCreditsTotalOfCoreProgram(String name){
         log.info("find total fo credits of core programs");
         return degreeRepository.findCreditsTotalOfCoreProgram(name);
