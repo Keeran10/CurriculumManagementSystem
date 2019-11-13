@@ -113,7 +113,7 @@ public class ImpactStatementUnitTest {
         request.setRequestType(3);
         request.setTargetId(1);
 
-
+        when(searchService.findCourseById(0)).thenReturn(course);
         when(searchService.findAllOccurrencesOfCourseAsRequisite(5)).thenReturn(new ArrayList<Requisite>());
         Map<String,Object> mapResponse = impactAssessmentCourse.getCourseImpact(request);
 

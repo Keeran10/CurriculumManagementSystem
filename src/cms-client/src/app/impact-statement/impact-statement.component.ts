@@ -25,7 +25,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { CourseExtras } from '../models/course-extras';
-import {first} from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 export interface DialogData {
   animal: string;
@@ -81,10 +81,6 @@ export class ImpactStatementComponent implements OnInit {
         DegreeCourseRequiredImpactAdded: this.impact.DegreeCourseRequiredImpact.added[0],
         DegreeCourseRequiredImpactUpdated: this.impact.DegreeCourseRequiredImpact.updated[0],
         DegreeCourseRequiredImpactUpdatedKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.updated[0] || {}),
-
-
-        DegreeCourseElectiveImpactRemoved: this.impact.DegreeCourseElectiveImpact.removed[0],
-        DegreeCourseElectiveImpactAdded: this.impact.DegreeCourseElectiveImpact.added[0],
 
         ProgramImpactOriginal: this.impact.ProgramImpact.original[0],
         ProgramImpactOriginalKeys: Object.keys(this.impact.ProgramImpact.original[0] || {}),
