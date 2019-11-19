@@ -38,6 +38,14 @@
                     
                     <div *ngFor="let request of package.requests">
                         <a (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request: {{request.title}}</a>
+                        <div>
+                            <div [innerHtml]='msg'></div>
+                            <label>
+                                >
+                                <input type="file" (change)="selectFile($event)">
+                                </label>
+                                <button [disabled]="!selectedFiles" (click)="upload(request.id)">Upload Support Document</button>
+                        </div>
                     </div>
                     <div>
                         <a (click)="packageSelect(package.id, 0, 'search')">Create new request</a>

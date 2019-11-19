@@ -20,10 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Course } from './models/course';
 import { CourseExtras } from './models/course-extras';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Package } from './models/package';
 import { User } from './models/user';
 
@@ -139,5 +140,20 @@ export class ApiService {
     });
 
   }
+
+  public uploadFile(file: File, requestId: any) {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', {
+        reportProgress: true,
+        responseType: 'text',
+        params: {
+          document: file,
+          package_id: requestId
+        }
+    });
+    return this.http.request(req);
+  }
+
 
 }
