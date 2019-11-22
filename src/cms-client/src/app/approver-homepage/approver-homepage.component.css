@@ -1,0 +1,17 @@
+.container {
+    margin: 30px;
+}
+
+.packages {
+    width:500px;
+}
+
+.buttons {
+    margin-top: 15px;
+    margin-left: 70%;
+    display: flex;
+}
+
+.option {
+    padding: 0%;
+}
