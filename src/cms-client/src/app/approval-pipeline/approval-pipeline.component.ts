@@ -50,11 +50,12 @@ export class ApprovalPipelineComponent {
     ngOnInit() {
         this.packageId = Number(this.cookieService.get('package'));
     }
-    public custom(opt: string[]) {
+    public custom(opt) {
         let i;
         if (opt.length === 0) {
             alert('Cannot submit blank pipeline');
         } else {
+            console.log(opt);
             for (i of opt) {
                 this.customPipeline.push(i.value);
             }
