@@ -27,7 +27,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { RouterTestingModule } from '@angular/router/testing';
 import { CookieService } from 'ngx-cookie-service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 describe('ApprovalPipelineComponent', () => {
@@ -47,7 +46,7 @@ describe('ApprovalPipelineComponent', () => {
     }).compileComponents();;
   }));
 
-  describe('Approval tests', ()=> {
+  describe('Approval pipeline tests', ()=> {
     function setup() {
       const fixture = TestBed.createComponent(ApprovalPipelineComponent);
       const component = fixture.componentInstance;
