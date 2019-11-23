@@ -19,23 +19,31 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
+<h2>Packages requesting approval:</h2>
 <div class="container">
-    <h2>Packages requesting approval:</h2>
-    <table>
+    <table class="half">
         <tbody>
             <tr *ngFor="let package of packages">
-                <mat-card class="packages">
-                    <mat-card-title>Package #{{ package.id }} </mat-card-title>
-                    <mat-card-content>
-                        <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
-                        <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
-                    </mat-card-content>
-                    <div class="buttons">
-                        <button mat-button>Accept</button>
-                        <button mat-button color="warn">Decline</button>
-                    </div>
-                </mat-card>
+                <td>
+                    <mat-card class="packages">
+                        <mat-card-title>Package #{{ package.id }} </mat-card-title>
+                        <mat-card-content>
+                            <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
+                            <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
+                        </mat-card-content>
+                        <div class="buttons">
+                            <button mat-button>Accept</button>
+                            <button mat-button color="warn" (click)="decline(package.id)">Decline</button>
+                        </div>
+                    </mat-card>
+                </td>
             </tr>
         </tbody>
     </table>
+    <mat-card class="half" id="rationale">
+        <mat-card-content>Please provide rationale for decline below:</mat-card-content>
+        <textarea class="input" matInput placeholder="Decline package"></textarea>
+        <br />
+        <button class="option" mat-button color="primary">Submit Rationale</button>
+    </mat-card>
 </div>

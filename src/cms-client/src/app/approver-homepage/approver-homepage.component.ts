@@ -70,4 +70,18 @@ export class ApproverHomepageComponent implements OnInit {
         console.log(packageId);
         this.router.navigate(['package']);
     }
+
+    // on decline
+    public decline(packageId) {
+        const rationaleInput = document.getElementById('rationale');
+        rationaleInput.style.visibility = 'visible';
+        // provide rationale
+        // remove from pipeline
+    }
+
+    // on accept
+    public accept(packageId) {
+        // approve 
+        // push to next academic body in pipeline
+    }
 }
