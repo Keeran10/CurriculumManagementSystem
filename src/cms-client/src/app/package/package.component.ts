@@ -33,7 +33,7 @@ import { Router } from '@angular/router';
 })
 export class PackageComponent implements OnInit {
 
-  packages: Package[];
+  packages = new Array();
   isPdfAvailable = new Array();
   userName = 'User';
 
