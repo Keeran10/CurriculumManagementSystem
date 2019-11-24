@@ -26,78 +26,134 @@ import { EditFormComponent } from './edit-form.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../backend-api.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Course } from '../models/course';
 import { CourseExtras } from '../models/course-extras';
 import { CookieService } from 'ngx-cookie-service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs';
+import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
 describe('EditFormComponent', () => {
-  let component: EditFormComponent;
-  let fixture: ComponentFixture<EditFormComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterModule.forRoot([]),
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
-      declarations: [EditFormComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [ EditFormComponent ],
       providers: [
         ApiService,
         CookieService
-      ]
-    })
-      .compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();;
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EditFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe('Approval pipeline tests', ()=> {
+    function setup() {
+      const fixture = TestBed.createComponent(EditFormComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
+      const cookieService = TestBed.get(CookieService); 
+      const httpClient = TestBed.get(HttpTestingController);
+      component.supportDocumentComponent = new SupportDocumentComponent();  
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+      return { fixture, component, apiService, cookieService, httpClient };
+    }
 
-  it('should not format prerequisites if there are none', () => {
-    let testCourse: Course = new Course();
-    let testCourseExtras = new CourseExtras();
-    testCourse.requisites = [];
+    it('should create', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
 
-    component.setRequisitesStrings(testCourse, testCourseExtras);
-    expect(component.model.prerequisites).toBe("")
-  });
+    it('should not format prerequisites if there are none', () => {
+      const { component } = setup();
+      let testCourse: Course = new Course();
+      let testCourseExtras = new CourseExtras();
+      testCourse.requisites = [];
+  
+      component.setRequisitesStrings(testCourse, testCourseExtras);
+      expect(component.model.prerequisites).toBe("")
+    });
 
-  it('should format prerequisites if they exist', () => {
-    let testCourse: Course = new Course();
-    let testCourseExtras = new CourseExtras();
-    testCourse.requisites = [
-      {
-        id: 0,
-        name: "SOEN",
-        type: "prerequisite",
-        number: 123,
-        isActive: true
-      },
-      {
-        id: 0,
-        name: "MECH",
-        type: "prerequisite",
-        number: 321,
-        isActive: true
-      },
-      {
-        id: 0,
-        name: "TEST",
-        type: "prerequisite",
-        number: 456,
-        isActive: true
-      }
-    ];
+    it('should format requisites if they exist', () => {
+      const { component } = setup();
+      let testCourse: Course = new Course();
+      let testCourseExtras = new CourseExtras();
+      testCourse.requisites = [
+        {
+          id: 0,
+          name: "SOEN",
+          type: "prerequisite",
+          number: 123,
+          isActive: true
+        },
+        {
+          id: 0,
+          name: "MECH",
+          type: "corequisite",
+          number: 321,
+          isActive: true
+        },
+        {
+          id: 0,
+          name: "TEST",
+          type: "equivalent",
+          number: 456,
+          isActive: true
+        },
+        {
+          id: 0,
+          name: "TEST",
+          type: "equivalent",
+          number: 457,
+          isActive: true
+        },
 
-    component.setRequisitesStrings(testCourse, testCourseExtras);
-    expect(testCourseExtras.prerequisites).toBe("SOEN123; MECH321; TEST456; ")
+      ];
+  
+      component.setRequisitesStrings(testCourse, testCourseExtras);
+      expect(testCourseExtras.prerequisites).toBe("SOEN123; ");
+      expect(testCourseExtras.corequisites).toBe('MECH321; ');
+      expect(testCourseExtras.equivalents).toBe('TEST456 or TEST457; ');
+    });
+
+    it('should add documents and send form in submit', () => {
+      const { component, apiService } = setup();
+      component.supportDocumentComponent.documents = [new File([], "File1"), new File([], "File2")];
+      spyOn(apiService, 'submitEditedCourse').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next('test');
+        observer.complete();
+      }));
+
+      component.submitForm();
+
+      expect(component.editedModel.files).toEqual(component.supportDocumentComponent.documents);
+      expect(apiService.submitEditedCourse).toHaveBeenCalled();
+    });
+    
+    it('should highlight changes of ins and del elements', () => {
+      const { component } = setup();
+
+      component.courseOriginal.title = 'testname';
+      component.courseEditable.title = 'test';
+      component.courseEditable.description = 'test description';
+
+      component.highlightChanges();
+
+      const insElements = document.querySelectorAll('ins');
+      const delElements = document.querySelectorAll('del');
+      insElements.forEach((e) => {
+        expect(e.style.background).toEqual('#bbffbb');
+      });
+  
+      delElements.forEach((e) => {
+        expect(e.style.background).toEqual('#ffbbbb');
+      });
+    });
+
   });
 });
