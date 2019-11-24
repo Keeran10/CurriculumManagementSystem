@@ -20,28 +20,59 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 
 import { CourseListComponent } from './course-list.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ApiService } from '../backend-api.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Course } from '../models/course';
+import { Observable } from 'rxjs';
 
 describe('CourseListComponent', () => {
-  let component: CourseListComponent;
-  let fixture: ComponentFixture<CourseListComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CourseListComponent ]
-    })
-    .compileComponents();
+      imports: [
+        HttpClientTestingModule
+      ],
+      declarations: [ CourseListComponent ],
+      providers: [
+        ApiService
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();;
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CourseListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe('Approval pipeline tests', ()=> {
+    function setup() {
+      const fixture = TestBed.createComponent(CourseListComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
+      const httpClient = TestBed.get(HttpTestingController);
 
-  xit('should create', () => {
-    expect(component).toBeTruthy();
+      return { fixture, component, apiService, httpClient };
+    }
+
+    it('should create component', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
+
+    it('should set courses on init', () => {
+      const { component, apiService } = setup();
+      const testCourses = [
+        new Course(),
+        new Course(),
+        new Course()
+      ]
+      spyOn(apiService, 'getAllCourses').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next(testCourses);
+        observer.complete();
+      }));
+      component.ngOnInit();
+      expect(component.courses.length).toBe(3);
+    });
   });
 });
