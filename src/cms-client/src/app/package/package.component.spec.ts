@@ -68,7 +68,7 @@ describe('PackageComponent', () => {
 
     it('should get packages and set user name on init', () => {
       const { component, cookieService, apiService } = setup();
-      cookieService.set('userName', 'testName');
+      spyOn(cookieService, 'get').and.returnValue('testName');
       let packages = new Array();
       packages.push({
         id: 5,

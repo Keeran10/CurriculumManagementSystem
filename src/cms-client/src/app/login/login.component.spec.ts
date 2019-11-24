@@ -86,8 +86,6 @@ describe('LoginComponent', () => {
       spyOn(cookieService, 'set');
       component.OnSubmit('fakename', 'fakepass');
       expect(cookieService.set).toHaveBeenCalledTimes(2);
-      expect(cookieService.get('user')).toEqual('10');
-      expect(cookieService.get('userName')).toEqual('firstTest');
     });
 
   });
