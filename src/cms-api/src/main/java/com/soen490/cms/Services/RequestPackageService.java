@@ -346,4 +346,16 @@ public class RequestPackageService {
         return supportingDocumentsRepository.save(supportingDocument);
     }
 
+    public boolean saveRequestFile(byte[] file, int id){
+
+        Request request = requestRepository.findByRequestId(id);
+        Course course = courseRepository.findById(request.getTargetId());
+
+        if(course == null) return false;
+
+        course.setOutline(file);
+        courseRepository.save(course);
+        return true;
+    }
+
 }

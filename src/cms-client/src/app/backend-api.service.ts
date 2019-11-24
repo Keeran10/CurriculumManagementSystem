@@ -144,13 +144,10 @@ export class ApiService {
   public uploadFile(file: File, requestId: any) {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', {
-        reportProgress: true,
-        responseType: 'text',
-        params: {
-          document: file,
-          package_id: requestId
-        }
+    formdata.append('id', requestId);
+    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
+      reportProgress: true,
+      responseType: 'text',
     });
     return this.http.request(req);
   }
