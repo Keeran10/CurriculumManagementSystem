@@ -21,4 +21,10 @@
 // SOFTWARE.
 
 export class Degree {
+  id: number;
+  name: string;
+  level: number;
+  credits: number;
+  program: object;
+  degreeRequirements: object;
 }
