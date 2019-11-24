@@ -20,13 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import { HttpClient, HttpParams, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Course } from './models/course';
 import { CourseExtras } from './models/course-extras';
 import { Degree } from './models/degree';
 import { Department } from './models/department';
 import { Faculty } from './models/faculty';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Package } from './models/package';
 import { Program } from './models/program';
 import { User } from './models/user';
@@ -51,19 +52,19 @@ export class ApiService {
   }
 
   public getAllDegrees() {
-    return this.http.get <Degree[]>(this.url + 'degrees');
+    return this.http.get<Degree[]>(this.url + 'degrees');
   }
 
   public getAllDepartments() {
-    return this.http.get <Department[]>(this.url + 'departments');
+    return this.http.get<Department[]>(this.url + 'departments');
   }
 
   public getAllFaculties() {
-    return this.http.get <Faculty[]>(this.url + 'faculties');
+    return this.http.get<Faculty[]>(this.url + 'faculties');
   }
 
   public getAllPrograms() {
-    return this.http.get <Program[]>(this.url + 'programs');
+    return this.http.get<Program[]>(this.url + 'programs');
   }
 
   public getCourse(id: string) {
@@ -159,5 +160,17 @@ export class ApiService {
     });
 
   }
+
+  public uploadFile(file: File, requestId: any) {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('id', requestId);
+    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+    return this.http.request(req);
+  }
+
 
 }
