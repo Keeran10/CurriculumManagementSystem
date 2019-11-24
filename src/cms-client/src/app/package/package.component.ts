@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
 export class PackageComponent implements OnInit {
 
   packages: Package[];
-  isPdfAvailable = [];
+  isPdfAvailable = new Array();
   userName = 'User';
 
   constructor(private cookieService: CookieService,
