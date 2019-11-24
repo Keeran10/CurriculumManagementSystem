@@ -43,7 +43,7 @@ describe('CourseListComponent', () => {
     }).compileComponents();;
   }));
 
-  describe('Approval pipeline tests', ()=> {
+  describe('Course list tests', ()=> {
     function setup() {
       const fixture = TestBed.createComponent(CourseListComponent);
       const component = fixture.componentInstance;

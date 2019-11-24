@@ -24,7 +24,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFormComponent } from './edit-form.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Course } from '../models/course';
@@ -50,16 +50,18 @@ describe('EditFormComponent', () => {
     }).compileComponents();;
   }));
 
-  describe('Approval pipeline tests', ()=> {
+  describe('Edit form tests', ()=> {
     function setup() {
       const fixture = TestBed.createComponent(EditFormComponent);
       const component = fixture.componentInstance;
       const apiService = TestBed.get(ApiService);
       const cookieService = TestBed.get(CookieService); 
       const httpClient = TestBed.get(HttpTestingController);
+      const router = TestBed.get(Router);
+      const activatedRoute = TestBed.get(ActivatedRoute);
       component.supportDocumentComponent = new SupportDocumentComponent();  
 
-      return { fixture, component, apiService, cookieService, httpClient };
+      return { fixture, component, apiService, cookieService, httpClient, router, activatedRoute };
     }
 
     it('should create', () => {
@@ -155,5 +157,114 @@ describe('EditFormComponent', () => {
       });
     });
 
+    it('should load the course data into the original and editable models', () => {
+      const { component, cookieService, apiService, router, activatedRoute } = setup();
+      spyOn(cookieService, 'get').and.returnValue('0');
+      spyOn(activatedRoute, 'paramMap').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next('test');
+        observer.complete();
+      }));
+      const testCourse = {
+        id: 0,
+        credits: 4,
+        degreeRequirements: [],
+        description: 'description',
+        equivalent: [],
+        isActive: true,
+        labHours: 3,
+        lectureHours: 4,
+        level: 1,
+        name: 'TEST',
+        note: '',
+        number: 123,
+        outline: '',
+        program: null,
+        requisites: [],
+        title: 'Test title',
+        tutorialHours: 4
+      }
+      spyOn(apiService, 'getCourse').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next(testCourse);
+        observer.complete();
+      }));
+
+      component.ngOnInit();
+
+      expect(component.courseOriginal).toEqual(testCourse);
+      expect(component.courseEditable).toEqual(testCourse);
+    });
+
+    it('should load the original course data into the original and the edited course into the editable model', () => {
+      const { component, cookieService, apiService, router, activatedRoute } = setup();
+      spyOn(cookieService, 'get').withArgs('originalCourse').and.returnValue('1')
+        .withArgs('editedCourse').and.returnValue('2')
+        .withArgs('request').and.returnValue('1')
+        .withArgs('package').and.returnValue('1')
+        .withArgs('user').and.returnValue('1');
+      spyOn(activatedRoute, 'paramMap').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next('test');
+        observer.complete();
+      }));
+      const testCourseOrignal = {
+        id: 1,
+        credits: 4,
+        degreeRequirements: [],
+        description: 'description',
+        equivalent: [],
+        isActive: true,
+        labHours: 3,
+        lectureHours: 4,
+        level: 1,
+        name: 'TEST',
+        note: '',
+        number: 123,
+        outline: '',
+        program: null,
+        requisites: [],
+        title: 'Test title',
+        tutorialHours: 4
+      }
+      const testCourseEdited = {
+        id: 2,
+        credits: 4,
+        degreeRequirements: [],
+        description: 'Edited description',
+        equivalent: [],
+        isActive: true,
+        labHours: 3,
+        lectureHours: 4,
+        level: 1,
+        name: 'TEST',
+        note: '',
+        number: 321,
+        outline: '',
+        program: null,
+        requisites: [],
+        title: 'Test title Edited',
+        tutorialHours: 4
+      }
+      spyOn(apiService, 'getCourse').withArgs('1').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next(testCourseOrignal);
+        observer.complete();
+      })).withArgs('2').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next(testCourseEdited);
+        observer.complete();
+      }));
+
+      component.ngOnInit();
+
+      expect(component.courseOriginal).toEqual(testCourseOrignal);
+      expect(component.courseEditable).toEqual(testCourseEdited);
+    });
   });
 });
