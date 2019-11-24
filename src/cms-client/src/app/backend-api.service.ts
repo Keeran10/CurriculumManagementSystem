@@ -23,9 +23,13 @@
 import { HttpClient, HttpParams, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Course } from './models/course';
 import { CourseExtras } from './models/course-extras';
+import { Degree } from './models/degree';
+import { Department } from './models/department';
+import { Faculty } from './models/faculty';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Package } from './models/package';
+import { Program } from './models/program';
 import { User } from './models/user';
 
 @Injectable({
@@ -45,6 +49,22 @@ export class ApiService {
 
   public getAllCourses() {
     return this.http.get<Course[]>(this.url + 'courses');
+  }
+
+  public getAllDegrees() {
+    return this.http.get<Degree[]>(this.url + 'degrees');
+  }
+
+  public getAllDepartments() {
+    return this.http.get<Department[]>(this.url + 'departments');
+  }
+
+  public getAllFaculties() {
+    return this.http.get<Faculty[]>(this.url + 'faculties');
+  }
+
+  public getAllPrograms() {
+    return this.http.get<Program[]>(this.url + 'programs');
   }
 
   public getCourse(id: string) {
@@ -77,7 +97,7 @@ export class ApiService {
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log(course);
     console.log(courseExtras);
-    return this.http.post(this.url + "save_request", {
+    return this.http.post(this.url + 'save_request', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     });
@@ -133,7 +153,7 @@ export class ApiService {
 
   public getPipeline(packageId: any) {
 
-    console.log("api-getPipeline:" + packageId);
+    console.log('api-getPipeline:' + packageId);
     return this.http.get<any>(this.url + 'get_pipeline', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'

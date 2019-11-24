@@ -20,11 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export class Degree {
+export class Department {
   id: number;
   name: string;
-  level: number;
-  credits: number;
-  program: object;
-  degreeRequirements: object;
+  faculty: object;
+  users: object;
+  programs: object;
+  requestPackages: object;
 }
