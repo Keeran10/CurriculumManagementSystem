@@ -23,6 +23,7 @@
 import { ApiService } from '../backend-api.service';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { HttpResponse } from '@angular/common/http';
 import { Package } from '../models/package';
 import { Router } from '@angular/router';
 
@@ -33,9 +34,13 @@ import { Router } from '@angular/router';
 })
 export class PackageComponent implements OnInit {
 
-  packages: Package[];
-  isPdfAvailable = [];
+  packages = new Array();
+  isPdfAvailable = new Array();
   userName = 'User';
+  selectedFiles: FileList;
+  currentFile: File;
+  msg;
+  files: File[] = [];
 
   constructor(private cookieService: CookieService,
     private api: ApiService,
@@ -77,6 +82,24 @@ export class PackageComponent implements OnInit {
       var fileURL = URL.createObjectURL(file);
       window.open(fileURL, '_blank');
       //window.location.assign(fileURL);
+    });
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles);
+    this.files.push(this.selectedFiles.item(0));
+    console.log(this.files);
+  }
+
+  upload(requestId) {
+    this.currentFile = this.selectedFiles[0];
+    this.api.uploadFile(this.currentFile, requestId).subscribe(response => {
+      this.selectedFiles.item[0] = '';
+      if (response instanceof HttpResponse) {
+        this.msg = response.body;
+        console.log(response.body);
+      }
     });
   }
 }

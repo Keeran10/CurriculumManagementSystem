@@ -39,7 +39,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.apiService.saveCourse(this.course).subscribe(result => this.gotoCourseList());
+    this.apiService.saveCourse(this.course).subscribe(() => this.gotoCourseList());
   }
 
   gotoCourseList() {

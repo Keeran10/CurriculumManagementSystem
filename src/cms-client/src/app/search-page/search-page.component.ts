@@ -26,8 +26,10 @@ import { Course } from '../models/course';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {Degree} from "../models/degree";
-
+import { Degree } from '../models/degree';
+import { Faculty } from '../models/faculty';
+import { Program } from '../models/program';
+import { Department } from '../models/department';
 
 
 export interface SearchCategory {
@@ -45,22 +47,27 @@ export class SearchPageComponent implements OnInit {
   myControl = new FormControl();
   myChildControl = new FormControl();
   filteredOptions: Observable<string[]>;
+
   displayedList: string[] = [];
   descriptionList: string [] = [];
+
   storedCourseNames: string[] = [];
+  storedDegreeNames: string[] = [];
+  storedDepartmentNames: string[] = [];
+  storedProgramNames: string[] = [];
+  storedFacultyNames: string[] = [];
+
   courses: Course[];
   degrees: Degree[];
+  faculties: Faculty[];
+  programs: Program[];
+  departments: Department[];
+
   isResultShown = false;
   searchFormPlaceholder = 'Select Search Category';
 
-  departments: string[] = [
-    'Software Engineering',
-    'Computer Science',
-    // test value.
-    'AAA'
-  ];
-
   selectedValue: string;
+  searchType: string;
 
   searchCategories: SearchCategory[] = [
     {value: 'faculty', viewValue: 'Faculty'},
@@ -77,6 +84,18 @@ export class SearchPageComponent implements OnInit {
     this.apiService.getAllCourses().subscribe(data => {
       this.courses = data;
     });
+    this.apiService.getAllDegrees().subscribe(data => {
+      this.degrees = data;
+    });
+    this.apiService.getAllDepartments().subscribe(data => {
+      this.departments = data;
+    });
+    this.apiService.getAllFaculties().subscribe(data => {
+      this.faculties = data;
+    });
+    this.apiService.getAllPrograms().subscribe(data => {
+      this.programs = data;
+    });
   }
 
   private setFilteredOptions() {
@@ -92,11 +111,24 @@ export class SearchPageComponent implements OnInit {
   private getStringValue() {
     this.courses.forEach(value => this.storedCourseNames.
     push(value.name + ' ' + value.number + ' ' + value.title));
+    this.degrees.forEach(value => this.storedDegreeNames.
+    push(value.name + ' '));
+    this.departments.forEach(value => this.storedDepartmentNames.
+    push(value.name + ' '));
+    this.faculties.forEach(value => this.storedFacultyNames.
+    push(value.name + ' '));
+    this.programs.forEach(value => this.storedProgramNames.
+    push(value.name + ' '));
   }
 
   private getDescription() {
     // test function
     this.courses.forEach(value => this.descriptionList.push(value.description));
+    this.degrees.forEach(value => this.descriptionList.push(value.degreeRequirements.toString()));
+    this.departments.forEach(value => this.descriptionList.push(value.programs.toString()));
+    this.faculties.forEach(value => this.descriptionList.push(value.departments.toString()));
+    this.programs.forEach(value => this.descriptionList.push(value.description));
+
     this.descriptionList = this.descriptionList.filter((el, i, a) => i === a.indexOf(el));
   }
 
@@ -109,36 +141,54 @@ export class SearchPageComponent implements OnInit {
 
     switch (this.selectedValue) {
       case 'faculty': {
-        // this behavior is the default for now to reset the displayedList
-        returnedList = [];
-        this.displayedList = returnedList;
-        // removes the previous displayed list when user starts typing
+        returnedList = returnedList.concat(this.storedFacultyNames.filter(c => c
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, '')
+          .includes(filterValue)));
+        const filteredList = returnedList;
+        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
         this.isResultShown = false;
+        this.searchType = 'faculty';
         break;
       }
       case 'department': {
-         returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
-         this.displayedList = returnedList;
-        // returnedList = []; // if we put this, auto-completion gets removed
-         this.isResultShown = false;
-         break;
+        returnedList = returnedList.concat(this.storedDepartmentNames.filter(c => c
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, '')
+          .includes(filterValue)));
+        const filteredList = returnedList;
+        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.isResultShown = false;
+        this.searchType = 'department';
+        break;
       }
       case 'program': {
-        // this behavior is the default for now to reset the displayedList
-        returnedList = [];
-        this.displayedList = returnedList;
-        returnedList = [];
+        returnedList = returnedList.concat(this.storedProgramNames.filter(c => c
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, '')
+          .includes(filterValue)));
+        const filteredList = returnedList;
+        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.isResultShown = false;
+        this.searchType = 'program';
         break;
       }
       case 'degree': {
-        // this behavior is the default for now to reset the displayedList
-        returnedList = [];
-        this.displayedList = returnedList;
-        returnedList = [];
+        returnedList = returnedList.concat(this.storedDegreeNames.filter(c => c
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, '')
+          .includes(filterValue)));
+        const filteredList = returnedList;
+        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.isResultShown = false;
+        this.searchType = 'degree';
         break;
       }
       case 'course': {
-        // this behavior is the default for now to reset the displayedList
         returnedList = returnedList.concat(this.storedCourseNames.filter(c => c
           .toLowerCase()
           .trim()
@@ -147,10 +197,12 @@ export class SearchPageComponent implements OnInit {
         const filteredList = returnedList;
         this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
         this.isResultShown = false;
+        this.searchType = 'course';
         break;
       }
       default: {
-        returnedList = returnedList.concat(this.departments.filter(department => department.toLowerCase().includes(filterValue)));
+        // Need to add default to return everything from all categories
+        returnedList = [];
         this.displayedList = returnedList;
         returnedList = [];
         break;
@@ -198,13 +250,29 @@ export class SearchPageComponent implements OnInit {
 
   }
 
-  public getCourseId(listItem: string){
-    let tmpCourse: Course = this.courses.find(c => listItem.includes(c.title));
+  public getCourseId(listItem: string) {
+    const tmpCourse: Course = this.courses.find(c => listItem.includes(c.title));
     return tmpCourse.id;
   }
 
-}
+  public getDepartmentId(listItem: string) {
+    const tmpDepartment: Department = this.departments.find(c => listItem.includes(c.name));
+    return tmpDepartment.id;
+  }
 
-export class Department {
-  name: string;
+  public getDegreeId(listItem: string) {
+    const tmpDegree: Degree = this.degrees.find(c => listItem.includes(c.name));
+    return tmpDegree.id;
+  }
+
+  public getFacultyId(listItem: string) {
+    const tmpFaculty: Faculty = this.faculties.find(c => listItem.includes(c.name));
+    return tmpFaculty.id;
+  }
+
+  public getProgramId(listItem: string) {
+    const tmpProgram: Program = this.programs.find(c => listItem.includes(c.name));
+    return tmpProgram.id;
+  }
+
 }

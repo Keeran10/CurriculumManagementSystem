@@ -20,10 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Degree } from './degree';
-
-describe('Degree', () => {
-  it('should create an instance', () => {
-    expect(new Degree()).toBeTruthy();
-  });
-});
+export class Faculty {
+  id: number;
+  name: string;
+  departments: object;
+}
