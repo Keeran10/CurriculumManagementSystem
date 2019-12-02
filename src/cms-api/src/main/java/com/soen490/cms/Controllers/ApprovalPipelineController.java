@@ -127,6 +127,31 @@ public class ApprovalPipelineController {
         }
     }
 
+    /**
+     * Approve package, push to next approving body
+     *
+     * @param user
+     * @param packageId
+     * @param approvalPipelineId
+     * @return
+     */
+    @PostMapping(value = "/approve_package")
+    public boolean approvePackage(@RequestParam User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
+        String type = user.getUserType();
+        String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
+        List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
+
+        if (isCorrectUserType(type, currentPosition)) {
+            if(pipeline.indexOf(currentPosition) == pipeline.size() - 1) { // last approving body -> merge changes
+                approvalPipelineService.executeUpdate(packageId);
+            } else { // push to next academic body
+                approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, pipeline.indexOf(currentPosition));
+            }
+            return true;
+        } else { // user cannot approve at this stage
+            return false;
+        }
+    }
 
     @GetMapping(value = "/get_pipeline")
     public int get(@RequestParam int package_id){
