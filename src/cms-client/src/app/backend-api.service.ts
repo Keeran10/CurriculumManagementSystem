@@ -140,4 +140,13 @@ export class ApiService {
 
   }
 
+  public setApprovalStatus(packageId: any, pipelineId: any, rationale: any, isApproved: any) {
+    return this.http.post(this.url + 'validatePackage', {
+      params: new HttpParams().set('package_id', packageId)
+        .set('approval_pipeline_id', pipelineId)
+        .set('rationale', rationale)
+        .set('is_approved', isApproved)
+    });
+  }
+
 }

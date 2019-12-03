@@ -72,16 +72,29 @@ export class ApproverHomepageComponent implements OnInit {
     }
 
     // on decline
-    public decline(packageId) {
+    public decline() {
         const rationaleInput = document.getElementById('rationale');
         rationaleInput.style.visibility = 'visible';
-        // provide rationale
-        // remove from pipeline
+        const acceptButton = document.getElementById('acceptButton');
+        acceptButton.style.visibility = 'hidden';
+        const declineButton = document.getElementById('declineButton');
+        declineButton.style.visibility = 'hidden';
+        const submitRationaleButton = document.getElementById('submitRationale');
+        submitRationaleButton.style.visibility = 'visible';
     }
 
     // on accept
     public accept(packageId) {
-        // approve 
+        let pipelineId;
+        this.api.getPipeline(packageId).subscribe(data => pipelineId = data);
+        this.api.setApprovalStatus(packageId, pipelineId, '', true);
         // push to next academic body in pipeline
+    }
+
+    // on decline --> pass in rationale
+    public submitRationale(packageId, value) {
+        let pipelineId;
+        this.api.getPipeline(packageId).subscribe(data => pipelineId = data);
+        this.api.setApprovalStatus(packageId, pipelineId, value, false);
     }
 }

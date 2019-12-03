@@ -9,7 +9,7 @@
 
 .buttons {
     margin-top: 15px;
-    margin-left: 70%;
+    margin-left: 40%;
     display: flex;
 }
 
@@ -21,9 +21,9 @@
     visibility: hidden;
 }
 
-.input {
-    width: 250px;
-    height: 80px;
+.rationale {
+    width: 400px;
+    height: 30px;
 }
 
 .half {
@@ -33,4 +33,16 @@
 
 h2 {
     margin-left: 30px;
+}
+
+#acceptButton {
+    visibility: visible;
+}
+
+#declineButton {
+    visibility: visible;
+}
+
+#submitRationale {
+    visibility: hidden;
 }

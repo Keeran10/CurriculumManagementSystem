@@ -30,20 +30,20 @@
                         <mat-card-content>
                             <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
                             <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
+                            <br />
+                            <mat-form-field id="rationale" class="rationale" color="warn">
+                                <textarea matInput #val placeholder="Please provide rationale for declining package #{{package.id}}"></textarea>
+                            {{value}}
+                            </mat-form-field>
                         </mat-card-content>
                         <div class="buttons">
-                            <button mat-button>Accept</button>
-                            <button mat-button color="warn" (click)="decline(package.id)">Decline</button>
+                            <button id="submitRationale" mat-button color="warn" (click)="submitRationale(package.id, val.value)">Submit Rationale</button>
+                            <button id="acceptButton" mat-button (click)="accept(package.id)">Accept</button>
+                            <button id="declineButton" mat-button color="warn" (click)="decline()">Decline</button>
                         </div>
                     </mat-card>
                 </td>
             </tr>
         </tbody>
     </table>
-    <mat-card class="half" id="rationale">
-        <mat-card-content>Please provide rationale for decline below:</mat-card-content>
-        <textarea class="input" matInput placeholder="Decline package"></textarea>
-        <br />
-        <button class="option" mat-button color="primary">Submit Rationale</button>
-    </mat-card>
 </div>
