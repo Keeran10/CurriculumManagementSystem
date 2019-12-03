@@ -183,8 +183,6 @@ public class ApprovalPipelineService {
         return true;
     }
 
-    public void addR
-
     /**
      * Receives a list of academic bodies in order for an approval pipeline
      * Will return an existing approval pipeline if one already exists in the database
