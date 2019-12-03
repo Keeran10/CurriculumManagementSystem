@@ -115,7 +115,13 @@ public class ApprovalPipelineService {
             senateService.receivePackage(requestPackage);
         }
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
+        approvalPipelineRequestPackage.setRationale("");
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
+    }
+
+    public String getRationale(int packageId, int pipelineId) {
+        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
+        return approvalPipelineRequestPackage.getRationale();
     }
 
     /**
@@ -126,7 +132,7 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @param currentPosition
      */
-    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition, String rationale) {
         log.info("push package " + packageId + " to previous position in pipeline");
         String position = pipeline.get(currentPosition);
         String previousPosition = pipeline.get(currentPosition + 1);
@@ -162,6 +168,7 @@ public class ApprovalPipelineService {
             senateService.receivePackage(requestPackage);
         }
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
+        approvalPipelineRequestPackage.setRationale(rationale);
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
     }
 
@@ -175,6 +182,8 @@ public class ApprovalPipelineService {
     public boolean executeUpdate(int id) {
         return true;
     }
+
+    public void addR
 
     /**
      * Receives a list of academic bodies in order for an approval pipeline

@@ -105,7 +105,8 @@ public class ApprovalPipelineController {
      * @return (true|false) depending on whether the user has the required permission to approve/deny at the current step in the approval pipeline
      */
     @PostMapping(value = "/validatePackage")
-    public boolean setApprove(User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId, @RequestParam("is_approved") boolean isApproved) {
+    public boolean setApprove(User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId,
+                              @RequestParam(value = "rationale", required = false) String rationale, @RequestParam("is_approved") boolean isApproved) {
         String type = user.getUserType();
         String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
@@ -119,36 +120,10 @@ public class ApprovalPipelineController {
                     approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index);
                 }
             } else { // not approved - move back a step
-                approvalPipelineService.pushToPrevious(packageId, approvalPipelineId, pipeline, index);
+                approvalPipelineService.pushToPrevious(packageId, approvalPipelineId, pipeline, index, rationale);
             }
             return true;
         } else {
-            return false;
-        }
-    }
-
-    /**
-     * Approve package, push to next approving body
-     *
-     * @param user
-     * @param packageId
-     * @param approvalPipelineId
-     * @return
-     */
-    @PostMapping(value = "/approve_package")
-    public boolean approvePackage(@RequestParam User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
-        String type = user.getUserType();
-        String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
-        List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
-
-        if (isCorrectUserType(type, currentPosition)) {
-            if(pipeline.indexOf(currentPosition) == pipeline.size() - 1) { // last approving body -> merge changes
-                approvalPipelineService.executeUpdate(packageId);
-            } else { // push to next academic body
-                approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, pipeline.indexOf(currentPosition));
-            }
-            return true;
-        } else { // user cannot approve at this stage
             return false;
         }
     }
