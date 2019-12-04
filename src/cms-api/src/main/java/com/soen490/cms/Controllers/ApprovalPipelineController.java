@@ -105,8 +105,9 @@ public class ApprovalPipelineController {
      * @return (true|false) depending on whether the user has the required permission to approve/deny at the current step in the approval pipeline
      */
     @PostMapping(value = "/validatePackage")
-    public boolean setApprove(@RequestParam User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId,
+    public boolean setApprove(@RequestParam("user_id") int userId, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId,
                               @RequestParam(value = "rationale", required = false) String rationale, @RequestParam("is_approved") boolean isApproved) {
+        User user = requestPackageService.getUser(userId);
         String type = user.getUserType();
         String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
