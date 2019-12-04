@@ -105,13 +105,13 @@ public class ApprovalPipelineController {
      * @return (true|false) depending on whether the user has the required permission to approve/deny at the current step in the approval pipeline
      */
     @PostMapping(value = "/validatePackage")
-    public boolean setApprove(User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId,
+    public boolean setApprove(@RequestParam User user, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId,
                               @RequestParam(value = "rationale", required = false) String rationale, @RequestParam("is_approved") boolean isApproved) {
         String type = user.getUserType();
         String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
 
-//        if(isCorrectUserType(type, currentPosition)) { // figure out how to retrieve/set user type in front end
+        if(isCorrectUserType(type, currentPosition)) { // figure out how to retrieve/set user type in front end
             int index = pipeline.indexOf(currentPosition);
             if(isApproved) { // move to next step
                 if(index == pipeline.size() - 1) { // last step, merge change package into database
@@ -123,9 +123,9 @@ public class ApprovalPipelineController {
                 approvalPipelineService.pushToPrevious(packageId, approvalPipelineId, pipeline, index, rationale);
             }
             return true;
-//        } else { // unable to move forward if the user is unauthorized to approve at the current step
-//            return false;
-//        }
+        } else { // unable to move forward if the user is unauthorized to approve at the current step
+            return false;
+        }
     }
 
     @GetMapping(value = "/get_pipeline")
