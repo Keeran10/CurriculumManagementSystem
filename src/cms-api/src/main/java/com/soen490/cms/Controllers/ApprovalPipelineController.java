@@ -111,7 +111,7 @@ public class ApprovalPipelineController {
         String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
 
-        if(isCorrectUserType(type, currentPosition)) {
+//        if(isCorrectUserType(type, currentPosition)) { // figure out how to retrieve/set user type in front end
             int index = pipeline.indexOf(currentPosition);
             if(isApproved) { // move to next step
                 if(index == pipeline.size() - 1) { // last step, merge change package into database
@@ -123,9 +123,9 @@ public class ApprovalPipelineController {
                 approvalPipelineService.pushToPrevious(packageId, approvalPipelineId, pipeline, index, rationale);
             }
             return true;
-        } else {
-            return false;
-        }
+//        } else { // unable to move forward if the user is unauthorized to approve at the current step
+//            return false;
+//        }
     }
 
     @GetMapping(value = "/get_pipeline")

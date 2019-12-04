@@ -44,7 +44,7 @@ INSERT IGNORE INTO department VALUES (7, 'Electrical and Computer Engineering', 
 INSERT IGNORE INTO department VALUES (8, 'Mechanical, Industrial and Aerospace Engineering', 2);
 
 
--- id, email, firstname, lastname, password, user_type
+-- id, email, firstname, lastname, password, user_type, department
 INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin', 4);
 INSERT IGNORE INTO user VALUES (2, 'felix@soen.com', 'Felix', 'Rosinante','123', 'admin', 8);
 
