@@ -20,28 +20,62 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 
 import { CourseFormComponent } from './course-form.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ApiService } from '../backend-api.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 describe('CourseFormComponent', () => {
-  let component: CourseFormComponent;
-  let fixture: ComponentFixture<CourseFormComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CourseFormComponent ]
-    })
-    .compileComponents();
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        FormsModule
+      ],
+      declarations: [ CourseFormComponent ],
+      providers: [
+        ApiService
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();;
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CourseFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe('Course form tests', ()=> {
+    function setup() {
+      const fixture = TestBed.createComponent(CourseFormComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
+      const httpClient = TestBed.get(HttpTestingController);
+      const router = TestBed.get(Router);
 
-  xit('should create', () => {
-    expect(component).toBeTruthy();
+      return { fixture, component, apiService, httpClient, router };
+    }
+
+    it('should create component', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
+
+    it('should navigate to next page on submit after saving', () => {
+      const { component, apiService, router } = setup();
+      spyOn(apiService, 'saveCourse').and.returnValue(new Observable((observer) => {
+        // observable execution
+        observer.next('test');
+        observer.complete();
+      }));
+      spyOn(router, 'navigate');
+      component.onSubmit();
+
+      expect(apiService.saveCourse).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalled();
+    });
+
   });
 });

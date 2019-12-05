@@ -37,7 +37,6 @@ import { SupportDocumentComponent } from '../support-documents/support-documents
 export class EditFormComponent {
 
   @ViewChild(SupportDocumentComponent, { static: false })
-
   supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
@@ -106,9 +105,9 @@ export class EditFormComponent {
         switch (r.type) {
           case 'equivalent':
             if (!isNextEquivalent) {
-              this.model.equivalents += r.name + r.number + ' or ';
+              courseExtras.equivalents += r.name + r.number + ' or ';
             } else {
-              this.model.equivalents += r.name + r.number + '; ';
+              courseExtras.equivalents += r.name + r.number + '; ';
             }
             isNextEquivalent = !isNextEquivalent;
             break;

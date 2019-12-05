@@ -23,26 +23,70 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginComponent } from './login.component';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ApiService } from '../backend-api.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormsModule, FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        FormsModule
+      ],
       declarations: [ LoginComponent ],
+      providers: [
+        ApiService,
+        CookieService,
+        FormBuilder
+      ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();;
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe('Login tests', ()=> {
+    function setup() {
+      const fixture = TestBed.createComponent(LoginComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
+      const cookieService = TestBed.get(CookieService); 
+      const httpClient = TestBed.get(HttpTestingController);
+      const router = TestBed.get(Router);
+      const activatedRoute = TestBed.get(ActivatedRoute);
 
-  xit('should create', () => {
-    expect(component).toBeTruthy();
+      return { fixture, component, apiService, cookieService, httpClient, router, activatedRoute };
+    }
+
+    it('should create', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
+
+    it('should set cookies when a user submits their login information', () => {
+      const { component, apiService, cookieService } = setup();
+      const user = {
+        id: 10,
+        firstName: 'firstTest',
+        lastName: 'lastTest',
+        userType: 'testUser',
+        email: 'test@email.com',
+        password: '123456'
+      }
+      spyOn(apiService, 'setCredentials').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next(user);
+        observer.complete();
+      }));
+      spyOn(cookieService, 'set');
+      component.OnSubmit('fakename', 'fakepass');
+      expect(cookieService.set).toHaveBeenCalledTimes(2);
+    });
+
   });
 });

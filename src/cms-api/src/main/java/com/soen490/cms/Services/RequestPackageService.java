@@ -346,4 +346,27 @@ public class RequestPackageService {
         return supportingDocumentsRepository.save(supportingDocument);
     }
 
+    public boolean saveRequestFile(byte[] file, int id){
+
+        Request request = requestRepository.findByRequestId(id);
+        Course course = courseRepository.findById(request.getTargetId());
+
+        if(course == null) return false;
+
+        course.setOutline(file);
+        courseRepository.save(course);
+        return true;
+    }
+
+    /**
+     * Returns a user with the specified ID
+     * 
+     * @param user_id
+     * @return
+     */
+    public User getUser(int user_id) {
+        log.info("getUser called with user_id " + user_id);
+        return userRepository.findById(user_id);
+    }
+
 }

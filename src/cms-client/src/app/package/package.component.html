@@ -26,7 +26,7 @@
         <h2>Here are your packages:</h2>
     </div>
     <div class="packages">
-        <div *ngFor="let package of packages; let i = index" >
+        <div *ngFor="let package of packages; let i = index">
             <mat-card class="inner-container">
                 <div class="left">
                     <span>Package {{package.id}}</span>
@@ -35,9 +35,17 @@
                             Progress
                         </a>
                     </div>
-                    
+
                     <div *ngFor="let request of package.requests">
-                        <a (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request: {{request.title}}</a>
+                        <a (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
+                            {{request.title}}</a>
+                        <div>
+                            <label>
+                                <input type="file" (change)="selectFile($event)">
+                            </label>
+                            <button [disabled]="!selectedFiles" (click)="upload(request.id)">Upload Support
+                                Document</button>
+                        </div>
                     </div>
                     <div>
                         <a (click)="packageSelect(package.id, 0, 'search')">Create new request</a>
@@ -50,7 +58,8 @@
                 <div class="right">
                     <button mat-raised-button color="primary" (click)="generatePdf(package.id, i)">Generate PDF</button>
                     <br><br>
-                    <button mat-raised-button color="primary" *ngIf="isPdfAvailable[i]" (click)="viewPdf(package.id)">View PDF</button>
+                    <button mat-raised-button color="primary" *ngIf="isPdfAvailable[i]"
+                        (click)="viewPdf(package.id)">View PDF</button>
                     <br><br>
                     <a (click)="packageSelect(package.id, 0, 'approval')">
                         <button mat-raised-button color="primary">Submit for Approval</button>
@@ -60,6 +69,6 @@
             <br>
         </div>
     </div>
-    <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new Package</button>
+    <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
+        Package</button>
 </div>
-    

@@ -37,6 +37,7 @@ export class ApproverHomepageComponent implements OnInit {
     packages: Package[];
     userName = 'User';
     userId = 0;
+    pipelineId = '0';
 
     constructor(private cookieService: CookieService,
                 private api: ApiService,
@@ -87,21 +88,23 @@ export class ApproverHomepageComponent implements OnInit {
 
     // on accept
     public accept(packageId) {
-        let pipelineId;
-        this.api.getPipeline(packageId).subscribe(data => pipelineId = data);
-        this.api.setApprovalStatus(this.userId, packageId, pipelineId, ' ', true).subscribe(
-            data => console.log(data)
-        );
-        // push to next academic body in pipeline
+        this.api.getPipeline(packageId).subscribe(data => {
+            const utf8decoder = new TextDecoder();
+            this.pipelineId = utf8decoder.decode(data);
+            this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, ' ', true).subscribe(
+                data => this.router.navigate(['pipeline'])
+            );
+        });
     }
 
     // on decline --> pass in rationale
     public submitRationale(packageId, value) {
-        let pipelineId;
-        this.api.getPipeline(packageId).subscribe(data => pipelineId = data);
-        console.log(this.userId);
-        this.api.setApprovalStatus(this.userId.toString(), packageId, pipelineId, value, false).subscribe(
-            data => console.log(data)
-        );
+        this.api.getPipeline(packageId).subscribe(data => {
+            const utf8decoder = new TextDecoder();
+            this.pipelineId = utf8decoder.decode(data);
+            this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, value, false).subscribe(
+                data => this.router.navigate(['homepage'])
+            );
+        });
     }
 }

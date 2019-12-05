@@ -20,10 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { User } from './user';
-
-describe('User', () => {
-  it('should create an instance', () => {
-    expect(new User()).toBeTruthy();
-  });
-});
+export class Program {
+  id: number;
+  name: string;
+  description: string;
+  department: object;
+  degrees: object;
+  courses: object;
+}

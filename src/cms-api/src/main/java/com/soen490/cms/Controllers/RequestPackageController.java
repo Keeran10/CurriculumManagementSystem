@@ -35,10 +35,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +134,7 @@ public class RequestPackageController {
      * @param packageId
      * @return
      */
-    @PostMapping(value = "/addSupportingDocument")
+    @PostMapping(value = "/upload")
     public SupportingDocument add(@RequestParam File document, @RequestParam int packageId) throws IOException {
 
         return requestPackageService.addSupportingDocument(document, packageId);
@@ -145,6 +147,18 @@ public class RequestPackageController {
         int request_id = requestPackageService.saveCourseRequest(requestForm);
 
         return impactAssessmentController.getImpactAssessment(request_id);
+    }
+
+    @PostMapping("/addSupportingDocument")
+    public boolean uploadData(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) throws Exception {
+
+        if (file == null) {
+            throw new RuntimeException("You must select the a file for uploading");
+        }
+
+        byte[] doc = file.getBytes();
+
+        return requestPackageService.saveRequestFile(doc, id);
     }
 
 }

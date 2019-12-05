@@ -20,28 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { ApprovalPipelineComponent } from './approval-pipeline.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule} from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { ApiService } from '../backend-api.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CookieService } from 'ngx-cookie-service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Observable } from 'rxjs';
 
 describe('ApprovalPipelineComponent', () => {
-  let component: ApprovalPipelineComponent;
-  let fixture: ComponentFixture<ApprovalPipelineComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatCheckboxModule,
-        MatListModule,
-        MatCardModule,
-        MatButtonModule,
         HttpClientTestingModule,
         RouterTestingModule
       ],
@@ -49,20 +41,71 @@ describe('ApprovalPipelineComponent', () => {
       providers: [
         ApiService,
         CookieService
-      ]
-    })
-    .compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();;
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ApprovalPipelineComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  describe('Approval pipeline tests', ()=> {
+    function setup() {
+      const fixture = TestBed.createComponent(ApprovalPipelineComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
+      const cookieService = TestBed.get(CookieService); 
+      const httpClient = TestBed.get(HttpTestingController);
+
+      return { fixture, component, apiService, cookieService, httpClient };
+    }
+
+    it('should create component', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
+
+    it('should get the ID from cookie on init', () => {
+      const { component, cookieService} = setup();
+      spyOn(cookieService, 'get').and.returnValue('2');
+
+      component.ngOnInit();
+      expect(component.packageId).toBe(2);
+    });
+
+    it('should display an alert if no pipeline has been selected', () => {
+      const { component } = setup();
+      spyOn(window, "alert");
+      component.custom([]);
+      expect(window.alert).toHaveBeenCalledWith('Cannot submit blank pipeline');
+    })
+
+    it('should save the list of custom pipeline steps to "customPipeline"', () => {
+      const { component } = setup();
+      const listOfStrings = [
+        {value:'A'},
+        {value:'list'},
+        {value:'of'},
+        {value:'strings'}
+      ];
+      const listOfStringsValues = [
+        'A',
+        'list',
+        'of',
+        'strings'
+      ]
+      component.custom(listOfStrings);
+      expect(component.customPipeline).toEqual(listOfStringsValues);
+    })
+
+    it('should save the pipeline', () => {
+      const { component, apiService } = setup();
+      spyOn(apiService, 'savePipeline').and.returnValue(new Observable((observer) => {
+    
+        // observable execution
+        observer.next('test');
+        observer.complete();
+      }));
+      component.predefined();
+      expect(apiService.savePipeline).toHaveBeenCalled();
+    });
+
   });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-
 });

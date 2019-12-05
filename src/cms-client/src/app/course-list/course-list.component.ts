@@ -36,7 +36,6 @@ export class CourseListComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.apiService.getAllCourses().subscribe(data => {this.courses = data;
-    });
+    this.apiService.getAllCourses().subscribe(data => { this.courses = data; });
   }
 }
