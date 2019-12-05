@@ -36,6 +36,7 @@ export class ApproverHomepageComponent implements OnInit {
 
     packages: Package[];
     userName = 'User';
+    userId = 0;
 
     constructor(private cookieService: CookieService,
                 private api: ApiService,
@@ -48,6 +49,7 @@ export class ApproverHomepageComponent implements OnInit {
             this.packages = data;
             });
         this.userName = this.cookieService.get('userName');
+        this.userId = parseInt(this.cookieService.get('user'), 10);
     }
 
     // generate PDF before viewing
@@ -87,7 +89,9 @@ export class ApproverHomepageComponent implements OnInit {
     public accept(packageId) {
         let pipelineId;
         this.api.getPipeline(packageId).subscribe(data => pipelineId = data);
-        this.api.setApprovalStatus(packageId, pipelineId, '', true);
+        this.api.setApprovalStatus(this.userId, packageId, pipelineId, ' ', true).subscribe(
+            data => console.log(data)
+        );
         // push to next academic body in pipeline
     }
 
@@ -95,6 +99,9 @@ export class ApproverHomepageComponent implements OnInit {
     public submitRationale(packageId, value) {
         let pipelineId;
         this.api.getPipeline(packageId).subscribe(data => pipelineId = data);
-        this.api.setApprovalStatus(packageId, pipelineId, value, false);
+        console.log(this.userId);
+        this.api.setApprovalStatus(this.userId.toString(), packageId, pipelineId, value, false).subscribe(
+            data => console.log(data)
+        );
     }
 }

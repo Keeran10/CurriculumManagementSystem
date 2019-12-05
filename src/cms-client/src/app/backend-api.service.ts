@@ -140,9 +140,11 @@ export class ApiService {
 
   }
 
-  public setApprovalStatus(packageId: any, pipelineId: any, rationale: any, isApproved: any) {
+  public setApprovalStatus(userId: any, packageId: any, pipelineId: any, rationale: any, isApproved: any) {
+    console.log('Changing status of package');
     return this.http.post(this.url + 'validatePackage', {
-      params: new HttpParams().set('package_id', packageId)
+      params: new HttpParams().set('user_id', userId)
+        .set('package_id', packageId)
         .set('approval_pipeline_id', pipelineId)
         .set('rationale', rationale)
         .set('is_approved', isApproved)
