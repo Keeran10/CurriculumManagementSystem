@@ -255,6 +255,30 @@ public class RequestPackageService {
         return request.getId();
     }
 
+    // delete course request along its requested course
+    public boolean deleteCourseRequest(int requestId) {
+
+        log.info("Delete request " + requestId + " and remove all its dependencies as well.");
+
+        Request request = requestRepository.findByRequestId(requestId);
+
+        if(request == null)
+            return false;
+
+        Course requested_course = courseRepository.findById(request.getTargetId());
+
+        for(Requisite requisite: requested_course.getRequisites())
+            requisiteRepository.delete(requisite);
+
+        for(DegreeRequirement dr: requested_course.getDegreeRequirements())
+            degreeRequirementRepository.delete(dr);
+
+        courseRepository.delete(requested_course);
+
+        requestRepository.delete(request);
+
+        return true;
+    }
 
     // returns list of packages
     public List<RequestPackage> getRequestPackagesByDepartment(int department_id) {
@@ -357,5 +381,4 @@ public class RequestPackageService {
         courseRepository.save(course);
         return true;
     }
-
 }

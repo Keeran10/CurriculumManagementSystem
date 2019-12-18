@@ -102,6 +102,15 @@ public class RequestPackageController {
         return requestPackageService.saveCourseRequest(requestForm);
     }
 
+    // delete course request
+    @GetMapping(value="/delete_request")
+    public boolean deleteCourseRequest(@RequestParam int requestId) {
+
+        if(requestId != 0)
+            return requestPackageService.deleteCourseRequest(requestId);
+
+        return true;
+    }
 
     // returns list of packages from a given department
     @GetMapping(value = "/get_packages")
@@ -125,7 +134,6 @@ public class RequestPackageController {
 
         return requestPackageService.saveRequestPackage(requestPackageForm);
     }
-
 
     /**
      * Add a new supporting document to a request
