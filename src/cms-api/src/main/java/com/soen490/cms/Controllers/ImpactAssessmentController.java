@@ -24,12 +24,12 @@ package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Services.ImpactAssessmentService;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Log4j2
@@ -48,9 +48,21 @@ public class ImpactAssessmentController {
      * @param requestId
      * @return Map<String, Object> Impact report object
      */
-    @GetMapping(value = "/ImpactAssessment")
+    @GetMapping(value = "/ImpactAssessment2")
     public Map<String, Object> getImpactAssessment(@RequestParam int requestId){
+
         log.info("Getting the Impact of Request Package: Id = ", requestId);
-        return impactAssessmentService.getAssessment(requestId);
+
+        Map<String, Object> impact = impactAssessmentService.getAssessment(requestId);
+
+        impact.put("RequestId", requestId);
+
+        return impact;
+    }
+
+    @PostMapping(value="/ImpactAssessment", consumes = "application/json")
+    public Map<String, Object> getImpactAssessment2(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException{
+        log.info("Getting the Impact of the following JSON: " + requestForm);
+        return impactAssessmentService.getCourseImpact(requestForm);
     }
 }

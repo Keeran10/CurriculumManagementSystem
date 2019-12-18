@@ -97,11 +97,33 @@ public class RequestPackageController {
      * @throws JSONException
      */
     @PostMapping(value="/save_request", consumes = "application/json")
-    public int saveRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+    public int saveCreateAndEditRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
 
         return requestPackageService.saveCourseRequest(requestForm);
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param requestForm Combined stringified JSON received from front-end.
+     * @param bindingResult Validates requestForm.
+     * @return True if course was successfully added to database.
+     * @throws JSONException
+     */
+    @PostMapping(value="/save_removal_request", consumes = "application/json")
+    public int saveRemovalRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+
+        return requestPackageService.saveRemovalRequest(requestForm);
+    }
+
+    // delete course request
+    @GetMapping(value="/delete_request")
+    public boolean deleteCourseRequest(@RequestParam int requestId) {
+
+        if(requestId != 0)
+            return requestPackageService.deleteCourseRequest(requestId);
+
+        return true;
+    }
 
     // returns list of packages from a given department
     @GetMapping(value = "/get_packages")
@@ -125,7 +147,6 @@ public class RequestPackageController {
 
         return requestPackageService.saveRequestPackage(requestPackageForm);
     }
-
 
     /**
      * Add a new supporting document to a request

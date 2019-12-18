@@ -88,7 +88,7 @@ export class ApiService {
 
     console.log('Impact endpoint called.');
 
-    return this.http.post(this.url + 'get_impact', {
+    return this.http.post(this.url + 'ImpactAssessment', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     });
@@ -172,5 +172,21 @@ export class ApiService {
     return this.http.request(req);
   }
 
+
+  public setApprovalStatus(userId: any, packageId: any, pipelineId: any, rationale: any, isApproved: any) {
+    console.log('Changing status of package');
+
+    const formdata: FormData = new FormData();
+    formdata.append('package_id', packageId);
+    formdata.append('approval_pipeline_id', pipelineId);
+    formdata.append('rationale', rationale);
+    formdata.append('is_approved', isApproved);
+
+    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+    return this.http.request(req);
+  }
 
 }
