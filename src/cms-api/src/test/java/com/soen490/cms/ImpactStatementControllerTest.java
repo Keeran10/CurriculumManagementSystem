@@ -69,7 +69,7 @@ public class ImpactStatementControllerTest {
             responseMap.put("ChangedNumber",362);
             responseMap.put("ChangedCredits",3.5);
         when(impactAssessmentService.getAssessment(1)).thenReturn(responseMap);
-            this.mockMvc.perform(get("/ImpactAssessment?requestId=1")).andDo(print()).andExpect(status().isOk())
+            this.mockMvc.perform(get("/ImpactAssessment2?requestId=1")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(containsString("Theoretical and computer science")));
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +82,7 @@ public class ImpactStatementControllerTest {
             Map<String, Object> responseMap = new HashMap();
             responseMap.put("error","RequestTypeInvalid");
             when(impactAssessmentService.getAssessment(25535896)).thenReturn(responseMap);
-            this.mockMvc.perform(get("/ImpactAssessment?requestId=25535896")).andDo(print()).andExpect(status().isOk())
+            this.mockMvc.perform(get("/ImpactAssessment2?requestId=25535896")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(containsString("error")));
         } catch (Exception e) {
             e.printStackTrace();
