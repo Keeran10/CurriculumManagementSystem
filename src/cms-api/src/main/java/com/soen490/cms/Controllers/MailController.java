@@ -18,9 +18,9 @@ public class MailController {
     MailService mailService;
 
     @GetMapping(value = "/Mail")
-    public boolean sendPackageByMail(@RequestParam int packageId){
+    public boolean sendPackageByMail(@RequestParam int packageId,@RequestParam int userId){
         log.info("Sending Package", packageId);
-        mailService.sendPackageByMail(packageId);
+        mailService.sendMailFromController(packageId, userId);
         return true;
     }
 }

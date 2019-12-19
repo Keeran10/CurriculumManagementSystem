@@ -1,5 +1,6 @@
 package com.soen490.cms.Services;
 
+import com.soen490.cms.Models.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -30,7 +31,13 @@ public class MailService {
     private JavaMailSender javaMailSender;
     @Autowired
     PdfService pdfService;
+    @Autowired
+    SearchService searchService;
 
+    public void sendMailFromController(int packageId , int userId){
+        User user = searchService.findUserById(userId);
+        System.out.println(user);
+    }
     public boolean sendPackageByMail (int packageId){
         try {
             sendEmailWithAttachment(packageId);
