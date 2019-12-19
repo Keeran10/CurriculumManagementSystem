@@ -25,12 +25,14 @@ package com.soen490.cms.Repositories;
 import com.soen490.cms.Models.RequestPackage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface RequestPackageRepository extends JpaRepository<RequestPackage, Integer>{
+public interface RequestPackageRepository extends JpaRepository<RequestPackage, Integer>,
+        RevisionRepository<RequestPackage, Integer, Integer>{
 
     @Query(value = "SELECT * FROM request_package WHERE id=?", nativeQuery = true)
     RequestPackage findById(int id);

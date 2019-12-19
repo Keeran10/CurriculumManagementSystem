@@ -29,6 +29,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,6 +96,8 @@ public class RequestPackageService {
         if(original_id == 0)
             return saveCreateRequest(course, courseExtras);
 
+        log.info("Inserting course update request to database...");
+
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId(original_id);
 
@@ -105,13 +109,17 @@ public class RequestPackageService {
 
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+        Request request = requestRepository.findByRequestId(request_id);
+
+        User user = userRepository.findById(user_id);
 
         if(request == null)
             request = new Request();
+
 
         Course c = new Course();
 
@@ -138,10 +146,10 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
         request.setRequestPackage(requestPackage);
-
+        request.setUser(user);
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
+
         // Degree Requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
 
@@ -267,12 +275,21 @@ public class RequestPackageService {
      */
     private int saveCreateRequest(JSONObject course, JSONObject courseExtras) throws JSONException {
 
+        log.info("Inserting course creation request to database...");
+
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        Request request = new Request();
+        Request request = requestRepository.findByRequestId(request_id);
+
+        User user = userRepository.findById(user_id);
+
+        if(request == null)
+            request = new Request();
+
 
         Course c = new Course();
 
@@ -300,7 +317,7 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
+        request.setUser(user);
         request.setRequestPackage(requestPackage);
 
         request.setTitle(c.getName().toUpperCase() + c.getNumber() + "_create");
@@ -429,6 +446,7 @@ public class RequestPackageService {
      */
     public int saveRemovalRequest(String requestForm) throws JSONException {
 
+        log.info("Inserting course removal request to database...");
         log.info("Json received: " + requestForm);
 
         JSONObject json = new JSONObject(requestForm);
@@ -454,13 +472,17 @@ public class RequestPackageService {
 
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+        Request request = requestRepository.findByRequestId(request_id);
+
+        User user = userRepository.findById(user_id);
 
         if(request == null)
             request = new Request();
+
 
         // Requests
         request.setRequestType(3);
@@ -470,7 +492,7 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
+        request.setUser(user);
         request.setRequestPackage(requestPackage);
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_remove");
@@ -606,5 +628,15 @@ public class RequestPackageService {
         course.setOutline(file);
         courseRepository.save(course);
         return true;
+    }
+
+    public Revisions<Integer, RequestPackage> getRequestPackageRevisions(int id){
+
+        return requestPackageRepository.findRevisions(id);
+    }
+
+    public Optional<Revision<Integer, RequestPackage>> getLatestRequestPackageRevision(int id) {
+
+        return requestPackageRepository.findLastChangeRevision(id);
     }
 }

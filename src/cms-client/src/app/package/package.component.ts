@@ -80,8 +80,8 @@ export class PackageComponent implements OnInit {
     this.api.viewPdf(packageId).subscribe(data => {
       let file = new Blob([data], { type: 'application/pdf' });
       var fileURL = URL.createObjectURL(file);
-      window.open(fileURL, '_blank');
-      //window.location.assign(fileURL);
+      //window.open(fileURL, '_blank');
+      window.location.assign(fileURL);
     });
   }
 

@@ -25,6 +25,7 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 

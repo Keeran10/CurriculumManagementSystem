@@ -23,12 +23,16 @@
 package com.soen490.cms.Controllers;
 
 import com.itextpdf.text.DocumentException;
+import com.soen490.cms.Models.DossierVersion;
 import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,9 +44,13 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -69,6 +77,7 @@ public class RequestPackageController {
      * @param package_id
      * @return The pdf file to browser.
      */
+    /*
     @GetMapping(value="/get_pdf")
     public ResponseEntity<byte[]> getPdf(@RequestParam int package_id){
 
@@ -86,6 +95,25 @@ public class RequestPackageController {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
+    }
+*/
+    @GetMapping(value="/get_pdf")
+    public byte[] getPdf(@RequestParam int package_id){
+
+        byte[] pdf_bytes = pdfService.getPDF(package_id);
+
+        if(pdf_bytes == null) return null;
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String filename = "package_" +  package_id + ".pdf";
+
+        headers.add("content-disposition", "inline;filename=" + filename);
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return pdf_bytes;
     }
 
 
@@ -180,6 +208,25 @@ public class RequestPackageController {
         byte[] doc = file.getBytes();
 
         return requestPackageService.saveRequestFile(doc, id);
+    }
+
+    @GetMapping("/versions")
+    public List<DossierVersion> getRequestPackageRevisions(@RequestParam int id){
+
+        Revisions revisions = requestPackageService.getRequestPackageRevisions(id);
+
+        List<Revision> revisionList = revisions.getContent();
+
+        List<DossierVersion> versions = new ArrayList<>();
+
+        for(Revision revision : revisionList){
+
+            RequestPackage requestPackage = (RequestPackage) revision.getEntity();
+
+            versions.add(new DossierVersion(requestPackage.getPdfFile(), (Instant) revision.getMetadata().getRevisionInstant().get()));
+        }
+
+        return versions;
     }
 
 }
