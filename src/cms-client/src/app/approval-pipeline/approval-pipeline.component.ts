@@ -22,6 +22,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-approval-pipeline',
@@ -31,7 +33,8 @@ import { ApiService } from '../backend-api.service';
 
 export class ApprovalPipelineComponent {
 
-    constructor(private api: ApiService) {
+    constructor(private api: ApiService, private router: Router, 
+        private cookieService: CookieService) {
     }
 
     public packageId = 1;
@@ -45,24 +48,25 @@ export class ApprovalPipelineComponent {
                                     'APC',
                                     'Senate'];
     ngOnInit() {
-        //id = get package ID
+        this.packageId = Number(this.cookieService.get('package'));
     }
-    public custom(opt: string[]) {
+    public custom(opt) {
         let i;
         if (opt.length === 0) {
             alert('Cannot submit blank pipeline');
         } else {
+            console.log(opt);
             for (i of opt) {
                 this.customPipeline.push(i.value);
             }
             this.api.savePipeline(JSON.stringify(this.customPipeline), this.packageId)
-      .subscribe(data => { console.log(data); });
+      .subscribe(data => this.router.navigate(['package']) );
         }
     }
     public predefined() {
         console.log('User selected predefined pipeline');
         this.api.savePipeline(JSON.stringify(this.predefinedPipeline), this.packageId)
-      .subscribe(data => { console.log(data); });
+      .subscribe(data => this.router.navigate(['package']));
     }
 
 }

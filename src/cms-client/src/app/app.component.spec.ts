@@ -31,7 +31,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      imports: [ 
+      imports: [
         RouterTestingModule,
         HttpClientModule
       ]

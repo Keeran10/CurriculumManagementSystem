@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Requisite } from '../model/requisite';
+import { Requisite } from '../models/requisite';
 
 export class Course {
   id: number;

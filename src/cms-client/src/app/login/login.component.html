@@ -1,0 +1,40 @@
+<!-- // MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE. -->
+
+<h1>Please enter your login information</h1>
+<br><br>
+<div *ngIf="isLoginError" class="red-text center error-message">
+  <i class="material-icons">error</i> Incorrect username or password
+</div>
+<form class="example-form" #loginForm="ngForm" (ngSubmit)="OnSubmit(UserName.value,Password.value)">
+  <mat-form-field class="example-full-width">
+      <input matInput type="text" #UserName ngModel name="UserName" placeholder="Email" required>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+      <input matInput type="password" #Password ngModel name="Password" placeholder="Password" required>
+  </mat-form-field>
+  <div class="row">
+    <div class="input-field col s12">
+      <button mat-raised-button [disabled]="!loginForm.valid" class="btn-large btn-submit" type="submit">Login</button>
+    </div>
+  </div>
+</form>

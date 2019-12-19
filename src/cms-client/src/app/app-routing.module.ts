@@ -20,17 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { EditFormComponent } from './edit-form/edit-form.component';
-import { SearchPageComponent } from './search-page/search-page.component';
+import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
 import { CommonModule } from '@angular/common';
 import { CourseFormComponent } from './course-form/course-form.component';
+import { EditFormComponent } from './edit-form/edit-form.component';
+import { LoginComponent } from './login/login.component';
+import { NgModule } from '@angular/core';
+import { PackageComponent } from './package/package.component';
+import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
+import { RouterModule, Routes } from '@angular/router';
+import { SearchPageComponent } from './search-page/search-page.component';
 
 const routes: Routes = [
-  { path: '', component: SearchPageComponent },
+  { path: 'addcourse', component: CourseFormComponent },
+  { path: 'approval', component: ApprovalPipelineComponent},
+  { path: 'search', component: SearchPageComponent },
   { path: 'editForm/:id', component: EditFormComponent },
-  { path: 'addcourse', component: CourseFormComponent }
+  { path: 'pipeline', component: PipelineTrackingComponent },
+  { path: 'package', component: PackageComponent },
+  { path: '', component: LoginComponent }
 ];
 
 @NgModule({

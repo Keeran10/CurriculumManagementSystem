@@ -3,6 +3,7 @@ package com.soen490.cms.Controllers;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Services.ApprovalPipelineService;
 import com.soen490.cms.Services.RequestPackageService;
+import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Log4j2
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class ApprovalPipelineController {
@@ -42,6 +44,7 @@ public class ApprovalPipelineController {
      */
     @GetMapping(value = "/approvalPipeline")
     public String[] getApprovalPipelineList(@RequestParam("approval_pipeline_id") int approvalPipelineId) {
+        log.info("getApprovalPipelineList " + approvalPipelineId);
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
         String[] pipelineArray = new String[pipeline.size()];
         return pipeline.toArray(pipelineArray);
@@ -56,6 +59,7 @@ public class ApprovalPipelineController {
      */
     @GetMapping(value = "/approvalPipelinePosition")
     public String getCurrentPosition(@RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
+        log.info(packageId + " " + approvalPipelineId);
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineService.findApprovalPipelineRequestPackage(approvalPipelineId, packageId);
         return approvalPipelineRequestPackage.getPosition();
     }
@@ -122,6 +126,23 @@ public class ApprovalPipelineController {
             return false;
         }
     }
+
+
+    @GetMapping(value = "/get_pipeline")
+    public int get(@RequestParam int package_id){
+
+        log.info("get pipeline for package " + package_id);
+
+        List<ApprovalPipeline> approvalPipelines = approvalPipelineService.getPipelineByPackageId(package_id);
+
+        ApprovalPipeline approvalPipeline = approvalPipelines.get(approvalPipelines.size() - 1);
+
+        if(approvalPipeline == null)
+            return 0;
+
+        return approvalPipeline.getId();
+    }
+
 
     /**
      * Returns true if the user is able to approve/request changes at the current approval position

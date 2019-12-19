@@ -36,7 +36,49 @@ public class ImpactAssessmentCourseService {
     @Autowired
     SearchService searchService;
 
+    // Object request causes trouble. Methods have been refactored to accept other parameters to avoid creating
+    // unsaved request objects.
+    //----------------------------------------------------------------------------
+    public Map<String, Object> getCourseImpact2(Course originalCourse, Course requestedCourse, int requestType){
+        //log.info("Getting course Impact for Request Package: ", request);
+        Map<String, Object> responseMap = new HashMap();
+        switch (requestType){
+            //case 1: return courseCreationImpactReport2(request);
+            case 2: return courseEditedImpact2(originalCourse, requestedCourse, requestType);
+            //case 3: return courseRemovalImpactReport2(request);
+            default: {
+                responseMap.put("error","wrong course Request Type");
+                return responseMap;
+            }
+        }
+    }
+
+    private Map<String, Object> courseEditedImpact2(Course originalCourse, Course requestedCourse, int requestType){
+
+        if(originalCourse == null){
+            Map<String, Object> responseMap = new HashMap();
+            responseMap.put("error","Original course not referred in request");
+            log.info("Impact Report Error for course Update Request: Original course does not exist");
+            return responseMap;
+        }
+        else{
+            Map<String, Object> responseMap = getCourseDiffReport(originalCourse, requestedCourse);
+            responseMap.put("RequestType", requestType);
+            return responseMap;
+        }
+    }
+    //----------------------------------------------------------------------------
+    /**
+     * Based on the Course Request type gets the Impact report
+     * case 1: Course Creation impact
+     * case 2: Course Edit impact
+     * case 3: Course Removale impact
+     *
+     * @param request
+     * @return Map<String, Object> Impact report object
+     */
     public Map<String, Object> getCourseImpact(Request request){
+        log.info("Getting course Impact for Request Package: ", request);
         Map<String, Object> responseMap = new HashMap();
         switch (request.getRequestType()){
             case 1: return courseCreationImpactReport(request);
@@ -49,6 +91,15 @@ public class ImpactAssessmentCourseService {
         }
     }
 
+    /**
+     * Finds the impact of the new course creation
+     * Effect on Degrees if the course is Required
+     * Effect on Core Programs if the course is Required
+     * Effect on Degrees if the course is an Elective
+     *
+     * @param request
+     * @return Map<String, Object> Impact report object
+     */
     private Map<String, Object> courseCreationImpactReport(Request request){
 
         Map<String, Object> responseReport = new HashMap();
@@ -72,33 +123,21 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseRequiredImpact", map);
 
-        // Making Elective Degree Impact Report
-        Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
-        updatedList = new ArrayList();
-        originalList = new ArrayList();
-        for(Degree degree : courseElectiveDegrees){
-            Map<String, Object> originalMap = new HashMap();
-            originalMap.put(degree.getName(), degree.getCredits());
-            originalList.add(originalMap);
-            Map<String, Object> changedMap = new HashMap();
-            double totaCredits =  degree.getCredits() + course.getCredits();
-            changedMap.put(degree.getName(), totaCredits);
-            updatedList.add(changedMap);
-        }
-        map = new HashMap();
-        map.put("updated",updatedList);
-        map.put("original",originalList);
-        responseReport.put("DegreeCourseElectiveImpact", map);
-
         // Making Program Impact Report
-        Set<String> programCores = getAlldegreeRequirementsCores(courseRequiredDegrees);
+        Collection<String> programCores = searchService.findPorgramCoreCourseId(course.getId());
         updatedList = new ArrayList();
         originalList = new ArrayList();
         for(String programCore : programCores){
             Map<String, Object> originalMap = new HashMap();
-            double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
-            originalMap.put(programCore, originalCredits);
-            originalList.add(originalMap);
+            Double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+
+            if(originalCredits == null)
+                originalCredits = (double) 0;
+
+            if(!(programCore.endsWith(" Electives"))) {
+                originalMap.put(programCore, originalCredits);
+                originalList.add(originalMap);
+            }
             Map<String, Object> changedMap = new HashMap();
             double totalCredits =  originalCredits + course.getCredits();
             changedMap.put(programCore, totalCredits);
@@ -113,14 +152,23 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Number",course.getNumber());
         responseReport.put("Course", course);
         responseReport.put("RequestType", request.getRequestType());
+        log.info("Impact Report for a course creation: ", responseReport);
         return responseReport;
     }
 
+    /**
+     *Finds the differences of course requirements between two courses
+     *
+     *
+     * @param request
+     * @return Map<String, Object> Impact report object
+     */
     private Map<String, Object> courseEditedImpact(Request request){
         Course originalCourse = searchService.findCourseById(request.getOriginalId());
         if(originalCourse == null){
             Map<String, Object> responseMap = new HashMap();
             responseMap.put("error","Original course not referred in request");
+            log.info("Impact Report Error for course Update Request: Original course does not exist");
             return responseMap;
         }
         else{
@@ -131,9 +179,20 @@ public class ImpactAssessmentCourseService {
         }
     }
 
+    /**
+     * Finds the impact of the new course creation
+     * Effect on Degrees if the course is Required
+     * Effect on Core Programs if the course is Required
+     * Effect on Degrees if the course is an Elective
+     * Effects on parent courses
+     *
+     * @param request
+     * @return Map<String, Object> Impact report object
+     */
     private Map<String,Object> courseRemovalImpactReport(Request request){
         Map<String, Object> responseReport = new HashMap();
-        Course course = searchService.findCourseById(request.getTargetId());
+        // used to be get targetId() which is wrong as course removals do not have any target_ids.
+        Course course = searchService.findCourseById(request.getOriginalId());
         int courseId = course.getId();
 
         Collection<Requisite> coursesInReference = searchService.findAllOccurrencesOfCourseAsRequisite(courseId);
@@ -162,33 +221,20 @@ public class ImpactAssessmentCourseService {
         map.put("original",originalList);
         responseReport.put("DegreeCourseRequiredImpact", map);
 
-        // Making Elective Degree Impact Report
-        Collection<Degree> courseElectiveDegrees = searchService.findDegreesByElectiveCourseId(course.getId());
-        updatedList = new ArrayList();
-        originalList = new ArrayList();
-        for(Degree degree : courseElectiveDegrees){
-            Map<String, Object> originalMap = new HashMap();
-            originalMap.put(degree.getName(), degree.getCredits());
-            originalList.add(originalMap);
-            Map<String, Object> changedMap = new HashMap();
-            double totaCredits =  degree.getCredits() - course.getCredits();
-            changedMap.put(degree.getName(), totaCredits);
-            updatedList.add(changedMap);
-        }
-        map = new HashMap();
-        map.put("updated",updatedList);
-        map.put("original",originalList);
-        responseReport.put("DegreeCourseElectiveImpact", map);
-
         // Making Program Impact Report
-        Set<String> programCores = getAlldegreeRequirementsCores(courseRequiredDegrees);
+        Collection<String> programCores = searchService.findPorgramCoreCourseId(course.getId());
         updatedList = new ArrayList();
         originalList = new ArrayList();
         for(String programCore : programCores){
             Map<String, Object> originalMap = new HashMap();
-            double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
-            originalMap.put(programCore, originalCredits);
-            originalList.add(originalMap);
+            Double originalCredits = searchService.findCreditsTotalOfCoreProgram(programCore);
+
+            if(originalCredits == null)
+                originalCredits = (double) 0;
+            if(!(programCore.endsWith(" Electives"))){
+                originalMap.put(programCore, originalCredits);
+                originalList.add(originalMap);
+            }
             Map<String, Object> changedMap = new HashMap();
             double totalCredits =  originalCredits - course.getCredits();
             changedMap.put(programCore, totalCredits);
@@ -205,9 +251,21 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Course",course);
         responseReport.put("RemovingFromParentCourses",responseMap);
         responseReport.put("RequestType",request.getRequestType());
+        log.info("Impact Report for a course Removal: ", responseReport);
         return responseReport;
     }
 
+    /**
+     * Finds the impact of the updated course
+     * Effect on Degrees if the course is Required
+     * Effect on Core Programs if the course is Required
+     * Effect on Degrees if the course is an Elective
+     * Effect on other Elective courses
+     * Changes on other electives
+     *
+     * @param originalCourse, requestedCourse
+     * @return Map<String, Object> Impact report object
+     */
     private Map<String, Object> getCourseDiffReport(Course originalCourse, Course requestedCourse){
         Map<String, Object> finalResponseMap = new HashMap();
 
@@ -253,13 +311,18 @@ public class ImpactAssessmentCourseService {
 
         finalResponseMap.put("CourseEdits", responseMap);
         finalResponseMap.put("DegreeCourseRequiredImpact",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
-        finalResponseMap.put("DegreeCourseElectiveImpact",getElectiveCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
         finalResponseMap.put("ProgramImpact",getProgramImpactUpdatedCourse(originalCourse,requestedCourse));
-
+        log.info("Impact Report for a course Update: ", finalResponseMap);
         return finalResponseMap;
     }
 
+    /**
+     * Finds the differences of required Degrees of an updated course and its original
+     *
+     * @param originalCourse, requestedCourse
+     * @return Map<String, Object> Impact report object
+     */
     private Map<Object, Object> getRequiredCourseDegreeImpactUpdatedCourse(Course originalCourse,Course requestedCourse){
         Map<Object, Object> responseMap = new HashMap();
         Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(originalCourse.getId());
@@ -331,116 +394,103 @@ public class ImpactAssessmentCourseService {
         responseMap.put("removed",removedList);
         responseMap.put("added",addedList);
         responseMap.put("original",originalList);
+        log.info("Impact Report for a course Update on the Required Degrees: ", responseMap);
         return responseMap;
     }
 
-    private Map<Object, Object> getElectiveCourseDegreeImpactUpdatedCourse(Course originalCourse,Course requestedCourse) {
-        Map<Object, Object> responseMap = new HashMap();
 
-        Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByElectiveCourseId(originalCourse.getId());
-        Collection<Degree> targetCourseRequiredDegrees = searchService.findDegreesByElectiveCourseId(requestedCourse.getId());
-
-        ArrayList removedList = new ArrayList();
-        ArrayList addedList = new ArrayList();
-        // List of Degrees elective is removed from
-        for(Degree originalReqdegree: originalCourseRequiredDegrees) {
-            boolean notFound = true;
-            for (Degree requestedReqDegree : targetCourseRequiredDegrees) {
-                if (originalReqdegree.getId() == requestedReqDegree.getId()) {
-                    notFound = false;
-                }
-            }
-            if(notFound){
-                removedList.add(originalReqdegree.getName());
-            }
-        }
-        // List of Degrees elective is added to
-        for (Degree requestedReqDegree : targetCourseRequiredDegrees) {
-            boolean notFound = true;
-            for(Degree originalReqdegree: originalCourseRequiredDegrees) {
-                if (originalReqdegree.getId() == requestedReqDegree.getId()) {
-                    notFound = false;
-                }
-            }
-            if(notFound){
-                addedList.add(requestedReqDegree.getName());
-            }
-        }
-
-        responseMap.put("removed", removedList);
-        responseMap.put("added", addedList);
-        return responseMap;
-    }
-
+    /**
+     * Finds the differences of a core Program of an updated course and its original
+     *
+     * @param originalCourse, requestedCourse
+     * @return Map<String, Object> Impact report object
+     */
     private Map<Object, Object> getProgramImpactUpdatedCourse( Course originalCourse, Course requestedCourse){
         Map<Object, Object> responseMap = new HashMap();
-        Collection<Degree> originalCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(originalCourse.getId());
-        Collection<Degree> targetCourseRequiredDegrees = searchService.findDegreesByRequiredCourseId(requestedCourse.getId());
-        Set<String> originalCores = getAlldegreeRequirementsCores(originalCourseRequiredDegrees);
-        Set<String> requestedCores = getAlldegreeRequirementsCores(targetCourseRequiredDegrees);
+        Collection<String> originalCourseProgramCore = searchService.findPorgramCoreCourseId(originalCourse.getId());
+        Collection<String> targetCourseProgramCore = searchService.findPorgramCoreCourseId(requestedCourse.getId());
 
         ArrayList<Map> updatedList = new ArrayList();
-
         ArrayList<Map> removedList = new ArrayList();
         ArrayList<Map> addedList = new ArrayList();
         ArrayList<Map> originalList = new ArrayList();
 
-        for(String originalCore: originalCores){
+        for(String originalCore: originalCourseProgramCore){
             boolean notFound = true;
-            for(String requestedCore: requestedCores){
+            for(String requestedCore: targetCourseProgramCore){
                 // When only the credits have changed in a core
                 if(originalCore.equals(requestedCore)){
                     notFound = false;
                     if(originalCourse.getCredits() != requestedCourse.getCredits()){
                         double difference =  Math.abs(originalCourse.getCredits() - requestedCourse.getCredits());
-                        double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
-                        double updatedCredits = originalCredits;
-                        //if credits increased else credits decreased
-                        if(originalCourse.getCredits() < requestedCourse.getCredits())
-                            updatedCredits += difference;
-                        else{
-                            updatedCredits -= difference;
-                        }
-                        Map<String, Object> updatedMap = new HashMap();
-                        updatedMap.put(originalCore, updatedCredits);
-                        updatedList.add(updatedMap);
-                        Map<String, Object> originalMap = new HashMap();
-                        originalMap.put(originalCore, originalCredits);
-                        originalList.add(originalMap);
+                        Double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+                        double originalCredit = 0.0;
+                        double updatedCredits = 0.0;
+                       if(originalCredits != null) {
+                           originalCredit = originalCredits.doubleValue();
+                            updatedCredits = originalCredit;
+                           //if credits increased else credits decreased
+                           if (originalCourse.getCredits() < requestedCourse.getCredits())
+                               updatedCredits += difference;
+                           else {
+                               updatedCredits -= difference;
+                           }
+                       }
+                       if(!(originalCore.endsWith(" Electives"))) {
+                           Map<String, Object> updatedMap = new HashMap();
+                           updatedMap.put(originalCore, updatedCredits);
+                           updatedList.add(updatedMap);
+                           Map<String, Object> originalMap = new HashMap();
+                           originalMap.put(originalCore, originalCredit);
+                           originalList.add(originalMap);
+                       }
 
                     }
                 }
             }
             // if core not found in modified List then it was removed
             if(notFound){
-                double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+                Double originalCredits = searchService.findCreditsTotalOfCoreProgram(originalCore);
+
+                if(originalCredits == null)
+                    originalCredits = (double) 0;
+
                 double totalCredits = originalCredits - originalCourse.getCredits();
                 Map<String, Object> removedMap = new HashMap();
                 removedMap.put(originalCore, totalCredits);
                 removedList.add(removedMap);
-                Map<String, Object> originalMap = new HashMap();
-                originalMap.put(originalCore, originalCredits);
-                originalList.add(originalMap);
+                if(!(originalCore.endsWith(" Electives"))) {
+                    Map<String, Object> originalMap = new HashMap();
+                    originalMap.put(originalCore, originalCredits);
+                    originalList.add(originalMap);
+                }
             }
         }
 
-        // New course requirement for a degree
-        for(String requestedCore: requestedCores){
+        // course is part of a new program core
+        for(String requestedCore: targetCourseProgramCore){
             boolean notFound = true;
-            for(String originalCore: originalCores){
+            for(String originalCore: originalCourseProgramCore){
                 if(originalCore.equals(requestedCore)){
                     notFound = false;
                 }
             }
             if(notFound){
-                double originalCredits = searchService.findCreditsTotalOfCoreProgram(requestedCore);
-                double totalCredits = originalCredits + requestedCourse.getCredits();
+                Double originalCredits = searchService.findCreditsTotalOfCoreProgram(requestedCore);
+                double totalCredits = 0.0;
+                double originalCredit = 0.0;
+                if(originalCredits != null){
+                    originalCredit = originalCredits.doubleValue();
+                    totalCredits = originalCredits.doubleValue() + requestedCourse.getCredits();
+                }
                 Map<String, Object> addedMap = new HashMap();
                 addedMap.put(requestedCore, totalCredits);
                 addedList.add(addedMap);
-                Map<String, Object> originalMap = new HashMap();
-                originalMap.put(requestedCore, originalCredits);
-                originalList.add(originalMap);
+                if(!(requestedCore.endsWith(" Electives"))) {
+                    Map<String, Object> originalMap = new HashMap();
+                    originalMap.put(requestedCore, originalCredit);
+                    originalList.add(originalMap);
+                }
             }
         }
 
@@ -448,9 +498,16 @@ public class ImpactAssessmentCourseService {
         responseMap.put("removed",removedList);
         responseMap.put("added",addedList);
         responseMap.put("original",originalList);
+        log.info("Impact Report for a course Update on Program Cores: ", responseMap);
         return responseMap;
     }
 
+    /**
+     * Finds the differences or requisites between two courses
+     *
+     * @param originalCourse, requestedCourse
+     * @return Map<String, Object> Impact report object
+     */
     private Map<String, Object> requisitesCompare(Course originalCourse, Course requestedCourse){
         Collection<Requisite> originalRequisites = originalCourse.getRequisites();
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
@@ -483,17 +540,12 @@ public class ImpactAssessmentCourseService {
         }
     }
 
-    public Set<String> getAlldegreeRequirementsCores(Collection<Degree> requiredDegrees){
-        Set<String> coreSet = new HashSet<String>();
-        for(Degree degree: requiredDegrees){
-            Collection<DegreeRequirement> requirements = degree.getDegreeRequirements();
-            for(DegreeRequirement degreeRequirement: requirements){
-                coreSet.add(degreeRequirement.getCore());
-            }
-        }
-        return coreSet;
-    }
 
+    /**
+     * Inputs a mock object for Search Service to use in Junit Tests
+     *
+     * @param course
+     */
     public void setServiceMock(SearchService course){
         searchService = course;
     }

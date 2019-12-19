@@ -20,11 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { Component, ViewChild } from '@angular/core';
-import { CourseExtras } from '../model/course-extras';
+import { CookieService } from 'ngx-cookie-service';
+import { CourseExtras } from '../models/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
 @Component({
@@ -45,20 +46,43 @@ export class EditFormComponent {
   model = new CourseExtras();
   editedModel = new CourseExtras();
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {
+  constructor(private route: ActivatedRoute, private api: ApiService, 
+    private cookieService: CookieService,
+    private router: Router) {
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
-    this.api.getCourse(this.id).subscribe(data => {
-      console.log(data);
-      this.courseOriginal = data;
-      this.courseEditable = Object.assign({}, data);
-      this.setRequisitesStrings(data);
-      this.editedModel = Object.assign({}, this.model);
-    });
+    let requestId = this.cookieService.get('request');
+    let packageId = this.cookieService.get('package');
+    let userId = this.cookieService.get('user');
+    this.model.packageId = Number(packageId);
+    this.editedModel.packageId = Number(packageId);
+    this.model.userId = Number(userId);
+    this.editedModel.userId = Number(userId);
+    if(requestId === '0'){
+      this.api.getCourse(this.id).subscribe(data => {
+        this.courseOriginal = data;
+        this.courseEditable = Object.assign({}, data);
+        this.setRequisitesStrings(data, this.model);
+        this.setRequisitesStrings(data, this.editedModel)
+      });
+    }
+    else {
+      let originalId = this.cookieService.get('originalCourse');
+      let editedId = this.cookieService.get('editedCourse');
+      this.api.getCourse(originalId).subscribe(data => {
+        this.courseOriginal = data;
+        this.setRequisitesStrings(data, this.model);
+      });
+      this.api.getCourse(editedId).subscribe(data => {
+        this.courseEditable = data;
+        this.setRequisitesStrings(data, this.editedModel);
+      });
+    }
   }
 
   public highlightChanges(): void {
@@ -74,32 +98,31 @@ export class EditFormComponent {
     });
   }
 
-  public setRequisitesStrings(course: Course) {
+  public setRequisitesStrings(course: Course, courseExtras: CourseExtras) {
     let isNextEquivalent = false;
     if (course.requisites.length > 0) {
       course.requisites.forEach(r => {
         switch (r.type) {
           case 'equivalent':
             if (!isNextEquivalent) {
-              this.model.equivalents += r.name + r.number + " or ";
-            }
-            else {
-              this.model.equivalents += r.name + r.number + '; ';
+              courseExtras.equivalents += r.name + r.number + ' or ';
+            } else {
+              courseExtras.equivalents += r.name + r.number + '; ';
             }
             isNextEquivalent = !isNextEquivalent;
             break;
           case 'prerequisite':
-            this.model.prerequisites += r.name + r.number + '; ';
+            courseExtras.prerequisites += r.name + r.number + '; '; 
             break;
           case 'corequisite':
-            this.model.corequisites += r.name + r.number + '; ';
-            break;
+            courseExtras.corequisites += r.name + r.number + '; ';
+            break; 
         }
-      })
+      });
     }
   }
 
-  //There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
+  // There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
   /*
   public setDegreesStrings(course: Course) {
     if(course.degreeRequirements.length > 0){
@@ -117,6 +140,6 @@ export class EditFormComponent {
   public submitForm() {
     this.editedModel.files = this.supportDocumentComponent.documents;
     this.api.submitEditedCourse(this.courseEditable, this.editedModel)
-      .subscribe(data => { console.log(data) })
+    .subscribe(() => this.router.navigate(['package']))
   }
 }

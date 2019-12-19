@@ -35,10 +35,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -95,11 +97,33 @@ public class RequestPackageController {
      * @throws JSONException
      */
     @PostMapping(value="/save_request", consumes = "application/json")
-    public int saveRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+    public int saveCreateAndEditRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
 
         return requestPackageService.saveCourseRequest(requestForm);
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param requestForm Combined stringified JSON received from front-end.
+     * @param bindingResult Validates requestForm.
+     * @return True if course was successfully added to database.
+     * @throws JSONException
+     */
+    @PostMapping(value="/save_removal_request", consumes = "application/json")
+    public int saveRemovalRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+
+        return requestPackageService.saveRemovalRequest(requestForm);
+    }
+
+    // delete course request
+    @GetMapping(value="/delete_request")
+    public boolean deleteCourseRequest(@RequestParam int requestId) {
+
+        if(requestId != 0)
+            return requestPackageService.deleteCourseRequest(requestId);
+
+        return true;
+    }
 
     // returns list of packages from a given department
     @GetMapping(value = "/get_packages")
@@ -124,7 +148,6 @@ public class RequestPackageController {
         return requestPackageService.saveRequestPackage(requestPackageForm);
     }
 
-
     /**
      * Add a new supporting document to a request
      * path format: /addSupportingDocument?documentId={id}
@@ -132,7 +155,7 @@ public class RequestPackageController {
      * @param packageId
      * @return
      */
-    @PostMapping(value = "/addSupportingDocument")
+    @PostMapping(value = "/upload")
     public SupportingDocument add(@RequestParam File document, @RequestParam int packageId) throws IOException {
 
         return requestPackageService.addSupportingDocument(document, packageId);
@@ -145,6 +168,18 @@ public class RequestPackageController {
         int request_id = requestPackageService.saveCourseRequest(requestForm);
 
         return impactAssessmentController.getImpactAssessment(request_id);
+    }
+
+    @PostMapping("/addSupportingDocument")
+    public boolean uploadData(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) throws Exception {
+
+        if (file == null) {
+            throw new RuntimeException("You must select the a file for uploading");
+        }
+
+        byte[] doc = file.getBytes();
+
+        return requestPackageService.saveRequestFile(doc, id);
     }
 
 }

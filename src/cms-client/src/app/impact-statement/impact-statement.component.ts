@@ -1,9 +1,31 @@
+// MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 import { Component, Inject, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
-import { CourseExtras } from '../model/course-extras';
-import {first} from 'rxjs/operators';
+import { CourseExtras } from '../models/course-extras';
+import { first } from 'rxjs/operators';
 
 export interface DialogData {
   animal: string;
@@ -33,12 +55,14 @@ export class ImpactStatementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.apiService.getImpact().subscribe(data => this.impact = data);
   }
 
   showImpact(): void {
-    this.apiService.getImpact(this.course, this.courseExtras).subscribe(data => this.impact = data);
-    this.openDialog();
+    this.apiService.getImpact(this.course, this.courseExtras).subscribe(data => {
+      console.log(data);
+      this.impact = data;
+      this.openDialog();
+    });
   }
 
   openDialog(): void {
@@ -57,10 +81,6 @@ export class ImpactStatementComponent implements OnInit {
         DegreeCourseRequiredImpactAdded: this.impact.DegreeCourseRequiredImpact.added[0],
         DegreeCourseRequiredImpactUpdated: this.impact.DegreeCourseRequiredImpact.updated[0],
         DegreeCourseRequiredImpactUpdatedKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.updated[0] || {}),
-
-
-        DegreeCourseElectiveImpactRemoved: this.impact.DegreeCourseElectiveImpact.removed[0],
-        DegreeCourseElectiveImpactAdded: this.impact.DegreeCourseElectiveImpact.added[0],
 
         ProgramImpactOriginal: this.impact.ProgramImpact.original[0],
         ProgramImpactOriginalKeys: Object.keys(this.impact.ProgramImpact.original[0] || {}),
