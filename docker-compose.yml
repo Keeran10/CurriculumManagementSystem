@@ -13,15 +13,28 @@ services:
     ports:
       - "4200:4200"
       - "49153:49153"
-    volumes:
-      - "/usr/src/app/node_modules"
-      - "./src/cms-client/:/usr/src/app/"
     restart: always
     depends_on:
       - server
     networks:
       - frontend 
+ 
 
+  # Database Service 
+  db:
+    image: mysql:5.7
+    container_name: trying-mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: cms
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - backend  
+      
   # Backend service
   server:
     container_name: api
@@ -30,33 +43,18 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080" 
-    restart: always
+    restart: on-failure
     depends_on: 
       - db # This service depends on mysql. Start that first.
     environment: # Pass environment variables to the service
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/CMS?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
-      SPRING_DATASOURCE_USERNAME: soen490
-      SPRING_DATASOURCE_PASSWORD: soen490     
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/cms?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password     
     networks: # Networks to join
       - backend
       - frontend
 
-  # Database Service 
-  db:
-    image: mysql:5.7
-    container_name: db
-    ports:
-      - "3306:3306"
-    restart: always
-    environment:
-      MYSQL_DATABASE: cms-db
-      MYSQL_USER: soen490
-      MYSQL_PASSWORD: soen490
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./docker/data/db:/var/lib/mysql
-    networks:
-      - backend  
+
   
 # Volumes
 volumes:

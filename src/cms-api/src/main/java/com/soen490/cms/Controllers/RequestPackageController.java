@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://192.168.99.100:4200"})
 public class RequestPackageController {
 
     @Autowired
