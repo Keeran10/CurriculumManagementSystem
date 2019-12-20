@@ -25,8 +25,6 @@ public class ApprovalPipelineRequestPackage implements Serializable {
 
     private String position;
 
-    private String rationale;
-
     public static class RequestPackagePipelineId implements Serializable {
         private Integer approvalPipeline;
         private Integer requestPackage;

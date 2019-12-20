@@ -98,7 +98,7 @@ public class ApprovalPipelineController {
     /**
      * Method that moves a request package to the next/previous step in the pipeline if it is approved/not approved
      *
-     * @param user
+     * @param userId
      * @param packageId
      * @param approvalPipelineId
      * @param isApproved
@@ -120,13 +120,24 @@ public class ApprovalPipelineController {
                 } else {
                     approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index);
                 }
-            } else { // not approved - move back a step
-                approvalPipelineService.pushToPrevious(packageId, approvalPipelineId, pipeline, index, rationale);
+            } else { // not approved - remove request
+                approvalPipelineService.removePackage(packageId, approvalPipelineId, rationale);
             }
             return true;
         } else { // unable to move forward if the user is unauthorized to approve at the current step
             return false;
         }
+    }
+
+    /**
+     * Returns the rejection raitonale for a request package
+     *
+     * @param package_id
+     * @return
+     */
+    @GetMapping(value = "/rejection_rationale")
+    public String getRationale(@RequestParam int package_id) {
+        return approvalPipelineService.getRejectionRationale(package_id);
     }
 
     @GetMapping(value = "/get_pipeline")

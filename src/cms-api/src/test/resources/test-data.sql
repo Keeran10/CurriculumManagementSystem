@@ -38,4 +38,4 @@ INSERT INTO request_package (id, department_id) VALUES (1, 4);
 
 INSERT INTO approval_pipeline (id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee) VALUES (1, 4, 0, 1, 2, 5, 3);
 
-INSERT INTO approval_pipeline_request_package (pipeline_id, package_id, position, rationale) VALUES (1, 1, 'Department Curriculum Committee', '');
+INSERT INTO approval_pipeline_request_package (pipeline_id, package_id, position) VALUES (1, 1, 'Department Curriculum Committee');

@@ -115,13 +115,20 @@ public class ApprovalPipelineService {
             senateService.receivePackage(requestPackage);
         }
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
-        approvalPipelineRequestPackage.setRationale("");
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
     }
 
-    public String getRationale(int packageId, int pipelineId) {
-        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
-        return approvalPipelineRequestPackage.getRationale();
+    public boolean removePackage(int packageId, int pipelineId, String rationale) {
+        RequestPackage requestPackage = requestPackageRepository.findById(packageId);
+        requestPackage.setRejectionRationale(rationale);
+        approvalPipelineRequestPackageRepository.remove(pipelineId, packageId);
+        requestPackageRepository.save(requestPackage);
+        return true;
+    }
+
+    public String getRejectionRationale(int packageId) {
+        RequestPackage requestPackage = requestPackageRepository.findById(packageId);
+        return requestPackage.getRejectionRationale();
     }
 
     /**
@@ -168,7 +175,6 @@ public class ApprovalPipelineService {
             senateService.receivePackage(requestPackage);
         }
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
-        approvalPipelineRequestPackage.setRationale(rationale);
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
     }
 

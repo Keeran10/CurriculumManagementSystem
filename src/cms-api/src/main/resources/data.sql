@@ -282,9 +282,10 @@ INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Managem
 INSERT IGNORE INTO calendar VALUES (2, 'Students employed full‑time in a computer science position during their non‑study terms may have this Industrial Experience listed on their official transcript and student record, provided they successfully complete the Reflective Learning course associated with this work term. Students may only register for these courses with the permission of the Faculty. The Industrial Experience terms COMP 107 and 207 carry no credit value and are used to indicate that the student is on an Industrial Experience term. The COMP 108 and 208 Industrial Experience Reflective Learning courses are worth three credits and are marked on a pass/fail basis. They are above and beyond the credit requirements of the student’s program and are not transferable nor are they included in the full‑ or part‑time assessment status. Students studying for a co‑op work term or CIADI term should not register for these Industrial Experience and Reflective Learning courses.', '71.70.7', 'Industrial Experience and Reflective Learning Courses', 'general', 4);
 INSERT IGNORE INTO calendar VALUES (3, "Please note that the current version of the Undergraduate Calendar is up to date as of February 2019.", "71.60", "Engineering Course Descriptions", "", 8);
 
--- id, pdf_file, department_id
-INSERT IGNORE INTO request_package VALUES (1, NULL, 4); -- creating a package for department of CS & SE
-INSERT IGNORE INTO request_package VALUES (2, NULL, 8); -- used for pdf generation
+-- id, pdf_file, rejection_rationale, department_id
+INSERT IGNORE INTO request_package VALUES (1, NULL, NULL, 4); -- creating a package for department of CS & SE
+INSERT IGNORE INTO request_package VALUES (2, NULL, NULL, 8); -- used for pdf generation
+INSERT IGNORE INTO request_package VALUES (3, NULL, NULL, 4); -- used to test package rejection
 
 -- id, original id, rationale, request type, resource, target id, target type, timestamp, title, package id, user id
 INSERT IGNORE INTO request VALUES (1, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
@@ -295,5 +296,6 @@ INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten ye
 -- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
 
--- pipeline_id, package_id, position, rationale
-INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department Curriculum Committee", "");
+-- pipeline_id, package_id, position
+INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department Curriculum Committee");
+INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department Curriculum Committee");
