@@ -40,12 +40,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "http://192.168.99.100:4200"})
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
 public class RequestPackageController {
 
     @Autowired
