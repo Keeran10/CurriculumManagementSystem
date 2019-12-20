@@ -17,6 +17,14 @@ public class MailController {
     @Autowired
     MailService mailService;
 
+    /**
+     * endpoint of: /Mail
+     * takes as parameter the request of package Id and user id
+     * this end point is for testing purpose only
+     *
+     * @param packageId, userId
+     * @return mail sent
+     */
     @GetMapping(value = "/Mail")
     public boolean sendPackageByMail(@RequestParam int packageId,@RequestParam int userId){
         log.info("Sending Package", packageId);

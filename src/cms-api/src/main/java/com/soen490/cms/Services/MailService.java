@@ -29,25 +29,48 @@ public class MailService {
     @Autowired
     SearchService searchService;
 
+    /**
+     * Email service function
+     * Sends email to the specified user based on package id and
+     * user object specified
+     *
+     * @param packageId, user
+     * @return Void message sent
+     */
     public boolean sendMailService(int packageId, User user){
         try {
             sendEmailWithAttachment(packageId, user);
-            System.out.println("EMAIL SENT");
+            log.info("EMAIL SENT");
         } catch (MessagingException e) {
             e.printStackTrace();
-            System.out.println("Messaging ERROR");
+            log.info("Messaging ERROR");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("IO ERROR");
+            log.info("IO ERROR");
         }
         return true;
     }
 
+    /**
+     * Sends email to the specified user based on package id and
+     * user id specified
+     *
+     * @param packageId, userId
+     * @return Void message sent
+     */
     public void sendMailFromController(int packageId , int userId){
         User user = searchService.findUserById(userId);
         sendMailService(packageId, user);
     }
 
+    /**
+     * Sends email with attachement to the specified user
+     * based on package id and
+     * user id specified
+     *
+     * @param packageId, user
+     * @return Void message sent
+     */
     private void sendEmailWithAttachment(int packageId, User user) throws MessagingException, IOException {
 
         byte[] pdf_bytes = pdfService.getPDF(packageId);
