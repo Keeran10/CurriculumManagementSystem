@@ -23,7 +23,7 @@ import java.io.IOException;
 public class MailService {
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    JavaMailSender javaMailSender;
     @Autowired
     PdfService pdfService;
     @Autowired
