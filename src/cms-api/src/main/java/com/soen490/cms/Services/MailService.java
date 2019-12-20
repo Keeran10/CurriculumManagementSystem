@@ -36,9 +36,10 @@ public class MailService {
 
     public void sendMailFromController(int packageId , int userId){
         User user = searchService.findUserById(userId);
-        System.out.println(user);
+        sendPackageByMail(packageId, user);
     }
-    public boolean sendPackageByMail (int packageId){
+
+    public boolean sendPackageByMail (int packageId, User user){
         try {
             sendEmailWithAttachment(packageId);
             System.out.println("EMAIL SENT");
@@ -51,19 +52,7 @@ public class MailService {
         }
         return true;
     }
-
-    void sendEmail() {
-
-        SimpleMailMessage msg = new SimpleMailMessage();
-       // msg.setTo("to_1@gmail.com", "to_2@gmail.com", "to_3@yahoo.com");
-        msg.setTo("georgebarsem@gmail.com");
-        msg.setSubject("Testing from Spring Boot");
-        msg.setText("Hello World \n Spring Boot Email");
-
-        javaMailSender.send(msg);
-        System.out.println("EMAIL SENT");
-
-    }
+    
 
     void sendEmailWithAttachment(int packageId) throws MessagingException, IOException {
 
