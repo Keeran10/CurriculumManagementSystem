@@ -45,6 +45,9 @@ public class ApprovalPipelineService {
     @Autowired
     UndergradStudiesCommitteeService undergradStudiesCommitteeService;
 
+    @Autowired
+    RequestPackageService requestPackageService;
+
     public RequestPackage findRequestPackage(int id) {
         log.info("find request package with id " + id);
         return requestPackageRepository.findById(id);
@@ -118,11 +121,20 @@ public class ApprovalPipelineService {
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
     }
 
+    /**
+     * Removes a request package and its tracking when it is rejected by an approving body
+     *
+     * @param packageId
+     * @param pipelineId
+     * @param rationale
+     * @return
+     */
     public boolean removePackage(int packageId, int pipelineId, String rationale) {
         RequestPackage requestPackage = requestPackageRepository.findById(packageId);
         requestPackage.setRejectionRationale(rationale);
         approvalPipelineRequestPackageRepository.remove(pipelineId, packageId);
         requestPackageRepository.save(requestPackage);
+        requestPackageService.deleteCourseRequest(packageId);
         return true;
     }
 
