@@ -28,15 +28,13 @@ import com.soen490.cms.FeatureFlagTest.IFeatureFlagTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import lombok.extern.log4j.Log4j2;
 
 @SpringBootApplication
 @Log4j2
-public class App extends SpringBootServletInitializer {
+public class App {
 
 	@Bean
 	@Primary
@@ -52,10 +50,6 @@ public class App extends SpringBootServletInitializer {
 		return new FeatureFlagOn();
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(App.class);
-	}
 
 	public static void main(String[] args) {
 		log.info("Running CMS app");
