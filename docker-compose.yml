@@ -30,8 +30,8 @@ services:
     environment:
       MYSQL_DATABASE: cms
       MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: soen490
+      MYSQL_ROOT_PASSWORD: soen490
     networks:
       - backend  
       
@@ -49,7 +49,7 @@ services:
     environment: # Pass environment variables to the service
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/cms?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: password     
+      SPRING_DATASOURCE_PASSWORD: soen490    
     networks: # Networks to join
       - backend
       - frontend
