@@ -9,16 +9,12 @@
 
 .buttons {
     margin-top: 15px;
-    margin-left: 40%;
+    margin-left: 70%;
     display: flex;
 }
 
 .option {
     padding: 0%;
-}
-
-#rationale {
-    visibility: hidden;
 }
 
 .rationale {
@@ -33,16 +29,4 @@
 
 h2 {
     margin-left: 30px;
-}
-
-#acceptButton {
-    visibility: visible;
-}
-
-#declineButton {
-    visibility: visible;
-}
-
-#submitRationale {
-    visibility: hidden;
 }

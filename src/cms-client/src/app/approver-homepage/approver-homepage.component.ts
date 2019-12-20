@@ -75,15 +75,14 @@ export class ApproverHomepageComponent implements OnInit {
     }
 
     // on decline
-    public decline() {
-        const rationaleInput = document.getElementById('rationale');
-        rationaleInput.style.visibility = 'visible';
-        const acceptButton = document.getElementById('acceptButton');
-        acceptButton.style.visibility = 'hidden';
-        const declineButton = document.getElementById('declineButton');
-        declineButton.style.visibility = 'hidden';
-        const submitRationaleButton = document.getElementById('submitRationale');
-        submitRationaleButton.style.visibility = 'visible';
+    public decline(packageId, value) {
+        this.api.getPipeline(packageId).subscribe(data => {
+            const utf8decoder = new TextDecoder();
+            this.pipelineId = utf8decoder.decode(data);
+            this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, value, false).subscribe(
+                data => this.router.navigate(['homepage'])
+            );
+        });
     }
 
     // on accept
@@ -92,18 +91,7 @@ export class ApproverHomepageComponent implements OnInit {
             const utf8decoder = new TextDecoder();
             this.pipelineId = utf8decoder.decode(data);
             this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, ' ', true).subscribe(
-                data => this.router.navigate(['pipeline'])
-            );
-        });
-    }
-
-    // on decline --> pass in rationale
-    public submitRationale(packageId, value) {
-        this.api.getPipeline(packageId).subscribe(data => {
-            const utf8decoder = new TextDecoder();
-            this.pipelineId = utf8decoder.decode(data);
-            this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, value, false).subscribe(
-                data => this.router.navigate(['homepage'])
+                data => this.router.navigateByUrl('/pipeline')
             );
         });
     }
