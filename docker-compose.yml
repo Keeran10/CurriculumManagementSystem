@@ -23,7 +23,7 @@ services:
   # Database Service 
   db:
     image: mysql:5.7
-    container_name: trying-mysql
+    container_name: database
     ports:
       - "3306:3306"
     restart: always
