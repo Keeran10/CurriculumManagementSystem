@@ -45,10 +45,12 @@ export class ApproverHomepageComponent implements OnInit {
                 }
 
     ngOnInit() {
-        // let departmentId = this.cookieService.get('department'); //replace 4 with department id
+        //const departmentId = this.cookieService.get('department'); //replace 4 with department id
         this.api.getAllPackages('4').subscribe(data => {
-            console.log(data);
             this.packages = data;
+            if (this.packages.length === 0) {
+                document.getElementById('empty').style.visibility = 'display';
+            }
             });
         this.userName = this.cookieService.get('userName');
         this.userId = parseInt(this.cookieService.get('user'), 10);
