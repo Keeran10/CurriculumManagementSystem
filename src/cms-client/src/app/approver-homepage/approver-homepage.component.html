@@ -31,15 +31,14 @@
                             <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
                             <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
                             <br />
-                            <mat-form-field id="rationale" class="rationale" color="warn">
-                                <textarea matInput #val placeholder="Please provide rationale for declining package #{{package.id}}"></textarea>
+                            <mat-form-field class="rationale" color="warn">
+                                <textarea matInput #val placeholder="Please provide rationale for package #{{package.id}}"></textarea>
                             {{value}}
                             </mat-form-field>
                         </mat-card-content>
                         <div class="buttons">
-                            <button id="submitRationale" mat-button color="warn" (click)="submitRationale(package.id, val.value)">Submit Rationale</button>
-                            <button id="acceptButton" mat-button (click)="accept(package.id)">Accept</button>
-                            <button id="declineButton" mat-button color="warn" (click)="decline()">Decline</button>
+                            <button mat-button (click)="accept(package.id, val.value)">Accept</button>
+                            <button mat-button color="warn" (click)="decline(package.id, val.value)">Decline</button>
                         </div>
                     </mat-card>
                 </td>

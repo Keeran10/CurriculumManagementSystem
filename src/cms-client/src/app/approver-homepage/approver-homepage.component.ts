@@ -41,7 +41,8 @@ export class ApproverHomepageComponent implements OnInit {
 
     constructor(private cookieService: CookieService,
                 private api: ApiService,
-                private router: Router) { }
+                private router: Router) { 
+                }
 
     ngOnInit() {
         // let departmentId = this.cookieService.get('department'); //replace 4 with department id
@@ -75,35 +76,27 @@ export class ApproverHomepageComponent implements OnInit {
     }
 
     // on decline
-    public decline() {
-        const rationaleInput = document.getElementById('rationale');
-        rationaleInput.style.visibility = 'visible';
-        const acceptButton = document.getElementById('acceptButton');
-        acceptButton.style.visibility = 'hidden';
-        const declineButton = document.getElementById('declineButton');
-        declineButton.style.visibility = 'hidden';
-        const submitRationaleButton = document.getElementById('submitRationale');
-        submitRationaleButton.style.visibility = 'visible';
-    }
-
-    // on accept
-    public accept(packageId) {
-        this.api.getPipeline(packageId).subscribe(data => {
-            const utf8decoder = new TextDecoder();
-            this.pipelineId = utf8decoder.decode(data);
-            this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, ' ', true).subscribe(
-                data => this.router.navigate(['pipeline'])
-            );
-        });
-    }
-
-    // on decline --> pass in rationale
-    public submitRationale(packageId, value) {
+    public decline(packageId, value) {
         this.api.getPipeline(packageId).subscribe(data => {
             const utf8decoder = new TextDecoder();
             this.pipelineId = utf8decoder.decode(data);
             this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, value, false).subscribe(
-                data => this.router.navigate(['homepage'])
+                data => window.location.reload()
+            );
+        });
+    }
+
+    // on accept
+    public accept(packageId, value) {
+        let rationale = ' '
+        if (value != ''){
+            rationale = value;
+        }
+        this.api.getPipeline(packageId).subscribe(data => {
+            const utf8decoder = new TextDecoder();
+            this.pipelineId = utf8decoder.decode(data);
+            this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, rationale, true).subscribe(
+                data => this.router.navigateByUrl('/pipeline')
             );
         });
     }
