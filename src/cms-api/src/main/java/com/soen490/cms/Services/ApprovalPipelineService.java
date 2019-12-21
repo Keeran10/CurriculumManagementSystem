@@ -82,10 +82,15 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @param currentPosition
      */
-    public void pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+    public String pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
         log.info("pushing package " + packageId + " to next position in pipeline");
         String position = pipeline.get(currentPosition);
-        String nextPosition = pipeline.get(currentPosition + 1);
+        String nextPosition;
+        try {
+            nextPosition = pipeline.get(currentPosition + 1); // get next position if it exists
+        } catch(Exception e) { // last position - no next position, throws exception
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+        }
         RequestPackage requestPackage = null;
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
 
@@ -119,6 +124,8 @@ public class ApprovalPipelineService {
         }
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
+
+        return "";
     }
 
     /**
@@ -197,8 +204,8 @@ public class ApprovalPipelineService {
      * @param id
      * @return
      */
-    public boolean executeUpdate(int id) {
-        return true;
+    public String finalizeDossierRequests(RequestPackage dossier) {
+        return "Making the requested changes to the database";
     }
 
     /**
