@@ -36,8 +36,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -638,5 +640,21 @@ public class RequestPackageService {
     public Optional<Revision<Integer, RequestPackage>> getLatestRequestPackageRevision(int id) {
 
         return requestPackageRepository.findLastChangeRevision(id);
+    }
+
+    public List getDossierRevisions(int id){
+
+        log.info("Retrieving revision history for dossier " + id + ".");
+
+        List<Object[]> revisions = requestPackageRepository.getRevisions(id);
+
+        List<DossierVersion> versions = new ArrayList<>();
+
+        if(revisions.isEmpty()) return null;
+
+        for(Object[] r : revisions)
+            versions.add(new DossierVersion((Integer) r[0], (Integer) r[1], (Byte) r[2], (byte[]) r[3], (BigInteger) r[4]));
+
+        return versions;
     }
 }

@@ -29,14 +29,11 @@ import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.Revisions;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,13 +41,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -210,23 +203,10 @@ public class RequestPackageController {
         return requestPackageService.saveRequestFile(doc, id);
     }
 
-    @GetMapping("/versions")
-    public List<DossierVersion> getRequestPackageRevisions(@RequestParam int id){
 
-        Revisions revisions = requestPackageService.getRequestPackageRevisions(id);
-
-        List<Revision> revisionList = revisions.getContent();
-
-        List<DossierVersion> versions = new ArrayList<>();
-
-        for(Revision revision : revisionList){
-
-            RequestPackage requestPackage = (RequestPackage) revision.getEntity();
-
-            versions.add(new DossierVersion(requestPackage.getPdfFile(), (Instant) revision.getMetadata().getRevisionInstant().get()));
-        }
-
-        return versions;
+    @GetMapping("/dossier_revisions")
+    public List getDossierRevisions(@RequestParam int id){
+        return requestPackageService.getDossierRevisions(id);
     }
 
 }
