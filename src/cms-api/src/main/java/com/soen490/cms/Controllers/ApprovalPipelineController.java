@@ -107,19 +107,18 @@ public class ApprovalPipelineController {
     @PostMapping(value = "/validatePackage")
     public boolean setApprove(@RequestParam("user_id") int userId, @RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId,
                               @RequestParam(value = "rationale", required = false) String rationale, @RequestParam("is_approved") boolean isApproved) {
+        log.info("user: " + userId + ", package_id: " + packageId + ", approval_pipeline_id: " + approvalPipelineId + ", is_approved: " + isApproved);
         User user = requestPackageService.getUser(userId);
+        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineService.findApprovalPipelineRequestPackage(approvalPipelineId, packageId);
         String type = user.getUserType();
-        String currentPosition = getCurrentPosition(packageId, approvalPipelineId);
+        String currentPosition = approvalPipelineRequestPackage.getPosition();
         List<String> pipeline = approvalPipelineService.getPipeline(approvalPipelineId);
 
         if(isCorrectUserType(type, currentPosition)) { // figure out how to retrieve/set user type in front end
             int index = pipeline.indexOf(currentPosition);
             if(isApproved) { // move to next step
-                if(index == pipeline.size() - 1) { // last step, merge change package into database
-                    approvalPipelineService.executeUpdate(packageId);
-                } else {
-                    approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index);
-                }
+                approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index);
+
             } else { // not approved - remove request
                 approvalPipelineService.removePackage(packageId, approvalPipelineId, rationale);
             }
@@ -166,17 +165,17 @@ public class ApprovalPipelineController {
     private boolean isCorrectUserType(String userType, String position) {
         if(userType.equals("admin")) {
             return true;
-        } else if(userType.equals("senate") && position.equals("Senate")) {
+        } else if(userType.equals("Senate") && position.equals("Senate")) {
             return true;
-        } else if(userType.equals("fcc") && position.equals("Faculty Council")) {
+        } else if(userType.equals("Faculty Council") && position.equals("Faculty Council")) {
             return true;
-        } else if(userType.equals("dcc") && position.equals("Department Curriculum Committee")) {
+        } else if(userType.equals("Department Curriculum Committee") && position.equals("Department Curriculum Committee")) {
             return true;
-        } else if(userType.equals("apc") && position.equals("APC")) {
+        } else if(userType.equals("APC") && position.equals("APC")) {
             return true;
-        } else if(userType.equals("departmentCouncil") && position.equals("Department Council")) {
+        } else if(userType.equals("Department Council") && position.equals("Department Council")) {
             return true;
-        } else if(userType.equals("ugsc") && position.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
+        } else if(userType.equals("UGSC") && position.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
             return true;
         } else {
             return false;
