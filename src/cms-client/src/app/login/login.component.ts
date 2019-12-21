@@ -63,7 +63,11 @@ export class LoginComponent implements OnInit {
       this.user = data;
       this.cookieService.set('user', this.user.id.toString());
       this.cookieService.set('userName', this.user.firstName);
-      this.router.navigate(['package']);
+      if (this.user.userType === 'professor') {
+        this.router.navigate(['package']);
+      } else { // if any approval body
+        this.router.navigate(['homepage']);
+      }
     }));
     console.log(this.user);
   }
