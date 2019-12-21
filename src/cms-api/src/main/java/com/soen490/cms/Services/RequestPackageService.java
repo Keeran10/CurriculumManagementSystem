@@ -74,7 +74,6 @@ public class RequestPackageService {
 
     /**
      * Saves an edited course to the database.
-     * Todo: Equivalent, package_id, and user are set to defaults, commented out or still missing.
      * @param requestForm Stringified JSON received from client
      * @return True if course has been successfully added to database.
      * @throws JSONException
@@ -90,8 +89,13 @@ public class RequestPackageService {
         JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
         JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
 
+        int original_id = (Integer) course.get("id");
+
+        if(original_id == 0)
+            return saveCreateRequest(course, courseExtras);
+
         // Changed Course and Original Course
-        List<Course> o = courseRepository.findByJsonId((Integer) course.get("id"));
+        List<Course> o = courseRepository.findByJsonId(original_id);
 
         Course original = null;
 
@@ -133,7 +137,6 @@ public class RequestPackageService {
         request.setOriginalId((Integer) course.get("id"));
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
-        request.setRequestPackage(null);
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
         request.setUser(userRepository.findById(user_id));
         request.setRequestPackage(requestPackage);
@@ -255,6 +258,253 @@ public class RequestPackageService {
         return request.getId();
     }
 
+
+    /**
+     * Saves a newly created course to the database.
+     * @param course, courseExtras
+     * @return request_id if course and request have been successfully added to database.
+     * @throws JSONException
+     */
+    private int saveCreateRequest(JSONObject course, JSONObject courseExtras) throws JSONException {
+
+        int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
+        int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+
+        RequestPackage requestPackage = requestPackageRepository.findById(package_id);
+
+        Request request = new Request();
+
+        Course c = new Course();
+
+        c.setName((String) course.get("name"));
+        c.setNumber((Integer) course.get("number"));
+        c.setTitle((String) course.get("title"));
+        c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
+        c.setDescription((String) course.get("description"));
+        c.setLevel((Integer) course.get("level"));
+        c.setNote((String) course.get("note"));
+        c.setLabHours(Double.valueOf(String.valueOf(course.get("labHours"))));
+        c.setTutorialHours(Double.valueOf(String.valueOf(course.get("tutorialHours"))));
+        c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
+        c.setIsActive(0);
+
+        //c.setProgram(original.getProgram());
+
+        courseRepository.save(c);
+
+        // Requests
+        request.setRequestType(1);
+        request.setTargetType(2);
+        request.setTargetId(c.getId());
+        request.setOriginalId(0);
+        request.setRationale((String) courseExtras.get("rationale"));
+        request.setResourceImplications((String) courseExtras.get("implications"));
+        request.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        request.setUser(userRepository.findById(user_id));
+        request.setRequestPackage(requestPackage);
+
+        request.setTitle(c.getName().toUpperCase() + c.getNumber() + "_create");
+
+        // TODO: Degree Requirements
+        /*
+        ArrayList<DegreeRequirement> list = new ArrayList<>();
+
+
+        for(DegreeRequirement dr : original.getDegreeRequirements()){
+
+            DegreeRequirement cdr = new DegreeRequirement();
+
+            cdr.setCore(dr.getCore());
+            cdr.setDegree(dr.getDegree());
+            cdr.setCourse(c);
+
+            degreeRequirementRepository.save(cdr);
+
+            dr.getDegree().getDegreeRequirements().add(cdr);
+
+            list.add(cdr);
+
+        }
+        c.setDegreeRequirements(list);
+        */
+
+        // Requisites
+        String pre = (String) courseExtras.get("prerequisites");
+        String co = (String) courseExtras.get("corequisites");
+        String anti = (String) courseExtras.get("antirequisites");
+        String eq = (String) courseExtras.get("equivalents");
+
+        String[] prerequisites = pre.split(";|\\,");
+        String[] corequisites = co.split(";|\\,");
+        String[] antirequisites = anti.split(";|\\,");
+        String[] equivalents = eq.split(";|,|or");
+
+        for(String prerequisite : prerequisites){
+
+            prerequisite = prerequisite.trim();
+
+            if(prerequisite.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                if(prerequisite.startsWith("credits", 3)){
+                    requisite.setName(prerequisite);
+                    requisite.setNumber(0);
+                }
+                else{
+                    requisite.setName(prerequisite.substring(0, 4).trim());
+                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
+                }
+                requisite.setType("prerequisite");
+                requisiteRepository.save(requisite);
+            }
+
+        }
+        for(String corequisite : corequisites){
+
+            corequisite = corequisite.trim();
+
+            if(corequisite.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(corequisite.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
+                requisite.setType("corequisite");
+                requisiteRepository.save(requisite);
+            }
+        }
+        for(String antirequisite : antirequisites){
+
+            antirequisite = antirequisite.trim();
+
+            if(antirequisite.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(antirequisite.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
+                requisite.setType("antirequisite");
+                requisiteRepository.save(requisite);
+            }
+        }
+        for(String equivalent : equivalents){
+
+            equivalent = equivalent.trim();
+
+            if(equivalent.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(equivalent.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
+                requisite.setType("equivalent");
+                requisiteRepository.save(requisite);
+            }
+        }
+
+        courseRepository.save(c);
+
+        requestRepository.save(request);
+
+
+        log.info("course saved: " + c);
+        log.info("request saved: " + request);
+
+        requestPackage.getRequests().add(request);
+
+        return request.getId();
+    }
+
+
+    /**
+     * saves a removal request to database.
+     * @param requestForm
+     * @return the request id upon successful insertion into database
+     * @throws JSONException
+     */
+    public int saveRemovalRequest(String requestForm) throws JSONException {
+
+        log.info("Json received: " + requestForm);
+
+        JSONObject json = new JSONObject(requestForm);
+
+        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
+
+        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
+        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
+
+        int original_id = (Integer) course.get("id");
+
+        if(original_id == 0)
+            return saveCreateRequest(course, courseExtras);
+
+        // Changed Course and Original Course
+        List<Course> o = courseRepository.findByJsonId(original_id);
+
+        Course original = null;
+
+        if(!o.isEmpty())
+            original = o.get(0);
+        else return 0;
+
+        int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
+        int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+
+        RequestPackage requestPackage = requestPackageRepository.findById(package_id);
+
+        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+
+        if(request == null)
+            request = new Request();
+
+        // Requests
+        request.setRequestType(3);
+        request.setTargetType(2);
+        request.setTargetId(0);
+        request.setOriginalId(original.getId());
+        request.setRationale((String) courseExtras.get("rationale"));
+        request.setResourceImplications((String) courseExtras.get("implications"));
+        request.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        request.setUser(userRepository.findById(user_id));
+        request.setRequestPackage(requestPackage);
+
+        request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_remove");
+
+        requestRepository.save(request);
+
+        return request.getId();
+    }
+
+
+    // delete course request along its requested course
+    public boolean deleteCourseRequest(int requestId) {
+
+        log.info("Delete request " + requestId + " and remove all its dependencies as well.");
+
+        Request request = requestRepository.findByRequestId(requestId);
+
+        if(request == null)
+            return false;
+
+        Course requested_course = courseRepository.findById(request.getTargetId());
+
+        for(Requisite requisite: requested_course.getRequisites())
+            requisiteRepository.delete(requisite);
+
+        for(DegreeRequirement dr: requested_course.getDegreeRequirements())
+            degreeRequirementRepository.delete(dr);
+
+        courseRepository.delete(requested_course);
+
+        requestRepository.delete(request);
+
+        return true;
+    }
 
     // returns list of packages
     public List<RequestPackage> getRequestPackagesByDepartment(int department_id) {

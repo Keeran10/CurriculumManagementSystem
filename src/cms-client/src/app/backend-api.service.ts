@@ -131,7 +131,7 @@ export class ApiService {
   }
 
   public viewPdf(packageId: string) {
-    window.open();
+    //window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'
