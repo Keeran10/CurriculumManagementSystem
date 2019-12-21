@@ -35,11 +35,11 @@ import { CookieService } from 'ngx-cookie-service';
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private api: ApiService,
-              private cookieService: CookieService,
-              private router: Router
-              ) {
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private cookieService: CookieService,
+    private router: Router
+  ) {
   }
 
   isLoginError = false;
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
       this.user = data;
       this.cookieService.set('user', this.user.id.toString());
       this.cookieService.set('userName', this.user.firstName);
-      if (this.user.userType === 'professor') {
+      if (this.user.userType === 'Professor') {
         this.router.navigate(['package']);
       } else { // if any approval body
         this.router.navigate(['homepage']);

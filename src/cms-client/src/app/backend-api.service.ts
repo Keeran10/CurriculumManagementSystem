@@ -187,24 +187,4 @@ export class ApiService {
     return this.http.request(req);
   }
 
-<<<<<<< HEAD
-=======
-
-  public setApprovalStatus(userId: any, packageId: any, pipelineId: any, rationale: any, isApproved: any) {
-    console.log('Changing status of package');
-
-    const formdata: FormData = new FormData();
-    formdata.append('package_id', packageId);
-    formdata.append('approval_pipeline_id', pipelineId);
-    formdata.append('rationale', rationale);
-    formdata.append('is_approved', isApproved);
-
-    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
-      reportProgress: true,
-      responseType: 'text',
-    });
-    return this.http.request(req);
-  }
-
->>>>>>> 843e8f8b668f53fd994962fa6c7df3236b560dfe
 }

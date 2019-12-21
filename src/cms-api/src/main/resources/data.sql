@@ -45,12 +45,13 @@ INSERT IGNORE INTO department VALUES (8, 'Mechanical, Industrial and Aerospace E
 
 
 -- id, email, firstname, lastname, password, user_type, department
-INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'Faculty Council', 4);
+INSERT IGNORE INTO user VALUES (1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'Professor', 4);
 INSERT IGNORE INTO user VALUES (2, 'felix@soen.com', 'Felix', 'Rosinante','123', 'Department Curriculum Committee', 8);
-INSERT IGNORE INTO user VALUES (3, 'chad@soen.com', 'Chad', 'Lee','123', 'APC', 8);
-INSERT IGNORE INTO user VALUES (4, 'rhonda@soen.com', 'Rhonda', 'Philips','123', 'Department Council', 8);
-INSERT IGNORE INTO user VALUES (5, 'billy@soen.com', 'Billy', 'Bob','123', 'UGSC', 8);
-INSERT IGNORE INTO user VALUES (5, 'olga@soen.com', 'Olga', 'Hashtag','123', 'Senate', 8);
+INSERT IGNORE INTO user VALUES (3, 'doris@soen.com', 'Doris', 'Fitzgerald','123', 'Faculty Council', 4);
+INSERT IGNORE INTO user VALUES (4, 'chad@soen.com', 'Chad', 'Lee','123', 'APC', 8);
+INSERT IGNORE INTO user VALUES (5, 'rhonda@soen.com', 'Rhonda', 'Philips','123', 'Department Council', 8);
+INSERT IGNORE INTO user VALUES (6, 'billy@soen.com', 'Billy', 'Bob','123', 'UGSC', 8);
+INSERT IGNORE INTO user VALUES (7, 'olga@soen.com', 'Olga', 'Hashtag','123', 'Senate', 8);
 
 
 -- id, desc, active, name, department_id
