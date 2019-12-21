@@ -130,7 +130,7 @@ public class ApprovalPipelineController {
     }
 
     /**
-     * Returns the rejection raitonale for a request package
+     * Returns the rejection raitonale for an approval package
      *
      * @param package_id
      * @return

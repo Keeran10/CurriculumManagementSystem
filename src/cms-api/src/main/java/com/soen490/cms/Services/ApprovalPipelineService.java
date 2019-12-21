@@ -134,7 +134,7 @@ public class ApprovalPipelineService {
         requestPackage.setRejectionRationale(rationale);
         approvalPipelineRequestPackageRepository.remove(pipelineId, packageId);
         requestPackageRepository.save(requestPackage);
-        requestPackageService.deleteCourseRequest(packageId);
+        //requestPackageService.deleteCourseRequest(packageId);
         return true;
     }
 
