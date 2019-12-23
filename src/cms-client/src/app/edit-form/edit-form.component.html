@@ -19,9 +19,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-
+<mat-card>
 <div class="container">
+  <mat-card>
+    <mat-card-header>
   <h1 class="title">Edit Course Page</h1>
+    </mat-card-header>
   <form class="edit-form">
     <mat-form-field class="row1col1">
       <input autofocus matInput placeholder="Program" [(ngModel)]="courseEditable.name" name="department">
@@ -67,8 +70,10 @@
     </mat-form-field>
 
   </form>
+  </mat-card>
 
   <div class="edited-text">
+    <mat-card>
     <span>
       <b>
         <span style="display: inline-block" semanticDiff [left]="courseOriginal.name"
@@ -126,17 +131,26 @@
       </i>
     </div>
     <br>
-    <button mat-raised-button (click)="highlightChanges()">Highlight Changes</button>
-    <app-impact-statement [course]="courseEditable" [courseExtras]="editedModel"></app-impact-statement>
+    <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
+     <app-impact-statement [course]="courseEditable" [courseExtras]="editedModel"></app-impact-statement>
     <br><br>
-    <span>Rationale:</span>
+    <span><b>Rationale:</b></span>
     <br>
     <span>{{editedModel.rationale}}</span>
+      <div *ngIf="editedModel.rationale == '' ">
+        No rationale is available for this course.
+      </div>
     <br>
-    <span>Resource Implications:</span>
+      <span><b>Resource Implications:</b></span>
     <br>
     <span>{{editedModel.implications}}</span>
+      <div *ngIf="editedModel.implications == '' ">
+        No implication is available for this course.
+      </div>
+    </mat-card>
   </div>
+
 </div>
 <app-support-documents></app-support-documents>
 <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
+</mat-card>

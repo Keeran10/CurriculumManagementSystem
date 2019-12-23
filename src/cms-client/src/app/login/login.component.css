@@ -20,6 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
 
+.top-container{
+  background-image: repeating-linear-gradient(whitesmoke, white);
+  position:relative;
+  padding-top:1px;
+  padding-bottom: 30px;
+}
+
+.middle-container{
+  background-image: repeating-linear-gradient(white, whitesmoke, white);
+  position:relative;
+  padding-top:5px;
+  padding-bottom: 50px;
+}
 .example-form {
   min-width: 150px;
   max-width: 500px;
@@ -37,4 +50,6 @@
 
 h1 {
   margin: 3% 10% 0% 30%;
+  font-family: Calibri;
+  color: black;
 }

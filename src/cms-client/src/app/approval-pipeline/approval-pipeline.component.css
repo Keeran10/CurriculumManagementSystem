@@ -37,3 +37,16 @@
 .custom_options {
     font-size: 14px;
 }
+
+.predefined{
+  height: 450px;
+}
+
+.custom{
+  height: 450px;
+}
+
+.predefined-button{
+  margin-top: 150px;
+  margin-left: 80%;
+}
