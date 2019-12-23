@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
+import { ApproverHomepageComponent } from './approver-homepage/approver-homepage.component';
 import { CommonModule } from '@angular/common';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { EditFormComponent } from './edit-form/edit-form.component';
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'approval', component: ApprovalPipelineComponent},
   { path: 'search', component: SearchPageComponent },
   { path: 'editForm/:id', component: EditFormComponent },
+  { path: 'homepage', component: ApproverHomepageComponent },
   { path: 'pipeline', component: PipelineTrackingComponent },
   { path: 'package', component: PackageComponent },
   { path: '', component: LoginComponent }
