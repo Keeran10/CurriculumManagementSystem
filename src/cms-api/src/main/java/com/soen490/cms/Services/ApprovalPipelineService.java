@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.*;
 
 @Log4j2
@@ -85,12 +86,18 @@ public class ApprovalPipelineService {
     public String pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
         log.info("pushing package " + packageId + " to next position in pipeline");
         String position = pipeline.get(currentPosition);
-        String nextPosition;
-        try {
+        String nextPosition = "";
+
+        try{
             nextPosition = pipeline.get(currentPosition + 1); // get next position if it exists
-        } catch(Exception e) { // last position - no next position, throws exception
+        } catch(NullPointerException | IndexOutOfBoundsException e) {
             return finalizeDossierRequests(requestPackageRepository.findById(packageId));
         }
+
+        if(nextPosition == null) { // at the last position in the pipeline, approve the dossier
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+        }
+
         RequestPackage requestPackage = null;
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
 
@@ -201,10 +208,11 @@ public class ApprovalPipelineService {
      * TODO
      * Commits the changes of a request package
      *
-     * @param id
+     * @param dossier
      * @return
      */
     public String finalizeDossierRequests(RequestPackage dossier) {
+        log.info("Finalizing dossier " + dossier.getId());
         return "Making the requested changes to the database";
     }
 
