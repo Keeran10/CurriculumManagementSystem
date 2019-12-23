@@ -25,6 +25,8 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,12 +41,15 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
+    @Audited
     private String firstName;
 
+    @Audited
     private String lastName;
 
     private String userType; // values = ("admin" | "user" | "senate" | "dcc" | "departmentCouncil" | "apc" | "fcc" | "ugsc"
 
+    @Audited
     private String email;
 
     private String password;

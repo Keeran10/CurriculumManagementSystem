@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -648,13 +647,21 @@ public class RequestPackageService {
 
         List<Object[]> revisions = requestPackageRepository.getRevisions(id);
 
-        List<DossierVersion> versions = new ArrayList<>();
+        List<DossierRevision> versions = new ArrayList<>();
 
         if(revisions.isEmpty()) return null;
 
+        User user = null;
+
         for(Object[] r : revisions)
-            versions.add(new DossierVersion((Integer) r[0], (Integer) r[1], (Byte) r[2], (byte[]) r[3], (BigInteger) r[4]));
+            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[4], user, (byte[]) r[3]));
 
         return versions;
+    }
+
+
+    public void revertDossier(int rev){
+
+        //RequestPackage requestPackage = requestPackageRepository.findByRevId(rev);
     }
 }

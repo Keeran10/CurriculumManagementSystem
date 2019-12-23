@@ -25,12 +25,15 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Data
+@Audited
 @ToString(exclude= {"requestPackage"})
 public class Request {
 
@@ -58,6 +61,7 @@ public class Request {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotAudited
     @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
     @ManyToOne
     @JoinColumn(name = "package_id")
