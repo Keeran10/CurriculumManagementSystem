@@ -63,7 +63,10 @@ export class EditFormComponent {
     this.editedModel.packageId = Number(packageId);
     this.model.userId = Number(userId);
     this.editedModel.userId = Number(userId);
-    if(requestId === '0'){
+    if(this.id === '0'){
+      // set up empty page for edit
+    }
+    else if(requestId === '0'){
       this.api.getCourse(this.id).subscribe(data => {
         this.courseOriginal = data;
         this.courseEditable = Object.assign({}, data);
