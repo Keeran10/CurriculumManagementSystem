@@ -3,9 +3,11 @@ package com.soen490.cms.Services;
 import com.soen490.cms.Models.ApprovalPipeline;
 import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
 import com.soen490.cms.Models.RequestPackage;
+import com.soen490.cms.Models.User;
 import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import com.soen490.cms.Repositories.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +29,12 @@ public class ApprovalPipelineService {
 
     @Autowired
     RequestPackageRepository requestPackageRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    MailService mailService;
 
     @Autowired
     SenateService senateService;
@@ -100,6 +108,7 @@ public class ApprovalPipelineService {
 
         RequestPackage requestPackage = null;
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
+        List<User> users = userRepository.findUserByType(nextPosition);
 
         if(position.equals("Department Curriculum Committee")) {
             requestPackage = dccService.sendPackage(packageId);
@@ -129,10 +138,30 @@ public class ApprovalPipelineService {
         } else if(nextPosition.equals("Senate")) {
             senateService.receivePackage(requestPackage);
         }
+
+        sendMail(users, requestPackage); // send an email notification to all users in the next position
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
 
         return "";
+    }
+
+    /**
+     * Uses the Mail Service to send an email to the users in the next approving body according to the Dossier's
+     * pipeline
+     *
+     * @param users
+     * @param dossier
+     * @return
+     */
+    private boolean sendMail(List<User> users, RequestPackage dossier) {
+        boolean success = true;
+
+        for(User user : users) {
+            success = mailService.sendMailService(dossier.getId(), user);
+        }
+
+        return success;
     }
 
     /**
