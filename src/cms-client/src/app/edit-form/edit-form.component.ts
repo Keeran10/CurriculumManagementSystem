@@ -64,7 +64,28 @@ export class EditFormComponent {
     this.model.userId = Number(userId);
     this.editedModel.userId = Number(userId);
     if(this.id === '0'){
-      // set up empty page for edit
+      this.courseEditable = {
+        id: 0,
+        credits: 4,
+        degreeRequirements: [],
+        description: '',
+        equivalent: [],
+        isActive: false,
+        labHours: 0,
+        lectureHours: 0,
+        level: 1,
+        name: '',
+        note: '',
+        number: 100,
+        outline: '',
+        program: null,
+        requisites: [],
+        title: '',
+        tutorialHours: 0
+      };
+      this.courseOriginal = Object.assign({}, this.courseEditable);
+      this.courseOriginal.number = null;
+      this.courseOriginal.credits = null;
     }
     else if(requestId === '0'){
       this.api.getCourse(this.id).subscribe(data => {
