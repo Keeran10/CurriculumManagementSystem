@@ -19,7 +19,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
+<mat-card>
+  <mat-card-header>
 <h1>Enter your search criteria below</h1>
+  </mat-card-header>
 <form class="example-form" id="searchForm">
   <mat-form-field class="example-full-width">
       <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
@@ -38,7 +41,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <button class="mat-search" mat-raised-button (click)="showResults()">Search
+  <button class="mat-search" mat-raised-button color="primary" (click)="showResults()">Search
   </button>
 </form>
 
@@ -72,5 +75,5 @@
     </div>
   </div>
 </div>
-
+</mat-card>
 
