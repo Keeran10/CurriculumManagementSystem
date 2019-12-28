@@ -19,9 +19,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-
+<!doctype html>
+<html>
+<body>
+<div class="top-container">
 <h1>Please enter your login information</h1>
+</div>
 <br><br>
+<div class="middle-container">
 <div *ngIf="isLoginError" class="red-text center error-message">
   <i class="material-icons">error</i> Incorrect username or password
 </div>
@@ -34,7 +39,10 @@
   </mat-form-field>
   <div class="row">
     <div class="input-field col s12">
-      <button mat-raised-button [disabled]="!loginForm.valid" class="btn-large btn-submit" type="submit">Login</button>
+      <button mat-raised-button [disabled]="!loginForm.valid" class="btn-large btn-submit" type="submit"><mat-icon>account_circle</mat-icon> Login</button>
     </div>
   </div>
 </form>
+</div>
+</body>
+</html>

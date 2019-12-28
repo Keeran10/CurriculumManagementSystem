@@ -22,14 +22,20 @@
 
 .container{
   display: grid;
-  grid-template-columns: 1fr 700px 700px 1fr;
+  grid-template-columns: 1fr 700px 0px 1fr;
   grid-template-rows: 1fr;
+}
+
+.mat-stroked-button{
+  margin: 10px;
+  text-shadow: black;
 }
 
 .title{
   grid-column: span 2;
   grid-row-start: 0;
   grid-row-end: 1;
+  margin: 1px;
 }
 
 .edit-form{
@@ -119,15 +125,12 @@
   grid-row-end: 10;
 }
 
-.edited-text{
-  grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 2;
+mat-card{
+  margin: 5px;
 }
 
 .submitButton{
-  float: right;
+
   height: 100px;
   width: 400px;
   font-size: 20px;

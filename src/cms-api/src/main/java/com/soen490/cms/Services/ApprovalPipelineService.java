@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.*;
 
 @Log4j2
@@ -44,6 +45,9 @@ public class ApprovalPipelineService {
 
     @Autowired
     UndergradStudiesCommitteeService undergradStudiesCommitteeService;
+
+    @Autowired
+    RequestPackageService requestPackageService;
 
     public RequestPackage findRequestPackage(int id) {
         log.info("find request package with id " + id);
@@ -79,10 +83,21 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @param currentPosition
      */
-    public void pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+    public String pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
         log.info("pushing package " + packageId + " to next position in pipeline");
         String position = pipeline.get(currentPosition);
-        String nextPosition = pipeline.get(currentPosition + 1);
+        String nextPosition = "";
+
+        try{
+            nextPosition = pipeline.get(currentPosition + 1); // get next position if it exists
+        } catch(NullPointerException | IndexOutOfBoundsException e) {
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+        }
+
+        if(nextPosition == null) { // at the last position in the pipeline, approve the dossier
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+        }
+
         RequestPackage requestPackage = null;
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
 
@@ -116,6 +131,30 @@ public class ApprovalPipelineService {
         }
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
+
+        return "";
+    }
+
+    /**
+     * Removes a request package and its tracking when it is rejected by an approving body
+     *
+     * @param packageId
+     * @param pipelineId
+     * @param rationale
+     * @return
+     */
+    public boolean removePackage(int packageId, int pipelineId, String rationale) {
+        RequestPackage requestPackage = requestPackageRepository.findById(packageId);
+        requestPackage.setRejectionRationale(rationale);
+        approvalPipelineRequestPackageRepository.remove(pipelineId, packageId);
+        requestPackageRepository.save(requestPackage);
+        //requestPackageService.deleteCourseRequest(packageId);
+        return true;
+    }
+
+    public String getRejectionRationale(int packageId) {
+        RequestPackage requestPackage = requestPackageRepository.findById(packageId);
+        return requestPackage.getRejectionRationale();
     }
 
     /**
@@ -126,7 +165,7 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @param currentPosition
      */
-    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition, String rationale) {
         log.info("push package " + packageId + " to previous position in pipeline");
         String position = pipeline.get(currentPosition);
         String previousPosition = pipeline.get(currentPosition + 1);
@@ -169,11 +208,12 @@ public class ApprovalPipelineService {
      * TODO
      * Commits the changes of a request package
      *
-     * @param id
+     * @param dossier
      * @return
      */
-    public boolean executeUpdate(int id) {
-        return true;
+    public String finalizeDossierRequests(RequestPackage dossier) {
+        log.info("Finalizing dossier " + dossier.getId());
+        return "Making the requested changes to the database";
     }
 
     /**
