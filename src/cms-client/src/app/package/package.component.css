@@ -20,12 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
 
+body {
+  background-color: #BB7884;
+}
+
+mat-card{
+  right: 0px;
+  padding: 0;
+  margin-left: 120px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  max-width: 1200px;
+}
+
 .container{
     display: grid;
     grid-template-columns: 300px auto;
     grid-template-rows: 150px auto 100px;
-  margin-left: 0;
-  margin-right: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 
@@ -45,8 +58,9 @@
 
 .inner-container{
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 7fr 1fr;
     grid-template-rows: auto;
+    margin-left: 1px;
 }
 
 .left{
@@ -78,3 +92,5 @@
 .new-request{
   color: crimson;
 }
+
+
