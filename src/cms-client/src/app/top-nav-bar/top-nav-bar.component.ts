@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CookieService} from 'ngx-cookie-service';
-import {ApiService} from '../backend-api.service';
-import {Router} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-top-nav-bar',
@@ -12,9 +10,7 @@ export class TopNavBarComponent implements OnInit {
 
   userName = 'User';
 
-  constructor(private cookieService: CookieService,
-              private api: ApiService,
-              private router: Router) { }
+  constructor(private cookieService: CookieService) { }
 
   ngOnInit() {
     this.userName = this.cookieService.get('userName');
