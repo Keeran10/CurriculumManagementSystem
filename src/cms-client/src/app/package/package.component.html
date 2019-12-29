@@ -19,50 +19,49 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-
+<body>
+<app-top-nav-bar></app-top-nav-bar>
+<mat-card class="outerMatCard">
 <div class="container">
-    <div class="title">
-        <h1>Welcome {{userName}}</h1>
-        <h2>Here are your packages:</h2>
-    </div>
     <div class="packages">
         <div *ngFor="let package of packages; let i = index">
             <mat-card class="inner-container">
                 <div class="left">
-                    <span>Package {{package.id}}</span>
+                    <span>Package {{package.id}}</span><br><br>
                     <div>
                         <a (click)="packageSelect(package.id, 0, 'pipeline')">
                             Progress
-                        </a>
+                        </a><br><br>
                     </div>
 
                     <div *ngFor="let request of package.requests">
-                        <a (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
+                        <a class="request" (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
                             {{request.title}}</a>
                         <div>
                             <label>
                                 <input type="file" (change)="selectFile($event)">
                             </label>
                             <button [disabled]="!selectedFiles" (click)="upload(request.id)">Upload Support
-                                Document</button>
+                                Document</button><br><br>
                         </div>
                     </div>
                     <div>
-                        <a (click)="packageSelect(package.id, 0, 'search')">Create new request</a>
+                        <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new request</a>
                     </div>
                     <br><br>
                     <app-generic-file-uploader [documentName]="'Internal memo'"></app-generic-file-uploader>
                     <app-generic-file-uploader [documentName]="'Cover Letter A'"></app-generic-file-uploader>
-                    <app-generic-file-uploader [documentName]="'Cover Letter B'"></app-generic-file-uploader>
+                    <app-generic-file-uploader [documentName]="'Cover Letter B'"></app-generic-file-uploader> <br>
                 </div>
+
                 <div class="right">
-                    <button mat-raised-button color="primary" (click)="generatePdf(package.id, i)">Generate PDF</button>
-                    <br><br>
-                    <button mat-raised-button color="primary" *ngIf="isPdfAvailable[i]"
+                    <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate PDF</button>
+
+                    <button mat-stroked-button color="warn" *ngIf="isPdfAvailable[i]"
                         (click)="viewPdf(package.id)">View PDF</button>
-                    <br><br>
+
                     <a (click)="packageSelect(package.id, 0, 'approval')">
-                        <button mat-raised-button color="primary">Submit for Approval</button>
+                        <button mat-stroked-button color="primary">Submit for Approval</button>
                     </a>
                 </div>
             </mat-card>
@@ -72,3 +71,6 @@
     <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
         Package</button>
 </div>
+</mat-card>
+<app-footer></app-footer>
+</body>

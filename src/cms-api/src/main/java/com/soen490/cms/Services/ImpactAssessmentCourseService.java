@@ -36,6 +36,38 @@ public class ImpactAssessmentCourseService {
     @Autowired
     SearchService searchService;
 
+    // Object request causes trouble. Methods have been refactored to accept other parameters to avoid creating
+    // unsaved request objects.
+    //----------------------------------------------------------------------------
+    public Map<String, Object> getCourseImpact2(Course originalCourse, Course requestedCourse, int requestType){
+        //log.info("Getting course Impact for Request Package: ", request);
+        Map<String, Object> responseMap = new HashMap();
+        switch (requestType){
+            //case 1: return courseCreationImpactReport2(request);
+            case 2: return courseEditedImpact2(originalCourse, requestedCourse, requestType);
+            //case 3: return courseRemovalImpactReport2(request);
+            default: {
+                responseMap.put("error","wrong course Request Type");
+                return responseMap;
+            }
+        }
+    }
+
+    private Map<String, Object> courseEditedImpact2(Course originalCourse, Course requestedCourse, int requestType){
+
+        if(originalCourse == null){
+            Map<String, Object> responseMap = new HashMap();
+            responseMap.put("error","Original course not referred in request");
+            log.info("Impact Report Error for course Update Request: Original course does not exist");
+            return responseMap;
+        }
+        else{
+            Map<String, Object> responseMap = getCourseDiffReport(originalCourse, requestedCourse);
+            responseMap.put("RequestType", requestType);
+            return responseMap;
+        }
+    }
+    //----------------------------------------------------------------------------
     /**
      * Based on the Course Request type gets the Impact report
      * case 1: Course Creation impact

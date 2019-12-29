@@ -1,0 +1,19 @@
+import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+
+@Component({
+  selector: 'app-top-nav-bar',
+  templateUrl: './top-nav-bar.component.html',
+  styleUrls: ['./top-nav-bar.component.css']
+})
+export class TopNavBarComponent implements OnInit {
+
+  userName = 'User';
+
+  constructor(private cookieService: CookieService) { }
+
+  ngOnInit() {
+    this.userName = this.cookieService.get('userName');
+  }
+
+}

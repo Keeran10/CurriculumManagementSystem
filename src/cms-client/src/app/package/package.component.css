@@ -20,24 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
 
+body {
+  background-color: #F3E7E9;
+}
+
+mat-card{
+  right: 0px;
+  padding: 0;
+  margin-left: 120px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  max-width: 1200px;
+}
+
+.outerMatCard{
+  background-color: #F3E7E9;
+}
+
 .container{
     display: grid;
     grid-template-columns: 300px auto;
     grid-template-rows: 150px auto 100px;
+    margin-left: 0;
+    margin-right: 50px;
+    background-color: #F3E7E9;
 }
 
-.title{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
 
 .packages{
     grid-column-start: 1;
     grid-column-end: 3;
-    grid-row-start: 2;
+    grid-row-start: 1;
     grid-row-end: 3;
+    background-color: #F3E7E9;
+
 }
 
 .bottom{
@@ -49,24 +65,41 @@
 
 .inner-container{
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 7fr 1fr;
     grid-template-rows: auto;
+    margin-left: 1px;
 }
 
 .left{
     grid-column-start: 1;
     grid-column-end: 2;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 .right{
-    grid-column-start: 2;
+    grid-column-start: 1;
     grid-column-end: 3;
-    justify-self: center;
-    align-self: center;
+    justify-self: auto;
+    align-self: auto;
 }
 
-a {
-    color: blue;
+.mat-stroked-button{
+  margin: 5px;
+}
+
+.mat-raised-button{
+  margin: 10px;
+}
+
+.request {
+    color: dodgerblue;
     text-decoration: underline;
     cursor: pointer;
   }
+
+.new-request{
+  color: crimson;
+}
+
+

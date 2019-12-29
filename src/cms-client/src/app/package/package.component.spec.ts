@@ -54,9 +54,9 @@ describe('PackageComponent', () => {
       const fixture = TestBed.createComponent(PackageComponent);
       const component = fixture.componentInstance;
       const apiService = TestBed.get(ApiService);
-      const cookieService = TestBed.get(CookieService); 
+      const cookieService = TestBed.get(CookieService);
       const httpClient = TestBed.get(HttpTestingController);
-      const router = TestBed.get(Router); 
+      const router = TestBed.get(Router);
 
       return { fixture, component, apiService, cookieService, httpClient, router };
     }
@@ -87,7 +87,7 @@ describe('PackageComponent', () => {
         supportingDocuments: []
       })
       spyOn(apiService, 'getAllPackages').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next(packages);
         observer.complete();
@@ -102,7 +102,7 @@ describe('PackageComponent', () => {
       const {component, apiService} = setup();
       const testPackage = new Package();
       spyOn(apiService, 'getPackage').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next(testPackage);
         observer.complete();
@@ -114,7 +114,7 @@ describe('PackageComponent', () => {
     it('should make an api call to create a generate a pdf', () => {
       const {component, apiService} = setup();
       spyOn(apiService, 'generatePdf').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next(false);
         observer.complete();
