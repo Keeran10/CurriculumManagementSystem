@@ -33,12 +33,17 @@ mat-card{
   max-width: 1200px;
 }
 
+.outerMatCard{
+  background-color: #F3E7E9;
+}
+
 .container{
     display: grid;
     grid-template-columns: 300px auto;
     grid-template-rows: 150px auto 100px;
     margin-left: 0;
-    margin-right: 0;
+    margin-right: 50px;
+    background-color: #F3E7E9;
 }
 
 
@@ -47,6 +52,8 @@ mat-card{
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
+    background-color: #F3E7E9;
+
 }
 
 .bottom{

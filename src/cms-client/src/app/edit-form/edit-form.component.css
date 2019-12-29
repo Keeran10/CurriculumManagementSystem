@@ -135,6 +135,7 @@ mat-card{
 
 .matCardBackground{
   margin: 30px;
+  background-color: #F3E7E9;
 }
 
 .submitButton{
