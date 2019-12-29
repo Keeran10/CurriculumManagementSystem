@@ -22,12 +22,6 @@
 <app-top-nav-bar></app-top-nav-bar>
 <mat-card>
 <div class="container">
-  <div class="welcome-container">
-    <div class="title">
-        <h1>Welcome {{userName}}</h1>
-        <h2>Here are your packages:</h2>
-    </div>
-  </div>
     <div class="packages">
         <div *ngFor="let package of packages; let i = index">
             <mat-card class="inner-container">

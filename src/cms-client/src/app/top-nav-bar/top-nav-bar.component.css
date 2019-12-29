@@ -2,3 +2,11 @@
   left: auto !important;
   right: 0px;
 }
+
+nav .navbar-nav li a.home{
+  color: maroon !important;
+}
+
+nav .navbar-nav li a.logout{
+  color: darkblue !important;
+}

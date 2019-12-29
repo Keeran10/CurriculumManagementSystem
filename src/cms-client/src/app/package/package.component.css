@@ -28,22 +28,11 @@
   margin-right: 0;
 }
 
-.welcome-container{
-  background: white;
-  position:relative;
-}
-
-.title{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
 
 .packages{
     grid-column-start: 1;
     grid-column-end: 3;
-    grid-row-start: 2;
+    grid-row-start: 1;
     grid-row-end: 3;
 }
 
