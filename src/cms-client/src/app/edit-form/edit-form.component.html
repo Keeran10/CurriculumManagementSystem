@@ -19,7 +19,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-<mat-card>
+<body>
+<app-top-nav-bar></app-top-nav-bar>
+<mat-card class="matCardBackground">
 <div class="container">
   <mat-card>
     <mat-card-header>
@@ -154,3 +156,5 @@
 <app-support-documents></app-support-documents>
 <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
 </mat-card>
+<app-footer></app-footer>
+</body>

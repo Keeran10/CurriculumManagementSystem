@@ -39,3 +39,27 @@ h1 {
 .mat-search {
   margin-left: 1%;
 }
+
+mat-card{
+  display: grid;
+  grid-template-columns: 1200px auto;
+  grid-template-rows: 100px auto 100px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-bottom: 420px;
+  background-color: #F3E7E9;
+}
+
+.searchContent{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.filler{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}

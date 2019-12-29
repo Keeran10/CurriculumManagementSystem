@@ -19,7 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-
+<app-top-nav-bar></app-top-nav-bar>
 <div class="container">
 
     <h2>Approval Pipeline Tracking Package (ID: #{{ id }})</h2>
@@ -27,7 +27,7 @@
     <table>
         <tbody>
             <tr *ngFor="let item of pipeline; let i=index">
-              
+
                 <td  *ngIf="i < packageLocation && item !== null">
                     <i *ngIf="i != 0" class="material-icons" id="vertical">
                         more_vert
@@ -37,7 +37,7 @@
                         assignment_turned_in
                     </i>
                 </td>
-              
+
                 <td  *ngIf="i == packageLocation && item !== null">
                     <i *ngIf="i != 0" class="material-icons" id="vertical">
                         more_vert
@@ -47,7 +47,7 @@
                         lock
                     </i>
                 </td>
-                
+
                 <td  *ngIf="i > packageLocation && item !== null">
                     <i *ngIf="i != 0" class="material-icons" id="vertical">
                         more_vert
@@ -62,7 +62,7 @@
                     <div class="item" >{{ item }}</div>
                     <div *ngIf="i < packageLocation" class="status">package (edit | <button class="view" (click)="viewPdf()">view pdf</button>)</div>
                     <div *ngIf="i == packageLocation" class="status">package under review...</div>
-                </td> 
+                </td>
 
                 </tr>
             </tbody>

@@ -19,14 +19,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-<mat-card>
+<body>
+<app-top-nav-bar></app-top-nav-bar>
+<mat-card class="outerMatCard">
 <div class="container">
-  <div class="welcome-container">
-    <div class="title">
-        <h1>Welcome {{userName}}</h1>
-        <h2>Here are your packages:</h2>
-    </div>
-  </div>
     <div class="packages">
         <div *ngFor="let package of packages; let i = index">
             <mat-card class="inner-container">
@@ -39,7 +35,7 @@
                     </div>
 
                     <div *ngFor="let request of package.requests">
-                        <a (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
+                        <a class="request" (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
                             {{request.title}}</a>
                         <div>
                             <label>
@@ -76,3 +72,5 @@
         Package</button>
 </div>
 </mat-card>
+<app-footer></app-footer>
+</body>
