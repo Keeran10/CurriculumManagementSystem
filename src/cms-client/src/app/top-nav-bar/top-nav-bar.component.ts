@@ -17,6 +17,7 @@ export class TopNavBarComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.userName = this.cookieService.get('userName');
   }
 
 }
