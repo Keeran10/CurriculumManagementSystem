@@ -5,7 +5,13 @@
   background-color: #92273B;
   color: white;
   text-align: center;
+  display: grid;
+  grid-template-columns: 1200px auto;
+  grid-template-rows: 100px auto 100px;
+  margin-left: 0;
+  margin-right: 0;
 }
+
 
 a{
   color: #f0f0d0;

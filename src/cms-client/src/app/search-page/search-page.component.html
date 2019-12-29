@@ -24,6 +24,7 @@
   <mat-card-header>
 <h1>Enter your search criteria below</h1>
   </mat-card-header>
+  <mat-card-content class="searchContent">
 <form class="example-form" id="searchForm">
   <mat-form-field class="example-full-width">
       <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
@@ -76,6 +77,7 @@
     </div>
   </div>
 </div>
+  </mat-card-content>
 </mat-card>
 
 <app-footer></app-footer>
