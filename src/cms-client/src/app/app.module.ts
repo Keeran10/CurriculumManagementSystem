@@ -58,6 +58,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 
 
 
@@ -76,7 +77,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     PipelineTrackingComponent,
     SearchPageComponent,
     SupportDocumentComponent,
-    GenericFileUploaderComponent
+    GenericFileUploaderComponent,
+    TopNavBarComponent
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
