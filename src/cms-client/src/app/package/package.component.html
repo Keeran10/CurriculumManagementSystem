@@ -40,7 +40,7 @@
                     </div>
 
                     <div *ngFor="let request of package.requests">
-                        <a (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
+                        <a class="request" (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
                             {{request.title}}</a>
                         <div>
                             <label>

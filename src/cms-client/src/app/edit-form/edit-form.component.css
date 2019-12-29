@@ -24,6 +24,8 @@
   display: grid;
   grid-template-columns: 1fr 700px 0px 1fr;
   grid-template-rows: 1fr;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .mat-stroked-button{

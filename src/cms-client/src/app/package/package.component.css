@@ -24,6 +24,8 @@
     display: grid;
     grid-template-columns: 300px auto;
     grid-template-rows: 150px auto 100px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .welcome-container{
@@ -78,7 +80,7 @@
   margin: 10px;
 }
 
-a {
+.request {
     color: dodgerblue;
     text-decoration: underline;
     cursor: pointer;
