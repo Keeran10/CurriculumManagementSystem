@@ -43,7 +43,6 @@ export interface SearchCategory {
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
-
   myControl = new FormControl();
   myChildControl = new FormControl();
   filteredOptions: Observable<string[]>;

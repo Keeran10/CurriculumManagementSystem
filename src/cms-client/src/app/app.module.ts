@@ -61,6 +61,7 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
 import { MatDialogModule } from '@angular/material/dialog';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
@@ -108,6 +109,7 @@ import { FooterComponent } from './footer/footer.component';
     ReactiveFormsModule,
     NgxFileDropModule,
     PdfViewerModule,
+    MatExpansionModule,
   ],
   providers: [
     ApiService,
