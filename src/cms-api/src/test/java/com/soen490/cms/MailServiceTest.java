@@ -9,8 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.activation.DataHandler;
+import javax.mail.internet.MimeMessage;
 import javax.mail.util.ByteArrayDataSource;
+import javax.validation.constraints.AssertTrue;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -30,11 +33,19 @@ public class MailServiceTest {
         user.setEmail("boris@soen.com");
         mailService = new MailService();
 
+        MimeMessage mimeMessage = mock(MimeMessage.class);
         when(pdfService.getPDF(1)).thenReturn(pdfString.getBytes());
         when(searchService.findUserById(1)).thenReturn(user);
+        when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
         mailService.setServiceMock(javaMailSender, pdfService, searchService);
     }
 
+    @Test
+    public void sendMailServiceTest(){
+     boolean mailSentWithSuccess = mailService.sendMailService(1, user);
+     
+     assertTrue(mailSentWithSuccess);
+    }
 
     String pdfString = "%PDF-1.4\n" +
             "%����\n" +
