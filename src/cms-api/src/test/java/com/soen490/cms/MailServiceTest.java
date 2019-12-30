@@ -8,10 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.activation.DataHandler;
 import javax.mail.internet.MimeMessage;
-import javax.mail.util.ByteArrayDataSource;
-import javax.validation.constraints.AssertTrue;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -43,7 +40,7 @@ public class MailServiceTest {
     @Test
     public void sendMailServiceTest(){
      boolean mailSentWithSuccess = mailService.sendMailService(1, user);
-     
+
      assertTrue(mailSentWithSuccess);
     }
 
