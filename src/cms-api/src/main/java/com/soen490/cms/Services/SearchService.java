@@ -46,6 +46,8 @@ public class SearchService {
     FacultyRepository facultyRepository;
     @Autowired
     RequisiteRepository requisiteRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public Collection<Course> findAllCourses(){
         log.info("findAllCourses()");
@@ -124,5 +126,9 @@ public class SearchService {
         log.info("Course "+id+" requisites: ");
         Course course = courseRepository.findById(id);
         return requisiteRepository.findAllOccurrencesOfCourseAsRequisite(course.getName(), course.getNumber());
+    }
+    public User findUserById(int id){
+        log.info("user id searched: "+ id);
+        return userRepository.findUserById(id);
     }
 }

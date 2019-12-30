@@ -19,12 +19,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
+<html>
+<body>
 <app-top-nav-bar></app-top-nav-bar>
-<mat-card>
+<div id="cloud-container">
+
+<mat-card class="searchFormCard">
+<div class="searchForm">
   <mat-card-header>
 <h1>Enter your search criteria below</h1>
   </mat-card-header>
-  <mat-card-content class="searchContent">
+  <mat-card-content>
 <form class="example-form" id="searchForm">
   <mat-form-field class="example-full-width">
       <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
@@ -46,9 +51,28 @@
   <button class="mat-search" mat-raised-button color="primary" (click)="showResults()">Search
   </button>
 </form>
+  </mat-card-content>
+</div>
+</mat-card>
 
 
-<div id="searchResults">
+      <div class="searchResults">
+        <div *ngIf="isResultShown === true && displayedList.length === 0">
+
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <span>No results found.</span>
+              </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div></div>
+
+
+<mat-card class="searchResultsCard">
+  <mat-card-content>
+<div class="searchResults">
   <div *ngIf="isResultShown === true && displayedList.length === 0">
     <span>No results found.</span>
   </div>
@@ -80,4 +104,8 @@
   </mat-card-content>
 </mat-card>
 
+</div>
 <app-footer></app-footer>
+
+</body>
+</html>

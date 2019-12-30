@@ -80,6 +80,7 @@ export class EditFormComponent {
       });
       this.api.getCourse(editedId).subscribe(data => {
         this.courseEditable = data;
+        this.courseEditable.id = Number(originalId);
         this.setRequisitesStrings(data, this.editedModel);
       });
     }

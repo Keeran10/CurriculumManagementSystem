@@ -29,6 +29,7 @@ import { ApiService } from './backend-api.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
+import { ApproverHomepageComponent } from './approver-homepage/approver-homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseFormComponent } from './course-form/course-form.component';
@@ -60,6 +61,7 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
 import { MatDialogModule } from '@angular/material/dialog';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
@@ -68,6 +70,7 @@ import { FooterComponent } from './footer/footer.component';
   declarations: [
     AppComponent,
     ApprovalPipelineComponent,
+    ApproverHomepageComponent,
     CourseFormComponent,
     CourseListComponent,
     DialogImpactStatementComponent,
@@ -106,6 +109,7 @@ import { FooterComponent } from './footer/footer.component';
     ReactiveFormsModule,
     NgxFileDropModule,
     PdfViewerModule,
+    MatExpansionModule,
   ],
   providers: [
     ApiService,
