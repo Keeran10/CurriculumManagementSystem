@@ -132,4 +132,10 @@ public class MailService {
         return mailSender;
     }
 
+    public void setServiceMock (JavaMailSender javaMailSender, PdfService pdfService, SearchService searchService ){
+        this.javaMailSender = javaMailSender;
+        this.pdfService = pdfService;
+        this.searchService = searchService;
+    }
+
 }
