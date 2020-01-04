@@ -24,7 +24,6 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -33,18 +32,14 @@ import java.sql.Timestamp;
 @Data
 public class SupportingDocument {
 
-    @Audited
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Audited
     private Timestamp timestamp;
 
-    @Audited
     @Lob
     private byte[] document;
 
-    @Audited
     @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals"})
     @ManyToOne
     @JoinColumn(name = "user_id")

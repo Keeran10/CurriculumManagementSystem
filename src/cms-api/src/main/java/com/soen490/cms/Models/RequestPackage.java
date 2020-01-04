@@ -25,7 +25,6 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,12 +50,10 @@ public class RequestPackage {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @Audited
     @JsonIgnoreProperties("requestPackage")
     @OneToMany(mappedBy = "requestPackage")
     private List<Request> requests = new ArrayList<>();
 
-    @Audited
     @JsonIgnoreProperties("requestPackage")
     @OneToMany(mappedBy = "requestPackage")
     private List<SupportingDocument> supportingDocuments = new ArrayList<>();
