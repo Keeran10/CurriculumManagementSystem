@@ -37,6 +37,7 @@ export class PackageComponent implements OnInit {
   packages = new Array();
   isPdfAvailable = new Array();
   userName = 'User';
+  userId = '0';
   selectedFiles: FileList;
   currentFile: File;
   msg;
@@ -54,6 +55,7 @@ export class PackageComponent implements OnInit {
       this.packages.forEach(() => this.isPdfAvailable.push(false));
     });
     this.userName = this.cookieService.get('userName');
+    this.userId = this.cookieService.get('user');
   }
 
   public packageSelect(packageId, requestId, href) {
@@ -73,7 +75,7 @@ export class PackageComponent implements OnInit {
   }
 
   public generatePdf(packageId, index) {
-    this.api.generatePdf(packageId).subscribe(data => this.isPdfAvailable[index] = data);
+    this.api.generatePdf(packageId, this.userId).subscribe(data => this.isPdfAvailable[index] = data);
   }
 
   public viewPdf(packageId) {

@@ -35,11 +35,11 @@ import { CookieService } from 'ngx-cookie-service';
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private api: ApiService,
-              private cookieService: CookieService,
-              private router: Router
-              ) {
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private cookieService: CookieService,
+    private router: Router
+  ) {
   }
 
   isLoginError = false;
