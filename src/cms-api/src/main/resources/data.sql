@@ -283,8 +283,8 @@ INSERT IGNORE INTO calendar VALUES (2, 'Students employed full‑time in a compu
 INSERT IGNORE INTO calendar VALUES (3, "Please note that the current version of the Undergraduate Calendar is up to date as of February 2019.", "71.60", "Engineering Course Descriptions", "", 8);
 
 -- id, pdf_file, department_id
-INSERT IGNORE INTO request_package VALUES (1, NULL, 4); -- creating a package for department of CS & SE
-INSERT IGNORE INTO request_package VALUES (2, NULL, 8); -- used for pdf generation
+INSERT IGNORE INTO request_package VALUES (1, NULL, 1, 4); -- creating a package for department of CS & SE
+INSERT IGNORE INTO request_package VALUES (2, NULL, 1, 8); -- used for pdf generation
 
 -- id, original id, rationale, request type, resource, target id, target type, timestamp, title, package id, user id
 INSERT IGNORE INTO request VALUES (1, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343

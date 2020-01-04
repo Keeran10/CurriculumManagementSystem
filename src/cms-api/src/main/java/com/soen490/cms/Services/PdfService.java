@@ -102,10 +102,12 @@ public class PdfService {
 
     /**
      * Generate the pdf file for a given package and saves it to the package database table.
+     *
+     * @param user_id Used to store audit information
      * @param package_id Used to retrieve request_package object.
      * @return true if a pdf has been generated and saved as pdf_file inside request_package.
      */
-    public boolean generatePDF(int package_id) throws IOException, DocumentException {
+    public boolean generatePDF(int package_id, int user_id) throws IOException, DocumentException {
 
         ByteArrayOutputStream course_outline_stream;
         ByteArrayOutputStream support_stream = null;
@@ -116,6 +118,9 @@ public class PdfService {
 
         if(requestPackage == null){ return false;}
 
+        requestPackage.setUserId(user_id);
+
+        requestPackageRepository.save(requestPackage);
 
         if(!requestPackage.getSupportingDocuments().isEmpty()) {
 

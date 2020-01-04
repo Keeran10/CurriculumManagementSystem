@@ -58,7 +58,10 @@ public class RequestPackageController {
      * @return A boolean detailing if the pdf generation was successful or a failure.
      */
     @GetMapping(value="/generate_pdf")
-    public boolean generatePdf(@RequestParam int package_id) throws IOException, DocumentException { return pdfService.generatePDF(package_id); }
+    public boolean generatePdf(@RequestParam int package_id, @RequestParam int user_id) throws IOException, DocumentException {
+
+        return pdfService.generatePDF(package_id, user_id);
+    }
 
 
     /**
@@ -66,26 +69,6 @@ public class RequestPackageController {
      * @param package_id
      * @return The pdf file to browser.
      */
-    /*
-    @GetMapping(value="/get_pdf")
-    public ResponseEntity<byte[]> getPdf(@RequestParam int package_id){
-
-        byte[] pdf_bytes = pdfService.getPDF(package_id);
-
-        if(pdf_bytes == null) return null;
-
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = "package_" +  package_id + ".pdf";
-
-        headers.add("content-disposition", "inline;filename=" + filename);
-
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-
-        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
-    }
-*/
     @GetMapping(value="/get_pdf")
     public byte[] getPdf(@RequestParam int package_id){
 

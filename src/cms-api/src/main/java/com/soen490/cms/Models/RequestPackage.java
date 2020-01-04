@@ -40,6 +40,9 @@ public class RequestPackage {
     private int id;
 
     @Audited
+    private int userId;
+
+    @Audited
     @Lob
     private byte[] pdfFile;
 
