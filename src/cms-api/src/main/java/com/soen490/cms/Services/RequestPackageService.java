@@ -633,16 +633,11 @@ public class RequestPackageService {
     }
 
 
-    public Revisions<Integer, RequestPackage> getRequestPackageRevisions(int id){
-
-        return requestPackageRepository.findRevisions(id);
-    }
-
-    public Optional<Revision<Integer, RequestPackage>> getLatestRequestPackageRevision(int id) {
-
-        return requestPackageRepository.findLastChangeRevision(id);
-    }
-
+    /**
+     * Takes in a package id and returns all change history made to said package
+     * @param id the id of the package
+     * @return list of dossier revisions
+     */
     public List getDossierRevisions(int id){
 
         log.info("Retrieving revision history for dossier " + id + ".");
@@ -661,6 +656,10 @@ public class RequestPackageService {
     }
 
 
+    /**
+     * Reverts a package back to a previous state.
+     * @param rev
+     */
     public void revertDossier(int rev) {
 
         //RequestPackage requestPackage = requestPackageRepository.findByRevId(rev);
