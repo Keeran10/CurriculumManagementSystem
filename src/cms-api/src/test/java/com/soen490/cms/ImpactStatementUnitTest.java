@@ -45,7 +45,7 @@ public class ImpactStatementUnitTest {
     ImpactAssessmentCourseService impactAssessmentCourse;
 
     @Before
-    public void intiation(){
+    public void initiation(){
         course = new Course();
         course.setId(5);
         course.setName("COMP");

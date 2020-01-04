@@ -44,8 +44,8 @@ export class PackageComponent implements OnInit {
   files: File[] = [];
 
   constructor(private cookieService: CookieService,
-    private api: ApiService,
-    private router: Router) { }
+              private api: ApiService,
+              private router: Router) { }
 
   ngOnInit() {
     // let departmentId = this.cookieService.get('department'); //replace 4 with department id
@@ -63,7 +63,7 @@ export class PackageComponent implements OnInit {
     console.log(packageId);
     this.cookieService.set('request', requestId);
     if (requestId != 0) {
-      let request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
+      const request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
       this.cookieService.set('originalCourse', request.originalId.toString());
       this.cookieService.set('editedCourse', request.targetId.toString());
     }
@@ -80,10 +80,17 @@ export class PackageComponent implements OnInit {
 
   public viewPdf(packageId) {
     this.api.viewPdf(packageId).subscribe(data => {
+<<<<<<< HEAD
       let file = new Blob([data], { type: 'application/pdf' });
       var fileURL = URL.createObjectURL(file);
       //window.open(fileURL, '_blank');
       window.location.assign(fileURL);
+=======
+      const file = new Blob([data], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL, '_blank');
+      // window.location.assign(fileURL);
+>>>>>>> 66dbc9227957b6d6c2a3e428fd4280d299e6baee
     });
   }
 

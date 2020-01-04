@@ -131,7 +131,7 @@ export class ApiService {
   }
 
   public viewPdf(packageId: string) {
-    window.open();
+    //window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'
@@ -161,27 +161,25 @@ export class ApiService {
 
   }
 
-  public uploadFile(file: File, requestId: any) {
+  public setApprovalStatus(userId: any, packageId: any, pipelineId: any, rationale: any, isApproved: any) {
+    console.log('Changing status of package');
     const formdata: FormData = new FormData();
-    formdata.append('file', file);
-    formdata.append('id', requestId);
-    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
+    formdata.append('user_id', userId);
+    formdata.append('package_id', packageId);
+    formdata.append('approval_pipeline_id', pipelineId);
+    formdata.append('rationale', rationale);
+    formdata.append('is_approved', isApproved);
+    const req = new HttpRequest('POST', this.url + 'validatePackage', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
     return this.http.request(req);
   }
 
-
-  public setApprovalStatus(userId: any, packageId: any, pipelineId: any, rationale: any, isApproved: any) {
-    console.log('Changing status of package');
-
+  public uploadFile(file: File, requestId: any) {
     const formdata: FormData = new FormData();
-    formdata.append('package_id', packageId);
-    formdata.append('approval_pipeline_id', pipelineId);
-    formdata.append('rationale', rationale);
-    formdata.append('is_approved', isApproved);
-
+    formdata.append('file', file);
+    formdata.append('id', requestId);
     const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
       reportProgress: true,
       responseType: 'text',

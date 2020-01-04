@@ -631,6 +631,7 @@ public class RequestPackageService {
         return true;
     }
 
+
     public Revisions<Integer, RequestPackage> getRequestPackageRevisions(int id){
 
         return requestPackageRepository.findRevisions(id);
@@ -653,14 +654,26 @@ public class RequestPackageService {
 
         for(Object[] r : revisions)
             versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[4],
-                    userRepository.findByUserId((Integer) r[5]), (byte[]) r[3]));
+                    userRepository.findUserById((Integer) r[5]), (byte[]) r[3]));
 
         return versions;
     }
 
 
-    public void revertDossier(int rev){
+    public void revertDossier(int rev) {
 
         //RequestPackage requestPackage = requestPackageRepository.findByRevId(rev);
+    }
+
+
+    /**
+     * Returns a user with the specified ID
+     *
+     * @param user_id
+     * @return
+     */
+    public User getUser(int user_id) {
+        log.info("getUser called with user_id " + user_id);
+        return userRepository.findById(user_id);
     }
 }

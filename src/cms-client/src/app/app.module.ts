@@ -29,6 +29,7 @@ import { ApiService } from './backend-api.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
+import { ApproverHomepageComponent } from './approver-homepage/approver-homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseFormComponent } from './course-form/course-form.component';
@@ -58,6 +59,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
+import { FooterComponent } from './footer/footer.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
@@ -66,6 +70,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   declarations: [
     AppComponent,
     ApprovalPipelineComponent,
+    ApproverHomepageComponent,
     CourseFormComponent,
     CourseListComponent,
     DialogImpactStatementComponent,
@@ -76,7 +81,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     PipelineTrackingComponent,
     SearchPageComponent,
     SupportDocumentComponent,
-    GenericFileUploaderComponent
+    GenericFileUploaderComponent,
+    TopNavBarComponent,
+    FooterComponent
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
@@ -102,6 +109,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     NgxFileDropModule,
     PdfViewerModule,
+    MatExpansionModule,
   ],
   providers: [
     ApiService,

@@ -68,4 +68,6 @@ public class RequestPackage {
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy =  "requestPackage")
     private List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = new ArrayList<>();
+
+    private String rejectionRationale;
 }

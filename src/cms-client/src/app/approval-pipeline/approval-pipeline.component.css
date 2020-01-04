@@ -19,15 +19,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
-
+body{
+  background-color: #F3E7E9;
+}
 .container {
     margin: 30px;
+}
+
+.outerMatCard{
+  background-color: #F3E7E9;
 }
 
 .card {
     margin: 3%;
     width: 44%;
-    float: left;
+  /*TODO: Figure out a different way to structure the page, float:left is breaking page*/
 }
 
 .select_button {
@@ -36,4 +42,17 @@
 
 .custom_options {
     font-size: 14px;
+}
+
+.predefined{
+  height: 500px;
+}
+
+.custom{
+  height: 500px;
+}
+
+.predefined-button{
+  margin-top: 100px;
+  margin-left: 80%;
 }

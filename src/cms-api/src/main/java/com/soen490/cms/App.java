@@ -54,6 +54,7 @@ public class App {
 		return new FeatureFlagOn();
 	}
 
+
 	public static void main(String[] args) {
 		log.info("Running CMS app");
 		SpringApplication.run(App.class, args);

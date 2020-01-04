@@ -3,15 +3,18 @@ package com.soen490.cms.Services;
 import com.soen490.cms.Models.ApprovalPipeline;
 import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
 import com.soen490.cms.Models.RequestPackage;
+import com.soen490.cms.Models.User;
 import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import com.soen490.cms.Repositories.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.*;
 
 @Log4j2
@@ -26,6 +29,12 @@ public class ApprovalPipelineService {
 
     @Autowired
     RequestPackageRepository requestPackageRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    MailService mailService;
 
     @Autowired
     SenateService senateService;
@@ -44,6 +53,9 @@ public class ApprovalPipelineService {
 
     @Autowired
     UndergradStudiesCommitteeService undergradStudiesCommitteeService;
+
+    @Autowired
+    RequestPackageService requestPackageService;
 
     public RequestPackage findRequestPackage(int id) {
         log.info("find request package with id " + id);
@@ -79,12 +91,24 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @param currentPosition
      */
-    public void pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+    public String pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
         log.info("pushing package " + packageId + " to next position in pipeline");
         String position = pipeline.get(currentPosition);
-        String nextPosition = pipeline.get(currentPosition + 1);
+        String nextPosition = "";
+
+        try{
+            nextPosition = pipeline.get(currentPosition + 1); // get next position if it exists
+        } catch(NullPointerException | IndexOutOfBoundsException e) {
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+        }
+
+        if(nextPosition == null) { // at the last position in the pipeline, approve the dossier
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+        }
+
         RequestPackage requestPackage = null;
         ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
+        List<User> users = userRepository.findUserByType(nextPosition);
 
         if(position.equals("Department Curriculum Committee")) {
             requestPackage = dccService.sendPackage(packageId);
@@ -114,8 +138,52 @@ public class ApprovalPipelineService {
         } else if(nextPosition.equals("Senate")) {
             senateService.receivePackage(requestPackage);
         }
+
+        sendMail(users, requestPackage); // send an email notification to all users in the next position
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
         approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
+
+        return "";
+    }
+
+    /**
+     * Uses the Mail Service to send an email to the users in the next approving body according to the Dossier's
+     * pipeline
+     *
+     * @param users
+     * @param dossier
+     * @return
+     */
+    private boolean sendMail(List<User> users, RequestPackage dossier) {
+        boolean success = true;
+
+        for(User user : users) {
+            success = mailService.sendMailService(dossier.getId(), user);
+        }
+
+        return success;
+    }
+
+    /**
+     * Removes a request package and its tracking when it is rejected by an approving body
+     *
+     * @param packageId
+     * @param pipelineId
+     * @param rationale
+     * @return
+     */
+    public boolean removePackage(int packageId, int pipelineId, String rationale) {
+        RequestPackage requestPackage = requestPackageRepository.findById(packageId);
+        requestPackage.setRejectionRationale(rationale);
+        approvalPipelineRequestPackageRepository.remove(pipelineId, packageId);
+        requestPackageRepository.save(requestPackage);
+        //requestPackageService.deleteCourseRequest(packageId);
+        return true;
+    }
+
+    public String getRejectionRationale(int packageId) {
+        RequestPackage requestPackage = requestPackageRepository.findById(packageId);
+        return requestPackage.getRejectionRationale();
     }
 
     /**
@@ -126,7 +194,7 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @param currentPosition
      */
-    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition, String rationale) {
         log.info("push package " + packageId + " to previous position in pipeline");
         String position = pipeline.get(currentPosition);
         String previousPosition = pipeline.get(currentPosition + 1);
@@ -169,11 +237,12 @@ public class ApprovalPipelineService {
      * TODO
      * Commits the changes of a request package
      *
-     * @param id
+     * @param dossier
      * @return
      */
-    public boolean executeUpdate(int id) {
-        return true;
+    public String finalizeDossierRequests(RequestPackage dossier) {
+        log.info("Finalizing dossier " + dossier.getId());
+        return "Making the requested changes to the database";
     }
 
     /**

@@ -20,19 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
 
+<app-top-nav-bar></app-top-nav-bar>
+<body>
+<mat-card class="outerMatCard">
 <div class="container">
+  <mat-card-header>
     <h2>Please Select an Approval Pipeline:</h2>
+  </mat-card-header>
     <div class="options">
         <div class="card">
-            <mat-card>
+            <mat-card class="predefined">
                 <mat-card-title>
                     Predefined Pipeline
                 </mat-card-title>
                 <mat-card-content>
                     <p>The Predefined Approval Pipeline is as follows:</p>
                     <p>
-                        1. Department Curriculum Committee 
-                    </p> 
+                        1. Department Curriculum Committee
+                    </p>
                     <p>
                         2. Department Council
                     </p>
@@ -49,13 +54,13 @@
                     <p>
                         6. Senate
                     </p>
-                    <button  (click)="predefined()" mat-raised-button color="primary" class="select_button">Select</button>
+                    <button class="predefined-button" (click)="predefined()" mat-raised-button color="primary" >Select</button>
                 </mat-card-content>
-            </mat-card>            
-        </div> 
+            </mat-card>
+        </div>
 
         <div class="card">
-            <mat-card>
+            <mat-card class="custom">
                     <mat-card-title>
                             Custom Pipeline
                     </mat-card-title>
@@ -82,7 +87,7 @@
                                 <mat-list-option  class="custom_options" value="Senate">
                                     Senate
                                 </mat-list-option>
-                        </mat-selection-list>                 
+                        </mat-selection-list>
                         <p>
                             Your custom approval pipeline:
                         </p>
@@ -93,9 +98,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button  mat-raised-button color="primary" class="select_button" (click)="custom(options.selectedOptions.selected)">Select</button>
+                        <button class="custom-button" mat-raised-button color="primary" class="select_button" (click)="custom(options.selectedOptions.selected)">Select</button>
                     </mat-card-content>
             </mat-card>
         </div>
     </div>
 </div>
+</mat-card>
+</body>
+<app-footer></app-footer>
+
