@@ -114,7 +114,6 @@ public class RequestPackageService {
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        System.out.println("-------------------------------------REQUESTID-----------------" + request_id);
         Request request = requestRepository.findByRequestId(request_id);
 
         User user = userRepository.findById(user_id);
@@ -152,6 +151,7 @@ public class RequestPackageService {
         request.setUser(user);
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
 
+        request.setOriginId(request.getOriginalId());
         // Degree Requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
 

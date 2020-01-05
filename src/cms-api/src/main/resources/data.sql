@@ -294,10 +294,10 @@ INSERT IGNORE INTO request_package VALUES (3, NULL, NULL, 1, 4); -- used to test
 
 
 -- id, original id, rationale, request type, resource, target id, target type, timestamp, title, package id, user id
-INSERT IGNORE INTO request VALUES (1, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
-INSERT IGNORE INTO request VALUES (3, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
-INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
+INSERT IGNORE INTO request VALUES (1, 8, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 1, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 0, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
+INSERT IGNORE INTO request VALUES (4, 30, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
 
 -- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate

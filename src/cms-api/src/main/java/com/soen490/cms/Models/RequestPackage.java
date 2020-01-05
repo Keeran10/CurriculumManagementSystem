@@ -24,6 +24,8 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
