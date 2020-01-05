@@ -124,9 +124,9 @@ export class ApiService {
     });
   }
 
-  public generatePdf(packageId: string) {
+  public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
-      params: new HttpParams().set('package_id', packageId)
+      params: new HttpParams().set('package_id', packageId).set('user_id', userId)
     });
   }
 

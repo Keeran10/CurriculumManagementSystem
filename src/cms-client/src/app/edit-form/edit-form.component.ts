@@ -67,6 +67,9 @@ export class EditFormComponent {
     this.editedModel.packageId = Number(packageId);
     this.model.userId = Number(userId);
     this.editedModel.userId = Number(userId);
+    this.model.requestId = Number(requestId);
+    this.editedModel.requestId = Number(requestId);
+
     if (requestId === '0') {
       this.api.getCourse(this.id).subscribe(data => {
         this.courseOriginal = data;
