@@ -158,7 +158,7 @@ public class ApprovalPipelineService {
         boolean success = true;
 
         for(User user : users) {
-            success = mailService.sendMailService(dossier.getId(), user);
+            //success = mailService.sendMailService(dossier.getId(), user);
         }
 
         return success;

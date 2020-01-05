@@ -37,14 +37,15 @@ export class PackageComponent implements OnInit {
   packages = new Array();
   isPdfAvailable = new Array();
   userName = 'User';
+  userId = '0';
   selectedFiles: FileList;
   currentFile: File;
   msg;
   files: File[] = [];
 
   constructor(private cookieService: CookieService,
-              private api: ApiService,
-              private router: Router) { }
+    private api: ApiService,
+    private router: Router) { }
 
   ngOnInit() {
     // let departmentId = this.cookieService.get('department'); //replace 4 with department id
@@ -54,6 +55,7 @@ export class PackageComponent implements OnInit {
       this.packages.forEach(() => this.isPdfAvailable.push(false));
     });
     this.userName = this.cookieService.get('userName');
+    this.userId = this.cookieService.get('user');
   }
 
   public packageSelect(packageId, requestId, href) {
@@ -73,15 +75,15 @@ export class PackageComponent implements OnInit {
   }
 
   public generatePdf(packageId, index) {
-    this.api.generatePdf(packageId).subscribe(data => this.isPdfAvailable[index] = data);
+    this.api.generatePdf(packageId, this.userId).subscribe(data => this.isPdfAvailable[index] = data);
   }
 
   public viewPdf(packageId) {
     this.api.viewPdf(packageId).subscribe(data => {
       const file = new Blob([data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
-      window.open(fileURL, '_blank');
-      // window.location.assign(fileURL);
+      //window.open(fileURL, '_blank');
+      window.location.assign(fileURL);
     });
   }
 

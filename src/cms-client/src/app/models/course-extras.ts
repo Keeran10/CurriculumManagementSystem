@@ -30,6 +30,7 @@ export class CourseExtras {
   prerequisites: string;
   rationale: string;
   userId: number;
+  requestId: number;
 
   constructor() {
     this.antirequisites = '';
@@ -40,5 +41,6 @@ export class CourseExtras {
     this.prerequisites = '';
     this.rationale = '';
     this.userId = 1;
+    this.requestId = 0;
   }
 };
