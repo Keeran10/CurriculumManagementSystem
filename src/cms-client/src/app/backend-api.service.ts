@@ -94,6 +94,7 @@ export class ApiService {
     });
   }
 
+  /*
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log(course);
     console.log(courseExtras);
@@ -102,6 +103,7 @@ export class ApiService {
         .set('courseExtras', JSON.stringify(courseExtras))
     });
   }
+  */
 
   public savePipeline(pipeline: string, packageId: any) {
     console.log('set approval pipeline');
