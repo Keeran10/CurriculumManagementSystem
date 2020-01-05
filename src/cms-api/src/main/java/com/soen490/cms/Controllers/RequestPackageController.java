@@ -92,31 +92,17 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param requestForm Combined stringified JSON received from front-end.
-     * @param bindingResult Validates requestForm.
-     * @return True if course was successfully added to database.
-     * @throws JSONException
-     */
-    @PostMapping(value="/save_request", consumes = "application/json")
-    public int saveCreateAndEditRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
-
-        return requestPackageService.saveCourseRequest(requestForm);
-    }
-
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
      * @param course stringified JSON received from front-end.
      * @param courseExtras stringified JSON received from front-end.
      * @param file course outline
      * @return True if course was successfully added to database.
      * @throws JSONException
      */
-    @PostMapping(value="/save_request2")
+    @PostMapping(value="/save_request")
     public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras, @RequestParam("file") MultipartFile file) {
 
         try {
-            return requestPackageService.saveCourseRequest2(course, courseExtras, file.getBytes());
+            return requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -186,9 +172,14 @@ public class RequestPackageController {
 
 
     @PostMapping(value = "/get_impact")
-    public Map<String, Object> sendRequestId(@RequestBody String requestForm) throws JSONException {
+    public Map<String, Object> sendRequestId(@RequestParam String course, @RequestParam String courseExtras, @RequestParam("file") MultipartFile file) {
 
-        int request_id = requestPackageService.saveCourseRequest(requestForm);
+        int request_id = 0;
+        try {
+            request_id = requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
 
         return impactAssessmentController.getImpactAssessment(request_id);
     }

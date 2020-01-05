@@ -195,7 +195,7 @@ export class ApiService {
     formdata.append('courseExtras', JSON.stringify(courseExtras));
     formdata.append('file', file);
 
-    const req = new HttpRequest('POST', this.url + 'save_request2', formdata, {
+    const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
