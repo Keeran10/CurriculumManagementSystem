@@ -29,6 +29,7 @@ import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -102,6 +103,28 @@ public class RequestPackageController {
         return requestPackageService.saveCourseRequest(requestForm);
     }
 
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param course stringified JSON received from front-end.
+     * @param courseExtras stringified JSON received from front-end.
+     * @param file course outline
+     * @return True if course was successfully added to database.
+     * @throws JSONException
+     */
+    @PostMapping(value="/save_request2")
+    public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras, @RequestParam("file") MultipartFile file) {
+
+        try {
+            return requestPackageService.saveCourseRequest2(course, courseExtras, file.getBytes());
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+
     /**
      * Receives data from client and populates the database for course and its dependencies.
      * @param requestForm Combined stringified JSON received from front-end.
@@ -170,6 +193,14 @@ public class RequestPackageController {
         return impactAssessmentController.getImpactAssessment(request_id);
     }
 
+
+    /**
+     * Unused. Will be refactored for package level supporting docs
+     * @param file
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/addSupportingDocument")
     public boolean uploadData(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) throws Exception {
 

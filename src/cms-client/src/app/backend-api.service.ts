@@ -187,4 +187,18 @@ export class ApiService {
     return this.http.request(req);
   }
 
+  public submitCourseRequestForm(file: File, course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = new FormData();
+    formdata.append('course', JSON.stringify(course));
+    formdata.append('courseExtras', JSON.stringify(courseExtras));
+    formdata.append('file', file);
+
+    const req = new HttpRequest('POST', this.url + 'save_request2', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
+
 }
