@@ -20,12 +20,12 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 -- SOFTWARE.
 
-INSERT INTO user (id, email, first_name, last_name, password, user_type) VALUES
-(1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin');
-
 INSERT INTO faculty (id, name) VALUES (2, 'Gina Cody School of Engineering and Computer Science');
 
 INSERT INTO department (id, name, faculty_id) VALUES (4, 'Computer Science & Software Engineering', 2);
+
+INSERT INTO user (id, email, first_name, last_name, password, user_type, department_id) VALUES
+(1, 'boris@soen.com', 'Boris', 'Fitzgerald','123', 'admin', 4);
 
 INSERT INTO program (id, description, is_active, name, department_id) VALUES  (1, 'description', 1, 'Software Engineering', 4);
 
