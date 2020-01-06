@@ -57,6 +57,11 @@ export class EditFormComponent {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
+
+    this.currentFile = null;
+    this.selectedFiles = null;
+    this.files = null;
+
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });

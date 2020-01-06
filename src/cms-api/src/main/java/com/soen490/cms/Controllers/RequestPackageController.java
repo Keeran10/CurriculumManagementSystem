@@ -99,10 +99,15 @@ public class RequestPackageController {
      * @throws JSONException
      */
     @PostMapping(value="/save_request")
-    public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras, @RequestParam("file") MultipartFile file) {
+    public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras,
+                                        @RequestParam(required = false) MultipartFile file) {
+
 
         try {
-            return requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            if(file != null)
+                return requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            else
+                return requestPackageService.saveCourseRequest(course, courseExtras, null);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -172,11 +177,15 @@ public class RequestPackageController {
 
 
     @PostMapping(value = "/get_impact")
-    public Map<String, Object> sendRequestId(@RequestParam String course, @RequestParam String courseExtras, @RequestParam("file") MultipartFile file) {
+    public Map<String, Object> sendRequestId(@RequestParam String course, @RequestParam String courseExtras,
+                                             @RequestParam(required = false) MultipartFile file) {
 
         int request_id = 0;
         try {
-            request_id = requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            if(file != null)
+                request_id = requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            else
+                request_id = requestPackageService.saveCourseRequest(course, courseExtras, null);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

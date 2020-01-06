@@ -109,15 +109,23 @@ public class RequestPackageService {
 
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+        Request request = requestRepository.findByRequestId(request_id);
 
-        if(request == null)
+        User user = userRepository.findById(user_id);
+
+        Course c = null;
+
+        if(request == null) {
             request = new Request();
-
-        Course c = new Course();
+            c = new Course();
+        }
+        else{
+            c = courseRepository.findById(request.getTargetId());
+        }
 
         c.setName((String) course.get("name"));
         c.setNumber((Integer) course.get("number"));
@@ -131,7 +139,9 @@ public class RequestPackageService {
         c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
         c.setIsActive(0);
         c.setProgram(original.getProgram());
-        c.setOutline(file);
+
+        if(file != null)
+            c.setOutline(file);
 
         courseRepository.save(c);
 
@@ -143,29 +153,33 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
+        request.setUser(user);
         request.setRequestPackage(requestPackage);
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
-        // Degree Requirements
-        ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-        for(DegreeRequirement dr : original.getDegreeRequirements()){
+        if(c.getDegreeRequirements() == null) {
 
-            DegreeRequirement cdr = new DegreeRequirement();
+            // Degree Requirements
+            ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-            cdr.setCore(dr.getCore());
-            cdr.setDegree(dr.getDegree());
-            cdr.setCourse(c);
+            for (DegreeRequirement dr : original.getDegreeRequirements()) {
 
-            degreeRequirementRepository.save(cdr);
+                DegreeRequirement cdr = new DegreeRequirement();
 
-            dr.getDegree().getDegreeRequirements().add(cdr);
+                cdr.setCore(dr.getCore());
+                cdr.setDegree(dr.getDegree());
+                cdr.setCourse(c);
 
-            list.add(cdr);
+                degreeRequirementRepository.save(cdr);
 
+                dr.getDegree().getDegreeRequirements().add(cdr);
+
+                list.add(cdr);
+
+            }
+            c.setDegreeRequirements(list);
         }
-        c.setDegreeRequirements(list);
 
         // Requisites
         String pre = (String) courseExtras.get("prerequisites");
@@ -196,7 +210,18 @@ public class RequestPackageService {
                     requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
                 }
                 requisite.setType("prerequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
 
         }
@@ -212,7 +237,18 @@ public class RequestPackageService {
                 requisite.setName(corequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
                 requisite.setType("corequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String antirequisite : antirequisites){
@@ -227,7 +263,18 @@ public class RequestPackageService {
                 requisite.setName(antirequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
                 requisite.setType("antirequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String equivalent : equivalents){
@@ -242,7 +289,18 @@ public class RequestPackageService {
                 requisite.setName(equivalent.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
                 requisite.setType("equivalent");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
 
@@ -284,11 +342,15 @@ public class RequestPackageService {
 
         User user = userRepository.findById(user_id);
 
-        if(request == null)
+        Course c = null;
+
+        if(request == null) {
             request = new Request();
-
-
-        Course c = new Course();
+            c = new Course();
+        }
+        else{
+            c = courseRepository.findById(request.getTargetId());
+        }
 
         c.setName((String) course.get("name"));
         c.setNumber((Integer) course.get("number"));
@@ -301,7 +363,9 @@ public class RequestPackageService {
         c.setTutorialHours(Double.valueOf(String.valueOf(course.get("tutorialHours"))));
         c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
         c.setIsActive(0);
-        c.setOutline(file);
+
+        if(file != null)
+            c.setOutline(file);
 
         //c.setProgram(original.getProgram());
 
@@ -372,7 +436,18 @@ public class RequestPackageService {
                     requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
                 }
                 requisite.setType("prerequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
 
         }
@@ -388,7 +463,18 @@ public class RequestPackageService {
                 requisite.setName(corequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
                 requisite.setType("corequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String antirequisite : antirequisites){
@@ -403,7 +489,18 @@ public class RequestPackageService {
                 requisite.setName(antirequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
                 requisite.setType("antirequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String equivalent : equivalents){
@@ -418,7 +515,18 @@ public class RequestPackageService {
                 requisite.setName(equivalent.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
                 requisite.setType("equivalent");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
 
