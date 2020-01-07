@@ -46,7 +46,7 @@ export class EditFormComponent {
   model = new CourseExtras();
   editedModel = new CourseExtras();
 
-  constructor(private route: ActivatedRoute, private api: ApiService, 
+  constructor(private route: ActivatedRoute, private api: ApiService,
     private cookieService: CookieService,
     private router: Router) {
   }
@@ -63,6 +63,8 @@ export class EditFormComponent {
     this.editedModel.packageId = Number(packageId);
     this.model.userId = Number(userId);
     this.editedModel.userId = Number(userId);
+    this.model.requestId = Number(requestId);
+    this.editedModel.requestId = Number(requestId);
     if(this.id === '0'){
       this.courseEditable = {
         id: 0,
@@ -104,6 +106,7 @@ export class EditFormComponent {
       });
       this.api.getCourse(editedId).subscribe(data => {
         this.courseEditable = data;
+        this.courseEditable.id = Number(originalId);
         this.setRequisitesStrings(data, this.editedModel);
       });
     }
@@ -136,11 +139,11 @@ export class EditFormComponent {
             isNextEquivalent = !isNextEquivalent;
             break;
           case 'prerequisite':
-            courseExtras.prerequisites += r.name + r.number + '; '; 
+            courseExtras.prerequisites += r.name + r.number + '; ';
             break;
           case 'corequisite':
             courseExtras.corequisites += r.name + r.number + '; ';
-            break; 
+            break;
         }
       });
     }
@@ -164,6 +167,6 @@ export class EditFormComponent {
   public submitForm() {
     this.editedModel.files = this.supportDocumentComponent.documents;
     this.api.submitEditedCourse(this.courseEditable, this.editedModel)
-    .subscribe(() => this.router.navigate(['package']))
+      .subscribe(() => this.router.navigate(['package']))
   }
 }

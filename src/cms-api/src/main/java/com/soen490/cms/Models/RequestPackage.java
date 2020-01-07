@@ -24,19 +24,26 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.envers.AuditMappedBy;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data
 public class RequestPackage {
 
+    @Audited
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Audited
+    private int userId;
+
+    @Audited
     @Lob
     private byte[] pdfFile;
 

@@ -30,9 +30,7 @@ import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +38,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +58,10 @@ public class RequestPackageController {
      * @return A boolean detailing if the pdf generation was successful or a failure.
      */
     @GetMapping(value="/generate_pdf")
-    public boolean generatePdf(@RequestParam int package_id) throws IOException, DocumentException { return pdfService.generatePDF(package_id); }
+    public boolean generatePdf(@RequestParam int package_id, @RequestParam int user_id) throws IOException, DocumentException {
+
+        return pdfService.generatePDF(package_id, user_id);
+    }
 
 
     /**
@@ -70,7 +70,7 @@ public class RequestPackageController {
      * @return The pdf file to browser.
      */
     @GetMapping(value="/get_pdf")
-    public ResponseEntity<byte[]> getPdf(@RequestParam int package_id){
+    public byte[] getPdf(@RequestParam int package_id){
 
         byte[] pdf_bytes = pdfService.getPDF(package_id);
 
@@ -85,7 +85,7 @@ public class RequestPackageController {
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
+        return pdf_bytes;
     }
 
 
@@ -180,6 +180,12 @@ public class RequestPackageController {
         byte[] doc = file.getBytes();
 
         return requestPackageService.saveRequestFile(doc, id);
+    }
+
+
+    @GetMapping("/dossier_revisions")
+    public List getDossierRevisions(@RequestParam int id){
+        return requestPackageService.getDossierRevisions(id);
     }
 
 }
