@@ -28,9 +28,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SectionRepository extends JpaRepository<SupportingDocument, Integer> {
 
-    @Query(value = "SELECT * FROM section WHERE target_type=?1 AND target_id=?2", nativeQuery = true)
-    Section findByTargetId(String targetType, int id);
+    @Query(value = "SELECT section.section FROM section WHERE target_type=?1 AND target_id=?2", nativeQuery = true)
+    List<String> findByTarget(String targetType, int id);
 }
