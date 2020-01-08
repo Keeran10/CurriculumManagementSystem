@@ -91,23 +91,23 @@ public class ApprovalPipelineService {
      * @param pipeline
      * @param currentPosition
      */
-    public String pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition) {
+    public String pushToNext(int packageId, int pipelineId, List<String> pipeline, int currentPosition, User user) {
         log.info("pushing package " + packageId + " to next position in pipeline");
         String position = pipeline.get(currentPosition);
+        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
         String nextPosition = "";
 
         try{
             nextPosition = pipeline.get(currentPosition + 1); // get next position if it exists
         } catch(NullPointerException | IndexOutOfBoundsException e) {
-            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId), approvalPipelineRequestPackage, user);
         }
 
         if(nextPosition == null) { // at the last position in the pipeline, approve the dossier
-            return finalizeDossierRequests(requestPackageRepository.findById(packageId));
+            return finalizeDossierRequests(requestPackageRepository.findById(packageId), approvalPipelineRequestPackage, user);
         }
 
         RequestPackage requestPackage = null;
-        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
         List<User> users = userRepository.findUserByType(nextPosition);
 
         if(position.equals("Department Curriculum Committee")) {
@@ -240,8 +240,10 @@ public class ApprovalPipelineService {
      * @param dossier
      * @return
      */
-    public String finalizeDossierRequests(RequestPackage dossier) {
+    public String finalizeDossierRequests(RequestPackage dossier, ApprovalPipelineRequestPackage approvalPipelineRequestPackage, User user) {
         log.info("Finalizing dossier " + dossier.getId());
+        approvalPipelineRequestPackage.setUser(user); // add user to keep track of who makes the final approval to the dossier
+        approvalPipelineRequestPackageRepository.save(approvalPipelineRequestPackage);
         return "Making the requested changes to the database";
     }
 

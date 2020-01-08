@@ -40,12 +40,12 @@ public class SupportingDocument {
     @Lob
     private byte[] document;
 
-    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals"})
+    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals"})
+    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "package_id")
     private RequestPackage requestPackage;

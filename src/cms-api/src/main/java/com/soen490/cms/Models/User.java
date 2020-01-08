@@ -65,4 +65,8 @@ public class User {
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private List<SupportingDocument> supportingDocuments = new ArrayList<>();
+
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user")
+    private List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = new ArrayList<>();
 }

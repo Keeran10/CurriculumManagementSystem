@@ -43,12 +43,12 @@ public class Approval {
 
     private Timestamp timestamp;
 
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "package_id")
     private RequestPackage requestPackage;

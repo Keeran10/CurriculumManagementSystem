@@ -68,13 +68,13 @@ public class Request {
     private int originId;
 
     @Audited(targetAuditMode = NOT_AUDITED)
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Audited
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "package_id")
     private RequestPackage requestPackage; // package is a reserved keyword
