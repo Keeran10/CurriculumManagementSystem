@@ -31,6 +31,7 @@ import { PackageComponent } from './package/package.component';
 import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchPageComponent } from './search-page/search-page.component';
+import { RevisionsComponent } from './revisions/revisions.component';
 
 const routes: Routes = [
   { path: 'addcourse', component: CourseFormComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'homepage', component: ApproverHomepageComponent },
   { path: 'pipeline', component: PipelineTrackingComponent },
   { path: 'package', component: PackageComponent },
+  { path: 'revisions', component: RevisionsComponent},
   { path: '', component: LoginComponent }
 ];
 

@@ -30,6 +30,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Package } from './models/package';
 import { Program } from './models/program';
+import { Revision } from './models/revision';
 import { User } from './models/user';
 
 @Injectable({
@@ -185,6 +186,13 @@ export class ApiService {
       responseType: 'text',
     });
     return this.http.request(req);
+  }
+
+  public getRevisions(packageId: any) {
+    console.log('api-getRevisions ' + packageId);
+    return this.http.get<Revision[]>(this.url + 'dossier_revisions', {
+      params: new HttpParams().set('id', packageId)
+    });
   }
 
 }
