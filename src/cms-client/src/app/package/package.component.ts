@@ -79,7 +79,7 @@ export class PackageComponent implements OnInit {
   }
 
   public viewPdf(packageId) {
-    this.api.viewPdf(packageId).subscribe(data => {
+    this.api.viewPdfFromPackagePage(packageId, this.userId).subscribe(data => {
       const file = new Blob([data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
       //window.open(fileURL, '_blank');

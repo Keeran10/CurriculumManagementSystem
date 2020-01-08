@@ -61,11 +61,12 @@
                         </div>
 
                         <div class="right">
+                            <!--
                             <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                                 PDF</button>
+                            -->
 
-                            <button mat-stroked-button color="warn" *ngIf="isPdfAvailable[i]"
-                                (click)="viewPdf(package.id)">View PDF</button>
+                            <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
 
                             <a (click)="packageSelect(package.id, 0, 'approval')">
                                 <button mat-stroked-button color="primary">Submit for Approval</button>

@@ -140,6 +140,14 @@ export class ApiService {
     });
   }
 
+  public viewPdfFromPackagePage(packageId: string, userId: string) {
+    //window.open();
+    return this.http.get<BlobPart>(this.url + 'get_pdf_packagePage', {
+      params: new HttpParams().set('package_id', packageId).set('user_id', userId),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
+
   public getAllPackages(departmentId: string) {
     return this.http.get<Package[]>(this.url + 'get_packages', {
       params: new HttpParams().set('department_id', departmentId)

@@ -93,6 +93,47 @@ public class RequestPackageController {
 
 
     /**
+     * Converts a stored byte array into a pdf file and displays it on the browser.
+     * @param package_id
+     * @return The pdf file to browser.
+     */
+    @GetMapping(value="/get_pdf_packagePage")
+    public byte[] getPdfPackagePage(@RequestParam int package_id, @RequestParam int user_id){
+
+        byte[] pdf_bytes = pdfService.getPDF(package_id);
+
+        if(pdf_bytes == null) {
+
+            boolean success = false;
+
+            try {
+                success = generatePdf(package_id, user_id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
+
+
+            if(success)
+                pdf_bytes = pdfService.getPDF(package_id);
+            else
+                return null;
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String filename = "package_" +  package_id + ".pdf";
+
+        headers.add("content-disposition", "inline;filename=" + filename);
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return pdf_bytes;
+    }
+
+    /**
      * Receives data from client and populates the database for course and its dependencies.
      * @param course stringified JSON received from front-end.
      * @param courseExtras stringified JSON received from front-end.
