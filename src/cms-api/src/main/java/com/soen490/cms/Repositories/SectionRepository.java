@@ -20,27 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export class CourseExtras {
-  antirequisites: string;
-  corequisites: string;
-  equivalents: string;
-  files: File[];
-  implications: string;
-  packageId: number;
-  prerequisites: string;
-  rationale: string;
-  userId: number;
-  requestId: number;
+package com.soen490.cms.Repositories;
 
-  constructor() {
-    this.antirequisites = '';
-    this.corequisites = '';
-    this.equivalents = '';
-    this.implications = '';
-    this.packageId = 1;
-    this.prerequisites = '';
-    this.rationale = '';
-    this.userId = 1;
-    this.requestId = 0;
-  }
-};
+import com.soen490.cms.Models.Section;
+import com.soen490.cms.Models.SupportingDocument;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface SectionRepository extends JpaRepository<SupportingDocument, Integer> {
+
+    @Query(value = "SELECT * FROM section WHERE target_type=?1 AND target_id=?2", nativeQuery = true)
+    Section findByTargetId(String targetType, int id);
+}

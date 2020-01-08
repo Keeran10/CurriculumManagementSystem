@@ -37,6 +37,7 @@ export class PackageComponent implements OnInit {
   packages = new Array();
   isPdfAvailable = new Array();
   userName = 'User';
+  userId = '0';
   selectedFiles: FileList;
   currentFile: File;
   msg;
@@ -54,6 +55,7 @@ export class PackageComponent implements OnInit {
       this.packages.forEach(() => this.isPdfAvailable.push(false));
     });
     this.userName = this.cookieService.get('userName');
+    this.userId = this.cookieService.get('user');
   }
 
   public packageSelect(packageId, requestId, href) {
@@ -61,7 +63,7 @@ export class PackageComponent implements OnInit {
     console.log(packageId);
     this.cookieService.set('request', requestId);
     if (requestId != 0) {
-      let request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
+      const request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
       this.cookieService.set('originalCourse', request.originalId.toString());
       this.cookieService.set('editedCourse', request.targetId.toString());
     }
@@ -73,13 +75,13 @@ export class PackageComponent implements OnInit {
   }
 
   public generatePdf(packageId, index) {
-    this.api.generatePdf(packageId).subscribe(data => this.isPdfAvailable[index] = data);
+    this.api.generatePdf(packageId, this.userId).subscribe(data => this.isPdfAvailable[index] = data);
   }
 
   public viewPdf(packageId) {
     this.api.viewPdf(packageId).subscribe(data => {
-      let file = new Blob([data], { type: 'application/pdf' });
-      var fileURL = URL.createObjectURL(file);
+      const file = new Blob([data], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
       //window.open(fileURL, '_blank');
       window.location.assign(fileURL);
     });

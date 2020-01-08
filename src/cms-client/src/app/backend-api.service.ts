@@ -95,6 +95,7 @@ export class ApiService {
     });
   }
 
+  /*
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log(course);
     console.log(courseExtras);
@@ -103,6 +104,7 @@ export class ApiService {
         .set('courseExtras', JSON.stringify(courseExtras))
     });
   }
+  */
 
   public savePipeline(pipeline: string, packageId: any) {
     console.log('set approval pipeline');
@@ -125,9 +127,9 @@ export class ApiService {
     });
   }
 
-  public generatePdf(packageId: string) {
+  public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
-      params: new HttpParams().set('package_id', packageId)
+      params: new HttpParams().set('package_id', packageId).set('user_id', userId)
     });
   }
 
@@ -185,6 +187,20 @@ export class ApiService {
       reportProgress: true,
       responseType: 'text',
     });
+    return this.http.request(req);
+  }
+
+  public submitCourseRequestForm(file: File, course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = new FormData();
+    formdata.append('course', JSON.stringify(course));
+    formdata.append('courseExtras', JSON.stringify(courseExtras));
+    formdata.append('file', file);
+
+    const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
     return this.http.request(req);
   }
 

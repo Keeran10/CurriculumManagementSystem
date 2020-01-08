@@ -29,10 +29,9 @@ import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,7 +59,10 @@ public class RequestPackageController {
      * @return A boolean detailing if the pdf generation was successful or a failure.
      */
     @GetMapping(value="/generate_pdf")
-    public boolean generatePdf(@RequestParam int package_id) throws IOException, DocumentException { return pdfService.generatePDF(package_id); }
+    public boolean generatePdf(@RequestParam int package_id, @RequestParam int user_id) throws IOException, DocumentException {
+
+        return pdfService.generatePDF(package_id, user_id);
+    }
 
 
     /**
@@ -69,7 +71,7 @@ public class RequestPackageController {
      * @return The pdf file to browser.
      */
     @GetMapping(value="/get_pdf")
-    public ResponseEntity<byte[]> getPdf(@RequestParam int package_id){
+    public byte[] getPdf(@RequestParam int package_id){
 
         byte[] pdf_bytes = pdfService.getPDF(package_id);
 
@@ -84,22 +86,35 @@ public class RequestPackageController {
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
+        return pdf_bytes;
     }
 
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param requestForm Combined stringified JSON received from front-end.
-     * @param bindingResult Validates requestForm.
+     * @param course stringified JSON received from front-end.
+     * @param courseExtras stringified JSON received from front-end.
+     * @param file course outline
      * @return True if course was successfully added to database.
      * @throws JSONException
      */
-    @PostMapping(value="/save_request", consumes = "application/json")
-    public int saveCreateAndEditRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+    @PostMapping(value="/save_request")
+    public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras,
+                                        @RequestParam(required = false) MultipartFile file) {
 
-        return requestPackageService.saveCourseRequest(requestForm);
+
+        try {
+            if(file != null)
+                return requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            else
+                return requestPackageService.saveCourseRequest(course, courseExtras, null);
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
+
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
@@ -162,13 +177,30 @@ public class RequestPackageController {
 
 
     @PostMapping(value = "/get_impact")
-    public Map<String, Object> sendRequestId(@RequestBody String requestForm) throws JSONException {
+    public Map<String, Object> sendRequestId(@RequestParam String course, @RequestParam String courseExtras,
+                                             @RequestParam(required = false) MultipartFile file) {
 
-        int request_id = requestPackageService.saveCourseRequest(requestForm);
+        int request_id = 0;
+        try {
+            if(file != null)
+                request_id = requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            else
+                request_id = requestPackageService.saveCourseRequest(course, courseExtras, null);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
 
         return impactAssessmentController.getImpactAssessment(request_id);
     }
 
+
+    /**
+     * Unused. Will be refactored for package level supporting docs
+     * @param file
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/addSupportingDocument")
     public boolean uploadData(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) throws Exception {
 
@@ -179,6 +211,12 @@ public class RequestPackageController {
         byte[] doc = file.getBytes();
 
         return requestPackageService.saveRequestFile(doc, id);
+    }
+
+
+    @GetMapping("/dossier_revisions")
+    public List getDossierRevisions(@RequestParam int id){
+        return requestPackageService.getDossierRevisions(id);
     }
 
 }

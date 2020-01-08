@@ -29,11 +29,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.*;
@@ -74,25 +78,25 @@ public class RequestPackageService {
 
     /**
      * Saves an edited course to the database.
-     * @param requestForm Stringified JSON received from client
+     * @param courseJSON Stringified course JSON received from client
+     * @param courseExtrasJSON Stringified course JSON received from client
+     * @param file uploaded course outline
      * @return True if course has been successfully added to database.
      * @throws JSONException
      */
-    public int saveCourseRequest(String requestForm) throws JSONException {
+    public int saveCourseRequest(String courseJSON, String courseExtrasJSON, byte[] file) throws JSONException {
 
-        log.info("Json received: " + requestForm);
+        log.info("Json course received: " + courseJSON);
+        log.info("Json courseExtras received: " + courseExtrasJSON);
+        log.info("File received received: " + file);
 
-        JSONObject json = new JSONObject(requestForm);
-
-        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
-
-        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
-        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
+        JSONObject course = new JSONObject(courseJSON);
+        JSONObject courseExtras = new JSONObject(courseExtrasJSON);
 
         int original_id = (Integer) course.get("id");
 
         if(original_id == 0)
-            return saveCreateRequest(course, courseExtras);
+            return saveCreateRequest(course, courseExtras, file);
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId(original_id);
@@ -105,15 +109,23 @@ public class RequestPackageService {
 
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+        Request request = requestRepository.findByRequestId(request_id);
 
-        if(request == null)
+        User user = userRepository.findById(user_id);
+
+        Course c = null;
+
+        if(request == null) {
             request = new Request();
-
-        Course c = new Course();
+            c = new Course();
+        }
+        else{
+            c = courseRepository.findById(request.getTargetId());
+        }
 
         c.setName((String) course.get("name"));
         c.setNumber((Integer) course.get("number"));
@@ -128,6 +140,9 @@ public class RequestPackageService {
         c.setIsActive(0);
         c.setProgram(original.getProgram());
 
+        if(file != null)
+            c.setOutline(file);
+
         courseRepository.save(c);
 
         // Requests
@@ -138,29 +153,33 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
+        request.setUser(user);
         request.setRequestPackage(requestPackage);
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
-        // Degree Requirements
-        ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-        for(DegreeRequirement dr : original.getDegreeRequirements()){
+        if(c.getDegreeRequirements() == null) {
 
-            DegreeRequirement cdr = new DegreeRequirement();
+            // Degree Requirements
+            ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-            cdr.setCore(dr.getCore());
-            cdr.setDegree(dr.getDegree());
-            cdr.setCourse(c);
+            for (DegreeRequirement dr : original.getDegreeRequirements()) {
 
-            degreeRequirementRepository.save(cdr);
+                DegreeRequirement cdr = new DegreeRequirement();
 
-            dr.getDegree().getDegreeRequirements().add(cdr);
+                cdr.setCore(dr.getCore());
+                cdr.setDegree(dr.getDegree());
+                cdr.setCourse(c);
 
-            list.add(cdr);
+                degreeRequirementRepository.save(cdr);
 
+                dr.getDegree().getDegreeRequirements().add(cdr);
+
+                list.add(cdr);
+
+            }
+            c.setDegreeRequirements(list);
         }
-        c.setDegreeRequirements(list);
 
         // Requisites
         String pre = (String) courseExtras.get("prerequisites");
@@ -191,7 +210,18 @@ public class RequestPackageService {
                     requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
                 }
                 requisite.setType("prerequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
 
         }
@@ -207,7 +237,18 @@ public class RequestPackageService {
                 requisite.setName(corequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
                 requisite.setType("corequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String antirequisite : antirequisites){
@@ -222,7 +263,18 @@ public class RequestPackageService {
                 requisite.setName(antirequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
                 requisite.setType("antirequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String equivalent : equivalents){
@@ -237,7 +289,18 @@ public class RequestPackageService {
                 requisite.setName(equivalent.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
                 requisite.setType("equivalent");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
 
@@ -252,7 +315,7 @@ public class RequestPackageService {
         log.info("course saved: " + c);
         log.info("request saved: " + request);
 
-        requestPackage.getRequests().add(request); 
+        requestPackage.getRequests().add(request);
 
 
         return request.getId();
@@ -265,16 +328,29 @@ public class RequestPackageService {
      * @return request_id if course and request have been successfully added to database.
      * @throws JSONException
      */
-    private int saveCreateRequest(JSONObject course, JSONObject courseExtras) throws JSONException {
+    private int saveCreateRequest(JSONObject course, JSONObject courseExtras, byte[] file) throws JSONException {
+
+        log.info("Inserting course creation request to database...");
 
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        Request request = new Request();
+        Request request = requestRepository.findByRequestId(request_id);
 
-        Course c = new Course();
+        User user = userRepository.findById(user_id);
+
+        Course c = null;
+
+        if(request == null) {
+            request = new Request();
+            c = new Course();
+        }
+        else{
+            c = courseRepository.findById(request.getTargetId());
+        }
 
         c.setName((String) course.get("name"));
         c.setNumber((Integer) course.get("number"));
@@ -288,6 +364,9 @@ public class RequestPackageService {
         c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
         c.setIsActive(0);
 
+        if(file != null)
+            c.setOutline(file);
+
         //c.setProgram(original.getProgram());
 
         courseRepository.save(c);
@@ -300,7 +379,7 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
+        request.setUser(user);
         request.setRequestPackage(requestPackage);
 
         request.setTitle(c.getName().toUpperCase() + c.getNumber() + "_create");
@@ -357,7 +436,18 @@ public class RequestPackageService {
                     requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
                 }
                 requisite.setType("prerequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
 
         }
@@ -373,7 +463,18 @@ public class RequestPackageService {
                 requisite.setName(corequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
                 requisite.setType("corequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String antirequisite : antirequisites){
@@ -388,7 +489,18 @@ public class RequestPackageService {
                 requisite.setName(antirequisite.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
                 requisite.setType("antirequisite");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
         for(String equivalent : equivalents){
@@ -403,7 +515,18 @@ public class RequestPackageService {
                 requisite.setName(equivalent.substring(0, 4).trim());
                 requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
                 requisite.setType("equivalent");
-                requisiteRepository.save(requisite);
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
             }
         }
 
@@ -429,6 +552,7 @@ public class RequestPackageService {
      */
     public int saveRemovalRequest(String requestForm) throws JSONException {
 
+        log.info("Inserting course removal request to database...");
         log.info("Json received: " + requestForm);
 
         JSONObject json = new JSONObject(requestForm);
@@ -441,7 +565,7 @@ public class RequestPackageService {
         int original_id = (Integer) course.get("id");
 
         if(original_id == 0)
-            return saveCreateRequest(course, courseExtras);
+            return 0;
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId(original_id);
@@ -454,13 +578,17 @@ public class RequestPackageService {
 
         int user_id = Integer.parseInt(String.valueOf(courseExtras.get("userId")));
         int package_id = Integer.parseInt(String.valueOf(courseExtras.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
-        Request request = requestRepository.findByTripleId(user_id, package_id, original.getId());
+        Request request = requestRepository.findByRequestId(request_id);
+
+        User user = userRepository.findById(user_id);
 
         if(request == null)
             request = new Request();
+
 
         // Requests
         request.setRequestType(3);
@@ -470,7 +598,7 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
+        request.setUser(user);
         request.setRequestPackage(requestPackage);
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_remove");
@@ -608,6 +736,40 @@ public class RequestPackageService {
         return true;
     }
 
+
+    /**
+     * Takes in a package id and returns all change history made to said package
+     * @param id the id of the package
+     * @return list of dossier revisions
+     */
+    public List getDossierRevisions(int id){
+
+        log.info("Retrieving revision history for dossier " + id + ".");
+
+        List<Object[]> revisions = requestPackageRepository.getRevisions(id);
+
+        List<DossierRevision> versions = new ArrayList<>();
+
+        if(revisions.isEmpty()) return null;
+
+        for(Object[] r : revisions)
+            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[4],
+                    userRepository.findUserById((Integer) r[5]), (byte[]) r[3]));
+
+        return versions;
+    }
+
+
+    /**
+     * Reverts a package back to a previous state.
+     * @param rev
+     */
+    public void revertDossier(int rev) {
+
+        //RequestPackage requestPackage = requestPackageRepository.findByRevId(rev);
+    }
+
+
     /**
      * Returns a user with the specified ID
      *
@@ -618,4 +780,5 @@ public class RequestPackageService {
         log.info("getUser called with user_id " + user_id);
         return userRepository.findById(user_id);
     }
+
 }

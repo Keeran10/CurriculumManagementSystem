@@ -39,6 +39,7 @@ export class PipelineTrackingComponent implements OnInit {
   public packageLocation = '';
   public pipelineId = 1;
   public pipeline = [];
+  public userId = '0';
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
   //}
@@ -69,7 +70,7 @@ export class PipelineTrackingComponent implements OnInit {
       });
   }
   public generatePDF() {
-    this.api.generatePdf(this.id.toString()).subscribe(data => console.log(data));
+    this.api.generatePdf(this.id.toString(), this.userId).subscribe(data => console.log(data));
   }
   public viewPdf() {
     this.generatePDF();
@@ -93,5 +94,6 @@ export class PipelineTrackingComponent implements OnInit {
     this.getPipeline();
     this.getPackageLocation();
     this.getNewPipelineId();
+    this.userId = this.cookieService.get('user');
   }
 }

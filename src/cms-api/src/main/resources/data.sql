@@ -53,7 +53,6 @@ INSERT IGNORE INTO user VALUES (5, 'rhonda@soen.com', 'Rhonda', 'Philips','123',
 INSERT IGNORE INTO user VALUES (6, 'billy@soen.com', 'Billy', 'Bob','123', 'UGSC', 8);
 INSERT IGNORE INTO user VALUES (7, 'olga@soen.com', 'Olga', 'Hashtag','123', 'Senate', 8);
 
-
 -- id, desc, active, name, department_id
 INSERT IGNORE INTO program VALUES (1, "The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics. The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.",
 1, 'Software Engineering', 4);
@@ -287,16 +286,99 @@ INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Managem
 INSERT IGNORE INTO calendar VALUES (2, 'Students employed full‑time in a computer science position during their non‑study terms may have this Industrial Experience listed on their official transcript and student record, provided they successfully complete the Reflective Learning course associated with this work term. Students may only register for these courses with the permission of the Faculty. The Industrial Experience terms COMP 107 and 207 carry no credit value and are used to indicate that the student is on an Industrial Experience term. The COMP 108 and 208 Industrial Experience Reflective Learning courses are worth three credits and are marked on a pass/fail basis. They are above and beyond the credit requirements of the student’s program and are not transferable nor are they included in the full‑ or part‑time assessment status. Students studying for a co‑op work term or CIADI term should not register for these Industrial Experience and Reflective Learning courses.', '71.70.7', 'Industrial Experience and Reflective Learning Courses', 'general', 4);
 INSERT IGNORE INTO calendar VALUES (3, "Please note that the current version of the Undergraduate Calendar is up to date as of February 2019.", "71.60", "Engineering Course Descriptions", "", 8);
 
--- id, pdf_file, rejection_rationale, department_id
-INSERT IGNORE INTO request_package VALUES (1, NULL, NULL, 4); -- creating a package for department of CS & SE
-INSERT IGNORE INTO request_package VALUES (2, NULL, NULL, 8); -- used for pdf generation
-INSERT IGNORE INTO request_package VALUES (3, NULL, NULL, 4); -- used to test package rejection
+-- id, section, target_id, target_type
+INSERT IGNORE INTO section VALUES (1, '71.70.9', 'course', 1);
+INSERT IGNORE INTO section VALUES (2, '71.70.9', 'course', 2);
+INSERT IGNORE INTO section VALUES (3, '71.70.9', 'course', 3);
+INSERT IGNORE INTO section VALUES (4, '71.70.9', 'course', 4);
+INSERT IGNORE INTO section VALUES (5, '71.70.9', 'course', 5);
+INSERT IGNORE INTO section VALUES (6, '71.70.9', 'course', 6);
+INSERT IGNORE INTO section VALUES (7, '71.70.9', 'course', 7);
+INSERT IGNORE INTO section VALUES (8, '71.70.9', 'course', 8);
+INSERT IGNORE INTO section VALUES (9, '71.70.9', 'course', 9);
+INSERT IGNORE INTO section VALUES (10, '71.70.9', 'course', 10);
+INSERT IGNORE INTO section VALUES (11, '71.70.9', 'course', 11);
+INSERT IGNORE INTO section VALUES (12, '71.70.9', 'course', 12);
+INSERT IGNORE INTO section VALUES (13, '71.70.9', 'course', 13);
+INSERT IGNORE INTO section VALUES (14, '71.70.9', 'course', 14);
+INSERT IGNORE INTO section VALUES (15, '71.70.9', 'course', 15);
+INSERT IGNORE INTO section VALUES (16, '71.20.5', 'course', 16);
+INSERT IGNORE INTO section VALUES (17, '71.20.5', 'course', 17);
+INSERT IGNORE INTO section VALUES (18, '71.20.5', 'course', 18);
+INSERT IGNORE INTO section VALUES (19, '71.20.5', 'course', 19);
+INSERT IGNORE INTO section VALUES (20, '71.20.5', 'course', 20);
+INSERT IGNORE INTO section VALUES (21, '71.20.5', 'course', 21);
+INSERT IGNORE INTO section VALUES (22, '71.40.1', 'course', 22);
+INSERT IGNORE INTO section VALUES (23, '71.40.1', 'course', 23);
+INSERT IGNORE INTO section VALUES (24, '71.40.1', 'course', 24);
+INSERT IGNORE INTO section VALUES (25, '71.40.1', 'course', 25);
+INSERT IGNORE INTO section VALUES (26, '71.40.1', 'course', 26);
+INSERT IGNORE INTO section VALUES (27, '71.40.1', 'course', 27);
+INSERT IGNORE INTO section VALUES (28, '71.40.1', 'course', 28);
+INSERT IGNORE INTO section VALUES (29, '71.40.1', 'course', 29);
+INSERT IGNORE INTO section VALUES (30, '71.40.1', 'course', 30);
+INSERT IGNORE INTO section VALUES (31, '71.40.1', 'course', 31);
+INSERT IGNORE INTO section VALUES (32, '71.40.1', 'course', 32);
+INSERT IGNORE INTO section VALUES (33, '71.40.1', 'course', 33);
+INSERT IGNORE INTO section VALUES (34, '71.40.1', 'course', 34);
+INSERT IGNORE INTO section VALUES (35, '71.40.1', 'course', 35);
+INSERT IGNORE INTO section VALUES (36, '71.40.1', 'course', 36);
+INSERT IGNORE INTO section VALUES (37, '71.40.1', 'course', 37);
+INSERT IGNORE INTO section VALUES (38, '71.40.1', 'course', 38);
+INSERT IGNORE INTO section VALUES (39, '71.40.1', 'course', 39);
+INSERT IGNORE INTO section VALUES (40, '71.70.9', 'course', 40);
+INSERT IGNORE INTO section VALUES (41, '71.70.10', 'course', 1);
+INSERT IGNORE INTO section VALUES (42, '71.70.10', 'course', 2);
+INSERT IGNORE INTO section VALUES (43, '71.70.10', 'course', 3);
+INSERT IGNORE INTO section VALUES (44, '71.70.10', 'course', 4);
+INSERT IGNORE INTO section VALUES (45, '71.70.10', 'course', 5);
+INSERT IGNORE INTO section VALUES (46, '71.70.10', 'course', 6);
+INSERT IGNORE INTO section VALUES (47, '71.70.10', 'course', 7);
+INSERT IGNORE INTO section VALUES (48, '71.70.10', 'course', 8);
+INSERT IGNORE INTO section VALUES (49, '71.70.10', 'course', 9);
+INSERT IGNORE INTO section VALUES (50, '71.70.10', 'course', 10);
+INSERT IGNORE INTO section VALUES (51, '71.70.10', 'course', 11);
+INSERT IGNORE INTO section VALUES (52, '71.70.10', 'course', 12);
+INSERT IGNORE INTO section VALUES (53, '71.70.10', 'course', 13);
+INSERT IGNORE INTO section VALUES (54, '71.70.10', 'course', 14);
+INSERT IGNORE INTO section VALUES (55, '71.70.10', 'course', 15);
+INSERT IGNORE INTO section VALUES (56, '71.60', 'course', 16);
+INSERT IGNORE INTO section VALUES (57, '71.60', 'course', 17);
+INSERT IGNORE INTO section VALUES (58, '71.60', 'course', 18);
+INSERT IGNORE INTO section VALUES (59, '71.60', 'course', 19);
+INSERT IGNORE INTO section VALUES (60, '71.60', 'course', 20);
+INSERT IGNORE INTO section VALUES (61, '71.60', 'course', 21);
+INSERT IGNORE INTO section VALUES (62, '71.60', 'course', 22);
+INSERT IGNORE INTO section VALUES (63, '71.60', 'course', 23);
+INSERT IGNORE INTO section VALUES (64, '71.60', 'course', 24);
+INSERT IGNORE INTO section VALUES (65, '71.60', 'course', 25);
+INSERT IGNORE INTO section VALUES (66, '71.60', 'course', 26);
+INSERT IGNORE INTO section VALUES (67, '71.60', 'course', 27);
+INSERT IGNORE INTO section VALUES (68, '71.60', 'course', 28);
+INSERT IGNORE INTO section VALUES (69, '71.60', 'course', 29);
+INSERT IGNORE INTO section VALUES (70, '71.60', 'course', 30);
+INSERT IGNORE INTO section VALUES (71, '71.60', 'course', 31);
+INSERT IGNORE INTO section VALUES (72, '71.60', 'course', 32);
+INSERT IGNORE INTO section VALUES (73, '71.60', 'course', 33);
+INSERT IGNORE INTO section VALUES (74, '71.60', 'course', 34);
+INSERT IGNORE INTO section VALUES (75, '71.60', 'course', 35);
+INSERT IGNORE INTO section VALUES (76, '71.60', 'course', 36);
+INSERT IGNORE INTO section VALUES (77, '71.60', 'course', 37);
+INSERT IGNORE INTO section VALUES (78, '71.60', 'course', 38);
+INSERT IGNORE INTO section VALUES (79, '71.60', 'course', 39);
+INSERT IGNORE INTO section VALUES (80, '71.60', 'course', 40);
+
+-- id, pdf_file, rejection_rationale, user_id, department_id
+INSERT IGNORE INTO request_package VALUES (1, NULL, NULL, 1, 4); -- creating a package for department of CS & SE
+INSERT IGNORE INTO request_package VALUES (2, NULL, NULL, 1, 8); -- used for pdf generation
+INSERT IGNORE INTO request_package VALUES (3, NULL, NULL, 1, 4); -- used to test package rejection
+
 
 -- id, original id, rationale, request type, resource, target id, target type, timestamp, title, package id, user id
-INSERT IGNORE INTO request VALUES (1, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
-INSERT IGNORE INTO request VALUES (3, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
-INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
+INSERT IGNORE INTO request VALUES (1, 8, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 1, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 0, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
+INSERT IGNORE INTO request VALUES (4, 30, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
 
 -- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
