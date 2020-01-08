@@ -75,7 +75,9 @@ public class RequestPackageController {
 
         byte[] pdf_bytes = pdfService.getPDF(package_id);
 
-        if(pdf_bytes == null) return null;
+        if(pdf_bytes == null) {
+            return null;
+        }
 
         HttpHeaders headers = new HttpHeaders();
 

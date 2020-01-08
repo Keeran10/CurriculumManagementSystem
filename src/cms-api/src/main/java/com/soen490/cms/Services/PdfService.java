@@ -589,7 +589,6 @@ public class PdfService {
 
         sections = sectionRepository.findByTarget("course", o.getId());
 
-        System.out.println(sections + "\n" + "COURSE ID: " + o.getId());
         String section = "";
 
         if(sections.isEmpty() && o.getId() != 0){
