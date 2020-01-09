@@ -24,24 +24,18 @@ package com.soen490.cms.Controllers;
 
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.RequestPackage;
-import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Log4j2
@@ -192,12 +186,21 @@ public class RequestPackageController {
     }
 
 
-    // Save package to database
-    @PostMapping(value="/save_package", consumes = "application/json")
-    public boolean saveRequestPackage(@Valid @RequestBody String requestPackageForm, BindingResult bindingResult) throws JSONException{
+    // Add dossier to database
+    @PostMapping(value="/add_dossier")
+    public RequestPackage addDossier(@RequestParam int user_id) throws JSONException{
 
-        return requestPackageService.saveRequestPackage(requestPackageForm);
+        return requestPackageService.addDossier(user_id);
     }
+
+
+    // Remove dossier from database
+    @PostMapping(value="/delete_dossier")
+    public boolean deleteDossier(@RequestParam int dossier_id) throws JSONException{
+
+        return requestPackageService.deleteDossier(dossier_id);
+    }
+
 
     /**
      * Add a new supporting document to a request
