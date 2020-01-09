@@ -22,6 +22,7 @@
 
 package com.soen490.cms.Services;
 
+import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.*;
 import lombok.extern.log4j.Log4j2;
@@ -48,21 +49,23 @@ import java.util.*;
 public class RequestPackageService {
 
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
     @Autowired
-    RequestRepository requestRepository;
+    private RequestRepository requestRepository;
     @Autowired
-    DegreeRequirementRepository degreeRequirementRepository;
+    private DegreeRequirementRepository degreeRequirementRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RequisiteRepository requisiteRepository;
+    private RequisiteRepository requisiteRepository;
     @Autowired
-    RequestPackageRepository requestPackageRepository;
+    private RequestPackageRepository requestPackageRepository;
     @Autowired
-    DepartmentRepository departmentRepository;
+    private DepartmentRepository departmentRepository;
     @Autowired
-    SupportingDocumentRepository supportingDocumentsRepository;
+    private SupportingDocumentRepository supportingDocumentsRepository;
+    @Autowired
+    private PdfService pdfService;
 
 
     // Return package with right id, if id given is 0, a new package is created and returned
@@ -317,6 +320,7 @@ public class RequestPackageService {
 
         requestPackage.getRequests().add(request);
 
+        generatePdf(package_id, user_id);
 
         return request.getId();
     }
@@ -540,6 +544,8 @@ public class RequestPackageService {
 
         requestPackage.getRequests().add(request);
 
+        generatePdf(package_id, user_id);
+
         return request.getId();
     }
 
@@ -605,6 +611,8 @@ public class RequestPackageService {
 
         requestRepository.save(request);
 
+        generatePdf(package_id, user_id);
+
         return request.getId();
     }
 
@@ -629,7 +637,12 @@ public class RequestPackageService {
 
         courseRepository.delete(requested_course);
 
+        int user_id = request.getUser().getId();
+        int package_id = request.getRequestPackage().getId();
+
         requestRepository.delete(request);
+
+        generatePdf(user_id, package_id);
 
         return true;
     }
@@ -780,5 +793,18 @@ public class RequestPackageService {
         log.info("getUser called with user_id " + user_id);
         return userRepository.findById(user_id);
     }
+
+    // Called after any request transaction
+    private void generatePdf(int package_id, int user_id) {
+
+        try {
+            pdfService.generatePDF(package_id, user_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
