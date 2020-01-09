@@ -46,4 +46,8 @@ export class RevisionsComponent implements OnInit {
         data => { this.revisions = data; }
         );
     }
+
+    public viewPDF(pdf: any) {
+        console.log(pdf);
+    }
 }
