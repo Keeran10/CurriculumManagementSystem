@@ -133,7 +133,8 @@ describe('EditFormComponent', () => {
 
       component.submitForm();
 
-      expect(component.currentFile).toEqual(component.supportDocumentComponent.documents[0]);
+      // documents is set back to an empty array after submission
+      expect(component.currentFile).toEqual(undefined);
       expect(apiService.submitCourseRequestForm).toHaveBeenCalled();
     });
 
