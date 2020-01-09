@@ -50,6 +50,8 @@ export class EditFormComponent {
   currentFile: File;
   files: File[] = [];
 
+  isDeleteVisible = true;
+
   constructor(private route: ActivatedRoute, private api: ApiService,
     private cookieService: CookieService,
     private router: Router) {
@@ -79,6 +81,7 @@ export class EditFormComponent {
       this.courseOriginal = Object.assign({}, this.courseEditable);
       this.courseOriginal.number = null;
       this.courseOriginal.credits = null;
+      this.isDeleteVisible = false;
     }
     else if(requestId === '0'){
       this.api.getCourse(this.id).subscribe(data => {
@@ -170,6 +173,12 @@ export class EditFormComponent {
     console.log(this.selectedFiles);
     this.files.push(this.selectedFiles.item(0));
     console.log(this.files);
+  }
+
+  public openDeleteDialog(){
+    if(confirm("Are you sure you want to delete this course?")){
+      console.log("delete course");
+    }
   }
 
 }
