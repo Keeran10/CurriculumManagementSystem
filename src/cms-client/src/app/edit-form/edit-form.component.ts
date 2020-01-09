@@ -46,6 +46,10 @@ export class EditFormComponent {
   model = new CourseExtras();
   editedModel = new CourseExtras();
 
+  selectedFiles: FileList;
+  currentFile: File;
+  files: File[] = [];
+
   constructor(private route: ActivatedRoute, private api: ApiService,
     private cookieService: CookieService,
     private router: Router) {
@@ -53,6 +57,11 @@ export class EditFormComponent {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
+
+    this.currentFile = null;
+    this.selectedFiles = null;
+    this.files = null;
+
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
@@ -165,8 +174,20 @@ export class EditFormComponent {
   */
 
   public submitForm() {
-    this.editedModel.files = this.supportDocumentComponent.documents;
-    this.api.submitEditedCourse(this.courseEditable, this.editedModel)
-      .subscribe(() => this.router.navigate(['package']))
+    console.log(this.supportDocumentComponent.documents[0]);
+
+    //this.currentFile = this.selectedFiles[0];
+    this.currentFile = this.supportDocumentComponent.documents[0];
+
+    this.api.submitCourseRequestForm(this.currentFile, this.courseEditable, this.editedModel)
+      .subscribe(() => this.router.navigate(['/package']))
   }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles);
+    this.files.push(this.selectedFiles.item(0));
+    console.log(this.files);
+  }
+
 }

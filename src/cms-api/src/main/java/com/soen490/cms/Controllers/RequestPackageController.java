@@ -29,6 +29,7 @@ import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -91,16 +92,29 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param requestForm Combined stringified JSON received from front-end.
-     * @param bindingResult Validates requestForm.
+     * @param course stringified JSON received from front-end.
+     * @param courseExtras stringified JSON received from front-end.
+     * @param file course outline
      * @return True if course was successfully added to database.
      * @throws JSONException
      */
-    @PostMapping(value="/save_request", consumes = "application/json")
-    public int saveCreateAndEditRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+    @PostMapping(value="/save_request")
+    public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras,
+                                        @RequestParam(required = false) MultipartFile file) {
 
-        return requestPackageService.saveCourseRequest(requestForm);
+
+        try {
+            if(file != null)
+                return requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            else
+                return requestPackageService.saveCourseRequest(course, courseExtras, null);
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
+
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
@@ -163,13 +177,30 @@ public class RequestPackageController {
 
 
     @PostMapping(value = "/get_impact")
-    public Map<String, Object> sendRequestId(@RequestBody String requestForm) throws JSONException {
+    public Map<String, Object> sendRequestId(@RequestParam String course, @RequestParam String courseExtras,
+                                             @RequestParam(required = false) MultipartFile file) {
 
-        int request_id = requestPackageService.saveCourseRequest(requestForm);
+        int request_id = 0;
+        try {
+            if(file != null)
+                request_id = requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
+            else
+                request_id = requestPackageService.saveCourseRequest(course, courseExtras, null);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
 
         return impactAssessmentController.getImpactAssessment(request_id);
     }
 
+
+    /**
+     * Unused. Will be refactored for package level supporting docs
+     * @param file
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/addSupportingDocument")
     public boolean uploadData(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) throws Exception {
 
