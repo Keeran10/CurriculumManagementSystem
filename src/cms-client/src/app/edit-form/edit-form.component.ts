@@ -75,25 +75,7 @@ export class EditFormComponent {
     this.model.requestId = Number(requestId);
     this.editedModel.requestId = Number(requestId);
     if(this.id === '0'){
-      this.courseEditable = {
-        id: 0,
-        credits: 4,
-        degreeRequirements: [],
-        description: '',
-        equivalent: [],
-        isActive: false,
-        labHours: 0,
-        lectureHours: 0,
-        level: 1,
-        name: '',
-        note: '',
-        number: 100,
-        outline: '',
-        program: null,
-        requisites: [],
-        title: '',
-        tutorialHours: 0
-      };
+      this.courseEditable = new Course();
       this.courseOriginal = Object.assign({}, this.courseEditable);
       this.courseOriginal.number = null;
       this.courseOriginal.credits = null;
