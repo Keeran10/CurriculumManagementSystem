@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
 public class RequestPackageController {
 
     @Autowired
