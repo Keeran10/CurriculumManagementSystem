@@ -83,15 +83,16 @@ public class RequestPackageService {
      * Saves an edited course to the database.
      * @param courseJSON Stringified course JSON received from client
      * @param courseExtrasJSON Stringified course JSON received from client
-     * @param file uploaded course outline
+     * @param files uploaded course outline
      * @return True if course has been successfully added to database.
      * @throws JSONException
      */
-    public int saveCourseRequest(String courseJSON, String courseExtrasJSON, byte[] file) throws JSONException {
+    public int saveCourseRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files) throws JSONException {
 
         log.info("Json course received: " + courseJSON);
         log.info("Json courseExtras received: " + courseExtrasJSON);
-        log.info("File received received: " + file);
+        for(MultipartFile file : files)
+            log.info("File received received: " + file.getOriginalFilename());
 
         JSONObject course = new JSONObject(courseJSON);
         JSONObject courseExtras = new JSONObject(courseExtrasJSON);
@@ -99,7 +100,7 @@ public class RequestPackageService {
         int original_id = (Integer) course.get("id");
 
         if(original_id == 0)
-            return saveCreateRequest(course, courseExtras, file);
+            return saveCreateRequest(course, courseExtras, files);
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId(original_id);
@@ -143,11 +144,13 @@ public class RequestPackageService {
         c.setIsActive(0);
         c.setProgram(original.getProgram());
 
-        if(file != null) {
-            c.setOutline(file);
-        }
-
         courseRepository.save(c);
+
+        try {
+            saveSupportingDocument(files, "course", c.getId(), user_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Requests
         request.setRequestType(2);
@@ -191,125 +194,7 @@ public class RequestPackageService {
         String anti = (String) courseExtras.get("antirequisites");
         String eq = (String) courseExtras.get("equivalents");
 
-        String[] prerequisites = pre.split(";|\\,");
-        String[] corequisites = co.split(";|\\,");
-        String[] antirequisites = anti.split(";|\\,");
-        String[] equivalents = eq.split(";|,|or");
-
-        for(String prerequisite : prerequisites){
-
-            prerequisite = prerequisite.trim();
-
-            if(prerequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                if(prerequisite.startsWith("credits", 3)){
-                    requisite.setName(prerequisite);
-                    requisite.setNumber(0);
-                }
-                else{
-                    requisite.setName(prerequisite.substring(0, 4).trim());
-                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
-                }
-                requisite.setType("prerequisite");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-
-        }
-        for(String corequisite : corequisites){
-
-            corequisite = corequisite.trim();
-
-            if(corequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(corequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
-                requisite.setType("corequisite");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-        }
-        for(String antirequisite : antirequisites){
-
-            antirequisite = antirequisite.trim();
-
-            if(antirequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(antirequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
-                requisite.setType("antirequisite");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-        }
-        for(String equivalent : equivalents){
-
-            equivalent = equivalent.trim();
-
-            if(equivalent.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(equivalent.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
-                requisite.setType("equivalent");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-        }
-
-        // Supporting Documents
-        // initialize supporting doc and save it to its repository
+        setRequisites(c, pre, co, anti, eq);
 
         courseRepository.save(c);
 
@@ -333,7 +218,7 @@ public class RequestPackageService {
      * @return request_id if course and request have been successfully added to database.
      * @throws JSONException
      */
-    private int saveCreateRequest(JSONObject course, JSONObject courseExtras, byte[] file) throws JSONException {
+    private int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files) throws JSONException {
 
         log.info("Inserting course creation request to database...");
 
@@ -369,12 +254,13 @@ public class RequestPackageService {
         c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
         c.setIsActive(0);
 
-        if(file != null)
-            c.setOutline(file);
-
-        //c.setProgram(original.getProgram());
-
         courseRepository.save(c);
+
+        try {
+            saveSupportingDocument(files, "course", c.getId(), user_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Requests
         request.setRequestType(1);
@@ -418,122 +304,7 @@ public class RequestPackageService {
         String anti = (String) courseExtras.get("antirequisites");
         String eq = (String) courseExtras.get("equivalents");
 
-        String[] prerequisites = pre.split(";|\\,");
-        String[] corequisites = co.split(";|\\,");
-        String[] antirequisites = anti.split(";|\\,");
-        String[] equivalents = eq.split(";|,|or");
-
-        for(String prerequisite : prerequisites){
-
-            prerequisite = prerequisite.trim();
-
-            if(prerequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                if(prerequisite.startsWith("credits", 3)){
-                    requisite.setName(prerequisite);
-                    requisite.setNumber(0);
-                }
-                else{
-                    requisite.setName(prerequisite.substring(0, 4).trim());
-                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
-                }
-                requisite.setType("prerequisite");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-
-        }
-        for(String corequisite : corequisites){
-
-            corequisite = corequisite.trim();
-
-            if(corequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(corequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
-                requisite.setType("corequisite");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-        }
-        for(String antirequisite : antirequisites){
-
-            antirequisite = antirequisite.trim();
-
-            if(antirequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(antirequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
-                requisite.setType("antirequisite");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-        }
-        for(String equivalent : equivalents){
-
-            equivalent = equivalent.trim();
-
-            if(equivalent.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(equivalent.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
-                requisite.setType("equivalent");
-
-                // handle duplicate case
-                boolean isPresent = false;
-                for(Requisite r : c.getRequisites()){
-
-                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
-                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
-                        isPresent = true;
-                    }
-                }
-                if(!isPresent)
-                    requisiteRepository.save(requisite);
-            }
-        }
+        setRequisites(c, pre, co, anti, eq);
 
         courseRepository.save(c);
 
@@ -551,23 +322,10 @@ public class RequestPackageService {
     }
 
 
-    /**
-     * saves a removal request to database.
-     * @param requestForm
-     * @return the request id upon successful insertion into database
-     * @throws JSONException
-     */
-    public int saveRemovalRequest(String requestForm) throws JSONException {
+    public int saveRemovalRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files) throws JSONException {
 
-        log.info("Inserting course removal request to database...");
-        log.info("Json received: " + requestForm);
-
-        JSONObject json = new JSONObject(requestForm);
-
-        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
-
-        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
-        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
+        JSONObject course = new JSONObject(courseJSON);
+        JSONObject courseExtras = new JSONObject(courseExtrasJSON);
 
         int original_id = (Integer) course.get("id");
 
@@ -596,8 +354,6 @@ public class RequestPackageService {
         if(request == null)
             request = new Request();
 
-
-        // Requests
         request.setRequestType(3);
         request.setTargetType(2);
         request.setTargetId(0);
@@ -609,6 +365,12 @@ public class RequestPackageService {
         request.setRequestPackage(requestPackage);
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_remove");
+
+        try {
+            saveSupportingDocument(files, "course", original.getId(), user_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         requestRepository.save(request);
 
@@ -708,39 +470,6 @@ public class RequestPackageService {
     }
 
 
-    /**
-     * Adds support documents to database.
-     * @param files The files to be added.
-     * @param packageId The designated package.
-     * @param userId user who uploaded the files.
-     * @return The saved supporting document object.
-     * @throws IOException
-     */
-    public List<String> saveSupportingDocument(MultipartFile[] files, int packageId, int userId) throws IOException {
-
-        List<String> message = new ArrayList<>();
-        
-        for(MultipartFile file : files) {
-
-            log.info("add supporting document " + file.getName());
-
-            SupportingDocument supportingDocument = new SupportingDocument();
-
-            supportingDocument.setUserId(userId);
-            supportingDocument.setTargetType("dossier");
-            supportingDocument.setTargetId(packageId);
-            supportingDocument.setFileName(file.getOriginalFilename());
-            supportingDocument.setFileType(file.getContentType());
-            supportingDocument.setFile(file.getBytes());
-
-            supportingDocumentsRepository.save(supportingDocument);
-
-            message.add(file.getOriginalFilename());
-        }
-
-        return message;
-    }
-
 
     /**
      * Takes in a package id and returns all change history made to said package
@@ -793,6 +522,164 @@ public class RequestPackageService {
             pdfService.generatePDF(package_id, user_id);
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Adds support documents to database.
+     * @param files The files to be added.
+     * @param targetType dossier or course.
+     * @param targetId The designated package.
+     * @param userId user who uploaded the files.
+     * @return The saved supporting document object.
+     * @throws IOException
+     */
+    public void saveSupportingDocument(MultipartFile[] files, String targetType, int targetId, int userId) throws IOException {
+
+        for(MultipartFile file : files) {
+
+            log.info("add supporting document " + file.getOriginalFilename());
+
+            SupportingDocument supportingDocument = new SupportingDocument();
+
+            supportingDocument.setUserId(userId);
+            supportingDocument.setTargetType(targetType);
+            supportingDocument.setTargetId(targetId);
+            supportingDocument.setFileName(file.getOriginalFilename());
+            supportingDocument.setFileType(file.getContentType());
+            supportingDocument.setFile(file.getBytes());
+
+            supportingDocumentsRepository.save(supportingDocument);
+        }
+
+    }
+
+    /**
+     * Saves the requisites to database
+     * @param c target course
+     * @param pre pre-requisite
+     * @param co co-requisite
+     * @param anti anti-requisite
+     * @param eq equivalent requisite
+     */
+     private void setRequisites(Course c, String pre, String co, String anti, String eq){
+
+        String[] prerequisites = pre.split(";|\\,");
+        String[] corequisites = co.split(";|\\,");
+        String[] antirequisites = anti.split(";|\\,");
+        String[] equivalents = eq.split(";|,|or");
+
+        for(String prerequisite : prerequisites){
+
+            prerequisite = prerequisite.trim();
+
+            if(prerequisite.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                if(prerequisite.startsWith("credits", 3)){
+                    requisite.setName(prerequisite);
+                    requisite.setNumber(0);
+                }
+                else{
+                    requisite.setName(prerequisite.substring(0, 4).trim());
+                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
+                }
+                requisite.setType("prerequisite");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
+            }
+
+        }
+        for(String corequisite : corequisites){
+
+            corequisite = corequisite.trim();
+
+            if(corequisite.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(corequisite.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
+                requisite.setType("corequisite");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
+            }
+        }
+        for(String antirequisite : antirequisites){
+
+            antirequisite = antirequisite.trim();
+
+            if(antirequisite.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(antirequisite.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
+                requisite.setType("antirequisite");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
+            }
+        }
+        for(String equivalent : equivalents){
+
+            equivalent = equivalent.trim();
+
+            if(equivalent.length() >= 7){
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(equivalent.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
+                requisite.setType("equivalent");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for(Requisite r : c.getRequisites()){
+
+                    if(Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if(!isPresent)
+                    requisiteRepository.save(requisite);
+            }
         }
     }
 

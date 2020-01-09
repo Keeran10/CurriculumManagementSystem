@@ -40,6 +40,6 @@ public interface SupportingDocumentRepository extends JpaRepository<SupportingDo
             "request_package.id = supporting_document.package_id WHERE supporting_document.package_id=?", nativeQuery = true)
     List<SupportingDocument> findByPackage(int package_id);
 
-    @Query(value = "SELECT * FROM supporting_document WHERE target_type='dossier' AND target_id=?", nativeQuery = true)
-    List<SupportingDocument> findByDossier(int id);
+    @Query(value = "SELECT * FROM supporting_document WHERE target_type=?1 AND target_id=?2", nativeQuery = true)
+    List<SupportingDocument> findByTarget(String target_type, int target_id);
 }

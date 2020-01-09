@@ -187,9 +187,6 @@ export class ApiService {
   }
 
   public uploadFile(files: File[], packageId: any, userId: any) {
-
-    console.log("upload here");
-
     const formdata: FormData = new FormData();
 
     for (const file of files) {
@@ -207,11 +204,14 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public submitCourseRequestForm(file: File, course: Course, courseExtras: CourseExtras) {
+  public submitCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
     const formdata: FormData = new FormData();
+
+    for (const file of files) {
+      formdata.append('files', file);
+    }
     formdata.append('course', JSON.stringify(course));
     formdata.append('courseExtras', JSON.stringify(courseExtras));
-    formdata.append('file', file);
 
     const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,

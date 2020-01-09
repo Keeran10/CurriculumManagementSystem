@@ -128,15 +128,13 @@ public class PdfService {
 
         requestPackageRepository.save(requestPackage);
 
-        List<SupportingDocument> dossier_files = null;
+        List<SupportingDocument> dossier_files = supportingDocumentRepository.findByTarget("dossier", requestPackage.getId());
 
-        dossier_files = supportingDocumentRepository.findByDossier(requestPackage.getId());
-
-        if(!dossier_files.isEmpty()) {
+        if(dossier_files != null && !dossier_files.isEmpty()) {
 
             try {
                 log.info("Supporting docs found. Merging them together...");
-                support_stream = mergeSupportingDocs(requestPackage, dossier_files);
+                support_stream = mergeSupportingDocs(dossier_files);
 
             } catch (DocumentException | IOException e) {
                 e.printStackTrace();
@@ -169,12 +167,18 @@ public class PdfService {
 
                     addCoursePreface(doc, request, original_course, changed_course);
 
-                    // append course outline
-                    if(changed_course != null && changed_course.getOutline() != null){
+                    // append course supporting documents
+
+                    List<SupportingDocument> course_files = null;
+
+                    if(changed_course != null){
+                        course_files = supportingDocumentRepository.findByTarget("course", changed_course.getId());
+                    }
+                    if(course_files != null && !course_files.isEmpty()){
 
                         log.info("Appending course outline for " + changed_course.getName() + changed_course.getNumber());
 
-                        course_outline_stream = mergeOutline(changed_course);
+                        course_outline_stream = mergeSupportingDocs(course_files);
 
                         doc.close();
 
@@ -265,13 +269,12 @@ public class PdfService {
 
     /**
      * Combines the request package's supporting documents into one pdf stream.
-     * @param requestPackage The package for which pdf generation has been invoked.
-     * @param dossier_files
+     * @param files to be merged.
      * @return The aggregated stream of the combined supporting documents.
      * @throws DocumentException
      * @throws IOException
      */
-    private ByteArrayOutputStream mergeSupportingDocs(RequestPackage requestPackage, List<SupportingDocument> dossier_files) throws DocumentException, IOException {
+    private ByteArrayOutputStream mergeSupportingDocs(List<SupportingDocument> files) throws DocumentException, IOException {
 
         Document doc = new Document();
         ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
@@ -282,7 +285,7 @@ public class PdfService {
 
         doc.open();
 
-        for(SupportingDocument supportingDocument : dossier_files){
+        for(SupportingDocument supportingDocument : files){
 
             copy.addDocument(new PdfReader(supportingDocument.getFile()));
 
@@ -317,32 +320,6 @@ public class PdfService {
             copy.addDocument(new PdfReader(request_doc.toByteArray()));
 
         }
-
-        doc.close();
-
-        return byte_stream;
-    }
-
-
-    /**
-     * Combines a request document with the course outline
-     * @param course Course that contains a proposed outline
-     * @return A combined document of the request followed by its proposed outline
-     * @throws DocumentException
-     * @throws IOException
-     */
-    private ByteArrayOutputStream mergeOutline(Course course) throws DocumentException, IOException {
-
-        Document doc = new Document();
-        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
-
-        // append supporting docs
-        PdfCopy copy = new PdfCopy(doc, byte_stream);
-        copy.setMergeFields();
-
-        doc.open();
-
-        copy.addDocument(new PdfReader(course.getOutline()));
 
         doc.close();
 

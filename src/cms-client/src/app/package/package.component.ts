@@ -102,7 +102,7 @@ export class PackageComponent implements OnInit {
 
     this.api.uploadFile(this.supportDocumentComponent.documents, packageId, this.userId).subscribe(response => {
       if (response instanceof HttpResponse) {
-        this.supportDocumentComponent.documents = null;
+        this.supportDocumentComponent.documents = [];
         this.msg = response.body;
         console.log(response.body);
       }
