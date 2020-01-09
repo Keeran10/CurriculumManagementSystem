@@ -678,89 +678,82 @@ public class RequestPackageService {
     }
 
 
+    /**
+     * All requested changes are processed and the dossier is subsequently deleted.
+     * @param dossier approved and ready to be finalized.
+     */
     public void finalizeDossierRequests(RequestPackage dossier) {
 
         for(Request r : dossier.getRequests()){
 
-            if(r.getTargetType() == 1 || r.getOriginalId() == 0 || r.getTargetId() == 0)
+            if(r.getTargetType() == 1)
                 continue;
 
-            Course original = courseRepository.findById(r.getOriginalId());
-            Course changed = courseRepository.findById(r.getTargetId());
+            if(r.getRequestType() == 1)
+                finalizeCourseCreationRequest(r);
+            if(r.getRequestType() == 2)
+                finalizeCourseUpdateRequest(r);
+            if(r.getRequestType() == 3)
+                finalizeCourseRemovalRequest(r);
 
-            original.setName(changed.getName());
-            original.setNumber(changed.getNumber());
-            original.setTitle(changed.getTitle());
-            original.setDescription(changed.getDescription());
-            original.setCredits(changed.getCredits());
-
-            original.setProgram(changed.getProgram());
-
-            for(Requisite original_requisite : original.getRequisites())
-                requisiteRepository.delete(original_requisite);
-
-            original.setRequisites(changed.getRequisites());
-
-            for(Requisite requisite :original.getRequisites())
-                requisite.setCourse(original);
-
-            // override degree requirements
-            for(DegreeRequirement dro : original.getDegreeRequirements())
-                degreeRequirementRepository.delete(dro);
-
-            original.setDegreeRequirements(changed.getDegreeRequirements());
-
-            for(DegreeRequirement dr : original.getDegreeRequirements())
-                dr.setCourse(original);
-
-            courseRepository.save(original);
-            courseRepository.delete(changed);
-            requestRepository.delete(r);
         }
+
+        log.info("Deleting dossier from database: " + dossier);
+        requestPackageRepository.delete(dossier);
     }
 
 
-    public void finalizeDossierRequests(int id) {
+    private void finalizeCourseUpdateRequest(Request r){
 
-         RequestPackage dossier = requestPackageRepository.findById(id);
+        Course original = courseRepository.findById(r.getOriginalId());
+        Course changed = courseRepository.findById(r.getTargetId());
 
-        for(Request r : dossier.getRequests()){
+        original.setName(changed.getName());
+        original.setNumber(changed.getNumber());
+        original.setTitle(changed.getTitle());
+        original.setDescription(changed.getDescription());
+        original.setCredits(changed.getCredits());
 
-            if(r.getTargetType() == 1 || r.getOriginalId() == 0 || r.getTargetId() == 0)
-                continue;
+        original.setProgram(changed.getProgram());
 
-            Course original = courseRepository.findById(r.getOriginalId());
-            Course changed = courseRepository.findById(r.getTargetId());
+        for(Requisite original_requisite : original.getRequisites())
+            requisiteRepository.delete(original_requisite);
 
-            original.setName(changed.getName());
-            original.setNumber(changed.getNumber());
-            original.setTitle(changed.getTitle());
-            original.setDescription(changed.getDescription());
-            original.setCredits(changed.getCredits());
+        original.setRequisites(changed.getRequisites());
 
-            original.setProgram(changed.getProgram());
+        for(Requisite requisite :original.getRequisites())
+            requisite.setCourse(original);
 
-            for(Requisite original_requisite : original.getRequisites())
-                requisiteRepository.delete(original_requisite);
+        // override degree requirements
+        for(DegreeRequirement dro : original.getDegreeRequirements())
+            degreeRequirementRepository.delete(dro);
 
-            original.setRequisites(changed.getRequisites());
+        original.setDegreeRequirements(changed.getDegreeRequirements());
 
-            for(Requisite requisite :original.getRequisites())
-                requisite.setCourse(original);
+        for(DegreeRequirement dr : original.getDegreeRequirements())
+            dr.setCourse(original);
 
-            // override degree requirements
-            for(DegreeRequirement dro : original.getDegreeRequirements())
-                degreeRequirementRepository.delete(dro);
+        log.info("Modifying course in database: " + original);
 
-            original.setDegreeRequirements(changed.getDegreeRequirements());
+        courseRepository.save(original);
+        courseRepository.delete(changed);
+    }
 
-            for(DegreeRequirement dr : original.getDegreeRequirements())
-                dr.setCourse(original);
 
-            courseRepository.save(original);
-            courseRepository.delete(changed);
-            requestRepository.delete(r);
-        }
+    private void finalizeCourseCreationRequest(Request r){
+
+        Course newcourse = courseRepository.findById(r.getTargetId());
+        newcourse.setIsActive(1);
+        log.info("Saving new course in database: " + newcourse);
+        courseRepository.save(newcourse);
+    }
+
+
+    private void finalizeCourseRemovalRequest(Request r){
+
+        Course course = courseRepository.findById(r.getOriginalId());
+        log.info("Removing existing course from database: " + course);
+        courseRepository.delete(course);
     }
 
 }
