@@ -3,30 +3,33 @@
     Revisions of Dossier #{{ packageId }}
 </h4>
 <table>
-    <td>
+    <td *ngIf="revisions.length > 0">
         <strong>Review Type</strong>
         <tr *ngFor="let rev of revisions">
             {{ rev.rev_type }}
         </tr>
     </td>
-    <td>
+    <td *ngIf="revisions.length > 0">
         <strong>Modified By</strong>
         <tr *ngFor="let rev of revisions">
             {{ rev.modified_by }}
         </tr>
     </td>
-    <td>
+    <td *ngIf="revisions.length > 0">
         <strong>Modified Date</strong>
         <tr *ngFor="let rev of revisions">
             {{ rev.modified_date }}
         </tr>
     </td>
-    <td> 
+    <td *ngIf="revisions.length > 0"> 
         <strong>PDF files</strong>
         <tr class="pdf" *ngFor="let revi of revisions">
             <a (click)="viewPDF(revi.pdf)">revision{{ revi.rev }}.pdf</a>
         </tr>
     </td>
-</table >
+    <tr *ngIf="revisions.length == 0">
+            No revisions for this package.
+    </tr>
+</table>
 
 <app-footer></app-footer>
