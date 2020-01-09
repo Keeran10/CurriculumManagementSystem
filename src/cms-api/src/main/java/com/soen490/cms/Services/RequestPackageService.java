@@ -392,12 +392,6 @@ public class RequestPackageService {
 
         Course requested_course = courseRepository.findById(request.getTargetId());
 
-        for(Requisite requisite: requested_course.getRequisites())
-            requisiteRepository.delete(requisite);
-
-        for(DegreeRequirement dr: requested_course.getDegreeRequirements())
-            degreeRequirementRepository.delete(dr);
-
         courseRepository.delete(requested_course);
 
         int user_id = request.getUser().getId();
@@ -683,5 +677,90 @@ public class RequestPackageService {
         }
     }
 
+
+    public void finalizeDossierRequests(RequestPackage dossier) {
+
+        for(Request r : dossier.getRequests()){
+
+            if(r.getTargetType() == 1 || r.getOriginalId() == 0 || r.getTargetId() == 0)
+                continue;
+
+            Course original = courseRepository.findById(r.getOriginalId());
+            Course changed = courseRepository.findById(r.getTargetId());
+
+            original.setName(changed.getName());
+            original.setNumber(changed.getNumber());
+            original.setTitle(changed.getTitle());
+            original.setDescription(changed.getDescription());
+            original.setCredits(changed.getCredits());
+
+            original.setProgram(changed.getProgram());
+
+            for(Requisite original_requisite : original.getRequisites())
+                requisiteRepository.delete(original_requisite);
+
+            original.setRequisites(changed.getRequisites());
+
+            for(Requisite requisite :original.getRequisites())
+                requisite.setCourse(original);
+
+            // override degree requirements
+            for(DegreeRequirement dro : original.getDegreeRequirements())
+                degreeRequirementRepository.delete(dro);
+
+            original.setDegreeRequirements(changed.getDegreeRequirements());
+
+            for(DegreeRequirement dr : original.getDegreeRequirements())
+                dr.setCourse(original);
+
+            courseRepository.save(original);
+            courseRepository.delete(changed);
+            requestRepository.delete(r);
+        }
+    }
+
+
+    public void finalizeDossierRequests(int id) {
+
+         RequestPackage dossier = requestPackageRepository.findById(id);
+
+        for(Request r : dossier.getRequests()){
+
+            if(r.getTargetType() == 1 || r.getOriginalId() == 0 || r.getTargetId() == 0)
+                continue;
+
+            Course original = courseRepository.findById(r.getOriginalId());
+            Course changed = courseRepository.findById(r.getTargetId());
+
+            original.setName(changed.getName());
+            original.setNumber(changed.getNumber());
+            original.setTitle(changed.getTitle());
+            original.setDescription(changed.getDescription());
+            original.setCredits(changed.getCredits());
+
+            original.setProgram(changed.getProgram());
+
+            for(Requisite original_requisite : original.getRequisites())
+                requisiteRepository.delete(original_requisite);
+
+            original.setRequisites(changed.getRequisites());
+
+            for(Requisite requisite :original.getRequisites())
+                requisite.setCourse(original);
+
+            // override degree requirements
+            for(DegreeRequirement dro : original.getDegreeRequirements())
+                degreeRequirementRepository.delete(dro);
+
+            original.setDegreeRequirements(changed.getDegreeRequirements());
+
+            for(DegreeRequirement dr : original.getDegreeRequirements())
+                dr.setCourse(original);
+
+            courseRepository.save(original);
+            courseRepository.delete(changed);
+            requestRepository.delete(r);
+        }
+    }
 
 }

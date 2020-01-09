@@ -234,4 +234,10 @@ public class RequestPackageController {
         return requestPackageService.getDossierRevisions(id);
     }
 
+
+    @GetMapping("/doit")
+    public void doIt(@RequestParam int id){
+        requestPackageService.finalizeDossierRequests(id);
+    }
+
 }

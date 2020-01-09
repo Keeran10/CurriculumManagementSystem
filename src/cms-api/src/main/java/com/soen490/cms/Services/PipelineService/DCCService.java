@@ -1,4 +1,4 @@
-package com.soen490.cms.Services;
+package com.soen490.cms.Services.PipelineService;
 
 import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
 import com.soen490.cms.Models.RequestPackage;
@@ -15,14 +15,13 @@ import java.util.HashMap;
 @Service
 @Transactional
 @Log4j2
-public class FacultyCouncilService implements ApprovingBody {
+public class DCCService implements ApprovingBody {
 
     @Autowired
     ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
 
     @Autowired
     RequestPackageRepository requestPackageRepository;
-
 
     private HashMap<Integer, RequestPackage> requestPackages = new HashMap<>();
 
@@ -44,7 +43,7 @@ public class FacultyCouncilService implements ApprovingBody {
     private void populateMap() {
         Collection<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = approvalPipelineRequestPackageRepository.findAll();
         for(ApprovalPipelineRequestPackage approvalPipelineRequestPackage : approvalPipelineRequestPackages) {
-            if(approvalPipelineRequestPackage.getPosition().equals("Faculty Council")) {
+            if(approvalPipelineRequestPackage.getPosition().equals("Department Curriculum Committee")) {
                 int packageId = approvalPipelineRequestPackage.getRequestPackage().getId();
                 requestPackages.put(packageId, requestPackageRepository.findById(packageId));
             }
