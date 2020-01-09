@@ -32,6 +32,7 @@ import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.SectionRepository;
+import com.soen490.cms.Repositories.SupportingDocumentRepository;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,8 @@ public class PdfService {
     private RequestPackageRepository requestPackageRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private SupportingDocumentRepository supportingDocumentRepository;
     @Autowired
     private ImpactAssessmentService impactAssessmentService;
     @Autowired
@@ -125,11 +128,15 @@ public class PdfService {
 
         requestPackageRepository.save(requestPackage);
 
-        if(!requestPackage.getSupportingDocuments().isEmpty()) {
+        List<SupportingDocument> dossier_files = null;
+
+        dossier_files = supportingDocumentRepository.findByDossier(requestPackage.getId());
+
+        if(!dossier_files.isEmpty()) {
 
             try {
                 log.info("Supporting docs found. Merging them together...");
-                support_stream = mergeSupportingDocs(requestPackage);
+                support_stream = mergeSupportingDocs(requestPackage, dossier_files);
 
             } catch (DocumentException | IOException e) {
                 e.printStackTrace();
@@ -259,11 +266,12 @@ public class PdfService {
     /**
      * Combines the request package's supporting documents into one pdf stream.
      * @param requestPackage The package for which pdf generation has been invoked.
+     * @param dossier_files
      * @return The aggregated stream of the combined supporting documents.
      * @throws DocumentException
      * @throws IOException
      */
-    private ByteArrayOutputStream mergeSupportingDocs(RequestPackage requestPackage) throws DocumentException, IOException {
+    private ByteArrayOutputStream mergeSupportingDocs(RequestPackage requestPackage, List<SupportingDocument> dossier_files) throws DocumentException, IOException {
 
         Document doc = new Document();
         ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
@@ -274,9 +282,9 @@ public class PdfService {
 
         doc.open();
 
-        for(SupportingDocument supportingDocument : requestPackage.getSupportingDocuments()){
+        for(SupportingDocument supportingDocument : dossier_files){
 
-            copy.addDocument(new PdfReader(supportingDocument.getDocument()));
+            copy.addDocument(new PdfReader(supportingDocument.getFile()));
 
         }
 

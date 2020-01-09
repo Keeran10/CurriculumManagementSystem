@@ -27,6 +27,7 @@ import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
+import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -44,6 +45,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Log4j2
 public class RequestPackageController {
 
     @Autowired
@@ -208,14 +210,28 @@ public class RequestPackageController {
     /**
      * Add a new supporting document to a request
      * path format: /addSupportingDocument?documentId={id}
-     * @param document
-     * @param packageId
+     * @param files
+     * @param package_id
+     * @param user_id
      * @return
      */
-    @PostMapping(value = "/upload")
-    public SupportingDocument add(@RequestParam File document, @RequestParam int packageId) throws IOException {
+    @PostMapping(value = "/upload_files")
+    public List<String> uploadFiles(@RequestParam MultipartFile[] files, @RequestParam int package_id,
+                                  @RequestParam int user_id) throws IOException {
 
-        return requestPackageService.addSupportingDocument(document, packageId);
+        System.out.println("Made it here.");
+        for(MultipartFile file : files)
+            log.info("Uploaded file: " + file.getOriginalFilename());
+
+        List<String> fileList =  requestPackageService.saveSupportingDocument(files, package_id, user_id);
+
+        try {
+            generatePdf(package_id, user_id);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        return fileList;
     }
 
 
@@ -234,26 +250,6 @@ public class RequestPackageController {
         }
 
         return impactAssessmentController.getImpactAssessment(request_id);
-    }
-
-
-    /**
-     * Unused. Will be refactored for package level supporting docs
-     * @param file
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/addSupportingDocument")
-    public boolean uploadData(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) throws Exception {
-
-        if (file == null) {
-            throw new RuntimeException("You must select the a file for uploading");
-        }
-
-        byte[] doc = file.getBytes();
-
-        return requestPackageService.saveRequestFile(doc, id);
     }
 
 

@@ -186,14 +186,24 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public uploadFile(file: File, requestId: any) {
+  public uploadFile(files: File[], packageId: any, userId: any) {
+
+    console.log("upload here");
+
     const formdata: FormData = new FormData();
-    formdata.append('file', file);
-    formdata.append('id', requestId);
-    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
+
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
+    formdata.append('package_id', packageId);
+    formdata.append('user_id', userId);
+
+    const req = new HttpRequest('POST', this.url + 'upload_files', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
+
     return this.http.request(req);
   }
 

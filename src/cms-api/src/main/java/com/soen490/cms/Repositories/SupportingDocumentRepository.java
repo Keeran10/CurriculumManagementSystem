@@ -39,4 +39,7 @@ public interface SupportingDocumentRepository extends JpaRepository<SupportingDo
     @Query(value = "SELECT * FROM supporting_document LEFT JOIN request_package ON " +
             "request_package.id = supporting_document.package_id WHERE supporting_document.package_id=?", nativeQuery = true)
     List<SupportingDocument> findByPackage(int package_id);
+
+    @Query(value = "SELECT * FROM supporting_document WHERE target_type='dossier' AND target_id=?", nativeQuery = true)
+    List<SupportingDocument> findByDossier(int id);
 }

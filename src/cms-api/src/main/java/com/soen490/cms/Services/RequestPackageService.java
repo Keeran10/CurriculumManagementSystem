@@ -143,8 +143,9 @@ public class RequestPackageService {
         c.setIsActive(0);
         c.setProgram(original.getProgram());
 
-        if(file != null)
+        if(file != null) {
             c.setOutline(file);
+        }
 
         courseRepository.save(c);
 
@@ -674,15 +675,6 @@ public class RequestPackageService {
 
         requestPackage.setDepartment(departmentRepository.findByName((String) requestPackageForm.get("name")));
 
-        List<SupportingDocument> supportingDocuments = new ArrayList<>();
-
-        if(requestPackageForm.get("support_docs") != null){
-
-            // init supporting docs, save them to db and then add them to list
-        }
-
-        requestPackage.setSupportingDocuments(supportingDocuments);
-
         requestPackageRepository.save(requestPackage);
 
         return true;
@@ -717,36 +709,36 @@ public class RequestPackageService {
 
 
     /**
-     * Adds support document to an existing package
-     * @param document The file to be added.
+     * Adds support documents to database.
+     * @param files The files to be added.
      * @param packageId The designated package.
+     * @param userId user who uploaded the files.
      * @return The saved supporting document object.
      * @throws IOException
      */
-    public SupportingDocument addSupportingDocument(File document, int packageId) throws IOException {
+    public List<String> saveSupportingDocument(MultipartFile[] files, int packageId, int userId) throws IOException {
 
-        log.info("add supporting document " + document.getName());
+        List<String> message = new ArrayList<>();
+        
+        for(MultipartFile file : files) {
 
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
-        SupportingDocument supportingDocument = new SupportingDocument();
-        supportingDocument.setDocument(Files.readAllBytes(document.toPath()));
-        supportingDocument.setRequestPackage(requestPackageRepository.findById(packageId));
-        supportingDocument.setTimestamp(timestamp);
+            log.info("add supporting document " + file.getName());
 
-        return supportingDocumentsRepository.save(supportingDocument);
-    }
+            SupportingDocument supportingDocument = new SupportingDocument();
 
-    public boolean saveRequestFile(byte[] file, int id){
+            supportingDocument.setUserId(userId);
+            supportingDocument.setTargetType("dossier");
+            supportingDocument.setTargetId(packageId);
+            supportingDocument.setFileName(file.getOriginalFilename());
+            supportingDocument.setFileType(file.getContentType());
+            supportingDocument.setFile(file.getBytes());
 
-        Request request = requestRepository.findByRequestId(id);
-        Course course = courseRepository.findById(request.getTargetId());
+            supportingDocumentsRepository.save(supportingDocument);
 
-        if(course == null) return false;
+            message.add(file.getOriginalFilename());
+        }
 
-        course.setOutline(file);
-        courseRepository.save(course);
-        return true;
+        return message;
     }
 
 
@@ -799,9 +791,7 @@ public class RequestPackageService {
 
         try {
             pdfService.generatePDF(package_id, user_id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DocumentException e) {
+        } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
     }
