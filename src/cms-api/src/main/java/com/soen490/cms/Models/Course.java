@@ -59,9 +59,6 @@ public class Course {
     @Lob
     private String description;
 
-    @Lob
-    private byte[] outline;
-
     private int isActive;
 
     @JsonIgnoreProperties({"courses", "degrees"})

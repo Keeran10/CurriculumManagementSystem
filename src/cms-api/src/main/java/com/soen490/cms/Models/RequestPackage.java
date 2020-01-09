@@ -43,6 +43,10 @@ public class RequestPackage {
     @Audited
     private int userId;
 
+    //private String file_name;
+
+    private String rejectionRationale;
+
     @Audited
     @Lob
     private byte[] pdfFile;
@@ -56,17 +60,7 @@ public class RequestPackage {
     @OneToMany(mappedBy = "requestPackage")
     private List<Request> requests = new ArrayList<>();
 
-    @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage")
-    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
-
-    @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage")
-    private List<Approval> approvals = new ArrayList<>();
-
     @JsonIgnoreProperties("requestPackages")
     @OneToMany(mappedBy =  "requestPackage")
     private List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = new ArrayList<>();
-
-    private String rejectionRationale;
 }

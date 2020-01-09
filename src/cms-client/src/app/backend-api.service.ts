@@ -187,22 +187,32 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public uploadFile(file: File, requestId: any) {
+  public uploadFile(files: File[], packageId: any, userId: any) {
     const formdata: FormData = new FormData();
-    formdata.append('file', file);
-    formdata.append('id', requestId);
-    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
+
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
+    formdata.append('package_id', packageId);
+    formdata.append('user_id', userId);
+
+    const req = new HttpRequest('POST', this.url + 'upload_files', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
+
     return this.http.request(req);
   }
 
-  public submitCourseRequestForm(file: File, course: Course, courseExtras: CourseExtras) {
+  public submitCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
     const formdata: FormData = new FormData();
+
+    for (const file of files) {
+      formdata.append('files', file);
+    }
     formdata.append('course', JSON.stringify(course));
     formdata.append('courseExtras', JSON.stringify(courseExtras));
-    formdata.append('file', file);
 
     const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,

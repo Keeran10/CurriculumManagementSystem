@@ -27,6 +27,7 @@ import com.soen490.cms.Models.RequestPackage;
 import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
+import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -43,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Log4j2
 @CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
 public class RequestPackageController {
 
@@ -108,9 +110,7 @@ public class RequestPackageController {
 
             try {
                 success = generatePdf(package_id, user_id);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (DocumentException e) {
+            } catch (IOException | DocumentException e) {
                 e.printStackTrace();
             }
 
@@ -137,39 +137,33 @@ public class RequestPackageController {
      * Receives data from client and populates the database for course and its dependencies.
      * @param course stringified JSON received from front-end.
      * @param courseExtras stringified JSON received from front-end.
-     * @param file course outline
+     * @param files supporting docs
      * @return True if course was successfully added to database.
      * @throws JSONException
      */
     @PostMapping(value="/save_request")
     public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras,
-                                        @RequestParam(required = false) MultipartFile file) {
-
+                                        @RequestParam(required = false) MultipartFile[] files) {
 
         try {
-            if(file != null)
-                return requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
-            else
-                return requestPackageService.saveCourseRequest(course, courseExtras, null);
-        } catch (JSONException | IOException e) {
+            return requestPackageService.saveCourseRequest(course, courseExtras, files);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return 0;
     }
 
 
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param requestForm Combined stringified JSON received from front-end.
-     * @param bindingResult Validates requestForm.
-     * @return True if course was successfully added to database.
-     * @throws JSONException
-     */
-    @PostMapping(value="/save_removal_request", consumes = "application/json")
-    public int saveRemovalRequest(@Valid @RequestBody String requestForm, BindingResult bindingResult) throws JSONException {
+    @PostMapping(value="/save_removal_request")
+    public int saveRemovalRequest(@RequestParam String course, @RequestParam String courseExtras,
+                                  @RequestParam(required = false) MultipartFile[] files) {
 
-        return requestPackageService.saveRemovalRequest(requestForm);
+        try {
+            return requestPackageService.saveRemovalRequest(course, courseExtras, files);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     // delete course request
@@ -208,52 +202,30 @@ public class RequestPackageController {
     /**
      * Add a new supporting document to a request
      * path format: /addSupportingDocument?documentId={id}
-     * @param document
-     * @param packageId
+     * @param files
+     * @param package_id
+     * @param user_id
      * @return
      */
-    @PostMapping(value = "/upload")
-    public SupportingDocument add(@RequestParam File document, @RequestParam int packageId) throws IOException {
+    @PostMapping(value = "/upload_files")
+    public String uploadFiles(@RequestParam MultipartFile[] files, @RequestParam int package_id,
+                                  @RequestParam int user_id) throws IOException {
 
-        return requestPackageService.addSupportingDocument(document, packageId);
-    }
+        if(files.length == 0)
+            return "No files uploaded.";
 
+        for(MultipartFile file : files)
+            log.info("Uploaded file: " + file.getOriginalFilename());
 
-    @PostMapping(value = "/get_impact")
-    public Map<String, Object> sendRequestId(@RequestParam String course, @RequestParam String courseExtras,
-                                             @RequestParam(required = false) MultipartFile file) {
+        requestPackageService.saveSupportingDocument(files, "dossier", package_id, user_id);
 
-        int request_id = 0;
         try {
-            if(file != null)
-                request_id = requestPackageService.saveCourseRequest(course, courseExtras, file.getBytes());
-            else
-                request_id = requestPackageService.saveCourseRequest(course, courseExtras, null);
-        } catch (IOException | JSONException e) {
+            generatePdf(package_id, user_id);
+        } catch (DocumentException e) {
             e.printStackTrace();
         }
 
-        return impactAssessmentController.getImpactAssessment(request_id);
-    }
-
-
-    /**
-     * Unused. Will be refactored for package level supporting docs
-     * @param file
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/addSupportingDocument")
-    public boolean uploadData(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) throws Exception {
-
-        if (file == null) {
-            throw new RuntimeException("You must select the a file for uploading");
-        }
-
-        byte[] doc = file.getBytes();
-
-        return requestPackageService.saveRequestFile(doc, id);
+        return "Files successfully uploaded.";
     }
 
 

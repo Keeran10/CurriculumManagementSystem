@@ -151,12 +151,7 @@ export class EditFormComponent {
   */
 
   public submitForm() {
-    console.log(this.supportDocumentComponent.documents[0]);
-
-    //this.currentFile = this.selectedFiles[0];
-    this.currentFile = this.supportDocumentComponent.documents[0];
-
-    this.api.submitCourseRequestForm(this.currentFile, this.courseEditable, this.editedModel)
+    this.api.submitCourseRequestForm(this.supportDocumentComponent.documents, this.courseEditable, this.editedModel)
       .subscribe(() => this.router.navigate(['/package']))
   }
 
