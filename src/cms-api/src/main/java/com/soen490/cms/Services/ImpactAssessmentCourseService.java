@@ -546,6 +546,12 @@ public class ImpactAssessmentCourseService {
         }
     }
 
+    /**
+     * Finds the sections for the course, degree and department
+     *
+     * @param course
+     * @return Map<String, Object> Section report object
+     */
     private Map<String, Object> sectionReport(Course course){
         Map<String, Object> responseMap = new HashMap();
 
