@@ -550,8 +550,17 @@ public class ImpactAssessmentCourseService {
         Map<String, Object> responseMap = new HashMap();
 
         List<String> sectionCourses = sectionRepository.findByTarget("course", course.getId());
-        List<String> sectionDegree = sectionRepository.findByTarget("degree", course.getDegreeRequirements().get(0).getDegree().getId());
-        List<String> sectionDepartment = sectionRepository.findByTarget("department", course.getProgram().getDepartment().getId());
+        List<String> sectionDegree = null;
+        List<String> sectionDepartment = null;
+
+        if(course.getDegreeRequirements()!= null) {
+            if(course.getDegreeRequirements().size() != 0) {
+                sectionDegree = sectionRepository.findByTarget("degree", course.getDegreeRequirements().get(0).getDegree().getId());
+            }
+        }
+        if(course.getProgram()!= null) {
+            sectionDepartment = sectionRepository.findByTarget("department", course.getProgram().getDepartment().getId());
+        }
 
         responseMap.put("course",sectionCourses);
         responseMap.put("degree",sectionDegree);
@@ -563,9 +572,10 @@ public class ImpactAssessmentCourseService {
     /**
      * Inputs a mock object for Search Service to use in Junit Tests
      *
-     * @param course
+     * @param course, section
      */
-    public void setServiceMock(SearchService course){
+    public void setServiceMock(SearchService course, SectionRepository section){
         searchService = course;
+        sectionRepository = section;
     }
 }
