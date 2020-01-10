@@ -21,7 +21,7 @@
 // SOFTWARE. */
 
 .top-container{
-  background-image: repeating-linear-gradient(whitesmoke, white);
+  background-image: repeating-linear-gradient(#F3E7E9, white);
   position:relative;
   padding-top:1px;
   padding-bottom: 30px;

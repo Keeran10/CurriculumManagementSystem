@@ -28,7 +28,7 @@
                 <div *ngFor="let package of packages; let i = index">
                     <mat-card class="inner-container">
                         <div class="left">
-                            <span>Package {{package.id}}</span><br><br>
+                            <span>{{ packages[0].department.name}}, Dossier #{{package.id}}</span><br><br>
                             <div>
                                 <a (click)="packageSelect(package.id, 0, 'pipeline')">
                                     Progress
