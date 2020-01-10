@@ -23,6 +23,7 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Repositories.SectionRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,8 @@ public class ImpactAssessmentCourseService {
 
     @Autowired
     SearchService searchService;
+    @Autowired
+    private SectionRepository sectionRepository;
 
     // Object request causes trouble. Methods have been refactored to accept other parameters to avoid creating
     // unsaved request objects.
@@ -540,6 +543,19 @@ public class ImpactAssessmentCourseService {
         }
     }
 
+    private Map<String, Object> sectionReport(Course course){
+        Map<String, Object> responseMap = new HashMap();
+
+        List<String> sectionCourses = sectionRepository.findByTarget("course", course.getId());
+        List<String> sectionDegree = sectionRepository.findByTarget("degree", course.getDegreeRequirements().get(0).getDegree().getId());
+        List<String> sectionDepartment = sectionRepository.findByTarget("department", course.getProgram().getDepartment().getId());
+
+        responseMap.put("course",sectionCourses);
+        responseMap.put("degree",sectionDegree);
+        responseMap.put("department",sectionDepartment);
+
+        return  responseMap;
+    }
 
     /**
      * Inputs a mock object for Search Service to use in Junit Tests
