@@ -69,7 +69,7 @@ public class RequestPackageController {
      * @return The pdf file to browser.
      */
     @GetMapping(value="/get_pdf")
-    public byte[] getPdf(@RequestParam int package_id){
+    public ResponseEntity<byte[]> getPdf(@RequestParam int package_id){
 
         byte[] pdf_bytes = pdfService.getPDF(package_id);
 
@@ -86,7 +86,7 @@ public class RequestPackageController {
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return pdf_bytes;
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
 
@@ -116,7 +116,7 @@ public class RequestPackageController {
      * @return The pdf file to browser.
      */
     @GetMapping(value="/get_pdf_packagePage")
-    public byte[] getPdfPackagePage(@RequestParam int package_id, @RequestParam int user_id){
+    public ResponseEntity<byte[]> getPdfPackagePage(@RequestParam int package_id, @RequestParam int user_id){
 
         byte[] pdf_bytes = pdfService.getPDF(package_id);
 
@@ -146,7 +146,7 @@ public class RequestPackageController {
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return pdf_bytes;
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
     /**

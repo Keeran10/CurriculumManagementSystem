@@ -472,8 +472,8 @@ public class RequestPackageService {
         if (revisions.isEmpty()) return null;
 
         for (Object[] r : revisions)
-            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[4],
-                    userRepository.findUserById((Integer) r[5]), (byte[]) r[3]));
+            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[3],
+                    userRepository.findUserById((Integer) r[4])));
 
         return versions;
     }
