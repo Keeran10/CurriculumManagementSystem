@@ -22,16 +22,15 @@
 
 package com.soen490.cms;
 
-import com.soen490.cms.Models.Course;
-import com.soen490.cms.Models.Program;
-import com.soen490.cms.Models.Request;
-import com.soen490.cms.Models.Requisite;
+import com.soen490.cms.Models.*;
+import com.soen490.cms.Repositories.SectionRepository;
 import com.soen490.cms.Services.SearchService;
 import com.soen490.cms.Services.ImpactAssessmentCourseService;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,6 +40,7 @@ import static org.mockito.Mockito.when;
 public class ImpactStatementUnitTest {
 
     SearchService searchService = mock(SearchService.class);
+    SectionRepository sectionRepository = mock(SectionRepository.class);
     Course course;
     ImpactAssessmentCourseService impactAssessmentCourse;
 
@@ -58,9 +58,17 @@ public class ImpactStatementUnitTest {
         course.setLevel(2);
         course.setTitle("Math");
         course.setRequisites(new ArrayList<>());
+        Program program = new Program();
+        program.setId(1);
+        Department department = new Department();
+        department.setId(0);
+        program.setDepartment(department);
+        course.setProgram(program);
         when(searchService.findCourseById(1)).thenReturn(course);
+        List<String> sectionsList = null;
+        when(sectionRepository.findByTarget("department", course.getProgram().getDepartment().getId())).thenReturn(sectionsList);
         impactAssessmentCourse = new ImpactAssessmentCourseService();
-        impactAssessmentCourse.setServiceMock(searchService);
+        impactAssessmentCourse.setServiceMock(searchService,sectionRepository);
     }
 
     @Test
@@ -84,6 +92,9 @@ public class ImpactStatementUnitTest {
         request.setOriginalId(1);
         Program program = new Program();
         program.setId(1);
+        Department department = new Department();
+        department.setId(0);
+        program.setDepartment(department);
         course.setProgram(program);
         Course courseUpdated = new Course();
         courseUpdated.setProgram(program);
