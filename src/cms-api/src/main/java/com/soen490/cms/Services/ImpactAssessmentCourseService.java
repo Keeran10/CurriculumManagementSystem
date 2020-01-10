@@ -552,25 +552,46 @@ public class ImpactAssessmentCourseService {
      * @param course
      * @return Map<String, Object> Section report object
      */
-    private Map<String, Object> sectionReport(Course course){
+    private Map<String, Object> sectionReport(Course course) {
         Map<String, Object> responseMap = new HashMap();
 
         List<String> sectionCourses = sectionRepository.findByTarget("course", course.getId());
         List<String> sectionDegree = null;
         List<String> sectionDepartment = null;
 
-        if(course.getDegreeRequirements()!= null) {
-            if(course.getDegreeRequirements().size() != 0) {
+        if (course.getDegreeRequirements() != null && sectionCourses == null) {
+            if (course.getDegreeRequirements().size() != 0) {
                 sectionDegree = sectionRepository.findByTarget("degree", course.getDegreeRequirements().get(0).getDegree().getId());
             }
         }
-        if(course.getProgram()!= null) {
+        if (course.getProgram() != null && sectionDegree == null) {
             sectionDepartment = sectionRepository.findByTarget("department", course.getProgram().getDepartment().getId());
         }
 
-        responseMap.put("course",sectionCourses);
-        responseMap.put("degree",sectionDegree);
-        responseMap.put("department",sectionDepartment);
+        String courseSections = "";
+        if(sectionCourses != null) {
+            for (String section : sectionCourses) {
+                courseSections += "§" + section + " ";
+            }
+        }
+
+        String degreeSections = "";
+        if(sectionDegree != null){
+            for (String section : sectionDegree) {
+                degreeSections += "§" + section + " ";
+             }
+        }
+
+        String departmentSections = "";
+        if(sectionDepartment != null) {
+            for (String section : sectionDepartment) {
+                departmentSections += "§" + section + " ";
+            }
+        }
+
+        responseMap.put("course",courseSections);
+        responseMap.put("degree",degreeSections);
+        responseMap.put("department",departmentSections);
 
         return  responseMap;
     }
