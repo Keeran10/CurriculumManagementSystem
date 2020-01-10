@@ -47,6 +47,7 @@ public interface RequestPackageRepository extends JpaRepository<RequestPackage, 
             "request_package_aud rpa, revinfo r WHERE rpa.rev=r.rev AND rpa.id=?", nativeQuery = true)
     List<Object[]> getRevisions(int id);
 
-    //@Query("SELECT * FROM request_package INNER JOIN", nativeQuery = true)
-    //RequestPackage findByRevId(int rev);
+    @Query(value = "SELECT pdf_file FROM request_package_aud WHERE rev=?", nativeQuery = true)
+    byte[] getPdfByRevision(int rev_id);
+
 }

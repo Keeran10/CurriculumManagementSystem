@@ -30,7 +30,9 @@ import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,6 +87,26 @@ public class RequestPackageController {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         return pdf_bytes;
+    }
+
+
+    @GetMapping("/get_rev_pdf")
+    public ResponseEntity<byte[]> getRevPdf(@RequestParam int rev_id){
+
+        byte[] pdf_bytes = requestPackageService.getRevPDF(rev_id);
+
+        if(pdf_bytes == null) return null;
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String filename = "package_revision_no" +  rev_id + ".pdf";
+
+        headers.add("content-disposition", "inline;filename=" + filename);
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
 

@@ -784,4 +784,11 @@ public class RequestPackageService {
         requestPackageRepository.delete(requestPackage);
         return true;
     }
+
+
+    // return dossier pdf for a specific revision
+    public byte[] getRevPDF(int rev_id) {
+
+        return requestPackageRepository.getPdfByRevision(rev_id);
+    }
 }
