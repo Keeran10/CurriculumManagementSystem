@@ -154,6 +154,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Name",course.getName());
         responseReport.put("Number",course.getNumber());
         responseReport.put("Course", course);
+        responseReport.put("Sections",sectionReport(course));
         responseReport.put("RequestType", request.getRequestType());
         log.info("Impact Report for a course creation: ", responseReport);
         return responseReport;
@@ -254,6 +255,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Course",course);
         responseReport.put("RemovingFromParentCourses",responseMap);
         responseReport.put("RequestType",request.getRequestType());
+        responseReport.put("Sections",sectionReport(course));
         log.info("Impact Report for a course Removal: ", responseReport);
         return responseReport;
     }
@@ -316,6 +318,7 @@ public class ImpactAssessmentCourseService {
         finalResponseMap.put("DegreeCourseRequiredImpact",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
         finalResponseMap.put("ProgramImpact",getProgramImpactUpdatedCourse(originalCourse,requestedCourse));
+        finalResponseMap.put("Sections",sectionReport(requestedCourse));
         log.info("Impact Report for a course Update: ", finalResponseMap);
         return finalResponseMap;
     }
