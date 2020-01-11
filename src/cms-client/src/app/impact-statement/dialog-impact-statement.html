@@ -25,6 +25,21 @@
 {{data.OriginalCourseName}} {{data.OriginalCourseNumber}}
 </div></h1>
 <div mat-dialog-content>
+
+  <ng-template [ngIf]="data.SectionsDegree != null ||
+                      data.SectionsCourse != null ||
+                      data.SectionsDepartment != null" [ngIfElse]="NoSectionsChanges">
+    <div>
+      <p *ngIf="data.CourseEdits !=0">
+      <h6 style="color:darkred">Calendar sections changes have been made.</h6>
+      <h6> Those changes are:</h6>
+
+      <div *ngIf="data.SectionsDegree != null && data.SectionsCourse == null && data.SectionsDepartment == null ">Degree calendar section is now: {{data.SectionsDegree}}</div>
+      <div *ngIf="data.SectionsCourse != null && data.SectionsDegree == null && data.SectionsDepartment == null ">Course calendar section is now: {{data.SectionsCourse}}</div>
+      <div *ngIf="data.SectionsDepartment != null && data.SectionsDegree == null && data.SectionsCourse == null ">Department calendar section is now: {{data.SectionsDepartment}}</div>
+    </div>
+  </ng-template>
+
     <ng-template [ngIf]="data.DegreeCourseRequiredImpactRemoved != null ||
     data.DegreeCourseRequiredImpactAdded != null ||
     data.DegreeCourseRequiredImpactUpdated != null" [ngIfElse]="NoDegreeRequiredChanges">
@@ -91,7 +106,7 @@
                       data.CourseEditsDescription != null" [ngIfElse]="NoCourseChanges">
   <div>
     <p *ngIf="data.CourseEdits !=0">
-    <h6 style="color:darkred">Course Changes have been made.</h6>
+    <h6 style="color:darkred">Course changes have been made.</h6>
     <h6> Those changes are:</h6>
 
     <div *ngIf="data.CourseEditsName != null && data.CourseEditsNumber == null ">Course is now: {{data.CourseEditsName}} {{data.OriginalCourseNumber}} </div>
@@ -103,6 +118,14 @@
   </div>
   </ng-template>
   <hr>
+
+  <!-- Calendar sections no changes -->
+  <ng-template [ngIf]="data.SectionsDegree == null &&
+                      data.SectionsCourse == null &&
+                      data.SectionsDepartment == null">
+    <h5 style="color:red;">No calendar sections changes have been made.</h5>
+  </ng-template>
+
 
   <!-- Degree no changes -->
   <ng-template [ngIf]="data.DegreeCourseRequiredImpactRemoved == null
