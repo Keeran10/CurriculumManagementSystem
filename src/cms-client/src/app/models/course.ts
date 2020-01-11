@@ -36,7 +36,6 @@ export class Course {
   name: string;
   note: string;
   number: number;
-  outline: string;
   program: Object;
   requisites: Requisite[];
   title: string;

@@ -20,6 +20,7 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 -- SOFTWARE.
 
+
 ALTER DATABASE cms
   DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
@@ -72,90 +73,90 @@ INSERT IGNORE INTO degree VALUES (5, 120, 1, 'Mechanical Engineering (BEng)', 3)
 -- id, credits, description,
 -- is_active, lab, lect, level, course_name, course_number, outline, title, program_id
 INSERT IGNORE INTO course VALUES (1, 4.00, 'Processor structure, Data and Instructions, Instruction Set Processor (ISP) level view of computer hardware, assembly language level use. Memory systems — RAM and disks, hierarchy of memories. I/O organization, I/O devices and their diversity, their interconnection to CPU and Memory. Communication between computers at the physical level. Networks and computers. Lectures: three hours per week. Tutorial: two hours per week. Laboratory: two hours per week.',
-1, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, NULL, 'System Hardware', 2, 1);
+1, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, 'System Hardware', 2, 1);
 INSERT IGNORE INTO course VALUES (2, 3.00, 'Internet architecture and protocols. Web applications through clients and servers. Markup languages. Client‑side programming using scripting languages. Static website contents and dynamic page generation through server‑side programming. Preserving state (client‑side) in web applications. Lectures: three hours per week. Tutorial: two hours per week.',
-1, 0, 3, 1, 'SOEN', "",  287, NULL, 'Web Programming', 2, 1);
+1, 0, 3, 1, 'SOEN', "",  287, 'Web Programming', 2, 1);
 INSERT IGNORE INTO course VALUES (3, 3.00, 'Protocol layers and security protocols. Intranets and extranets. Mobile computing. Electronic commerce. Security architectures in open‑network environments. Cryptographic security protocols. Threats, attacks, and vulnerabilities. Security services: confidentiality; authentication; integrity; access control; non‑repudiation; and availability. Security mechanisms: encryption; data‑integrity mechanisms; digital signatures; keyed hashes; access‑control mechanisms; challenge‑response authentication; traffic padding; routing control; and notarization. Key‑management principles. Distributed and embedded firewalls. Security zones. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', "", 321, NULL, 'Information Systems Security', 1, 1);
+1, 0, 3, 1, 'SOEN', "", 321, 'Information Systems Security', 1, 1);
 INSERT IGNORE INTO course VALUES (4, 3.00, 'Assertions. Static and dynamic checking. Method specification using preconditions and postconditions. Strengthening and weakening. Design by contract. Hoare logic. Invariants. Class specification using invariants. Software tools for assertion checking and verification. Reliable software development. Lectures: three hours per week. Tutorial: two hours per week.',
-1, 0, 3, 1, 'SOEN', "",  331, NULL, 'Introduction to Formal Methods for Software Engineering', 2, 1);
+1, 0, 3, 1, 'SOEN', "",  331, 'Introduction to Formal Methods for Software Engineering', 2, 1);
 INSERT IGNORE INTO course VALUES (5, 3.00, 'previously ortsiles of software engineering. Introduction to software process models. Activities in each phase, including review activities. Working in teams: organization; stages of formation; roles; conflict resolution. Notations used in software documentation. How to review, revise, and improve software documentation. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 354 may not take this course for credit.',  341, NULL, 'Software Process', 1, 1);
+1, 0, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 354 may not take this course for credit.',  341, 'Software Process', 1, 1);
 INSERT IGNORE INTO course VALUES (6, 3.00, 'Requirements engineering. Functional and non‑functional requirements. Traceability. Test generation. Formal and informal specifications. Formal specification languages. Reasoning with specifications. Correctness issues. Verification. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', "",  342, NULL, 'Software Requirements and Specifications', 1, 1);
+1, 0, 3, 1, 'SOEN', "",  342, 'Software Requirements and Specifications', 1, 1);
 INSERT IGNORE INTO course VALUES (7, 3.00, 'From requirements to design to implementation. Planned vs. evolutionary design and refactoring. Model‑driven design and Unified Modelling Language (UML). Structural and behavioural design descriptions and specifications. General and domain‑specific design principles, patterns and idioms. Object‑oriented design concepts such as interfaces vs. abstract types, polymorphism, generics, and delegation vs. subclassing. Introduction to software architecture (styles and view models). Design quality. Design rationale. Design methodologies (e.g. based on responsibility assignment). Test‑driven development. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', "", 343, NULL, 'Software Architecture and Design I', 1, 1);
+1, 0, 3, 1, 'SOEN', "", 343, 'Software Architecture and Design I', 1, 1);
 INSERT IGNORE INTO course VALUES (8, 3.00, 'Architectural activities, roles, and deliverables. Architectural view models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, process control) and frameworks. Architectural analysis and the interplay with requirements elicitation. Notations for expressing architectural designs, structural and behavioural specifications. From architectural design to detailed design. Domain specific architectures and design patterns. Evaluation and performance estimation of designs. Advanced object‑oriented design patterns and idioms. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', "", 344, NULL, 'Software Architecture and Design II', 1, 1);
+1, 0, 3, 1, 'SOEN', "", 344, 'Software Architecture and Design II', 1, 1);
 INSERT IGNORE INTO course VALUES (9, 3.00, "Testing strategies. Specification‑based vs. code‑based, black‑box vs. white‑box, functional vs. structural testing; unit, integration, system, acceptance, and regression testing. Verification vs. validation. Test planning, design and artifacts. Introduction to software reliability and quality assurance. Formal verification methods, oracles; static and dynamic program verification. Lectures: three hours per week. Tutorial: one hour per week.",
-1, 0, 3, 1, 'SOEN', "",  345, NULL, 'Software Testing, Verification and Quality Assurance', 1, 1);
+1, 0, 3, 1, 'SOEN', "",  345, 'Software Testing, Verification and Quality Assurance', 1, 1);
 INSERT IGNORE INTO course VALUES (10, 3.00, 'The human side: I/O; memory; and information processing. Interaction: mental models; human error; interaction frameworks and paradigms. Direct manipulation. User interface design: principles; standards; and guidelines. User‑centred design: standards and design rationale; heuristic evaluation; iterative design; and prototyping. Task‑centred design. Rationalized design: usability engineering; dialogue notations; user models; diagrammatic notations; and textual notations. Evaluation: with the user; without the user; quantitative; and qualitative. Implementation support. Help and documentation. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', "", 357, NULL, 'User Interface Design', 1, 1);
+1, 0, 3, 1, 'SOEN', "", 357, 'User Interface Design', 1, 1);
 INSERT IGNORE INTO course VALUES (11, 3.00, 'Organization of large software development. Roles of team members, leaders, managers, stakeholders, and users. Tools for monitoring and controlling a schedule. Financial, organizational, human, and computational resources allocation and control. Project and quality reviews, inspections, and walkthroughs. Risk management. Communication and collaboration. Cause and effects of project failure. Project management via the Internet. Quality assurance and control. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', "",  384, NULL, 'Management, Measurement and Quality Control', 1, 1);
+1, 0, 3, 1, 'SOEN', "",  384, 'Management, Measurement and Quality Control', 1, 1);
 INSERT IGNORE INTO course VALUES (12, 3.00, 'Mathematical modelling of dynamical systems; block diagrams; feedback; open and closed loops. Linear differential equations; time domain analysis; free, forced, and total response; steady state and transient response. Laplace transform and inverse transform; second order systems. Transfer functions and stability. Control system design: PID and root locus techniques. Computer simulation of control systems. Applications. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'SOEN', "", 385, NULL, 'Control Systems and Applications', 1, 1);
+1, 0, 3, 1, 'SOEN', "", 385, 'Control Systems and Applications', 1, 1);
 INSERT IGNORE INTO course VALUES (13, 3.50, 'Students work in teams to design and implement a software project from requirements provided by the coordinator. Each team will demonstrate the software and prepare adequate documentation for it. In addition, each student will write an individual report. Lectures: two hours per week. Tutorial: one hour per week. Laboratory: three hours per week.',
-1, 3, 2, 1, 'SOEN', "",  390, NULL, 'Software Engineering Team Design Project', 1, 1);
+1, 3, 2, 1, 'SOEN', "",  390, 'Software Engineering Team Design Project', 1, 1);
 -- SOEN 490 needs 75 credits in the program as prerequisite. Not handled yet.
 INSERT IGNORE INTO course VALUES (14, 4.00, 'Students work in teams of at least four members to construct a significant software application. The class meets at regular intervals. Team members will give a presentation of their contribution to the project. Lectures: one hour per week. Laboratory: two hours per week. Two terms.',
-1, 2, 1, 1, 'SOEN', "",  490, NULL, 'Capstone Software Engineering Design Project', 0, 1);
+1, 2, 1, 1, 'SOEN', "",  490, 'Capstone Software Engineering Design Project', 0, 1);
 INSERT IGNORE INTO course VALUES (15, 4.00, 'Architectural activities, roles, and deliverables. Architectural view models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, process control) and frameworks. Architectural analysis and the interplay with requirements elicitation. Notations for expressing architectural designs, structural and behavioural specifications. From architectural design to detailed design. Domain specific architectures and design patterns. Evaluation and performance estimation of designs. Advanced object‑oriented design patterns and idioms. Lectures: three hours per week. Tutorial: one hour per week.',
-0, 0, 3, 2, 'SOEN', "", 6441, NULL, 'Advanced Software Architecture and Design', 1, 1);
+0, 0, 3, 2, 'SOEN', "", 6441, 'Advanced Software Architecture and Design', 1, 1);
 
 INSERT IGNORE INTO course VALUES (16, 3.00, 'Resultant of force systems; equilibrium of particles and rigid bodies; distributed forces; statically determinate systems; trusses; friction; moments of inertia; virtual work. Shear and bending moment diagrams. Lectures: three hours per week. Tutorial: two hours per week.',
-1, 0, 3, 1, 'ENGR', "", 242, NULL, 'Statics', 2, 3);
+1, 0, 3, 1, 'ENGR', "", 242, 'Statics', 2, 3);
 INSERT IGNORE INTO course VALUES (17, 3.00, 'Kinematics of a particle and rigid body; forces and accelerations; work and energy; impulse and momentum; dynamics of a system of particles and rigid bodies, introduction to vibrations. Lectures: three hours per week. Tutorial: two hours per week.',
-1, 0, 3, 1, 'ENGR', "", 243, NULL, 'Dynamics', 2, 3);
+1, 0, 3, 1, 'ENGR', "", 243, 'Dynamics', 2, 3);
 INSERT IGNORE INTO course VALUES (18, 3.75, 'Mechanical behaviour of materials; stress; strain; shear and bending moment diagrams; introduction to inelastic action. Analysis and design of structural and machine elements subjected to axial, torsional, and flexural loadings. Combined stresses and stress transformation. Deflections. Introduction to elastic stability. Lectures: three hours per week. Tutorial: two hours per week. Laboratory: three hours per week, alternate weeks.',
-1, 3, 3, 1, 'ENGR', "", 244, NULL, 'Mechanics of Materials', 2, 3); -- lab hours is 3 hours alternative weeks !
+1, 3, 3, 1, 'ENGR', "", 244, 'Mechanics of Materials', 2, 3); -- lab hours is 3 hours alternative weeks !
 INSERT IGNORE INTO course VALUES (19, 3.00, 'Basic principles of thermodynamics and their application to various systems composed of pure substances and their homogeneous non-reactive mixtures. Simple power production and utilization cycles. Lectures: three hours per week. Tutorial: two hours per week.',
-1, 0, 3, 1, 'ENGR', "", 251, NULL, 'Thermodynamics I', 2, 3);
+1, 0, 3, 1, 'ENGR', "", 251, 'Thermodynamics I', 2, 3);
 INSERT IGNORE INTO course VALUES (20, 3.00, 'Elements of complex variables. The Laplace transform: Laplace transforms and their properties, solution of linear differential equations with constant coefficients. Further theorems and their applications. The Fourier transform: orthogonal functions, expan­sion of a function in orthogonal functions, the Fourier series, the Fourier integral, the Fourier transform, the convolution theorem. Partial differential equations: physical foundations of partial differential equations, introduction to boundary value problems. Lectures: three hours per week. Tutorial: two hours per week.',
-1, 0, 3, 1, 'ENGR', "", 311, NULL, 'Transform Calculus and Partial Differential Equations', 2, 3);
+1, 0, 3, 1, 'ENGR', "", 311, 'Transform Calculus and Partial Differential Equations', 2, 3);
 INSERT IGNORE INTO course VALUES (21, 3.00, 'Basic concepts and principles of fluid mechanics. Classification of fluid flow. Hydrostatic forces on plane and curved surfaces, buoyancy and stability, fluids in rigid body motion. Mass, momentum, and energy conservation integral equations. Bernoulli equation. Basic concepts of pipe and duct flow. Introduction to Navier-Stokes equations. Similarity and model studies. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'ENGR', "", 361, NULL, 'Fluid Mechanics I', 1, 3);
+1, 0, 3, 1, 'ENGR', "", 361, 'Fluid Mechanics I', 1, 3);
 
 INSERT IGNORE INTO course VALUES (22, 3.50, 'Introduction to graphic language and design — means and techniques. The third and the first angle projections. Orthographic projection of points, lines, planes and solids. Principal and auxiliary views. Views in a given direction. Sectional views. Intersection of lines, planes and solids. Development of surfaces. Drafting practices. Dimensioning, fits and tolerancing. Computer-aided drawing and solid modelling. Working drawings — detail and assembly drawing. Design practice. Machine elements representation. Lectures: three hours per week. Tutorial: two hours per week — includes learning of a CAD software. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', "", 211, NULL, 'Mechanical Engineering Drawing', 2, 3);
+1, 2, 3, 1, 'MECH', "", 211, 'Mechanical Engineering Drawing', 2, 3);
 INSERT IGNORE INTO course VALUES (23, 3.50, 'Writing programs using assignment and sequences. Variables and types. Operators and expressions. Conditional and repetitive statements. Input and output. File access. Functions. Program structure and organization. Pointers and dynamic memory allocation. Introduction to classes and objects. Mechanical and industrial engineering applications. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: one hour per week.',
-1, 1, 3, 1, 'MECH', "", 215, NULL, 'Programming for Mechanical and Industrial Engineers', 1, 3);
+1, 1, 3, 1, 'MECH', "", 215, 'Programming for Mechanical and Industrial Engineers', 1, 3);
 INSERT IGNORE INTO course VALUES (24, 3.00, 'Relationships between properties and internal structure, atomic bonding; molecular, crystalline and amorphous structures, crystalline imperfections and mechanisms of structural change. Microstructures and their development from phase diagrams. Structures and mechanical properties of polymers and ceramics. Thermal, optical, and magnetic properties of materials. Lectures: three hours per week. Tutorial: one hour per week.',
-1, 0, 3, 1, 'MECH', "", 221, NULL, 'Materials Science', 1, 3);
+1, 0, 3, 1, 'MECH', "", 221, 'Materials Science', 1, 3);
 INSERT IGNORE INTO course VALUES (25, 3.75, 'Fundamentals of manufacturing processes and their limitations, metrology, machine shop practice, safety and health considerations, forming, conventional machining and casting processes, welding and joining, plastic production, and non-conventional machining techniques. Sustainable technologies. Laboratory includes instruction and practice on conventional machine tools and a manufacturing project. Lectures: three hours per week. Tutorial: two hours per week, including industrial visits and field trips to local industries. Laboratory: three hours per week, alternate weeks.',
-1, 3, 3, 1, 'MECH', "", 311, NULL, 'Manufacturing Processes', 2, 3);
+1, 3, 3, 1, 'MECH', "", 311, 'Manufacturing Processes', 2, 3);
 INSERT IGNORE INTO course VALUES (26, 3.50, 'Introduction to engi­neering design and design process. Problem definition, solution formulation, model development and collaboration aspects of design process.The use of drawings and other graphical methods in the process of engineering design. Industrial standards and specifications, design of fits, linear and geometrical tolerances. Design projects based on design philosophies will involve design and selection of many standard machine com­ponents like mechanical drives, cams, clutches, couplings, brakes, seals, fasteners, springs, and bearings. Drawing representation of standard components. Design projects are an integral part of this course. Lectures: three hours per week. Tutorial: two hours per week. Laboratory: 12 hours total',
-1, 12, 3, 1, 'MECH', "", 313, NULL, 'Machine Drawing and Design', 2, 3);
+1, 12, 3, 1, 'MECH', "", 313, 'Machine Drawing and Design', 2, 3);
 INSERT IGNORE INTO course VALUES (27, 3.50, 'The service capabilities of alloys and their relationship to microstructure as produced by thermal and mechanical treatments; tensile and torsion tests; elements of dislocation theory; strengthening mechanisms; composite materials. Modes of failure of materials; fracture, fatigue, wear, creep, corrosion, radiation damage. Failure analysis. Material codes; material selection for design. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', "", 321, NULL, 'Properties and Failure of Materials', 1, 3);
+1, 2, 3, 1, 'MECH', "", 321, 'Properties and Failure of Materials', 1, 3);
 INSERT IGNORE INTO course VALUES (28, 3.50, 'Introduction to mechanisms; position and displacement; velocity; acceleration; synthesis of linkage; robotics; static force analysis; dynamic force analysis; forward kinematics and inverse kinematics; introduction to gear analysis and gear box design; kinematic analysis of spatial mechanisms. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', "", 343, NULL, 'Theory of Machines', 1, 3);
+1, 2, 3, 1, 'MECH', "", 343, 'Theory of Machines', 1, 3);
 INSERT IGNORE INTO course VALUES (29, 3.00, 'Introduction to machine design; static failure theories; failure of ductile vs. brittle materials under static loading. Fatigue failure theories; fatigue loads; notches and stress concentrations; residual stresses; designing for high cycle fatigue. Design of shafts, keys and couplings. Design of spur gears. Spring design. Design of screws and fasteners. Design of bearings. Case studies. Lectures: three hours per week. Tutorial: two hours per week.',
-1, 0, 3, 1, 'MECH', 'NOTE: Students who have received credit for MECH 441 may not take this course for credit.', 344, NULL, 'Machine Element Design', 2, 3);
+1, 0, 3, 1, 'MECH', 'NOTE: Students who have received credit for MECH 441 may not take this course for credit.', 344, 'Machine Element Design', 2, 3);
 INSERT IGNORE INTO course VALUES (30, 3.50, 'Brief review of ideal gas processes. Semi-perfect gases and the gas tables. Mixtures of gases, gases and vapours, air conditioning processes. Combustion and combustion equilibrium. Applications of thermo­dynamics to power production and utilization systems: study of basic and advanced cycles for gas compression, internal combustion engines, power from steam, gas turbine cycles, and refrigeration. Real gases. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', "", 351, NULL, 'Thermodynamics II', 1, 3);
+1, 2, 3, 1, 'MECH', "", 351, 'Thermodynamics II', 1, 3);
 INSERT IGNORE INTO course VALUES (31, 3.50, 'Analytical and numerical methods for steady-state and transient heat conduction. Empirical and practical relations for forced- and free-convection heat transfer. Radiation heat exchange between black bodies, and between non-black bodies. Gas radiation. Solar radiation. Effect of radiation on temperature measurement. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', "", 352, NULL, 'Heat Transfer I', 1, 3);
+1, 2, 3, 1, 'MECH', "", 352, 'Heat Transfer I', 1, 3);
 INSERT IGNORE INTO course VALUES (32, 3.50, 'Differential analysis of fluid flows, vorticity, stream function, stresses, and strains. Navier-Stokes equations and solutions for parallel flows. Euler’s equations, irrotational and potential flows, plane potential flows. Viscous flows in pipes, laminar and turbulent flows, major and minor losses. Flow over immersed bodies, boundary layers, separation and thickness. Drag, lift and applications. Introduction to compressible flows, speed of sound, Mach cone, and some characteristics of supersonic flows. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', "", 361, NULL, 'Fluid Mechanics II', 1, 3);
+1, 2, 3, 1, 'MECH', "", 361, 'Fluid Mechanics II', 1, 3);
 INSERT IGNORE INTO course VALUES (33, 3.50, 'Dependent sources, voltage and current dividers, voltage and current sources, superposition, Thevenin and Norton equivalent sources, linear and nonlinear circuit analysis. Semiconductors and diodes. Bipolar Junction Transistors (BJT), Field Effect Transistors (FET); amplifiers and switches. Operational amplifiers; circuits and frequency response. Digital logic components and circuits. Digital systems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', 'NOTE: Students who have received credit for MECH 470 may not take this course for credit. NOTE: Electrical Engineering and Computer Engineering students may not take this course for credit.', 368, NULL, 'Electronics for Mechanical Engineers', 1, 3);
+1, 2, 3, 1, 'MECH', 'NOTE: Students who have received credit for MECH 470 may not take this course for credit. NOTE: Electrical Engineering and Computer Engineering students may not take this course for credit.', 368, 'Electronics for Mechanical Engineers', 1, 3);
 INSERT IGNORE INTO course VALUES (34, 3.50, 'Definition and classification of dynamic systems and components. Modelling of dynamic systems containing individual or mixed mechanical, electrical, fluid and thermal elements. Block diagrams representation and simulation techniques using MATLAB/Simulink. Time domain analysis. Transient and steady-state characteristics of dynamic systems. Linearization. Transfer functions. Introduction to feedback control systems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', 'NOTE: Students who have received credit for ELEC 370 may not take this course for credit.', 370, NULL, 'Modelling and Analysis of Dynamic Systems', 1, 3);
+1, 2, 3, 1, 'MECH', 'NOTE: Students who have received credit for ELEC 370 may not take this course for credit.', 370, 'Modelling and Analysis of Dynamic Systems', 1, 3);
 INSERT IGNORE INTO course VALUES (35, 3.75, 'Stability of linear feedback systems. Root-Locus method. Frequency response concepts. Stability in the frequency domain. Feedback system design using Root Locus techniques. Compensator concepts and configurations. PID-controller design. Simulation and computer-aided controller design using Matlab/Simulink. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: three hours per week, alternate weeks.',
-1, 3, 3, 1, 'MECH', 'NOTE: Students who have received credit for ELEC 372 may not take this course for credit.', 371, NULL, 'Analysis and Design of Control Systems', 1, 3);
+1, 3, 3, 1, 'MECH', 'NOTE: Students who have received credit for ELEC 372 may not take this course for credit.', 371, 'Analysis and Design of Control Systems', 1, 3);
 INSERT IGNORE INTO course VALUES (36, 3.50, 'Transient vibrations under impulsive shock and arbitrary excitation: normal modes, free and forced vibration. Multi-degree of freedom systems, influence coefficients, orthogonality principle, numerical methods. Continuous systems; longitudinal torsional and flexural free and forced vibrations of prismatic bars. Lagrange’s equations. Vibration measurements. Lectures: three hours per week. Tutorial: two hours per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', 'NOTE: Students who have received credit for MECH 443 may not take this course for credit', 375, NULL, 'Mechanical Vibrations', 2, 3);
+1, 2, 3, 1, 'MECH', 'NOTE: Students who have received credit for MECH 443 may not take this course for credit', 375, 'Mechanical Vibrations', 2, 3);
 INSERT IGNORE INTO course VALUES (37, 3.00, 'The design process; product cost, quality and time to market, open and concept design problems, problem description. Geometric and type synthesis. Direct and inverse design problems. Material selection and load determination. Mathematical modelling, analysis, and validation. Introduction to Computer-Aided Design and Engineering (CAD and CAE). Product evaluation for performance, tolerance, cost, manufacture, assembly, and other measures. Design documentation. A team-based design project is an intrinsic part of this course. Lectures: three hours per week. Tutorial: two hours per week',
-1, 0, 3, 1, 'MECH', "", 390, NULL, 'Mechanical Engineering Design Project', 2, 3);
+1, 0, 3, 1, 'MECH', "", 390, 'Mechanical Engineering Design Project', 2, 3);
 INSERT IGNORE INTO course VALUES (38, 4.00, 'A supervised design, simulation or experimental capstone design project including a preliminary project proposal with complete project plan and a technical report at the end of the fall term; a final report by the group and presentation at the end of the winter term. Lectures: one hour per week, one term. Equivalent laboratory time: three hours per week, two terms.',
-1, 3, 1, 1, 'MECH', 'NOTE: Students will work in groups under direct supervision of a faculty member.', 490, NULL, 'Capstone Mechanical Engineering Design Project', 0, 3);
+1, 3, 1, 1, 'MECH', 'NOTE: Students will work in groups under direct supervision of a faculty member.', 490, 'Capstone Mechanical Engineering Design Project', 0, 3);
 INSERT IGNORE INTO course VALUES (39, 4.00, 'No review of ideal gas processes. Students should be aware of this beforehand. Semi-perfect gases and the gas tables. Mixtures of gases, gases and vapours, air conditioning processes. Combustion and combustion equilibrium. Applications of thermo­dynamics to power production and utilization systems: study of basic and advanced cycles for gas compression, internal combustion engines, power from steam, gas turbine cycles, and refrigeration. Real gases. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
-0, 2, 3, 1, 'MECH', "NOTE: Students will not perform any cool experiments unfortunately.", 351, NULL, 'Thermodynamics II', 1, 3);
+0, 2, 3, 1, 'MECH', "NOTE: Students will not perform any cool experiments unfortunately.", 351, 'Thermodynamics II', 1, 3);
 
 -- new course soen 363
 INSERT IGNORE INTO course VALUES (40, 3.00, 'Prerequisite: COMP 352. This course covers the following topics: introduction to the current data ecosystem; relational databases; key-value databases; document databases; column databases; graph databases; RDF stores; parallel and distributed file systems, data processing engines; data stream analytics; and data infrastructure. Lectures: three hours per week. Tutorial: one hour per week',
-0, 0, 3, 1, 'SOEN', "", 363, NULL, 'Data Systems for Software Engineers', 1, 1);
+0, 0, 3, 1, 'SOEN', "", 363, 'Data Systems for Software Engineers', 1, 1);
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -287,86 +288,87 @@ INSERT IGNORE INTO calendar VALUES (2, 'Students employed full‑time in a compu
 INSERT IGNORE INTO calendar VALUES (3, "Please note that the current version of the Undergraduate Calendar is up to date as of February 2019.", "71.60", "Engineering Course Descriptions", "", 8);
 
 -- id, section, target_id, target_type
-INSERT IGNORE INTO section VALUES (1, '71.70.9', 'course', 1);
-INSERT IGNORE INTO section VALUES (2, '71.70.9', 'course', 2);
-INSERT IGNORE INTO section VALUES (3, '71.70.9', 'course', 3);
-INSERT IGNORE INTO section VALUES (4, '71.70.9', 'course', 4);
-INSERT IGNORE INTO section VALUES (5, '71.70.9', 'course', 5);
-INSERT IGNORE INTO section VALUES (6, '71.70.9', 'course', 6);
-INSERT IGNORE INTO section VALUES (7, '71.70.9', 'course', 7);
-INSERT IGNORE INTO section VALUES (8, '71.70.9', 'course', 8);
-INSERT IGNORE INTO section VALUES (9, '71.70.9', 'course', 9);
-INSERT IGNORE INTO section VALUES (10, '71.70.9', 'course', 10);
-INSERT IGNORE INTO section VALUES (11, '71.70.9', 'course', 11);
-INSERT IGNORE INTO section VALUES (12, '71.70.9', 'course', 12);
-INSERT IGNORE INTO section VALUES (13, '71.70.9', 'course', 13);
-INSERT IGNORE INTO section VALUES (14, '71.70.9', 'course', 14);
-INSERT IGNORE INTO section VALUES (15, '71.70.9', 'course', 15);
-INSERT IGNORE INTO section VALUES (16, '71.20.5', 'course', 16);
-INSERT IGNORE INTO section VALUES (17, '71.20.5', 'course', 17);
-INSERT IGNORE INTO section VALUES (18, '71.20.5', 'course', 18);
-INSERT IGNORE INTO section VALUES (19, '71.20.5', 'course', 19);
-INSERT IGNORE INTO section VALUES (20, '71.20.5', 'course', 20);
-INSERT IGNORE INTO section VALUES (21, '71.20.5', 'course', 21);
-INSERT IGNORE INTO section VALUES (22, '71.40.1', 'course', 22);
-INSERT IGNORE INTO section VALUES (23, '71.40.1', 'course', 23);
-INSERT IGNORE INTO section VALUES (24, '71.40.1', 'course', 24);
-INSERT IGNORE INTO section VALUES (25, '71.40.1', 'course', 25);
-INSERT IGNORE INTO section VALUES (26, '71.40.1', 'course', 26);
-INSERT IGNORE INTO section VALUES (27, '71.40.1', 'course', 27);
-INSERT IGNORE INTO section VALUES (28, '71.40.1', 'course', 28);
-INSERT IGNORE INTO section VALUES (29, '71.40.1', 'course', 29);
-INSERT IGNORE INTO section VALUES (30, '71.40.1', 'course', 30);
-INSERT IGNORE INTO section VALUES (31, '71.40.1', 'course', 31);
-INSERT IGNORE INTO section VALUES (32, '71.40.1', 'course', 32);
-INSERT IGNORE INTO section VALUES (33, '71.40.1', 'course', 33);
-INSERT IGNORE INTO section VALUES (34, '71.40.1', 'course', 34);
-INSERT IGNORE INTO section VALUES (35, '71.40.1', 'course', 35);
-INSERT IGNORE INTO section VALUES (36, '71.40.1', 'course', 36);
-INSERT IGNORE INTO section VALUES (37, '71.40.1', 'course', 37);
-INSERT IGNORE INTO section VALUES (38, '71.40.1', 'course', 38);
-INSERT IGNORE INTO section VALUES (39, '71.40.1', 'course', 39);
-INSERT IGNORE INTO section VALUES (40, '71.70.9', 'course', 40);
-INSERT IGNORE INTO section VALUES (41, '71.70.10', 'course', 1);
-INSERT IGNORE INTO section VALUES (42, '71.70.10', 'course', 2);
-INSERT IGNORE INTO section VALUES (43, '71.70.10', 'course', 3);
-INSERT IGNORE INTO section VALUES (44, '71.70.10', 'course', 4);
-INSERT IGNORE INTO section VALUES (45, '71.70.10', 'course', 5);
-INSERT IGNORE INTO section VALUES (46, '71.70.10', 'course', 6);
-INSERT IGNORE INTO section VALUES (47, '71.70.10', 'course', 7);
-INSERT IGNORE INTO section VALUES (48, '71.70.10', 'course', 8);
-INSERT IGNORE INTO section VALUES (49, '71.70.10', 'course', 9);
-INSERT IGNORE INTO section VALUES (50, '71.70.10', 'course', 10);
-INSERT IGNORE INTO section VALUES (51, '71.70.10', 'course', 11);
-INSERT IGNORE INTO section VALUES (52, '71.70.10', 'course', 12);
-INSERT IGNORE INTO section VALUES (53, '71.70.10', 'course', 13);
-INSERT IGNORE INTO section VALUES (54, '71.70.10', 'course', 14);
-INSERT IGNORE INTO section VALUES (55, '71.70.10', 'course', 15);
-INSERT IGNORE INTO section VALUES (56, '71.60', 'course', 16);
-INSERT IGNORE INTO section VALUES (57, '71.60', 'course', 17);
-INSERT IGNORE INTO section VALUES (58, '71.60', 'course', 18);
-INSERT IGNORE INTO section VALUES (59, '71.60', 'course', 19);
-INSERT IGNORE INTO section VALUES (60, '71.60', 'course', 20);
-INSERT IGNORE INTO section VALUES (61, '71.60', 'course', 21);
-INSERT IGNORE INTO section VALUES (62, '71.60', 'course', 22);
-INSERT IGNORE INTO section VALUES (63, '71.60', 'course', 23);
-INSERT IGNORE INTO section VALUES (64, '71.60', 'course', 24);
-INSERT IGNORE INTO section VALUES (65, '71.60', 'course', 25);
-INSERT IGNORE INTO section VALUES (66, '71.60', 'course', 26);
-INSERT IGNORE INTO section VALUES (67, '71.60', 'course', 27);
-INSERT IGNORE INTO section VALUES (68, '71.60', 'course', 28);
-INSERT IGNORE INTO section VALUES (69, '71.60', 'course', 29);
-INSERT IGNORE INTO section VALUES (70, '71.60', 'course', 30);
-INSERT IGNORE INTO section VALUES (71, '71.60', 'course', 31);
-INSERT IGNORE INTO section VALUES (72, '71.60', 'course', 32);
-INSERT IGNORE INTO section VALUES (73, '71.60', 'course', 33);
-INSERT IGNORE INTO section VALUES (74, '71.60', 'course', 34);
-INSERT IGNORE INTO section VALUES (75, '71.60', 'course', 35);
-INSERT IGNORE INTO section VALUES (76, '71.60', 'course', 36);
-INSERT IGNORE INTO section VALUES (77, '71.60', 'course', 37);
-INSERT IGNORE INTO section VALUES (78, '71.60', 'course', 38);
-INSERT IGNORE INTO section VALUES (79, '71.60', 'course', 39);
-INSERT IGNORE INTO section VALUES (80, '71.60', 'course', 40);
+INSERT IGNORE INTO section VALUES (1, '71.70.9', 1, "course");
+INSERT IGNORE INTO section VALUES (2, '71.70.9', 2, "course");
+INSERT IGNORE INTO section VALUES (3, '71.70.9', 3, "course");
+INSERT IGNORE INTO section VALUES (4, '71.70.9', 4, "course");
+INSERT IGNORE INTO section VALUES (5, '71.70.9', 5, "course");
+INSERT IGNORE INTO section VALUES (6, '71.70.9', 6, "course");
+INSERT IGNORE INTO section VALUES (7, '71.70.9', 7, "course");
+INSERT IGNORE INTO section VALUES (8, '71.70.9', 8, "course");
+INSERT IGNORE INTO section VALUES (9, '71.70.9', 9, "course");
+INSERT IGNORE INTO section VALUES (10, '71.70.9', 10, "course");
+INSERT IGNORE INTO section VALUES (11, '71.70.9', 11, "course");
+INSERT IGNORE INTO section VALUES (12, '71.70.9', 12, "course");
+INSERT IGNORE INTO section VALUES (13, '71.70.9', 13, "course");
+INSERT IGNORE INTO section VALUES (14, '71.70.9', 14, "course");
+INSERT IGNORE INTO section VALUES (15, '71.70.9', 15, "course");
+INSERT IGNORE INTO section VALUES (16, '71.20.5', 16, "course");
+INSERT IGNORE INTO section VALUES (17, '71.20.5', 17, "course");
+INSERT IGNORE INTO section VALUES (18, '71.20.5', 18, "course");
+INSERT IGNORE INTO section VALUES (19, '71.20.5', 19, "course");
+INSERT IGNORE INTO section VALUES (20, '71.20.5', 20, "course");
+INSERT IGNORE INTO section VALUES (21, '71.20.5', 21, "course");
+INSERT IGNORE INTO section VALUES (22, '71.40.1', 22, "course");
+INSERT IGNORE INTO section VALUES (23, '71.40.1', 23, "course");
+INSERT IGNORE INTO section VALUES (24, '71.40.1', 24, "course");
+INSERT IGNORE INTO section VALUES (25, '71.40.1', 25, "course");
+INSERT IGNORE INTO section VALUES (26, '71.40.1', 26, "course");
+INSERT IGNORE INTO section VALUES (27, '71.40.1', 27, "course");
+INSERT IGNORE INTO section VALUES (28, '71.40.1', 28, "course");
+INSERT IGNORE INTO section VALUES (29, '71.40.1', 29, "course");
+INSERT IGNORE INTO section VALUES (30, '71.40.1', 30, "course");
+INSERT IGNORE INTO section VALUES (31, '71.40.1', 31, "course");
+INSERT IGNORE INTO section VALUES (32, '71.40.1', 32, "course");
+INSERT IGNORE INTO section VALUES (33, '71.40.1', 33, "course");
+INSERT IGNORE INTO section VALUES (34, '71.40.1', 34, "course");
+INSERT IGNORE INTO section VALUES (35, '71.40.1', 35, "course");
+INSERT IGNORE INTO section VALUES (36, '71.40.1', 36, "course");
+INSERT IGNORE INTO section VALUES (37, '71.40.1', 37, "course");
+INSERT IGNORE INTO section VALUES (38, '71.40.1', 38, "course");
+INSERT IGNORE INTO section VALUES (39, '71.40.1', 39, "course");
+INSERT IGNORE INTO section VALUES (40, '71.70.9', 40, "course");
+INSERT IGNORE INTO section VALUES (41, '71.70.10', 1, "course");
+INSERT IGNORE INTO section VALUES (42, '71.70.10', 2, "course");
+INSERT IGNORE INTO section VALUES (43, '71.70.10', 3, "course");
+INSERT IGNORE INTO section VALUES (44, '71.70.10', 4, "course");
+INSERT IGNORE INTO section VALUES (45, '71.70.10', 5, "course");
+INSERT IGNORE INTO section VALUES (46, '71.70.10', 6, "course");
+INSERT IGNORE INTO section VALUES (47, '71.70.10', 7, "course");
+INSERT IGNORE INTO section VALUES (48, '71.70.10', 8, "course");
+INSERT IGNORE INTO section VALUES (49, '71.70.10', 9, "course");
+INSERT IGNORE INTO section VALUES (50, '71.70.10', 10, "course");
+INSERT IGNORE INTO section VALUES (51, '71.70.10', 11, "course");
+INSERT IGNORE INTO section VALUES (52, '71.70.10', 12, "course");
+INSERT IGNORE INTO section VALUES (53, '71.70.10', 13, "course");
+INSERT IGNORE INTO section VALUES (54, '71.70.10', 14, "course");
+INSERT IGNORE INTO section VALUES (55, '71.70.10', 15, "course");
+INSERT IGNORE INTO section VALUES (56, '71.60', 16, "course");
+INSERT IGNORE INTO section VALUES (57, '71.60', 17, "course");
+INSERT IGNORE INTO section VALUES (58, '71.60', 18, "course");
+INSERT IGNORE INTO section VALUES (59, '71.60', 19, "course");
+INSERT IGNORE INTO section VALUES (60, '71.60', 20, "course");
+INSERT IGNORE INTO section VALUES (61, '71.60', 21, "course");
+INSERT IGNORE INTO section VALUES (62, '71.60', 22, "course");
+INSERT IGNORE INTO section VALUES (63, '71.60', 23, "course");
+INSERT IGNORE INTO section VALUES (64, '71.60', 24, "course");
+INSERT IGNORE INTO section VALUES (65, '71.60', 25, "course");
+INSERT IGNORE INTO section VALUES (66, '71.60', 26, "course");
+INSERT IGNORE INTO section VALUES (67, '71.60', 27, "course");
+INSERT IGNORE INTO section VALUES (68, '71.60', 28, "course");
+INSERT IGNORE INTO section VALUES (69, '71.60', 29, "course");
+INSERT IGNORE INTO section VALUES (70, '71.60', 30, "course");
+INSERT IGNORE INTO section VALUES (71, '71.60', 31, "course");
+INSERT IGNORE INTO section VALUES (72, '71.60', 32, "course");
+INSERT IGNORE INTO section VALUES (73, '71.60', 33, "course");
+INSERT IGNORE INTO section VALUES (74, '71.60', 34, "course");
+INSERT IGNORE INTO section VALUES (75, '71.60', 35, "course");
+INSERT IGNORE INTO section VALUES (76, '71.60', 36, "course");
+INSERT IGNORE INTO section VALUES (77, '71.60', 37, "course");
+INSERT IGNORE INTO section VALUES (78, '71.60', 38, "course");
+INSERT IGNORE INTO section VALUES (79, '71.60', 39, "course");
+INSERT IGNORE INTO section VALUES (80, '71.60', 40, "course");
+INSERT IGNORE INTO section VALUES (81, '71.70.9', 1, "degree");
 
 -- id, pdf_file, rejection_rationale, user_id, department_id
 INSERT IGNORE INTO request_package VALUES (1, NULL, NULL, 1, 4); -- creating a package for department of CS & SE

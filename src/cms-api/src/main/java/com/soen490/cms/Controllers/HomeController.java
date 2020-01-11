@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
 public class HomeController {
 
     @Autowired

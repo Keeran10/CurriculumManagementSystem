@@ -23,6 +23,7 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Repositories.SectionRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,8 @@ public class ImpactAssessmentCourseService {
 
     @Autowired
     SearchService searchService;
+    @Autowired
+    private SectionRepository sectionRepository;
 
     // Object request causes trouble. Methods have been refactored to accept other parameters to avoid creating
     // unsaved request objects.
@@ -151,6 +154,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Name",course.getName());
         responseReport.put("Number",course.getNumber());
         responseReport.put("Course", course);
+        responseReport.put("Sections",sectionReport(course));
         responseReport.put("RequestType", request.getRequestType());
         log.info("Impact Report for a course creation: ", responseReport);
         return responseReport;
@@ -251,6 +255,7 @@ public class ImpactAssessmentCourseService {
         responseReport.put("Course",course);
         responseReport.put("RemovingFromParentCourses",responseMap);
         responseReport.put("RequestType",request.getRequestType());
+        responseReport.put("Sections",sectionReport(course));
         log.info("Impact Report for a course Removal: ", responseReport);
         return responseReport;
     }
@@ -313,6 +318,7 @@ public class ImpactAssessmentCourseService {
         finalResponseMap.put("DegreeCourseRequiredImpact",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
         finalResponseMap.put("ProgramImpact",getProgramImpactUpdatedCourse(originalCourse,requestedCourse));
+        finalResponseMap.put("Sections",sectionReport(requestedCourse));
         log.info("Impact Report for a course Update: ", finalResponseMap);
         return finalResponseMap;
     }
@@ -540,13 +546,63 @@ public class ImpactAssessmentCourseService {
         }
     }
 
+    /**
+     * Finds the sections for the course, degree and department
+     *
+     * @param course
+     * @return Map<String, Object> Section report object
+     */
+    private Map<String, Object> sectionReport(Course course) {
+        Map<String, Object> responseMap = new HashMap();
+
+        List<String> sectionCourses = sectionRepository.findByTarget("course", course.getId());
+        List<String> sectionDegree = null;
+        List<String> sectionDepartment = null;
+
+        if (course.getDegreeRequirements() != null && sectionCourses == null) {
+            if (course.getDegreeRequirements().size() != 0) {
+                sectionDegree = sectionRepository.findByTarget("degree", course.getDegreeRequirements().get(0).getDegree().getId());
+            }
+        }
+        if (course.getProgram() != null && sectionDegree == null) {
+            sectionDepartment = sectionRepository.findByTarget("department", course.getProgram().getDepartment().getId());
+        }
+
+        String courseSections = "";
+        if(sectionCourses != null) {
+            for (String section : sectionCourses) {
+                courseSections += "§" + section + " ";
+            }
+        }
+
+        String degreeSections = "";
+        if(sectionDegree != null){
+            for (String section : sectionDegree) {
+                degreeSections += "§" + section + " ";
+             }
+        }
+
+        String departmentSections = "";
+        if(sectionDepartment != null) {
+            for (String section : sectionDepartment) {
+                departmentSections += "§" + section + " ";
+            }
+        }
+
+        responseMap.put("course",courseSections);
+        responseMap.put("degree",degreeSections);
+        responseMap.put("department",departmentSections);
+
+        return  responseMap;
+    }
 
     /**
      * Inputs a mock object for Search Service to use in Junit Tests
      *
-     * @param course
+     * @param course, section
      */
-    public void setServiceMock(SearchService course){
+    public void setServiceMock(SearchService course, SectionRepository section){
         searchService = course;
+        sectionRepository = section;
     }
 }

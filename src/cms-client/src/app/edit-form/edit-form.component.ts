@@ -159,13 +159,8 @@ export class EditFormComponent {
   */
 
   public submitForm() {
-    console.log(this.supportDocumentComponent.documents[0]);
-
-    //this.currentFile = this.selectedFiles[0];
-    this.currentFile = this.supportDocumentComponent.documents[0];
-
-    this.api.submitCourseRequestForm(this.currentFile, this.courseEditable, this.editedModel)
-      .subscribe(() => this.router.navigate(['/package']));
+    this.api.submitCourseRequestForm(this.supportDocumentComponent.documents, this.courseEditable, this.editedModel)
+      .subscribe(() => this.router.navigate(['/package']))
   }
 
   selectFile(event) {
@@ -178,8 +173,7 @@ export class EditFormComponent {
   public openDeleteDialog(){
     if(confirm("Are you sure you want to delete this course?")){
       
-      this.currentFile = this.supportDocumentComponent.documents[0];
-      this.api.submitDeleteCourseRequestForm(this.currentFile, this.courseEditable, this.editedModel)
+      this.api.submitDeleteCourseRequestForm(this.supportDocumentComponent.documents, this.courseEditable, this.editedModel)
       .subscribe(() => this.router.navigate(['/package']));
     }
   }

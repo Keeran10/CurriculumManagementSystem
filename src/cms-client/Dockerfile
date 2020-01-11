@@ -1,9 +1,12 @@
-FROM node:10.16.0
+FROM node:10.16.3-alpine
 
-WORKDIR /app
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY package.json /app/package.json
+COPY package.json /usr/src/app/package.json
 RUN npm install
-RUN npm install -g @angular/cli@8.3.5
+RUN npm install -g @angular/cli 
 
-COPY . /app
+COPY . /usr/src/app
+EXPOSE 4200 49153
+CMD npm run start

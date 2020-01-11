@@ -54,18 +54,18 @@
                                     request</a>
                             </div>
                             <br><br>
-                            <app-generic-file-uploader [documentName]="'Internal memo'"></app-generic-file-uploader>
-                            <app-generic-file-uploader [documentName]="'Cover Letter A'"></app-generic-file-uploader>
-                            <app-generic-file-uploader [documentName]="'Cover Letter B'"></app-generic-file-uploader>
+                            <app-support-documents></app-support-documents>
                             <br>
                         </div>
 
                         <div class="right">
+                            <!--
                             <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                                 PDF</button>
-
-                            <button mat-stroked-button color="warn" *ngIf="isPdfAvailable[i]"
-                                (click)="viewPdf(package.id)">View PDF</button>
+                            -->
+                            <button mat-stroked-button color="primary" (click)="upload(package.id)">Upload
+                                Files</button>
+                            <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
 
                             <a (click)="packageSelect(package.id, 0, 'approval')">
                                 <button mat-stroked-button color="primary">Submit for Approval</button>
