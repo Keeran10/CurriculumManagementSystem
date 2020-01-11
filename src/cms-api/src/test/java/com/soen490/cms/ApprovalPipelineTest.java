@@ -9,10 +9,10 @@ import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.UserRepository;
-import com.soen490.cms.Services.ApprovalPipelineService;
-import com.soen490.cms.Services.ApprovingBody;
-import com.soen490.cms.Services.DCCService;
-import com.soen490.cms.Services.FacultyCouncilService;
+import com.soen490.cms.Services.PipelineService.ApprovalPipelineService;
+import com.soen490.cms.Services.PipelineService.DCCService;
+import com.soen490.cms.Services.PipelineService.FacultyCouncilService;
+import com.soen490.cms.Services.RequestPackageService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +63,9 @@ public class ApprovalPipelineTest {
 
     @MockBean
     DCCService dccService;
+
+    @MockBean
+    RequestPackageService requestPackageService;
 
     @Mock
     FacultyCouncilService facultyCouncilService;
@@ -132,9 +135,11 @@ public class ApprovalPipelineTest {
     @Test
     public void testFinalApproval() {
         doReturn(approvalPipelineRequestPackage).when(approvalPipelineRequestPackageRepository).save(any(ApprovalPipelineRequestPackage.class));
+        doNothing().when(requestPackageService).finalizeDossierRequests(requestPackage);
 
+        String message = "Making the requested changes to the database";
         approvalPipelineRequestPackage.setPosition("Senate");
-        approvalPipelineService.finalizeDossierRequests(requestPackage, approvalPipelineRequestPackage, senateUser);
-        assertEquals(senateUser.getId(), approvalPipelineRequestPackage.getUser().getId()); // if successful, approvalPipelineRequestPackage will be assigned an approving user
+        String finalApprovalMessage = approvalPipelineService.finalizeDossierRequests(requestPackage, approvalPipelineRequestPackage, senateUser);
+        assertEquals("Making the requested changes to the database", finalApprovalMessage);
     }
 }
