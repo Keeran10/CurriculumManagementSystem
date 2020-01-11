@@ -145,6 +145,7 @@ public class ApprovalPipelineService {
         }
 
         sendMail(users, requestPackage); // send an email notification to all users in the next position
+        approvalPipelineRequestPackage.setUser(user);
         approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
         saveApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
 
