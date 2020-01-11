@@ -76,7 +76,7 @@ export class ApproverHomepageComponent implements OnInit {
     public packageSelect(packageId) {
         this.cookieService.set('package', packageId);
         console.log(packageId);
-        this.router.navigate(['package']);
+        this.router.navigate(['/package']);
     }
 
     // on decline
