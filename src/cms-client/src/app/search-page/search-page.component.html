@@ -19,17 +19,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-<html>
 
-<body>
+<body class="hg">
+<header class="hg__header">
   <app-top-nav-bar></app-top-nav-bar>
+</header>
+<main class="hg__main">
   <div id="cloud-container">
 
-    <mat-card class="searchFormCard">
+
       <div class="searchForm">
-        <mat-card-header>
           <h1>Enter your search criteria below</h1>
-        </mat-card-header>
         <mat-card-content>
           <form class="example-form" id="searchForm">
             <mat-form-field class="example-full-width">
@@ -55,29 +55,17 @@
           </form>
         </mat-card-content>
       </div>
-    </mat-card>
-    <div class="searchResults">
-      <div *ngIf="isResultShown === true && displayedList.length === 0">
-
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <span>No results found.</span>
-            </mat-expansion-panel-header>
-
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-    </div>
 
 
-    <mat-card class="searchResultsCard">
-      <mat-card-content>
+
+
         <div class="searchResults">
           <div *ngIf="isResultShown === true && displayedList.length === 0">
             <span>No results found.</span>
           </div>
           <div *ngIf="isResultShown === true && displayedList.length != 0">
+            <mat-card class="searchResultsCard">
+              <mat-card-content>
             <div *ngFor="let listItem of displayedList ; let i = index">
               <div *ngIf="searchType === 'course'">
                 <pre><a href = "http://localhost:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
@@ -100,6 +88,8 @@
 </pre>
               </div>
             </div>
+              </mat-card-content>
+            </mat-card>
           </div>
         </div>
         <!--
@@ -135,12 +125,10 @@
       </div>
     </div>
 -->
-      </mat-card-content>
-    </mat-card>
 
   </div>
-  <app-footer></app-footer>
-
+    </main>
+    <footer class="hg__footer">
+      <app-footer></app-footer>
+    </footer>
 </body>
-
-</html>
