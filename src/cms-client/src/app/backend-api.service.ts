@@ -206,13 +206,7 @@ export class ApiService {
   }
 
   public submitCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
-    const formdata: FormData = new FormData();
-
-    for (const file of files) {
-      formdata.append('files', file);
-    }
-    formdata.append('course', JSON.stringify(course));
-    formdata.append('courseExtras', JSON.stringify(courseExtras));
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
 
     const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,
@@ -222,4 +216,25 @@ export class ApiService {
     return this.http.request(req);
   }
 
+  public submitDeleteCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+
+    const req = new HttpRequest('POST', this.url + 'save_removal_request', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
+
+  private fileCourseAndExtrasToFormData(files: File[], course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = new FormData();
+    formdata.append('course', JSON.stringify(course));
+    formdata.append('courseExtras', JSON.stringify(courseExtras));
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
+    return formdata;
+  }
 }
