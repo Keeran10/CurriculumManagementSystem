@@ -54,7 +54,6 @@ export class Course {
     this.name = '';
     this.note = '';
     this.number = 100;
-    this.outline = '';
     this.program = new Program();
     this.requisites = [];
     this.title = '';
