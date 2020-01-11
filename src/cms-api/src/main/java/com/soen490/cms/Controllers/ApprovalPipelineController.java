@@ -10,8 +10,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Log4j2
@@ -92,7 +90,7 @@ public class ApprovalPipelineController {
         approvalPipelineRequestPackage.setApprovalPipeline(approvalPipeline);
         approvalPipelineRequestPackage.setPosition(pipelineList.get(0)); // get first position of pipeline
 
-        approvalPipelineService.addApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
+        approvalPipelineService.saveApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
     }
 
     /**
