@@ -46,6 +46,7 @@ export class PackageComponent implements OnInit {
   currentFile: File;
   msg;
   files: File[] = [];
+  step = 0;
 
   constructor(private cookieService: CookieService,
               private api: ApiService,
@@ -107,5 +108,17 @@ export class PackageComponent implements OnInit {
         console.log(response.body);
       }
     });
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
   }
 }
