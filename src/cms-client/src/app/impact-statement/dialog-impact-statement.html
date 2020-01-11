@@ -123,7 +123,7 @@
   <ng-template [ngIf]="data.SectionsDegree == null &&
                       data.SectionsCourse == null &&
                       data.SectionsDepartment == null">
-    <h5 style="color:red;">No calendar sections changes have been made.</h5>
+    <p style="color:red;font-style:italic">No calendar sections changes have been made.</p>
   </ng-template>
 
 
@@ -131,20 +131,20 @@
   <ng-template [ngIf]="data.DegreeCourseRequiredImpactRemoved == null
   && data.DegreeCourseRequiredImpactAdded == null
   && data.DegreeCourseRequiredImpactUpdated == null">
-     <h5 style="color:red;">No degree changes have been made.</h5>
+     <p style="color:red;font-style:italic">No degree changes have been made.</p>
   </ng-template>
 
   <!-- Core no changes -->
   <ng-template [ngIf]="data.ProgramImpactRemoved == null
   && data.ProgramImpactAdded == null
   && data.ProgramImpactUpdated == null ">
-    <h5 style="color:red;">No core changes have been made.</h5>
+    <p style="color:red;font-style:italic">No core changes have been made.</p>
   </ng-template>
 
   <!-- course elective no changes -->
   <ng-template [ngIf]="data.DegreeCourseElectiveImpactRemoved == null
   && data.DegreeCourseElectiveImpactAdded == null">
-      <h5 style="color:red;">No course electives changes have been made.</h5>
+      <p style="color:red;font-style:italic">No course electives changes have been made.</p>
   </ng-template>
 
   <!-- Course no changes -->
@@ -153,7 +153,7 @@
                       data.CourseEditsCredits == null &&
                       data.CourseEditsTitle == null &&
                       data.CourseEditsDescription == null">
-      <h5 style="color:red;">No course changes have been made.</h5>
+      <p style="color:red;font-style:italic">No course changes have been made.</p>
   </ng-template>
 <br>
 </div>
