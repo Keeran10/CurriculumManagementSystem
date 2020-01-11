@@ -1,7 +1,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
-import com.soen490.cms.Services.ApprovalPipelineService;
+import com.soen490.cms.Services.PipelineService.ApprovalPipelineService;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;

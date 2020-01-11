@@ -67,11 +67,11 @@ public class Course {
     private Program program;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Requisite> requisites = new ArrayList<>();
 
     @JsonIgnoreProperties("course")
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<DegreeRequirement> degreeRequirements = new ArrayList<>();
 
 }

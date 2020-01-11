@@ -15,10 +15,7 @@ import java.util.Locale;
 @Data
 public class DossierRevision extends Revision{
 
-    private byte[] pdf;
-
-    public DossierRevision(int id, int rev, int revtype, BigInteger timestamp, User user, byte[] pdf){
+    public DossierRevision(int id, int rev, int revtype, BigInteger timestamp, User user){
         super(id, rev, revtype, timestamp, user);
-        this.pdf = pdf;
     }
 }
