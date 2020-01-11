@@ -390,38 +390,30 @@ public class RequestPackageService {
         if (request == null)
             return true;
 
+        int user_id = request.getUser().getId();
+        int package_id = request.getRequestPackage().getId();
 
         if(request.getRequestType() == 3){
 
-            int user_id = request.getUser().getId();
-            int package_id = request.getRequestPackage().getId();
-
             requestRepository.delete(request);
-
             generatePdf(user_id, package_id);
-
             return true;
         }
 
         Course requested_course = courseRepository.findById(request.getTargetId());
-
         courseRepository.delete(requested_course);
-
-        int user_id = request.getUser().getId();
-        int package_id = request.getRequestPackage().getId();
-
         requestRepository.delete(request);
-
         generatePdf(user_id, package_id);
-
         return true;
     }
+
 
     // returns list of packages
     public List<RequestPackage> getRequestPackagesByDepartment(int department_id) {
 
         return requestPackageRepository.findByDepartment(department_id);
     }
+
 
     public RequestPackage findById(int id) {
         return requestPackageRepository.findById(id);

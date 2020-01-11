@@ -59,7 +59,7 @@ public class RequestPackage {
     private Department department;
 
     @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "requestPackage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Request> requests = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
