@@ -35,18 +35,16 @@ public class SupportingDocument {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Timestamp timestamp;
+    private int userId;
+
+    private String targetType; // course or dossier
+
+    private int targetId;
+
+    private String fileName;
+
+    private String fileType;
 
     @Lob
-    private byte[] document;
-
-    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals", "approvalPipelineRequestPackages"})
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals", "approvalPipelineRequestPackages"})
-    @ManyToOne
-    @JoinColumn(name = "package_id")
-    private RequestPackage requestPackage;
+    private byte[] file;
 }

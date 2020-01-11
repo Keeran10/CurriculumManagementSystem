@@ -57,16 +57,4 @@ public class User {
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private List<Request> requests = new ArrayList<>();
-
-    @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user")
-    private List<Approval> approvals = new ArrayList<>();
-
-    @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user")
-    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
-
-    @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user")
-    private List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = new ArrayList<>();
 }

@@ -1,4 +1,4 @@
-package com.soen490.cms.Services;
+package com.soen490.cms.Services.PipelineService;
 
 import com.soen490.cms.Models.ApprovalPipeline;
 import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
@@ -8,13 +8,13 @@ import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.UserRepository;
+import com.soen490.cms.Services.MailService;
+import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.*;
 
 @Log4j2
@@ -247,8 +247,7 @@ public class ApprovalPipelineService {
      */
     public String finalizeDossierRequests(RequestPackage dossier, ApprovalPipelineRequestPackage approvalPipelineRequestPackage, User user) {
         log.info("Finalizing dossier " + dossier.getId());
-        approvalPipelineRequestPackage.setUser(user); // add user to keep track of who makes the final approval to the dossier
-        saveApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
+        requestPackageService.finalizeDossierRequests(dossier);
         return "Making the requested changes to the database";
     }
 

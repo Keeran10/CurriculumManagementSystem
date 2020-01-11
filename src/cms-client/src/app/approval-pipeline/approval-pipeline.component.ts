@@ -29,11 +29,11 @@ import { CookieService } from 'ngx-cookie-service';
     selector: 'app-approval-pipeline',
     templateUrl: './approval-pipeline.component.html',
     styleUrls: ['./approval-pipeline.component.css']
-  })
+})
 
 export class ApprovalPipelineComponent {
 
-    constructor(private api: ApiService, private router: Router, 
+    constructor(private api: ApiService, private router: Router,
         private cookieService: CookieService) {
     }
 
@@ -42,11 +42,11 @@ export class ApprovalPipelineComponent {
     public customPipeline = [];
     // predefined pipeline order
     public predefinedPipeline = ['Department Curriculum Committee',
-                                    'Department Council',
-                                    'Associate Dean Academic Programs Under Graduate Studies Committee',
-                                    'Faculty Council',
-                                    'APC',
-                                    'Senate'];
+        'Department Council',
+        'Associate Dean Academic Programs Under Graduate Studies Committee',
+        'Faculty Council',
+        'APC',
+        'Senate'];
     ngOnInit() {
         this.packageId = Number(this.cookieService.get('package'));
     }
@@ -60,13 +60,13 @@ export class ApprovalPipelineComponent {
                 this.customPipeline.push(i.value);
             }
             this.api.savePipeline(JSON.stringify(this.customPipeline), this.packageId)
-      .subscribe(data => this.router.navigate(['package']) );
+                .subscribe(data => this.router.navigate(['/package']));
         }
     }
     public predefined() {
         console.log('User selected predefined pipeline');
         this.api.savePipeline(JSON.stringify(this.predefinedPipeline), this.packageId)
-      .subscribe(data => this.router.navigate(['package']));
+            .subscribe(data => this.router.navigate(['/package']));
     }
 
 }

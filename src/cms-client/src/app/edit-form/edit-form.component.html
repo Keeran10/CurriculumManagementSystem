@@ -156,6 +156,7 @@
     </div>
     <app-support-documents></app-support-documents>
     <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
+    <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn" (click)="openDeleteDialog()">Delete Course</button>
   </mat-card>
   <app-footer></app-footer>
 </body>

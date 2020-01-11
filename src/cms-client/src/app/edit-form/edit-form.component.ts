@@ -50,6 +50,8 @@ export class EditFormComponent {
   currentFile: File;
   files: File[] = [];
 
+  isDeleteVisible = true;
+
   constructor(private route: ActivatedRoute, private api: ApiService,
     private cookieService: CookieService,
     private router: Router) {
@@ -74,8 +76,14 @@ export class EditFormComponent {
     this.editedModel.userId = Number(userId);
     this.model.requestId = Number(requestId);
     this.editedModel.requestId = Number(requestId);
-
-    if (requestId === '0') {
+    if(this.id === '0'){
+      this.courseEditable = new Course();
+      this.courseOriginal = Object.assign({}, this.courseEditable);
+      this.courseOriginal.number = null;
+      this.courseOriginal.credits = null;
+      this.isDeleteVisible = false;
+    }
+    else if(requestId === '0'){
       this.api.getCourse(this.id).subscribe(data => {
         this.courseOriginal = data;
         this.courseEditable = Object.assign({}, data);
@@ -151,12 +159,7 @@ export class EditFormComponent {
   */
 
   public submitForm() {
-    console.log(this.supportDocumentComponent.documents[0]);
-
-    //this.currentFile = this.selectedFiles[0];
-    this.currentFile = this.supportDocumentComponent.documents[0];
-
-    this.api.submitCourseRequestForm(this.currentFile, this.courseEditable, this.editedModel)
+    this.api.submitCourseRequestForm(this.supportDocumentComponent.documents, this.courseEditable, this.editedModel)
       .subscribe(() => this.router.navigate(['/package']))
   }
 
@@ -165,6 +168,14 @@ export class EditFormComponent {
     console.log(this.selectedFiles);
     this.files.push(this.selectedFiles.item(0));
     console.log(this.files);
+  }
+
+  public openDeleteDialog(){
+    if(confirm("Are you sure you want to delete this course?")){
+      
+      this.api.submitDeleteCourseRequestForm(this.supportDocumentComponent.documents, this.courseEditable, this.editedModel)
+      .subscribe(() => this.router.navigate(['/package']));
+    }
   }
 
 }

@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
 public class SearchController {
 
     @Autowired
