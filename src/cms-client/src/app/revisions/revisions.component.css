@@ -1,3 +1,23 @@
+.hg__main { grid-area: main; }
+.hg__header { grid-area: header; }
+.hg__footer { grid-area: footer; }
+
+.hg {
+  display: grid;
+  grid-template-areas: "header header header"
+  "main main main"
+  "footer footer footer";
+  grid-template-columns: 150px 1fr 150px;
+  grid-template-rows: 100px
+  1fr
+  80px;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #F3E7E9;
+}
+
 table td {
   table-layout:fixed;
   width: 5%;
@@ -26,6 +46,12 @@ a:hover {
     background-color: lightblue;
   }
 
-.container {
-    min-height: 80vh;
+
+
+@media screen and (max-width: 600px) {
+  .hg {
+    grid-template-areas: "header" "main" "main" "main" "footer";
+    grid-template-columns: 100%;
+    grid-template-rows: 100px 50px 1fr 50px 30px;
+  }
 }
