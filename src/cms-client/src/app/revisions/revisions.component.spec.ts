@@ -43,7 +43,7 @@ describe('RevisionsComponent', () => {
     }).compileComponents();;
   }));
 
-  describe('Pipeline Tracking tests', ()=> {
+  describe('Revisions tests', ()=> {
     function setup() {
       const fixture = TestBed.createComponent(RevisionsComponent);
       const component = fixture.componentInstance;
@@ -69,7 +69,7 @@ describe('RevisionsComponent', () => {
       }));;
 
       component.showPDF(1);
-      expect(apiService.generatePdf).toHaveBeenCalled();
+      expect(apiService.getRevisionsPdf).toHaveBeenCalled();
     });
   });
 });
