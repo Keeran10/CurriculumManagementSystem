@@ -48,9 +48,13 @@ export class RevisionsComponent implements OnInit {
         );
     }
 
-    public viewPDF(pdf: any) {
-      const file = new Blob([pdf], { type: 'application/pdf' });
-      const fileURL = URL.createObjectURL(file);
-      window.location.assign(fileURL);
+    public showPDF(rev_id: any) {
+      this.api.getRevisionsPdf(rev_id).subscribe(
+        data => {
+          const file = new Blob([data], { type: 'application/pdf' });
+          const fileURL = URL.createObjectURL(file);
+          window.location.assign(fileURL);
+        }
+      )
     }
 }

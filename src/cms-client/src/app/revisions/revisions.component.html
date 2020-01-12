@@ -24,7 +24,7 @@
     <td *ngIf="revisions.length > 0"> 
         <strong>PDF files</strong>
         <tr class="pdf" *ngFor="let revi of revisions">
-            <a (click)="viewPDF(revi.pdf)">revision{{ revi.rev }}.pdf</a>
+            <a (click)="showPDF(revi.rev)">view pdf</a>
         </tr>
     </td>
     <tr *ngIf="revisions.length == 0">

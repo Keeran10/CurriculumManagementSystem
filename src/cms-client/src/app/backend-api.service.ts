@@ -195,4 +195,11 @@ export class ApiService {
     });
   }
 
+  public getRevisionsPdf(revId: any) {
+    return this.http.get<BlobPart>(this.url + 'get_rev_pdf', {
+      params: new HttpParams().set('rev_id', revId),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
+
 }
