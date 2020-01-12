@@ -74,6 +74,12 @@ export class PackageComponent implements OnInit {
     this.router.navigate([href]);
   }
 
+  public viewAllRevisions(packageId, href) {
+    this.cookieService.set('package', packageId.toString());
+    console.log('PackageComponent packageId: ' + packageId);
+    this.router.navigate([href]);
+  }
+
   public createNewPackage() {
     this.api.getPackage('0', '4').subscribe(data => this.packages.push(data));
   }

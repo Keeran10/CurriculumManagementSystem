@@ -20,43 +20,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Requisite } from '../models/requisite';
-import { Program } from './program';
+import { ApiService } from '../backend-api.service';
+import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { Revision } from '../models/revision';
 
-export class Course {
-  id: number;
-  credits: number;
-  degreeRequirements: Object[];
-  description: string;
-  equivalent: string[];
-  isActive: boolean;
-  labHours: number;
-  lectureHours: number;
-  level: number;
-  name: string;
-  note: string;
-  number: number;
-  program: Object;
-  requisites: Requisite[];
-  title: string;
-  tutorialHours: number;
+@Component({
+  selector: 'app-revisions',
+  templateUrl: './revisions.component.html',
+  styleUrls: ['./revisions.component.css']
+})
+export class RevisionsComponent implements OnInit {
 
-  constructor(){
-    this.id = 0;
-    this.credits = 0;
-    this.degreeRequirements = [];
-    this.description = '';
-    this.equivalent = [];
-    this.isActive = false;
-    this.labHours = 0;
-    this.lectureHours = 0;
-    this.level = 1;
-    this.name = '';
-    this.note = '';
-    this.number = 100;
-    this.program = new Program();
-    this.requisites = [];
-    this.title = '';
-    this.tutorialHours = 0;
-  }
+  revisions = new Array<Revision>();
+  packageId: string;
+
+  constructor(private cookieService: CookieService,
+              private api: ApiService) { }
+
+  ngOnInit() {
+    this.packageId = this.cookieService.get('package');
+    this.api.getRevisions(this.packageId).subscribe(
+        data => { this.revisions = data;
+        }
+        );
+    }
+
+    public showPDF(rev_id: any) {
+      this.api.getRevisionsPdf(rev_id).subscribe(
+        data => {
+          const file = new Blob([data], { type: 'application/pdf' });
+          const fileURL = URL.createObjectURL(file);
+          window.location.assign(fileURL);
+        }
+      )
+    }
 }

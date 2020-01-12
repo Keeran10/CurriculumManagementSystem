@@ -1,4 +1,4 @@
-package com.soen490.cms.Services;
+package com.soen490.cms.Services.PipelineService;
 
 import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
 import com.soen490.cms.Models.RequestPackage;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 @Service
 @Transactional
 @Log4j2
-public class APCService implements ApprovingBody {
+public class SenateService implements ApprovingBody {
 
     @Autowired
     ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
@@ -43,7 +43,7 @@ public class APCService implements ApprovingBody {
     private void populateMap() {
         Collection<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = approvalPipelineRequestPackageRepository.findAll();
         for(ApprovalPipelineRequestPackage approvalPipelineRequestPackage : approvalPipelineRequestPackages) {
-            if(approvalPipelineRequestPackage.getPosition().equals("APC")) {
+            if(approvalPipelineRequestPackage.getPosition().equals("Senate")) {
                 int packageId = approvalPipelineRequestPackage.getRequestPackage().getId();
                 requestPackages.put(packageId, requestPackageRepository.findById(packageId));
             }

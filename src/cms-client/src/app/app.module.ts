@@ -56,6 +56,7 @@ import { PackageComponent } from './package/package.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RevisionsComponent } from './revisions/revisions.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -79,6 +80,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     LoginComponent,
     PackageComponent,
     PipelineTrackingComponent,
+    RevisionsComponent,
     SearchPageComponent,
     SupportDocumentComponent,
     GenericFileUploaderComponent,
