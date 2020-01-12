@@ -25,7 +25,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { CourseExtras } from '../models/course-extras';
-import { first } from 'rxjs/operators';
 
 export interface DialogData {
   animal: string;
@@ -94,6 +93,10 @@ export class ImpactStatementComponent implements OnInit {
         CourseEditsCredits: this.impact.CourseEdits.credits,
         CourseEditsTitle: this.impact.CourseEdits.title,
         CourseEditsDescription: this.impact.CourseEdits.description,
+
+        SectionsDegree: this.impact.SectionsDegree,
+        SectionsCourse: this.impact.SectionsCourse,
+        SectionsDepartment: this.impact.SectionsDepartment,
       },
     });
 

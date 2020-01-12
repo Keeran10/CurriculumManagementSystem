@@ -20,8 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
 
-<body>
+<body class="hg">
+<header class="hg__header">
   <app-top-nav-bar></app-top-nav-bar>
+</header>
+<main class="hg__main">
   <mat-card class="matCardBackground">
     <div class="container">
       <mat-card>
@@ -158,5 +161,8 @@
     <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
     <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn" (click)="openDeleteDialog()">Delete Course</button>
   </mat-card>
-  <app-footer></app-footer>
+  </main>
+  <footer class="hg__footer">
+    <app-footer></app-footer>
+  </footer>
 </body>
