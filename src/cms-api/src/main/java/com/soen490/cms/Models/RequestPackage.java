@@ -24,6 +24,7 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
@@ -34,6 +35,7 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString(exclude= {"approvalPipelineRequestPackages"})
 public class RequestPackage {
 
     @Audited
@@ -57,10 +59,10 @@ public class RequestPackage {
     private Department department;
 
     @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage")
+    @OneToMany(mappedBy = "requestPackage", cascade = CascadeType.ALL)
     private List<Request> requests = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")
-    @OneToMany(mappedBy =  "requestPackage")
+    @OneToMany(mappedBy =  "requestPackage", cascade = CascadeType.ALL)
     private List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = new ArrayList<>();
 }

@@ -93,38 +93,48 @@
           </div>
         </div>
         <!--
-<mat-card class="searchResultsCard">
-  <mat-card-content>
-    <div class="searchResults">
-      <div *ngIf="isResultShown === true && displayedList.length === 0">
-        <span>No results found.</span>
-      </div>
-      <div *ngIf="isResultShown === true && displayedList.length != 0">
-        <div *ngFor="let listItem of displayedList ; let i = index">
-          <div *ngIf="searchType === 'course'">
-            <pre><a href = "http://192.168.99.100:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-          </div>
-          <div *ngIf="searchType === 'degree'">
-            <pre><a href = "http://192.168.99.100:4200/editForm/{{getDegreeId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-          </div>
-          <div *ngIf="searchType === 'department'">
-            <pre><a href = "http://192.168.99.100:4200/editForm/{{getDepartmentId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-          </div>
-          <div *ngIf="searchType === 'faculty'">
-            <pre><a href = "http://192.168.99.100:4200/editForm/{{getFacultyId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-          </div>
-          <div *ngIf="searchType === 'program'">
-            <pre><a href = "http://192.168.99.100:4200/editForm/{{getProgramId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-          </div>
-        </div>
+        <mat-card class="searchResultsCard">
+          <mat-card-content>
+            <div class="searchResults">
+              <div *ngIf="isResultShown === true && displayedList.length === 0">
+                <span>No results found.</span>
+              </div>
+              <!----
+              <div *ngIf="isResultShown === true && displayedList.length != 0">
+                <div *ngFor="let listItem of displayedList ; let i = index">
+                  <div *ngIf="searchType === 'course'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'degree'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getDegreeId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'department'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getDepartmentId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'faculty'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getFacultyId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'program'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getProgramId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        -->
+      <div>
+        <a href = "http://localhost:4200/editForm/0">Create New Course</a>
       </div>
     </div>
 -->
+
+      </mat-card-content>
+    </mat-card>
+
 
   </div>
     </main>

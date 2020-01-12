@@ -386,5 +386,5 @@ INSERT IGNORE INTO request VALUES (4, 30, 30, "The course description is over te
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
 
 -- pipeline_id, package_id, position
-INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department Curriculum Committee");
-INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department Curriculum Committee");
+INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department Curriculum Committee", NULL);
+INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department Curriculum Committee", NULL);
