@@ -24,24 +24,20 @@ package com.soen490.cms.Controllers;
 
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.RequestPackage;
-import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Log4j2
@@ -73,7 +69,7 @@ public class RequestPackageController {
      * @return The pdf file to browser.
      */
     @GetMapping(value="/get_pdf")
-    public byte[] getPdf(@RequestParam int package_id){
+    public ResponseEntity<byte[]> getPdf(@RequestParam int package_id){
 
         byte[] pdf_bytes = pdfService.getPDF(package_id);
 
@@ -90,7 +86,27 @@ public class RequestPackageController {
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return pdf_bytes;
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/get_rev_pdf")
+    public ResponseEntity<byte[]> getRevPdf(@RequestParam int rev_id){
+
+        byte[] pdf_bytes = requestPackageService.getRevPDF(rev_id);
+
+        if(pdf_bytes == null) return null;
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String filename = "package_revision_no" +  rev_id + ".pdf";
+
+        headers.add("content-disposition", "inline;filename=" + filename);
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
 
@@ -100,7 +116,7 @@ public class RequestPackageController {
      * @return The pdf file to browser.
      */
     @GetMapping(value="/get_pdf_packagePage")
-    public byte[] getPdfPackagePage(@RequestParam int package_id, @RequestParam int user_id){
+    public ResponseEntity<byte[]> getPdfPackagePage(@RequestParam int package_id, @RequestParam int user_id){
 
         byte[] pdf_bytes = pdfService.getPDF(package_id);
 
@@ -130,7 +146,7 @@ public class RequestPackageController {
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return pdf_bytes;
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
     /**
@@ -192,12 +208,21 @@ public class RequestPackageController {
     }
 
 
-    // Save package to database
-    @PostMapping(value="/save_package", consumes = "application/json")
-    public boolean saveRequestPackage(@Valid @RequestBody String requestPackageForm, BindingResult bindingResult) throws JSONException{
+    // Add dossier to database
+    @PostMapping(value="/add_dossier")
+    public RequestPackage addDossier(@RequestParam int user_id) throws JSONException{
 
-        return requestPackageService.saveRequestPackage(requestPackageForm);
+        return requestPackageService.addDossier(user_id);
     }
+
+
+    // Remove dossier from database
+    @PostMapping(value="/delete_dossier")
+    public boolean deleteDossier(@RequestParam int dossier_id) throws JSONException{
+
+        return requestPackageService.deleteDossier(dossier_id);
+    }
+
 
     /**
      * Add a new supporting document to a request

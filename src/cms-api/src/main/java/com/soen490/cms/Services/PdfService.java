@@ -465,9 +465,9 @@ public class PdfService {
         faculty.add(new Chunk("Faculty/School:", times_10_bold));
         faculty.add(Chunk.TABBING);
 
-        if(request_type == 3)
+        if(request_type == 3 && o.getProgram() != null)
             faculty.add(new Chunk(o.getProgram().getDepartment().getFaculty().getName(), times_10));
-        else
+        else if(c.getProgram() != null)
             faculty.add(new Chunk(c.getProgram().getDepartment().getFaculty().getName(), times_10));
 
         preface3.add(faculty);
@@ -478,9 +478,9 @@ public class PdfService {
         department.add(new Chunk("Department:", times_10_bold));
         department.add(Chunk.TABBING);
 
-        if(request_type == 3)
+        if(request_type == 3 && o.getProgram() != null)
             department.add(new Chunk(o.getProgram().getDepartment().getName(), times_10));
-        else
+        else if(c.getProgram() != null)
             department.add(new Chunk(c.getProgram().getDepartment().getName(), times_10));
 
         preface3.add(department);
@@ -491,9 +491,9 @@ public class PdfService {
         program.add(new Chunk("Program:", times_10_bold));
         program.add(Chunk.TABBING);
 
-        if(request_type == 3)
+        if(request_type == 3 && o.getProgram() != null)
             program.add(new Chunk(o.getProgram().getName(), times_10));
-        else
+        else if(c.getProgram() != null)
             program.add(new Chunk(c.getProgram().getName(), times_10));
 
         preface3.add(program);
