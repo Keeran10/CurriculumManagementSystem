@@ -29,10 +29,9 @@
         <div class="container">
 
             <div class="packages">
+              <br>
               <mat-accordion class="example-headers-align" multi="false">
                 <div *ngFor="let package of packages; let i = index">
-
-                  <br>
                     <mat-expansion-panel [expanded]>
                       <mat-expansion-panel-header>
                         <mat-panel-title>
@@ -43,6 +42,7 @@
                         <div><a class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
                           Progress
                         </a></div><br><br>
+
                       <div *ngFor="let request of package.requests">
                         <a class="request"
                            (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
@@ -88,12 +88,17 @@
                         </a>
                       </div>
                     </mat-expansion-panel>
+                            <a (click)="packageSelect(package.id, 0, 'approval')">
+                                <button mat-stroked-button color="primary">Submit for Approval</button>
+                            </a>
 
-                </div>
+                            <a (click)="viewAllRevisions(package.id, 'revisions')">
+                                <button mat-stroked-button color="primary">View All Revisions</button>
+                            </a>
+                        </div>
+                    <br>
           </mat-accordion> <br>
             </div>
-
-
             <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
                 Package</button>
         </div>
