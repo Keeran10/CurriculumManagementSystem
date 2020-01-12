@@ -20,27 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export class CourseExtras {
-  antirequisites: string;
-  corequisites: string;
-  equivalents: string;
-  files: File[];
-  implications: string;
-  packageId: number;
-  prerequisites: string;
-  rationale: string;
-  userId: number;
-  requestId: number;
-
-  constructor() {
-    this.antirequisites = '';
-    this.corequisites = '';
-    this.equivalents = '';
-    this.implications = '';
-    this.packageId = 1;
-    this.prerequisites = '';
-    this.rationale = '';
-    this.userId = 1;
-    this.requestId = 0;
-  }
-};
+export class Revision {
+    id: number;
+    rev: number;
+    rev_type: string;
+    modified_date: string;
+    modified_by: string;
+}

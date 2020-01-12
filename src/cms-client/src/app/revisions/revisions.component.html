@@ -22,32 +22,47 @@
 
 <body class="hg">
 <header class="hg__header">
+  <app-top-nav-bar></app-top-nav-bar>
 </header>
 <main class="hg__main">
-<div class="top-container">
-<h1>Please enter your login information</h1>
-</div>
-<br><br>
-<div class="middle-container">
-<div *ngIf="isLoginError" class="red-text center error-message">
-  <i class="material-icons">error</i> Incorrect username or password
-</div>
-<form class="example-form" #loginForm="ngForm" (ngSubmit)="OnSubmit(UserName.value,Password.value)">
-  <mat-form-field class="example-full-width">
-      <input matInput type="text" #UserName ngModel name="UserName" placeholder="Email" required>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-      <input matInput type="password" #Password ngModel name="Password" placeholder="Password" required>
-  </mat-form-field>
-  <div class="row">
-    <div class="input-field col s12">
-      <button mat-raised-button [disabled]="!loginForm.valid" class="btn-large btn-submit" type="submit"><mat-icon>account_circle</mat-icon> Login</button>
-    </div>
-  </div>
-</form>
+
+<div class="container">
+    <h4>
+        Revisions of Dossier #{{ packageId }}
+    </h4>
+    <table>
+        <td *ngIf="revisions.length > 0">
+            <strong>Revision Type</strong>
+            <tr *ngFor="let rev of revisions">
+                {{ rev.rev_type }}
+            </tr>
+        </td>
+        <td *ngIf="revisions.length > 0">
+            <strong>Modified By</strong>
+            <tr *ngFor="let rev of revisions">
+                {{ rev.modified_by }}
+            </tr>
+        </td>
+        <td *ngIf="revisions.length > 0">
+            <strong>Modified Date</strong>
+            <tr *ngFor="let rev of revisions">
+                {{ rev.modified_date }}
+            </tr>
+        </td>
+        <td *ngIf="revisions.length > 0">
+            <strong>PDF files</strong>
+            <tr class="pdf" *ngFor="let revi of revisions">
+                <a (click)="showPDF(revi.rev)">view pdf</a>
+            </tr>
+        </td>
+        <tr *ngIf="revisions.length == 0">
+                No revisions for this package.
+        </tr>
+    </table>
 </div>
 </main>
 <footer class="hg__footer">
-<app-footer></app-footer>
+  <app-footer></app-footer>
 </footer>
 </body>
+

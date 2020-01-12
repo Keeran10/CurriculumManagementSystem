@@ -30,6 +30,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Package } from './models/package';
 import { Program } from './models/program';
+import { Revision } from './models/revision';
 import { User } from './models/user';
 
 @Injectable({
@@ -41,6 +42,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/';
+    //this.url = 'http://192.168.99.100:8080/';
   }
 
   public getFeatureFlagTest() {
@@ -94,6 +96,7 @@ export class ApiService {
     });
   }
 
+  /*
   public submitEditedCourse(course: Course, courseExtras: CourseExtras) {
     console.log(course);
     console.log(courseExtras);
@@ -102,6 +105,7 @@ export class ApiService {
         .set('courseExtras', JSON.stringify(courseExtras))
     });
   }
+  */
 
   public savePipeline(pipeline: string, packageId: any) {
     console.log('set approval pipeline');
@@ -124,9 +128,9 @@ export class ApiService {
     });
   }
 
-  public generatePdf(packageId: string) {
+  public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
-      params: new HttpParams().set('package_id', packageId)
+      params: new HttpParams().set('package_id', packageId).set('user_id', userId)
     });
   }
 
@@ -134,6 +138,14 @@ export class ApiService {
     //window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
+
+  public viewPdfFromPackagePage(packageId: string, userId: string) {
+    //window.open();
+    return this.http.get<BlobPart>(this.url + 'get_pdf_packagePage', {
+      params: new HttpParams().set('package_id', packageId).set('user_id', userId),
       responseType: 'arraybuffer' as 'json'
     });
   }
@@ -176,15 +188,68 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public uploadFile(file: File, requestId: any) {
+  public uploadFile(files: File[], packageId: any, userId: any) {
     const formdata: FormData = new FormData();
-    formdata.append('file', file);
-    formdata.append('id', requestId);
-    const req = new HttpRequest('POST', this.url + 'addSupportingDocument', formdata, {
+
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
+    formdata.append('package_id', packageId);
+    formdata.append('user_id', userId);
+
+    const req = new HttpRequest('POST', this.url + 'upload_files', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
+
     return this.http.request(req);
   }
 
+  public submitCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+
+    const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
+
+  public getRevisions(packageId: any) {
+    console.log('api-getRevisions ' + packageId);
+    return this.http.get<Revision[]>(this.url + 'dossier_revisions', {
+      params: new HttpParams().set('id', packageId)
+    });
+  }
+
+  public getRevisionsPdf(revId: any) {
+    return this.http.get<BlobPart>(this.url + 'get_rev_pdf', {
+      params: new HttpParams().set('rev_id', revId),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
+
+  public submitDeleteCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+
+    const req = new HttpRequest('POST', this.url + 'save_removal_request', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
+
+  private fileCourseAndExtrasToFormData(files: File[], course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = new FormData();
+    formdata.append('course', JSON.stringify(course));
+    formdata.append('courseExtras', JSON.stringify(courseExtras));
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
+    return formdata;
+  }
 }

@@ -25,39 +25,56 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 @Entity
 @Data
 @ToString(exclude= {"requestPackage"})
 public class Request {
 
+    @Audited
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Audited
     private int targetId;
 
     private int originalId; // original target Id if its a edit requests
 
+    @Audited
     private int targetType; // 1: program, 2: course
 
+    @Audited
     private int requestType; // 1: create, 2: update, 3: remove
 
+    @Audited
     private String rationale;
 
+    @Audited
     private String resourceImplications;
 
+    @Audited
     private Timestamp timestamp;
 
+    @Audited
     private String title;
 
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
+    @Audited
+    private int originId;
+
+    @Audited(targetAuditMode = NOT_AUDITED)
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
+    @Audited
+    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "package_id")
     private RequestPackage requestPackage; // package is a reserved keyword

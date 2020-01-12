@@ -30,7 +30,7 @@ import { Router } from '@angular/router';
     selector: 'app-approver-homepage',
     templateUrl: './approver-homepage.component.html',
     styleUrls: ['./approver-homepage.component.css']
-  })
+})
 
 export class ApproverHomepageComponent implements OnInit {
 
@@ -38,11 +38,12 @@ export class ApproverHomepageComponent implements OnInit {
     userName = 'User';
     userId = 0;
     pipelineId = '0';
+    user_id = '0';
 
     constructor(private cookieService: CookieService,
-                private api: ApiService,
-                private router: Router) { 
-                }
+        private api: ApiService,
+        private router: Router) {
+    }
 
     ngOnInit() {
         //const departmentId = this.cookieService.get('department'); //replace 4 with department id
@@ -51,14 +52,15 @@ export class ApproverHomepageComponent implements OnInit {
             if (this.packages.length === 0) {
                 document.getElementById('empty').style.visibility = 'display';
             }
-            });
+        });
         this.userName = this.cookieService.get('userName');
         this.userId = parseInt(this.cookieService.get('user'), 10);
+        this.user_id = this.cookieService.get('user');
     }
 
     // generate PDF before viewing
     public generatePdf(packageId) {
-        this.api.generatePdf(packageId).subscribe(data => console.log(data));
+        this.api.generatePdf(packageId, this.user_id).subscribe(data => console.log(data));
     }
 
     viewPDF(packageId: any) {
@@ -67,14 +69,14 @@ export class ApproverHomepageComponent implements OnInit {
             const file = new Blob([data], { type: 'application/pdf' });
             const fileURL = URL.createObjectURL(file);
             window.location.assign(fileURL);
-          });
+        });
     }
 
     // on edit
     public packageSelect(packageId) {
         this.cookieService.set('package', packageId);
         console.log(packageId);
-        this.router.navigate(['package']);
+        this.router.navigate(['/package']);
     }
 
     // on decline
@@ -91,7 +93,7 @@ export class ApproverHomepageComponent implements OnInit {
     // on accept
     public accept(packageId, value) {
         let rationale = ' '
-        if (value != ''){
+        if (value != '') {
             rationale = value;
         }
         this.api.getPipeline(packageId).subscribe(data => {

@@ -20,36 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.soen490.cms.Models;
+package com.soen490.cms.Repositories;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import com.soen490.cms.Models.Section;
+import com.soen490.cms.Models.SupportingDocument;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.List;
 
-@Entity
-@Data
-public class Approval {
+@Repository
+public interface SectionRepository extends JpaRepository<SupportingDocument, Integer> {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    private String feedback;
-
-    private int status; // 1: not_viewed, 2: in_review, 3: change_requested, 4: rejected, 5: approved
-
-    private int isLocked; // 0: no, 1: yes
-
-    private Timestamp timestamp;
-
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @JsonIgnoreProperties({"supportingDocuments", "approvals", "requests"})
-    @ManyToOne
-    @JoinColumn(name = "package_id")
-    private RequestPackage requestPackage;
+    @Query(value = "SELECT section.section FROM section WHERE target_type=?1 AND target_id=?2", nativeQuery = true)
+    List<String> findByTarget(String targetType, int id);
 }

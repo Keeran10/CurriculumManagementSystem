@@ -1,4 +1,4 @@
-package com.soen490.cms.Services;
+package com.soen490.cms.Services.PipelineService;
 
 import com.soen490.cms.Models.RequestPackage;
 

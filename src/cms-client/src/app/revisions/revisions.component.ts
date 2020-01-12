@@ -20,27 +20,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export class CourseExtras {
-  antirequisites: string;
-  corequisites: string;
-  equivalents: string;
-  files: File[];
-  implications: string;
-  packageId: number;
-  prerequisites: string;
-  rationale: string;
-  userId: number;
-  requestId: number;
+import { ApiService } from '../backend-api.service';
+import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { Revision } from '../models/revision';
 
-  constructor() {
-    this.antirequisites = '';
-    this.corequisites = '';
-    this.equivalents = '';
-    this.implications = '';
-    this.packageId = 1;
-    this.prerequisites = '';
-    this.rationale = '';
-    this.userId = 1;
-    this.requestId = 0;
-  }
-};
+@Component({
+  selector: 'app-revisions',
+  templateUrl: './revisions.component.html',
+  styleUrls: ['./revisions.component.css']
+})
+export class RevisionsComponent implements OnInit {
+
+  revisions = new Array<Revision>();
+  packageId: string;
+
+  constructor(private cookieService: CookieService,
+              private api: ApiService) { }
+
+  ngOnInit() {
+    this.packageId = this.cookieService.get('package');
+    this.api.getRevisions(this.packageId).subscribe(
+        data => { this.revisions = data;
+        }
+        );
+    }
+
+    public showPDF(rev_id: any) {
+      this.api.getRevisionsPdf(rev_id).subscribe(
+        data => {
+          const file = new Blob([data], { type: 'application/pdf' });
+          const fileURL = URL.createObjectURL(file);
+          window.location.assign(fileURL);
+        }
+      )
+    }
+}

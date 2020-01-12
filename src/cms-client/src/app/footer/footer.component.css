@@ -1,6 +1,7 @@
+
 .links{
   text-align: left;
-  padding-left: 20px ;
+  padding-left: 20px;
   color: #f0f0d0;
 }
 
@@ -10,17 +11,11 @@
   color: #f0f0d0;
 }
 
-.footer{
-  background-color: #92273B !important;
-  position: static;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 0;
-}
+
 
 a{
   color: white;
+  text-decoration: none;
 }
 
 a:hover{
@@ -29,4 +24,11 @@ a:hover{
 
 a:visited{
   color: #ffffcc;
+}
+
+
+.footer{
+  background-color: #92273B !important;
+  height: 80px;
+  grid-area: footer;
 }

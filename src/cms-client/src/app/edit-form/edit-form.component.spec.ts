@@ -41,7 +41,7 @@ describe('EditFormComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      declarations: [ EditFormComponent ],
+      declarations: [EditFormComponent],
       providers: [
         ApiService,
         CookieService
@@ -50,16 +50,16 @@ describe('EditFormComponent', () => {
     }).compileComponents();;
   }));
 
-  describe('Edit form tests', ()=> {
+  describe('Edit form tests', () => {
     function setup() {
       const fixture = TestBed.createComponent(EditFormComponent);
       const component = fixture.componentInstance;
       const apiService = TestBed.get(ApiService);
-      const cookieService = TestBed.get(CookieService); 
+      const cookieService = TestBed.get(CookieService);
       const httpClient = TestBed.get(HttpTestingController);
       const router = TestBed.get(Router);
       const activatedRoute = TestBed.get(ActivatedRoute);
-      component.supportDocumentComponent = new SupportDocumentComponent();  
+      component.supportDocumentComponent = new SupportDocumentComponent();
 
       return { fixture, component, apiService, cookieService, httpClient, router, activatedRoute };
     }
@@ -74,7 +74,7 @@ describe('EditFormComponent', () => {
       let testCourse: Course = new Course();
       let testCourseExtras = new CourseExtras();
       testCourse.requisites = [];
-  
+
       component.setRequisitesStrings(testCourse, testCourseExtras);
       expect(component.model.prerequisites).toBe("")
     });
@@ -114,7 +114,7 @@ describe('EditFormComponent', () => {
         },
 
       ];
-  
+
       component.setRequisitesStrings(testCourse, testCourseExtras);
       expect(testCourseExtras.prerequisites).toBe("SOEN123; ");
       expect(testCourseExtras.corequisites).toBe('MECH321; ');
@@ -124,8 +124,8 @@ describe('EditFormComponent', () => {
     it('should add documents and send form in submit', () => {
       const { component, apiService } = setup();
       component.supportDocumentComponent.documents = [new File([], "File1"), new File([], "File2")];
-      spyOn(apiService, 'submitEditedCourse').and.returnValue(new Observable((observer) => {
-    
+      spyOn(apiService, 'submitCourseRequestForm').and.returnValue(new Observable((observer) => {
+
         // observable execution
         observer.next('test');
         observer.complete();
@@ -133,10 +133,11 @@ describe('EditFormComponent', () => {
 
       component.submitForm();
 
-      expect(component.editedModel.files).toEqual(component.supportDocumentComponent.documents);
-      expect(apiService.submitEditedCourse).toHaveBeenCalled();
+      // documents is set back to an empty array after submission
+      expect(component.currentFile).toEqual(undefined);
+      expect(apiService.submitCourseRequestForm).toHaveBeenCalled();
     });
-    
+
     it('should highlight changes of ins and del elements', () => {
       const { component } = setup();
 
@@ -151,7 +152,7 @@ describe('EditFormComponent', () => {
       insElements.forEach((e) => {
         expect(e.style.background).toEqual('#bbffbb');
       });
-  
+
       delElements.forEach((e) => {
         expect(e.style.background).toEqual('#ffbbbb');
       });
@@ -161,7 +162,7 @@ describe('EditFormComponent', () => {
       const { component, cookieService, apiService, router, activatedRoute } = setup();
       spyOn(cookieService, 'get').and.returnValue('0');
       spyOn(activatedRoute, 'paramMap').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next('test');
         observer.complete();
@@ -186,7 +187,7 @@ describe('EditFormComponent', () => {
         tutorialHours: 4
       }
       spyOn(apiService, 'getCourse').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next(testCourse);
         observer.complete();
@@ -206,7 +207,7 @@ describe('EditFormComponent', () => {
         .withArgs('package').and.returnValue('1')
         .withArgs('user').and.returnValue('1');
       spyOn(activatedRoute, 'paramMap').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next('test');
         observer.complete();
@@ -250,12 +251,12 @@ describe('EditFormComponent', () => {
         tutorialHours: 4
       }
       spyOn(apiService, 'getCourse').withArgs('1').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next(testCourseOrignal);
         observer.complete();
       })).withArgs('2').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next(testCourseEdited);
         observer.complete();

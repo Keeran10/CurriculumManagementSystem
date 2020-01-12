@@ -20,13 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
 
-<app-top-nav-bar></app-top-nav-bar>
-<body>
-<mat-card class="outerMatCard">
+<body class="hg">
+<header class="hg__header">
+  <app-top-nav-bar></app-top-nav-bar>
+</header>
+<main class="hg__main">
 <div class="container">
-  <mat-card-header>
+
     <h2>Please Select an Approval Pipeline:</h2>
-  </mat-card-header>
+
     <div class="options">
         <div class="card">
             <mat-card class="predefined">
@@ -104,7 +106,11 @@
         </div>
     </div>
 </div>
-</mat-card>
+
+</main>
+<footer class="hg__footer">
+  <app-footer></app-footer>
+</footer>
 </body>
-<app-footer></app-footer>
+
 

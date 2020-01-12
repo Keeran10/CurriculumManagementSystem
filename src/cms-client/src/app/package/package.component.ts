@@ -21,11 +21,11 @@
 // SOFTWARE.
 
 import { ApiService } from '../backend-api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpResponse } from '@angular/common/http';
-import { Package } from '../models/package';
 import { Router } from '@angular/router';
+import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
 @Component({
   selector: 'app-package',
@@ -34,26 +34,32 @@ import { Router } from '@angular/router';
 })
 export class PackageComponent implements OnInit {
 
+  @ViewChild(SupportDocumentComponent, { static: false })
+  supportDocumentComponent: SupportDocumentComponent;
+
   packages = new Array();
   isPdfAvailable = new Array();
   userName = 'User';
+  userId = '0';
   selectedFiles: FileList;
   currentFile: File;
   msg;
   files: File[] = [];
+  step = 0;
 
   constructor(private cookieService: CookieService,
               private api: ApiService,
               private router: Router) { }
 
   ngOnInit() {
-    // let departmentId = this.cookieService.get('department'); //replace 4 with department id
-    this.api.getAllPackages('4').subscribe(data => {
+     // let departmentId = this.cookieService.get('department'); // replace 4 with department id
+     this.api.getAllPackages('4').subscribe(data => {
       console.log(data);
       this.packages = data;
       this.packages.forEach(() => this.isPdfAvailable.push(false));
     });
-    this.userName = this.cookieService.get('userName');
+     this.userName = this.cookieService.get('userName');
+     this.userId = this.cookieService.get('user');
   }
 
   public packageSelect(packageId, requestId, href) {
@@ -68,20 +74,26 @@ export class PackageComponent implements OnInit {
     this.router.navigate([href]);
   }
 
+  public viewAllRevisions(packageId, href) {
+    this.cookieService.set('package', packageId.toString());
+    console.log('PackageComponent packageId: ' + packageId);
+    this.router.navigate([href]);
+  }
+
   public createNewPackage() {
     this.api.getPackage('0', '4').subscribe(data => this.packages.push(data));
   }
 
   public generatePdf(packageId, index) {
-    this.api.generatePdf(packageId).subscribe(data => this.isPdfAvailable[index] = data);
+    this.api.generatePdf(packageId, this.userId).subscribe(data => this.isPdfAvailable[index] = data);
   }
 
   public viewPdf(packageId) {
-    this.api.viewPdf(packageId).subscribe(data => {
+    this.api.viewPdfFromPackagePage(packageId, this.userId).subscribe(data => {
       const file = new Blob([data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
-      window.open(fileURL, '_blank');
-      // window.location.assign(fileURL);
+      // window.open(fileURL, '_blank');
+      window.location.assign(fileURL);
     });
   }
 
@@ -92,11 +104,11 @@ export class PackageComponent implements OnInit {
     console.log(this.files);
   }
 
-  upload(requestId) {
-    this.currentFile = this.selectedFiles[0];
-    this.api.uploadFile(this.currentFile, requestId).subscribe(response => {
-      this.selectedFiles.item[0] = '';
+  upload(packageId: any) {
+
+    this.api.uploadFile(this.supportDocumentComponent.documents, packageId, this.userId).subscribe(response => {
       if (response instanceof HttpResponse) {
+        this.supportDocumentComponent.documents = [];
         this.msg = response.body;
         console.log(response.body);
       }

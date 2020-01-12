@@ -25,9 +25,9 @@ package com.soen490.cms.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -57,12 +57,4 @@ public class User {
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private List<Request> requests = new ArrayList<>();
-
-    @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user")
-    private List<Approval> approvals = new ArrayList<>();
-
-    @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user")
-    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
 }

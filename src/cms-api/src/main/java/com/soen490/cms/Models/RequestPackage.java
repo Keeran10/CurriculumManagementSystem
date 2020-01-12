@@ -24,19 +24,32 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.envers.AuditMappedBy;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data
+@ToString(exclude= {"approvalPipelineRequestPackages"})
 public class RequestPackage {
 
+    @Audited
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Audited
+    private int userId;
+
+    //private String file_name;
+
+    private String rejectionRationale;
+
+    @Audited
     @Lob
     private byte[] pdfFile;
 
@@ -46,20 +59,10 @@ public class RequestPackage {
     private Department department;
 
     @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage")
+    @OneToMany(mappedBy = "requestPackage", cascade = CascadeType.ALL)
     private List<Request> requests = new ArrayList<>();
 
-    @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage")
-    private List<SupportingDocument> supportingDocuments = new ArrayList<>();
-
-    @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage")
-    private List<Approval> approvals = new ArrayList<>();
-
     @JsonIgnoreProperties("requestPackages")
-    @OneToMany(mappedBy =  "requestPackage")
+    @OneToMany(mappedBy =  "requestPackage", cascade = CascadeType.ALL)
     private List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = new ArrayList<>();
-
-    private String rejectionRationale;
 }
