@@ -67,16 +67,13 @@
                                 Files</button>
                             <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
 
-                    <button mat-stroked-button color="warn" *ngIf="isPdfAvailable[i]"
-                        (click)="viewPdf(package.id)">View PDF</button>
+                            <a (click)="packageSelect(package.id, 0, 'approval')">
+                                <button mat-stroked-button color="primary">Submit for Approval</button>
+                            </a>
 
-                    <a (click)="packageSelect(package.id, 0, 'approval')">
-                        <button mat-stroked-button color="primary">Submit for Approval</button>
-                    </a>
-
-                    <a (click)="viewAllRevisions(package.id, 'revisions')">
-                        <button mat-stroked-button color="primary">View All Revisions</button>
-                    </a>
+                            <a (click)="viewAllRevisions(package.id, 'revisions')">
+                                <button mat-stroked-button color="primary">View All Revisions</button>
+                            </a>
                         </div>
                     </mat-card>
                     <br>
