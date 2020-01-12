@@ -24,7 +24,6 @@ import { ApiService } from '../backend-api.service';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Revision } from '../models/revision';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-revisions',
@@ -37,8 +36,7 @@ export class RevisionsComponent implements OnInit {
   packageId: string;
 
   constructor(private cookieService: CookieService,
-              private api: ApiService,
-              private router: Router) { }
+              private api: ApiService) { }
 
   ngOnInit() {
     this.packageId = this.cookieService.get('package');

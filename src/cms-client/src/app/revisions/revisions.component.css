@@ -25,3 +25,7 @@ h4 {
 a:hover {
     background-color: lightblue;
   }
+
+.container {
+    min-height: 80vh;
+}

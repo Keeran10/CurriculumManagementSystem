@@ -1,35 +1,36 @@
 <app-top-nav-bar></app-top-nav-bar>
-<h4>
-    Revisions of Dossier #{{ packageId }}
-</h4>
-<table>
-    <td *ngIf="revisions.length > 0">
-        <strong>Review Type</strong>
-        <tr *ngFor="let rev of revisions">
-            {{ rev.rev_type }}
+<div class="container">
+    <h4>
+        Revisions of Dossier #{{ packageId }}
+    </h4>
+    <table>
+        <td *ngIf="revisions.length > 0">
+            <strong>Review Type</strong>
+            <tr *ngFor="let rev of revisions">
+                {{ rev.rev_type }}
+            </tr>
+        </td>
+        <td *ngIf="revisions.length > 0">
+            <strong>Modified By</strong>
+            <tr *ngFor="let rev of revisions">
+                {{ rev.modified_by }}
+            </tr>
+        </td>
+        <td *ngIf="revisions.length > 0">
+            <strong>Modified Date</strong>
+            <tr *ngFor="let rev of revisions">
+                {{ rev.modified_date }}
+            </tr>
+        </td>
+        <td *ngIf="revisions.length > 0"> 
+            <strong>PDF files</strong>
+            <tr class="pdf" *ngFor="let revi of revisions">
+                <a (click)="showPDF(revi.rev)">view pdf</a>
+            </tr>
+        </td>
+        <tr *ngIf="revisions.length == 0">
+                No revisions for this package.
         </tr>
-    </td>
-    <td *ngIf="revisions.length > 0">
-        <strong>Modified By</strong>
-        <tr *ngFor="let rev of revisions">
-            {{ rev.modified_by }}
-        </tr>
-    </td>
-    <td *ngIf="revisions.length > 0">
-        <strong>Modified Date</strong>
-        <tr *ngFor="let rev of revisions">
-            {{ rev.modified_date }}
-        </tr>
-    </td>
-    <td *ngIf="revisions.length > 0"> 
-        <strong>PDF files</strong>
-        <tr class="pdf" *ngFor="let revi of revisions">
-            <a (click)="showPDF(revi.rev)">view pdf</a>
-        </tr>
-    </td>
-    <tr *ngIf="revisions.length == 0">
-            No revisions for this package.
-    </tr>
-</table>
-
+    </table>
+</div>
 <app-footer></app-footer>
