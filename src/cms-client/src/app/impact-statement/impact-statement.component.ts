@@ -94,9 +94,9 @@ export class ImpactStatementComponent implements OnInit {
         CourseEditsTitle: this.impact.CourseEdits.title,
         CourseEditsDescription: this.impact.CourseEdits.description,
 
-        SectionsDegree: this.impact.SectionsDegree,
-        SectionsCourse: this.impact.SectionsCourse,
-        SectionsDepartment: this.impact.SectionsDepartment,
+        SectionsDegree: this.impact.Sections.degree,
+        SectionsCourse: this.impact.Sections.course,
+        SectionsDepartment: this.impact.Sections.department,
       },
     });
 

@@ -318,7 +318,7 @@ public class ImpactAssessmentCourseService {
         finalResponseMap.put("DegreeCourseRequiredImpact",getRequiredCourseDegreeImpactUpdatedCourse(originalCourse,requestedCourse));
         finalResponseMap.put("OriginalCourse",originalCourse);
         finalResponseMap.put("ProgramImpact",getProgramImpactUpdatedCourse(originalCourse,requestedCourse));
-        finalResponseMap.put("Sections",sectionReport(requestedCourse));
+        finalResponseMap.put("Sections",sectionReport(originalCourse));
         log.info("Impact Report for a course Update: ", finalResponseMap);
         return finalResponseMap;
     }
