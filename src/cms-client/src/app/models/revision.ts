@@ -26,5 +26,4 @@ export class Revision {
     rev_type: string;
     modified_date: string;
     modified_by: string;
-    pdf: File;
 }
