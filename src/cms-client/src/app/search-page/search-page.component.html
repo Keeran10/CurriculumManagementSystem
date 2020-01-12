@@ -20,92 +20,131 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
 <html>
+
 <body>
-<app-top-nav-bar></app-top-nav-bar>
-<div id="cloud-container">
+  <app-top-nav-bar></app-top-nav-bar>
+  <div id="cloud-container">
 
-<mat-card class="searchFormCard">
-<div class="searchForm">
-  <mat-card-header>
-<h1>Enter your search criteria below</h1>
-  </mat-card-header>
-  <mat-card-content>
-<form class="example-form" id="searchForm">
-  <mat-form-field class="example-full-width">
-      <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field class = "example-select">
-    <mat-label>Search Category</mat-label>
-    <mat-select [(ngModel)]="selectedValue" name="searchCategory" [formControl]="myChildControl">
-      <mat-option *ngFor="let searchCategory of searchCategories" [value]="searchCategory.value">
-        {{searchCategory.viewValue}}
-        {{selectSearchFormPlaceholder()}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button class="mat-search" mat-raised-button color="primary" (click)="showResults()">Search
-  </button>
-</form>
-  </mat-card-content>
-</div>
-</mat-card>
-
-
-      <div class="searchResults">
-        <div *ngIf="isResultShown === true && displayedList.length === 0">
-
-          <mat-accordion>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <span>No results found.</span>
-              </mat-expansion-panel-header>
-
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div></div>
-
-
-<mat-card class="searchResultsCard">
-  <mat-card-content>
-<div class="searchResults">
-  <div *ngIf="isResultShown === true && displayedList.length === 0">
-    <span>No results found.</span>
-  </div>
-  <div  *ngIf="isResultShown === true && displayedList.length != 0">
-    <div *ngFor="let listItem of displayedList ; let i = index">
-      <div *ngIf="searchType === 'course'">
-      <pre><a href = "http://localhost:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-      </pre>
+    <mat-card class="searchFormCard">
+      <div class="searchForm">
+        <mat-card-header>
+          <h1>Enter your search criteria below</h1>
+        </mat-card-header>
+        <mat-card-content>
+          <form class="example-form" id="searchForm">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="{{searchFormPlaceholder}}" aria-label="Number" matInput
+                [formControl]="myControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="example-select">
+              <mat-label>Search Category</mat-label>
+              <mat-select [(ngModel)]="selectedValue" name="searchCategory" [formControl]="myChildControl">
+                <mat-option *ngFor="let searchCategory of searchCategories" [value]="searchCategory.value">
+                  {{searchCategory.viewValue}}
+                  {{selectSearchFormPlaceholder()}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button class="mat-search" mat-raised-button color="primary" (click)="showResults()">Search
+            </button>
+          </form>
+        </mat-card-content>
       </div>
-      <div *ngIf="searchType === 'degree'">
-      <pre><a href = "http://localhost:4200/editForm/{{getDegreeId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-      </pre>
-      </div>
-      <div *ngIf="searchType === 'department'">
-      <pre><a href = "http://localhost:4200/editForm/{{getDepartmentId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-      </pre>
-      </div>
-      <div *ngIf="searchType === 'faculty'">
-      <pre><a href = "http://localhost:4200/editForm/{{getFacultyId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-      </pre>
-      </div>
-      <div *ngIf="searchType === 'program'">
-      <pre><a href = "http://localhost:4200/editForm/{{getProgramId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-      </pre>
+    </mat-card>
+    <div class="searchResults">
+      <div *ngIf="isResultShown === true && displayedList.length === 0">
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <span>No results found.</span>
+            </mat-expansion-panel-header>
+
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
     </div>
-  </div>
-</div>
-  </mat-card-content>
-</mat-card>
 
-</div>
-<app-footer></app-footer>
+
+    <mat-card class="searchResultsCard">
+      <mat-card-content>
+        <div class="searchResults">
+          <div *ngIf="isResultShown === true && displayedList.length === 0">
+            <span>No results found.</span>
+          </div>
+          <div *ngIf="isResultShown === true && displayedList.length != 0">
+            <div *ngFor="let listItem of displayedList ; let i = index">
+              <div *ngIf="searchType === 'course'">
+                <pre><a href = "http://localhost:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+</pre>
+              </div>
+              <div *ngIf="searchType === 'degree'">
+                <pre><a href = "http://localhost:4200/editForm/{{getDegreeId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+</pre>
+              </div>
+              <div *ngIf="searchType === 'department'">
+                <pre><a href = "http://localhost:4200/editForm/{{getDepartmentId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+</pre>
+              </div>
+              <div *ngIf="searchType === 'faculty'">
+                <pre><a href = "http://localhost:4200/editForm/{{getFacultyId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+</pre>
+              </div>
+              <div *ngIf="searchType === 'program'">
+                <pre><a href = "http://localhost:4200/editForm/{{getProgramId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--
+        <mat-card class="searchResultsCard">
+          <mat-card-content>
+            <div class="searchResults">
+              <div *ngIf="isResultShown === true && displayedList.length === 0">
+                <span>No results found.</span>
+              </div>
+              <!----
+              <div *ngIf="isResultShown === true && displayedList.length != 0">
+                <div *ngFor="let listItem of displayedList ; let i = index">
+                  <div *ngIf="searchType === 'course'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'degree'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getDegreeId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'department'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getDepartmentId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'faculty'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getFacultyId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                  <div *ngIf="searchType === 'program'">
+                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getProgramId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
+        </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        -->
+      <div>
+        <a href = "http://localhost:4200/editForm/0">Create New Course</a>
+      </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+  <app-footer></app-footer>
 
 </body>
+
 </html>

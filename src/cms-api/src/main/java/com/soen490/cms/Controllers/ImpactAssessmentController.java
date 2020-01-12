@@ -34,7 +34,7 @@ import java.util.Map;
 
 @Log4j2
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
 public class ImpactAssessmentController {
 
     @Autowired

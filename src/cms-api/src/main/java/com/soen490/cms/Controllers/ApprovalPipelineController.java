@@ -1,7 +1,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
-import com.soen490.cms.Services.ApprovalPipelineService;
+import com.soen490.cms.Services.PipelineService.ApprovalPipelineService;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
@@ -10,13 +10,11 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Log4j2
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
 public class ApprovalPipelineController {
 
     @Autowired
@@ -92,7 +90,7 @@ public class ApprovalPipelineController {
         approvalPipelineRequestPackage.setApprovalPipeline(approvalPipeline);
         approvalPipelineRequestPackage.setPosition(pipelineList.get(0)); // get first position of pipeline
 
-        approvalPipelineService.addApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
+        approvalPipelineService.saveApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
     }
 
     /**
@@ -117,7 +115,7 @@ public class ApprovalPipelineController {
         if(isCorrectUserType(type, currentPosition)) { // figure out how to retrieve/set user type in front end
             int index = pipeline.indexOf(currentPosition);
             if(isApproved) { // move to next step
-                approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index);
+                approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index, user);
 
             } else { // not approved - remove request
                 approvalPipelineService.removePackage(packageId, approvalPipelineId, rationale);

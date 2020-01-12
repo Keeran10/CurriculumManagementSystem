@@ -22,6 +22,7 @@
 
 package com.soen490.cms.Services;
 
+import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.*;
 import lombok.extern.log4j.Log4j2;
@@ -33,6 +34,7 @@ import org.springframework.data.history.Revision;
 import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,29 +49,31 @@ import java.util.*;
 public class RequestPackageService {
 
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
     @Autowired
-    RequestRepository requestRepository;
+    private RequestRepository requestRepository;
     @Autowired
-    DegreeRequirementRepository degreeRequirementRepository;
+    private DegreeRequirementRepository degreeRequirementRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RequisiteRepository requisiteRepository;
+    private RequisiteRepository requisiteRepository;
     @Autowired
-    RequestPackageRepository requestPackageRepository;
+    private RequestPackageRepository requestPackageRepository;
     @Autowired
-    DepartmentRepository departmentRepository;
+    private DepartmentRepository departmentRepository;
     @Autowired
-    SupportingDocumentRepository supportingDocumentsRepository;
+    private SupportingDocumentRepository supportingDocumentsRepository;
+    @Autowired
+    private PdfService pdfService;
 
 
     // Return package with right id, if id given is 0, a new package is created and returned
-    public RequestPackage getRequestPackage(int package_id, int department_id){
+    public RequestPackage getRequestPackage(int package_id, int department_id) {
 
         log.info("getRequestPackage called with package_id " + package_id + " and department_id " + department_id + ".");
 
-        if(package_id == 0)
+        if (package_id == 0)
             return getNewPackage(department_id);
 
         return requestPackageRepository.findById(package_id);
@@ -77,34 +81,34 @@ public class RequestPackageService {
 
     /**
      * Saves an edited course to the database.
-     * @param requestForm Stringified JSON received from client
+     *
+     * @param courseJSON       Stringified course JSON received from client
+     * @param courseExtrasJSON Stringified course JSON received from client
+     * @param files            uploaded course outline
      * @return True if course has been successfully added to database.
      * @throws JSONException
      */
-    public int saveCourseRequest(String requestForm) throws JSONException {
+    public int saveCourseRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files) throws JSONException {
 
-        log.info("Json received: " + requestForm);
+        log.info("Json course received: " + courseJSON);
+        log.info("Json courseExtras received: " + courseExtrasJSON);
+        for (MultipartFile file : files)
+            log.info("File received received: " + file.getOriginalFilename());
 
-        JSONObject json = new JSONObject(requestForm);
-
-        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
-
-        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
-        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
+        JSONObject course = new JSONObject(courseJSON);
+        JSONObject courseExtras = new JSONObject(courseExtrasJSON);
 
         int original_id = (Integer) course.get("id");
 
-        if(original_id == 0)
-            return saveCreateRequest(course, courseExtras);
-
-        log.info("Inserting course update request to database...");
+        if (original_id == 0)
+            return saveCreateRequest(course, courseExtras, files);
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId(original_id);
 
         Course original = null;
 
-        if(!o.isEmpty())
+        if (!o.isEmpty())
             original = o.get(0);
         else return 0;
 
@@ -118,11 +122,14 @@ public class RequestPackageService {
 
         User user = userRepository.findById(user_id);
 
-        if(request == null)
+        Course c = null;
+
+        if (request == null) {
             request = new Request();
-
-
-        Course c = new Course();
+            c = new Course();
+        } else {
+            c = courseRepository.findById(request.getTargetId());
+        }
 
         c.setName((String) course.get("name"));
         c.setNumber((Integer) course.get("number"));
@@ -139,6 +146,12 @@ public class RequestPackageService {
 
         courseRepository.save(c);
 
+        try {
+            saveSupportingDocument(files, "course", c.getId(), user_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Requests
         request.setRequestType(2);
         request.setTargetType(2);
@@ -147,30 +160,33 @@ public class RequestPackageService {
         request.setRationale((String) courseExtras.get("rationale"));
         request.setResourceImplications((String) courseExtras.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setRequestPackage(requestPackage);
         request.setUser(user);
+        request.setRequestPackage(requestPackage);
+
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
 
-        request.setOriginId(request.getOriginalId());
-        // Degree Requirements
-        ArrayList<DegreeRequirement> list = new ArrayList<>();
+        if (c.getDegreeRequirements() == null) {
 
-        for(DegreeRequirement dr : original.getDegreeRequirements()){
+            // Degree Requirements
+            ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-            DegreeRequirement cdr = new DegreeRequirement();
+            for (DegreeRequirement dr : original.getDegreeRequirements()) {
 
-            cdr.setCore(dr.getCore());
-            cdr.setDegree(dr.getDegree());
-            cdr.setCourse(c);
+                DegreeRequirement cdr = new DegreeRequirement();
 
-            degreeRequirementRepository.save(cdr);
+                cdr.setCore(dr.getCore());
+                cdr.setDegree(dr.getDegree());
+                cdr.setCourse(c);
 
-            dr.getDegree().getDegreeRequirements().add(cdr);
+                degreeRequirementRepository.save(cdr);
 
-            list.add(cdr);
+                dr.getDegree().getDegreeRequirements().add(cdr);
 
+                list.add(cdr);
+
+            }
+            c.setDegreeRequirements(list);
         }
-        c.setDegreeRequirements(list);
 
         // Requisites
         String pre = (String) courseExtras.get("prerequisites");
@@ -178,81 +194,7 @@ public class RequestPackageService {
         String anti = (String) courseExtras.get("antirequisites");
         String eq = (String) courseExtras.get("equivalents");
 
-        String[] prerequisites = pre.split(";|\\,");
-        String[] corequisites = co.split(";|\\,");
-        String[] antirequisites = anti.split(";|\\,");
-        String[] equivalents = eq.split(";|,|or");
-
-        for(String prerequisite : prerequisites){
-
-            prerequisite = prerequisite.trim();
-
-            if(prerequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                if(prerequisite.startsWith("credits", 3)){
-                    requisite.setName(prerequisite);
-                    requisite.setNumber(0);
-                }
-                else{
-                    requisite.setName(prerequisite.substring(0, 4).trim());
-                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
-                }
-                requisite.setType("prerequisite");
-                requisiteRepository.save(requisite);
-            }
-
-        }
-        for(String corequisite : corequisites){
-
-            corequisite = corequisite.trim();
-
-            if(corequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(corequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
-                requisite.setType("corequisite");
-                requisiteRepository.save(requisite);
-            }
-        }
-        for(String antirequisite : antirequisites){
-
-            antirequisite = antirequisite.trim();
-
-            if(antirequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(antirequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
-                requisite.setType("antirequisite");
-                requisiteRepository.save(requisite);
-            }
-        }
-        for(String equivalent : equivalents){
-
-            equivalent = equivalent.trim();
-
-            if(equivalent.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(equivalent.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
-                requisite.setType("equivalent");
-                requisiteRepository.save(requisite);
-            }
-        }
-
-        // Supporting Documents
-        // initialize supporting doc and save it to its repository
+        setRequisites(c, pre, co, anti, eq);
 
         courseRepository.save(c);
 
@@ -262,8 +204,9 @@ public class RequestPackageService {
         log.info("course saved: " + c);
         log.info("request saved: " + request);
 
-        requestPackage.getRequests().add(request); 
+        requestPackage.getRequests().add(request);
 
+        generatePdf(package_id, user_id);
 
         return request.getId();
     }
@@ -271,11 +214,12 @@ public class RequestPackageService {
 
     /**
      * Saves a newly created course to the database.
+     *
      * @param course, courseExtras
      * @return request_id if course and request have been successfully added to database.
      * @throws JSONException
      */
-    private int saveCreateRequest(JSONObject course, JSONObject courseExtras) throws JSONException {
+    private int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files) throws JSONException {
 
         log.info("Inserting course creation request to database...");
 
@@ -289,14 +233,17 @@ public class RequestPackageService {
 
         User user = userRepository.findById(user_id);
 
-        if(request == null)
+        Course c = null;
+
+        if (request == null) {
             request = new Request();
-
-
-        Course c = new Course();
+            c = new Course();
+        } else {
+            c = courseRepository.findById(request.getTargetId());
+        }
 
         c.setName((String) course.get("name"));
-        c.setNumber((Integer) course.get("number"));
+        c.setNumber((Integer.parseInt((String)course.get("number"))));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
@@ -307,9 +254,13 @@ public class RequestPackageService {
         c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
         c.setIsActive(0);
 
-        //c.setProgram(original.getProgram());
-
         courseRepository.save(c);
+
+        try {
+            saveSupportingDocument(files, "course", c.getId(), user_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Requests
         request.setRequestType(1);
@@ -353,78 +304,7 @@ public class RequestPackageService {
         String anti = (String) courseExtras.get("antirequisites");
         String eq = (String) courseExtras.get("equivalents");
 
-        String[] prerequisites = pre.split(";|\\,");
-        String[] corequisites = co.split(";|\\,");
-        String[] antirequisites = anti.split(";|\\,");
-        String[] equivalents = eq.split(";|,|or");
-
-        for(String prerequisite : prerequisites){
-
-            prerequisite = prerequisite.trim();
-
-            if(prerequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                if(prerequisite.startsWith("credits", 3)){
-                    requisite.setName(prerequisite);
-                    requisite.setNumber(0);
-                }
-                else{
-                    requisite.setName(prerequisite.substring(0, 4).trim());
-                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
-                }
-                requisite.setType("prerequisite");
-                requisiteRepository.save(requisite);
-            }
-
-        }
-        for(String corequisite : corequisites){
-
-            corequisite = corequisite.trim();
-
-            if(corequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(corequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
-                requisite.setType("corequisite");
-                requisiteRepository.save(requisite);
-            }
-        }
-        for(String antirequisite : antirequisites){
-
-            antirequisite = antirequisite.trim();
-
-            if(antirequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(antirequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
-                requisite.setType("antirequisite");
-                requisiteRepository.save(requisite);
-            }
-        }
-        for(String equivalent : equivalents){
-
-            equivalent = equivalent.trim();
-
-            if(equivalent.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(equivalent.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
-                requisite.setType("equivalent");
-                requisiteRepository.save(requisite);
-            }
-        }
+        setRequisites(c, pre, co, anti, eq);
 
         courseRepository.save(c);
 
@@ -436,39 +316,28 @@ public class RequestPackageService {
 
         requestPackage.getRequests().add(request);
 
+        generatePdf(package_id, user_id);
+
         return request.getId();
     }
 
 
-    /**
-     * saves a removal request to database.
-     * @param requestForm
-     * @return the request id upon successful insertion into database
-     * @throws JSONException
-     */
-    public int saveRemovalRequest(String requestForm) throws JSONException {
+    public int saveRemovalRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files) throws JSONException {
 
-        log.info("Inserting course removal request to database...");
-        log.info("Json received: " + requestForm);
-
-        JSONObject json = new JSONObject(requestForm);
-
-        JSONArray array = json.getJSONObject("params").getJSONArray("updates");
-
-        JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
-        JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
+        JSONObject course = new JSONObject(courseJSON);
+        JSONObject courseExtras = new JSONObject(courseExtrasJSON);
 
         int original_id = (Integer) course.get("id");
 
-        if(original_id == 0)
-            return saveCreateRequest(course, courseExtras);
+        if (original_id == 0)
+            return 0;
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId(original_id);
 
         Course original = null;
 
-        if(!o.isEmpty())
+        if (!o.isEmpty())
             original = o.get(0);
         else return 0;
 
@@ -482,11 +351,9 @@ public class RequestPackageService {
 
         User user = userRepository.findById(user_id);
 
-        if(request == null)
+        if (request == null)
             request = new Request();
 
-
-        // Requests
         request.setRequestType(3);
         request.setTargetType(2);
         request.setTargetId(0);
@@ -499,7 +366,15 @@ public class RequestPackageService {
 
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_remove");
 
+        try {
+            saveSupportingDocument(files, "course", original.getId(), user_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         requestRepository.save(request);
+
+        generatePdf(package_id, user_id);
 
         return request.getId();
     }
@@ -512,20 +387,32 @@ public class RequestPackageService {
 
         Request request = requestRepository.findByRequestId(requestId);
 
-        if(request == null)
-            return false;
+        if (request == null)
+            return true;
+
+
+        if(request.getRequestType() == 3){
+
+            int user_id = request.getUser().getId();
+            int package_id = request.getRequestPackage().getId();
+
+            requestRepository.delete(request);
+
+            generatePdf(user_id, package_id);
+
+            return true;
+        }
 
         Course requested_course = courseRepository.findById(request.getTargetId());
 
-        for(Requisite requisite: requested_course.getRequisites())
-            requisiteRepository.delete(requisite);
-
-        for(DegreeRequirement dr: requested_course.getDegreeRequirements())
-            degreeRequirementRepository.delete(dr);
-
         courseRepository.delete(requested_course);
 
+        int user_id = request.getUser().getId();
+        int package_id = request.getRequestPackage().getId();
+
         requestRepository.delete(request);
+
+        generatePdf(user_id, package_id);
 
         return true;
     }
@@ -541,39 +428,8 @@ public class RequestPackageService {
     }
 
 
-    /**
-     * Saves a new request package to the database
-     * @param requestPackageString contains department name and files (memos, cover letters, supporting docs)
-     * @return True if request package was added to database
-     * @throws JSONException
-     */
-    public boolean saveRequestPackage(String requestPackageString) throws JSONException {
-
-        JSONObject requestPackageForm = new JSONObject(requestPackageString);
-
-        System.out.println(requestPackageForm);
-
-        RequestPackage requestPackage = new RequestPackage();
-
-        requestPackage.setDepartment(departmentRepository.findByName((String) requestPackageForm.get("name")));
-
-        List<SupportingDocument> supportingDocuments = new ArrayList<>();
-
-        if(requestPackageForm.get("support_docs") != null){
-
-            // init supporting docs, save them to db and then add them to list
-        }
-
-        requestPackage.setSupportingDocuments(supportingDocuments);
-
-        requestPackageRepository.save(requestPackage);
-
-        return true;
-    }
-
-
     // Called when package id received is 0.
-    private RequestPackage getNewPackage(int department_id){
+    private RequestPackage getNewPackage(int department_id) {
 
         RequestPackage requestPackage = new RequestPackage();
 
@@ -600,45 +456,12 @@ public class RequestPackageService {
 
 
     /**
-     * Adds support document to an existing package
-     * @param document The file to be added.
-     * @param packageId The designated package.
-     * @return The saved supporting document object.
-     * @throws IOException
-     */
-    public SupportingDocument addSupportingDocument(File document, int packageId) throws IOException {
-
-        log.info("add supporting document " + document.getName());
-
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
-        SupportingDocument supportingDocument = new SupportingDocument();
-        supportingDocument.setDocument(Files.readAllBytes(document.toPath()));
-        supportingDocument.setRequestPackage(requestPackageRepository.findById(packageId));
-        supportingDocument.setTimestamp(timestamp);
-
-        return supportingDocumentsRepository.save(supportingDocument);
-    }
-
-    public boolean saveRequestFile(byte[] file, int id){
-
-        Request request = requestRepository.findByRequestId(id);
-        Course course = courseRepository.findById(request.getTargetId());
-
-        if(course == null) return false;
-
-        course.setOutline(file);
-        courseRepository.save(course);
-        return true;
-    }
-
-
-    /**
      * Takes in a package id and returns all change history made to said package
+     *
      * @param id the id of the package
      * @return list of dossier revisions
      */
-    public List getDossierRevisions(int id){
+    public List getDossierRevisions(int id) {
 
         log.info("Retrieving revision history for dossier " + id + ".");
 
@@ -646,11 +469,11 @@ public class RequestPackageService {
 
         List<DossierRevision> versions = new ArrayList<>();
 
-        if(revisions.isEmpty()) return null;
+        if (revisions.isEmpty()) return null;
 
-        for(Object[] r : revisions)
-            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[4],
-                    userRepository.findUserById((Integer) r[5]), (byte[]) r[3]));
+        for (Object[] r : revisions)
+            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[3],
+                    userRepository.findUserById((Integer) r[4])));
 
         return versions;
     }
@@ -658,6 +481,7 @@ public class RequestPackageService {
 
     /**
      * Reverts a package back to a previous state.
+     *
      * @param rev
      */
     public void revertDossier(int rev) {
@@ -675,5 +499,296 @@ public class RequestPackageService {
     public User getUser(int user_id) {
         log.info("getUser called with user_id " + user_id);
         return userRepository.findById(user_id);
+    }
+
+    // Called after any request transaction
+    private void generatePdf(int package_id, int user_id) {
+
+        try {
+            pdfService.generatePDF(package_id, user_id);
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Adds support documents to database.
+     *
+     * @param files      The files to be added.
+     * @param targetType dossier or course.
+     * @param targetId   The designated package.
+     * @param userId     user who uploaded the files.
+     * @return The saved supporting document object.
+     * @throws IOException
+     */
+    public void saveSupportingDocument(MultipartFile[] files, String targetType, int targetId, int userId) throws IOException {
+
+        for (MultipartFile file : files) {
+
+            log.info("add supporting document " + file.getOriginalFilename());
+
+            SupportingDocument supportingDocument = new SupportingDocument();
+
+            supportingDocument.setUserId(userId);
+            supportingDocument.setTargetType(targetType);
+            supportingDocument.setTargetId(targetId);
+            supportingDocument.setFileName(file.getOriginalFilename());
+            supportingDocument.setFileType(file.getContentType());
+            supportingDocument.setFile(file.getBytes());
+
+            supportingDocumentsRepository.save(supportingDocument);
+        }
+
+    }
+
+    /**
+     * Saves the requisites to database
+     *
+     * @param c    target course
+     * @param pre  pre-requisite
+     * @param co   co-requisite
+     * @param anti anti-requisite
+     * @param eq   equivalent requisite
+     */
+    private void setRequisites(Course c, String pre, String co, String anti, String eq) {
+
+        String[] prerequisites = pre.split(";|\\,");
+        String[] corequisites = co.split(";|\\,");
+        String[] antirequisites = anti.split(";|\\,");
+        String[] equivalents = eq.split(";|,|or");
+
+        for (String prerequisite : prerequisites) {
+
+            prerequisite = prerequisite.trim();
+
+            if (prerequisite.length() >= 7) {
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                if (prerequisite.startsWith("credits", 3)) {
+                    requisite.setName(prerequisite);
+                    requisite.setNumber(0);
+                } else {
+                    requisite.setName(prerequisite.substring(0, 4).trim());
+                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
+                }
+                requisite.setType("prerequisite");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for (Requisite r : c.getRequisites()) {
+
+                    if (Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if (!isPresent)
+                    requisiteRepository.save(requisite);
+            }
+
+        }
+        for (String corequisite : corequisites) {
+
+            corequisite = corequisite.trim();
+
+            if (corequisite.length() >= 7) {
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(corequisite.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
+                requisite.setType("corequisite");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for (Requisite r : c.getRequisites()) {
+
+                    if (Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if (!isPresent)
+                    requisiteRepository.save(requisite);
+            }
+        }
+        for (String antirequisite : antirequisites) {
+
+            antirequisite = antirequisite.trim();
+
+            if (antirequisite.length() >= 7) {
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(antirequisite.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
+                requisite.setType("antirequisite");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for (Requisite r : c.getRequisites()) {
+
+                    if (Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if (!isPresent)
+                    requisiteRepository.save(requisite);
+            }
+        }
+        for (String equivalent : equivalents) {
+
+            equivalent = equivalent.trim();
+
+            if (equivalent.length() >= 7) {
+
+                Requisite requisite = new Requisite();
+                requisite.setCourse(c);
+                requisite.setIsActive(0);
+                requisite.setName(equivalent.substring(0, 4).trim());
+                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
+                requisite.setType("equivalent");
+
+                // handle duplicate case
+                boolean isPresent = false;
+                for (Requisite r : c.getRequisites()) {
+
+                    if (Objects.equals(r.getType(), requisite.getType()) && r.getNumber() == requisite.getNumber() &&
+                            Objects.equals(r.getName(), requisite.getName()) && r.getIsActive() == requisite.getIsActive()) {
+                        isPresent = true;
+                    }
+                }
+                if (!isPresent)
+                    requisiteRepository.save(requisite);
+            }
+        }
+    }
+
+
+    /**
+     * All requested changes are processed and the dossier is subsequently deleted.
+     *
+     * @param dossier approved and ready to be finalized.
+     */
+    public void finalizeDossierRequests(RequestPackage dossier) {
+
+        for (Request r : dossier.getRequests()) {
+
+            if (r.getTargetType() == 1)
+                continue;
+
+            if (r.getRequestType() == 1)
+                finalizeCourseCreationRequest(r);
+            if (r.getRequestType() == 2)
+                finalizeCourseUpdateRequest(r);
+            if (r.getRequestType() == 3)
+                finalizeCourseRemovalRequest(r);
+
+        }
+
+        log.info("Deleting dossier from database: " + dossier);
+        requestPackageRepository.delete(dossier);
+    }
+
+
+    private void finalizeCourseUpdateRequest(Request r) {
+
+        Course original = courseRepository.findById(r.getOriginalId());
+        Course changed = courseRepository.findById(r.getTargetId());
+
+        original.setName(changed.getName());
+        original.setNumber(changed.getNumber());
+        original.setTitle(changed.getTitle());
+        original.setDescription(changed.getDescription());
+        original.setCredits(changed.getCredits());
+
+        original.setProgram(changed.getProgram());
+
+        for (Requisite original_requisite : original.getRequisites())
+            requisiteRepository.delete(original_requisite);
+
+        original.setRequisites(changed.getRequisites());
+
+        for (Requisite requisite : original.getRequisites())
+            requisite.setCourse(original);
+
+        // override degree requirements
+        for (DegreeRequirement dro : original.getDegreeRequirements())
+            degreeRequirementRepository.delete(dro);
+
+        original.setDegreeRequirements(changed.getDegreeRequirements());
+
+        for (DegreeRequirement dr : original.getDegreeRequirements())
+            dr.setCourse(original);
+
+        log.info("Modifying course in database: " + original);
+
+        courseRepository.save(original);
+        courseRepository.delete(changed);
+    }
+
+
+    private void finalizeCourseCreationRequest(Request r) {
+
+        Course newcourse = courseRepository.findById(r.getTargetId());
+        newcourse.setIsActive(1);
+        log.info("Saving new course in database: " + newcourse);
+        courseRepository.save(newcourse);
+    }
+
+
+    private void finalizeCourseRemovalRequest(Request r) {
+
+        Course course = courseRepository.findById(r.getOriginalId());
+        log.info("Removing existing course from database: " + course);
+        courseRepository.delete(course);
+    }
+
+
+    // creates a new dossier and saves it to database
+    public RequestPackage addDossier(int userId) {
+
+        User user = userRepository.findById(userId);
+
+        Department department = user.getDepartment();
+
+        RequestPackage requestPackage = new RequestPackage();
+
+        requestPackage.setDepartment(department);
+        requestPackage.setUserId(user.getId());
+
+        requestPackageRepository.save(requestPackage);
+
+        return requestPackage;
+    }
+
+
+    // deletes dossier from database
+    public boolean deleteDossier(int id) {
+
+        RequestPackage requestPackage = requestPackageRepository.findById(id);
+
+        for (Request r : requestPackage.getRequests()) {
+
+            if (r.getRequestType() != 3) {
+                Course course = courseRepository.findById(r.getTargetId());
+                courseRepository.delete(course);
+            }
+        }
+        requestPackageRepository.delete(requestPackage);
+        return true;
+    }
+
+
+    // return dossier pdf for a specific revision
+    public byte[] getRevPDF(int rev_id) {
+
+        return requestPackageRepository.getPdfByRevision(rev_id);
     }
 }

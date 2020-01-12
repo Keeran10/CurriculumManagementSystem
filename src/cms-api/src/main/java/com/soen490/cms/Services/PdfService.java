@@ -31,6 +31,8 @@ import com.itextpdf.text.pdf.*;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
+import com.soen490.cms.Repositories.SectionRepository;
+import com.soen490.cms.Repositories.SupportingDocumentRepository;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,11 @@ public class PdfService {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
+    private SupportingDocumentRepository supportingDocumentRepository;
+    @Autowired
     private ImpactAssessmentService impactAssessmentService;
+    @Autowired
+    private SectionRepository sectionRepository;
 
     // preface fonts
     private static Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
@@ -122,11 +128,13 @@ public class PdfService {
 
         requestPackageRepository.save(requestPackage);
 
-        if(!requestPackage.getSupportingDocuments().isEmpty()) {
+        List<SupportingDocument> dossier_files = supportingDocumentRepository.findByTarget("dossier", requestPackage.getId());
+
+        if(dossier_files != null && !dossier_files.isEmpty()) {
 
             try {
                 log.info("Supporting docs found. Merging them together...");
-                support_stream = mergeSupportingDocs(requestPackage);
+                support_stream = mergeSupportingDocs(dossier_files);
 
             } catch (DocumentException | IOException e) {
                 e.printStackTrace();
@@ -159,12 +167,18 @@ public class PdfService {
 
                     addCoursePreface(doc, request, original_course, changed_course);
 
-                    // append course outline
-                    if(changed_course != null && changed_course.getOutline() != null){
+                    // append course supporting documents
+
+                    List<SupportingDocument> course_files = null;
+
+                    if(changed_course != null){
+                        course_files = supportingDocumentRepository.findByTarget("course", changed_course.getId());
+                    }
+                    if(course_files != null && !course_files.isEmpty()){
 
                         log.info("Appending course outline for " + changed_course.getName() + changed_course.getNumber());
 
-                        course_outline_stream = mergeOutline(changed_course);
+                        course_outline_stream = mergeSupportingDocs(course_files);
 
                         doc.close();
 
@@ -255,12 +269,12 @@ public class PdfService {
 
     /**
      * Combines the request package's supporting documents into one pdf stream.
-     * @param requestPackage The package for which pdf generation has been invoked.
+     * @param files to be merged.
      * @return The aggregated stream of the combined supporting documents.
      * @throws DocumentException
      * @throws IOException
      */
-    private ByteArrayOutputStream mergeSupportingDocs(RequestPackage requestPackage) throws DocumentException, IOException {
+    private ByteArrayOutputStream mergeSupportingDocs(List<SupportingDocument> files) throws DocumentException, IOException {
 
         Document doc = new Document();
         ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
@@ -271,9 +285,9 @@ public class PdfService {
 
         doc.open();
 
-        for(SupportingDocument supportingDocument : requestPackage.getSupportingDocuments()){
+        for(SupportingDocument supportingDocument : files){
 
-            copy.addDocument(new PdfReader(supportingDocument.getDocument()));
+            copy.addDocument(new PdfReader(supportingDocument.getFile()));
 
         }
 
@@ -306,32 +320,6 @@ public class PdfService {
             copy.addDocument(new PdfReader(request_doc.toByteArray()));
 
         }
-
-        doc.close();
-
-        return byte_stream;
-    }
-
-
-    /**
-     * Combines a request document with the course outline
-     * @param course Course that contains a proposed outline
-     * @return A combined document of the request followed by its proposed outline
-     * @throws DocumentException
-     * @throws IOException
-     */
-    private ByteArrayOutputStream mergeOutline(Course course) throws DocumentException, IOException {
-
-        Document doc = new Document();
-        ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
-
-        // append supporting docs
-        PdfCopy copy = new PdfCopy(doc, byte_stream);
-        copy.setMergeFields();
-
-        doc.open();
-
-        copy.addDocument(new PdfReader(course.getOutline()));
 
         doc.close();
 
@@ -461,9 +449,9 @@ public class PdfService {
 
         Phrase years = new Phrase();
         years.add(new Chunk("Calendar for Academic Year: ", times_10_bold));
-        years.add(new Chunk("2020/2021\n", times_10));
+        years.add(new Chunk("2021/2022\n", times_10));
         years.add(new Chunk("Implementation Month/Year: ", times_10_bold));
-        years.add(new Chunk("May 2020", times_10));
+        years.add(new Chunk("May 2021", times_10));
 
         preface2.add(years);
         preface2.setAlignment(Element.ALIGN_RIGHT);
@@ -477,9 +465,9 @@ public class PdfService {
         faculty.add(new Chunk("Faculty/School:", times_10_bold));
         faculty.add(Chunk.TABBING);
 
-        if(request_type == 3)
+        if(request_type == 3 && o.getProgram() != null)
             faculty.add(new Chunk(o.getProgram().getDepartment().getFaculty().getName(), times_10));
-        else
+        else if(c.getProgram() != null)
             faculty.add(new Chunk(c.getProgram().getDepartment().getFaculty().getName(), times_10));
 
         preface3.add(faculty);
@@ -490,9 +478,9 @@ public class PdfService {
         department.add(new Chunk("Department:", times_10_bold));
         department.add(Chunk.TABBING);
 
-        if(request_type == 3)
+        if(request_type == 3 && o.getProgram() != null)
             department.add(new Chunk(o.getProgram().getDepartment().getName(), times_10));
-        else
+        else if(c.getProgram() != null)
             department.add(new Chunk(c.getProgram().getDepartment().getName(), times_10));
 
         preface3.add(department);
@@ -503,9 +491,9 @@ public class PdfService {
         program.add(new Chunk("Program:", times_10_bold));
         program.add(Chunk.TABBING);
 
-        if(request_type == 3)
+        if(request_type == 3 && o.getProgram() != null)
             program.add(new Chunk(o.getProgram().getName(), times_10));
-        else
+        else if(c.getProgram() != null)
             program.add(new Chunk(c.getProgram().getName(), times_10));
 
         preface3.add(program);
@@ -574,7 +562,7 @@ public class PdfService {
 
         // calendar phrase
         Phrase calendar = new Phrase();
-        if(c.getLevel() == 1)
+        if(c.getLevel() <= 1)
             calendar.add(new Chunk("Undergraduate Calendar Section:", times_10_bold));
         else
             calendar.add(new Chunk("Graduate Page Number:", times_10_bold));
@@ -582,10 +570,28 @@ public class PdfService {
         // Todo: calendar needs a better design
         calendar.add(Chunk.TABBING);
 
-        if(request_type == 3)
-            calendar.add(new Chunk("§" + o.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
-        else
-            calendar.add(new Chunk("§" + c.getProgram().getDepartment().getCalendar().getSectionId(), times_10));
+        List<String> sections = null;
+
+        sections = sectionRepository.findByTarget("course", o.getId());
+
+        String section = "";
+
+        if(sections.isEmpty() && o.getId() != 0){
+            sections = sectionRepository.findByTarget("degree", o.getDegreeRequirements().get(0).getDegree().getId());
+        }
+        if(sections.isEmpty() && o.getId() != 0){
+            sections = sectionRepository.findByTarget("department", o.getProgram().getDepartment().getId());
+        }
+        if(sections.isEmpty()){
+            section = "N/A";
+        }
+        if(!sections.isEmpty()){
+
+            for(String s : sections)
+                section += "§" + s + " ";
+        }
+
+        calendar.add(new Chunk(section, times_10));
 
         preface3.add(calendar);
         preface3.add(Chunk.NEWLINE);

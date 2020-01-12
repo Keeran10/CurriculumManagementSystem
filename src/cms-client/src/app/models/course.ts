@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 import { Requisite } from '../models/requisite';
+import { Program } from './program';
 
 export class Course {
   id: number;
@@ -35,9 +36,27 @@ export class Course {
   name: string;
   note: string;
   number: number;
-  outline: string;
   program: Object;
   requisites: Requisite[];
   title: string;
   tutorialHours: number;
+
+  constructor(){
+    this.id = 0;
+    this.credits = 0;
+    this.degreeRequirements = [];
+    this.description = '';
+    this.equivalent = [];
+    this.isActive = false;
+    this.labHours = 0;
+    this.lectureHours = 0;
+    this.level = 1;
+    this.name = '';
+    this.note = '';
+    this.number = 100;
+    this.program = new Program();
+    this.requisites = [];
+    this.title = '';
+    this.tutorialHours = 0;
+  }
 }
