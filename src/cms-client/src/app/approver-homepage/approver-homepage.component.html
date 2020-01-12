@@ -24,15 +24,15 @@
   <app-top-nav-bar></app-top-nav-bar>
 </header>
 <main class="hg__main">
-<h2>Dossiers requesting approval:</h2>
+<h2>Packages requesting approval:</h2>
 <div class="container">
     <table class="half">
         <tbody>
-            <tr id="empty">No dossiers to display currently...</tr>
+            <tr id="empty">No packages to display currently...</tr>
             <tr *ngFor="let package of packages">
                 <td>
                     <mat-card class="packages">
-                        <mat-card-title>Dossier #{{ package.id }} </mat-card-title>
+                        <mat-card-title>Package #{{ package.id }} </mat-card-title>
                         <mat-card-content>
                             <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
                             <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
