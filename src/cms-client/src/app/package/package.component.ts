@@ -24,7 +24,6 @@ import { ApiService } from '../backend-api.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpResponse } from '@angular/common/http';
-import { Package } from '../models/package';
 import { Router } from '@angular/router';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
