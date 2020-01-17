@@ -22,8 +22,9 @@
 
 package com.soen490.cms;
 
-import com.soen490.cms.Services.PdfService.PdfService;
+import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Services.PdfService.PdfUtil;
+import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,20 +34,34 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
-import static com.soen490.cms.Services.PdfService.PdfUtil.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Log4j2
 public class PdfServiceTests {
 
+    @Autowired
+    private RequestPackageService requestPackageService;
+    @Autowired
+    private RequestPackageRepository requestPackageRepository;
 
     String original = "This string, processed, should be identical to the one produced through a mere eye test.";
     String original_eye_test = "This string~,~ ~processed, ~should be ~identical to ~the ~one~ ~produced~ ~through~ ~a~ ~mere~ eye test.";
 
     String changed = "This string should also be the same, once processed, as its own eye test string defined below.";
     String changed_eye_test = "This string should ~also ~be the ~same,~ ~once~ ~processed,~ ~as~ ~its~ ~own ~eye test~ string defined below~.";
+
+
+    // Verify that dossier revisions is provided
+    @Test
+    public void testPdfGeneration(){
+
+        requestPackageService.generatePdf(1, 1);
+
+        assertNotEquals(null, requestPackageRepository.findById(1).getPdfFile());
+    }
 
 
     /**

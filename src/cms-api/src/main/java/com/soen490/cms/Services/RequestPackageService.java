@@ -202,8 +202,6 @@ public class RequestPackageService {
 
         requestPackage.getRequests().add(request);
 
-        generatePdf(package_id, user_id);
-
         return request.getId();
     }
 
@@ -215,7 +213,7 @@ public class RequestPackageService {
      * @return request_id if course and request have been successfully added to database.
      * @throws JSONException
      */
-    private int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files) throws JSONException {
+    public int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files) throws JSONException {
 
         log.info("Inserting course creation request to database...");
 
@@ -239,7 +237,7 @@ public class RequestPackageService {
         }
 
         c.setName((String) course.get("name"));
-        c.setNumber((Integer.parseInt((String)course.get("number"))));
+        c.setNumber((Integer) course.get("number"));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
@@ -312,8 +310,6 @@ public class RequestPackageService {
 
         requestPackage.getRequests().add(request);
 
-        generatePdf(package_id, user_id);
-
         return request.getId();
     }
 
@@ -370,7 +366,7 @@ public class RequestPackageService {
 
         requestRepository.save(request);
 
-        generatePdf(package_id, user_id);
+        requestPackage.getRequests().add(request);
 
         return request.getId();
     }
@@ -490,7 +486,7 @@ public class RequestPackageService {
     }
 
     // Called after any request transaction
-    private void generatePdf(int package_id, int user_id) {
+    public void generatePdf(int package_id, int user_id) {
 
         try {
             pdfService.generatePDF(package_id, user_id);
