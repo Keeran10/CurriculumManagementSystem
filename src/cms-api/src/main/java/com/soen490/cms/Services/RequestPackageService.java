@@ -25,21 +25,17 @@ package com.soen490.cms.Services;
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.*;
+import com.soen490.cms.Services.PdfService.PdfService;
 import lombok.extern.log4j.Log4j2;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.history.Revision;
-import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.*;
 
