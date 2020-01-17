@@ -90,7 +90,7 @@ public class ApprovalPipelineController {
         approvalPipelineRequestPackage.setApprovalPipeline(approvalPipeline);
         approvalPipelineRequestPackage.setPosition(pipelineList.get(0)); // get first position of pipeline
 
-        approvalPipelineService.addApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
+        approvalPipelineService.saveApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
     }
 
     /**
@@ -115,7 +115,7 @@ public class ApprovalPipelineController {
         if(isCorrectUserType(type, currentPosition)) { // figure out how to retrieve/set user type in front end
             int index = pipeline.indexOf(currentPosition);
             if(isApproved) { // move to next step
-                approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index);
+                approvalPipelineService.pushToNext(packageId, approvalPipelineId, pipeline, index, user);
 
             } else { // not approved - remove request
                 approvalPipelineService.removePackage(packageId, approvalPipelineId, rationale);

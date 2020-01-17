@@ -25,6 +25,11 @@ public class ApprovalPipelineRequestPackage implements Serializable {
 
     private String position;
 
+    @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals", "approvalPipelineRequestPackages"})
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public static class RequestPackagePipelineId implements Serializable {
         private Integer approvalPipeline;
         private Integer requestPackage;

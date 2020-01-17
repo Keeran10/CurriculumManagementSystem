@@ -2,7 +2,7 @@ package com.soen490.cms;
 
 import com.soen490.cms.Models.User;
 import com.soen490.cms.Services.MailService;
-import com.soen490.cms.Services.PdfService;
+import com.soen490.cms.Services.PdfService.PdfService;
 import com.soen490.cms.Services.SearchService;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.junit.Before;

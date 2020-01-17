@@ -25,21 +25,17 @@ package com.soen490.cms.Services;
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.*;
+import com.soen490.cms.Services.PdfService.PdfService;
 import lombok.extern.log4j.Log4j2;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.history.Revision;
-import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -243,7 +239,7 @@ public class RequestPackageService {
         }
 
         c.setName((String) course.get("name"));
-        c.setNumber((Integer) course.get("number"));
+        c.setNumber((Integer.parseInt((String)course.get("number"))));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
@@ -464,8 +460,8 @@ public class RequestPackageService {
         if (revisions.isEmpty()) return null;
 
         for (Object[] r : revisions)
-            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[4],
-                    userRepository.findUserById((Integer) r[5]), (byte[]) r[3]));
+            versions.add(new DossierRevision((Integer) r[0], (Integer) r[1], (Byte) r[2], (BigInteger) r[3],
+                    userRepository.findUserById((Integer) r[4])));
 
         return versions;
     }
@@ -775,5 +771,12 @@ public class RequestPackageService {
         }
         requestPackageRepository.delete(requestPackage);
         return true;
+    }
+
+
+    // return dossier pdf for a specific revision
+    public byte[] getRevPDF(int rev_id) {
+
+        return requestPackageRepository.getPdfByRevision(rev_id);
     }
 }
