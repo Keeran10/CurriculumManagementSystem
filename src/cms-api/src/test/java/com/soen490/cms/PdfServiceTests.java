@@ -54,16 +54,6 @@ public class PdfServiceTests {
     String changed_eye_test = "This string should ~also ~be the ~same,~ ~once~ ~processed,~ ~as~ ~its~ ~own ~eye test~ string defined below~.";
 
 
-    // Verify that dossier revisions is provided
-    @Test
-    public void testPdfGeneration(){
-
-        requestPackageService.generatePdf(1, 1);
-
-        assertNotEquals(null, requestPackageRepository.findById(1).getPdfFile());
-    }
-
-
     /**
      * Assert how the diff tool works
      */
