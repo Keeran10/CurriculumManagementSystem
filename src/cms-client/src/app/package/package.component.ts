@@ -39,6 +39,7 @@ export class PackageComponent implements OnInit {
 
   packages = new Array();
   isPdfAvailable = new Array();
+  isSubmitted = new Array();
   userName = 'User';
   userId = '0';
   selectedFiles: FileList;
@@ -49,7 +50,8 @@ export class PackageComponent implements OnInit {
 
   constructor(private cookieService: CookieService,
               private api: ApiService,
-              private router: Router) { }
+              private router: Router) {
+               }
 
   ngOnInit() {
      // let departmentId = this.cookieService.get('department'); // replace 4 with department id

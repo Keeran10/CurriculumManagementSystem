@@ -39,33 +39,41 @@
                         </mat-panel-title>
                       </mat-expansion-panel-header>
 
-                        <div><a class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
-                          Progress
-                        </a></div><br><br>
-
-                      <div *ngFor="let request of package.requests">
-                        <a class="request"
-                           (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
-                          {{request.title}}</a>
-                        <!--
-                        <div>
-                            <label>
-                                <input type="file" (change)="selectFile($event)">
-                            </label>
-                            <button [disabled]="!selectedFiles" (click)="upload(request.id)">Upload Support
-                                Document</button><br><br>
-                        </div>
-                        -->
+                      <div *ngIf="package.approvalPipelineRequestPackages.length != 0">
+                        This package has been submitted for approval.
+                        <br /><br />
+                        <a class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
+                          Track Progress
+                        </a>
                       </div>
-                      <div>
+
+                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0">
+                        <div *ngFor="let request of package.requests">
+                          <a class="request"
+                            (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
+                            {{request.title}}</a>
+                          <!--
+                          <div>
+                              <label>
+                                  <input type="file" (change)="selectFile($event)">
+                              </label>
+                              <button [disabled]="!selectedFiles" (click)="upload(request.id)">Upload Support
+                                  Document</button><br><br>
+                          </div>
+                          -->
+                        </div>
+                      </div>
+                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0">
                         <br> <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
                           request</a>
-                      </div>
+                      </div >
                       <br><br>
-                      <app-support-documents></app-support-documents>
+                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0">
+                        <app-support-documents></app-support-documents>
+                      </div>
                       <br>
 
-                      <div class="right">
+                      <div class="right" *ngIf="package.approvalPipelineRequestPackages.length == 0">
                         <!--
                         <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                             PDF</button>
@@ -83,11 +91,7 @@
                         </a>
                       </div>
                     </mat-expansion-panel>
-
-
-
-                        </div>
-                    <br>
+                  </div>
           </mat-accordion> <br>
             </div>
             <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
