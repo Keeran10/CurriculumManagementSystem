@@ -48,9 +48,9 @@ export class ApproverHomepageComponent implements OnInit {
 
     ngOnInit() {
         const userType = this.cookieService.get('userType');
-        this.api.getAllPackages("4").subscribe(data => {
+        this.api.getPackagesToBeApproved(userType).subscribe(data => {
             this.packages = data;
-            if (this.packages.length === 0) {
+            if (data.length === 0) {
                 document.getElementById('empty').style.visibility = 'display';
             }
         });

@@ -252,4 +252,10 @@ export class ApiService {
 
     return formdata;
   }
+
+  public getPackagesToBeApproved(userType: string) {
+    return this.http.get<Package[]>(this.url + 'get_packages_by_type', {
+      params: new HttpParams().set('userType', userType)
+    });
+  }
 }

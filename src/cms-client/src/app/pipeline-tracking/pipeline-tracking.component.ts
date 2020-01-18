@@ -67,6 +67,7 @@ export class PipelineTrackingComponent implements OnInit {
             this.packageLocation = i;
           }
         }
+        console.log(this.packageLocation);
       });
   }
   public generatePDF() {
