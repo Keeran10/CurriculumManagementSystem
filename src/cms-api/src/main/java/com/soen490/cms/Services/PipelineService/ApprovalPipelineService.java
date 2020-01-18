@@ -73,6 +73,29 @@ public class ApprovalPipelineService {
     }
 
     /**
+     * Returns the current approval position of a dossier as a string
+     * Returns "Approved" if the dossier received final approval
+     * Returns "Not Submitted" if the dossier has not been submitted for approval
+     *
+     * @param approvalPipelineId
+     * @param requestPackageId
+     * @return
+     */
+    public String getPipelinePosition(int approvalPipelineId, int requestPackageId) {
+        log.info("get position for request package: " + requestPackageId);
+        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = findApprovalPipelineRequestPackage(approvalPipelineId, requestPackageId);
+        if(approvalPipelineRequestPackage == null) {
+            RequestPackage dossier = findRequestPackage(requestPackageId);
+            if(dossier == null) {
+                return "Approved";
+            } else {
+                return "Not Submitted";
+            }
+        }
+        return approvalPipelineRequestPackage.getPosition();
+    }
+
+    /**
      * Adds a new one-to-one relationship between an approval pipeline and a request package
      *
      * @param approvalPipelineRequestPackage

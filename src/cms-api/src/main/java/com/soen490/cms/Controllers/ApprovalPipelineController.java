@@ -59,8 +59,7 @@ public class ApprovalPipelineController {
     @GetMapping(value = "/approvalPipelinePosition")
     public String getCurrentPosition(@RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
         log.info(packageId + " " + approvalPipelineId);
-        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineService.findApprovalPipelineRequestPackage(approvalPipelineId, packageId);
-        return approvalPipelineRequestPackage.getPosition();
+        return approvalPipelineService.getPipelinePosition(approvalPipelineId, packageId);
     }
 
     /**
