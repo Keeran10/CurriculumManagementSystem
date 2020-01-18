@@ -141,15 +141,7 @@ public class ApprovalPipelineController {
     public int get(@RequestParam int package_id){
 
         log.info("get pipeline for package " + package_id);
-
-        List<ApprovalPipeline> approvalPipelines = approvalPipelineService.getPipelineByPackageId(package_id);
-
-        ApprovalPipeline approvalPipeline = approvalPipelines.get(approvalPipelines.size() - 1);
-
-        if(approvalPipeline == null)
-            return 0;
-
-        return approvalPipeline.getId();
+        return approvalPipelineService.getPipelineId(package_id);
     }
 
     /**
