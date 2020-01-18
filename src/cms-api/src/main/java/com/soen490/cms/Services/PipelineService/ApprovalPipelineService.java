@@ -153,6 +153,22 @@ public class ApprovalPipelineService {
     }
 
     /**
+     * Returns a list of request packages by position/user type
+     *
+     * @param userType
+     * @return
+     */
+    public List<RequestPackage> getRequestPackagesByUserType(String userType) {
+        List<RequestPackage> requestPackages = new ArrayList<>();
+        List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = approvalPipelineRequestPackageRepository.findByPosition(userType); // userType == position
+        for(ApprovalPipelineRequestPackage approvalPipelineRequestPackage : approvalPipelineRequestPackages) {
+            RequestPackage requestPackage = approvalPipelineRequestPackage.getRequestPackage();
+            requestPackages.add(requestPackage);
+        }
+        return requestPackages;
+    }
+
+    /**
      * Uses the Mail Service to send an email to the users in the next approving body according to the Dossier's
      * pipeline
      *
