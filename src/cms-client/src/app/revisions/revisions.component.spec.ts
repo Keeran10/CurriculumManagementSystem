@@ -34,7 +34,7 @@ describe('RevisionsComponent', () => {
       imports: [
         HttpClientTestingModule
       ],
-      declarations: [ RevisionsComponent ],
+      declarations: [RevisionsComponent],
       providers: [
         ApiService,
         CookieService
@@ -43,12 +43,12 @@ describe('RevisionsComponent', () => {
     }).compileComponents();;
   }));
 
-  describe('Revisions tests', ()=> {
+  describe('Revisions tests', () => {
     function setup() {
       const fixture = TestBed.createComponent(RevisionsComponent);
       const component = fixture.componentInstance;
       const apiService = TestBed.get(ApiService);
-      const cookieService = TestBed.get(CookieService); 
+      const cookieService = TestBed.get(CookieService);
       const httpClient = TestBed.get(HttpTestingController);
 
       return { fixture, component, apiService, cookieService, httpClient };
@@ -59,17 +59,5 @@ describe('RevisionsComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should generate pdf', () => {
-      const { component, apiService } = setup();
-      spyOn(apiService, 'getRevisionsPdf').and.returnValue(new Observable((observer) => {
-    
-        // observable execution
-        observer.next('test');
-        observer.complete();
-      }));;
-
-      component.showPDF(1);
-      expect(apiService.getRevisionsPdf).toHaveBeenCalled();
-    });
   });
 });

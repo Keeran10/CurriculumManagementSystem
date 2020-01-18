@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -58,8 +59,7 @@ public class ApprovalPipelineController {
     @GetMapping(value = "/approvalPipelinePosition")
     public String getCurrentPosition(@RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
         log.info(packageId + " " + approvalPipelineId);
-        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineService.findApprovalPipelineRequestPackage(approvalPipelineId, packageId);
-        return approvalPipelineRequestPackage.getPosition();
+        return approvalPipelineService.getPipelinePosition(approvalPipelineId, packageId);
     }
 
     /**
@@ -152,6 +152,16 @@ public class ApprovalPipelineController {
         return approvalPipeline.getId();
     }
 
+    /**
+     * Returns a list of request packages by user type
+     *
+     * @param userType
+     * @return
+     */
+    @GetMapping(value = "/get_packages_by_type")
+    public List<RequestPackage> getPackages(@RequestParam String userType) {
+        return approvalPipelineService.getRequestPackagesByUserType(userType);
+    }
 
     /**
      * Returns true if the user is able to approve/request changes at the current approval position
