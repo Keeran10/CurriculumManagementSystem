@@ -334,6 +334,21 @@ public class ApprovalPipelineService {
         return approvalPipeline;
     }
 
+    public int getPipelineId(int id) {
+        RequestPackage requestPackage = requestPackageRepository.findById(id);
+        if(requestPackage == null) {
+            return -1; // no package with that id in the database
+        }
+
+        List<ApprovalPipeline> approvalPipelines = getPipelineByPackageId(id);
+        ApprovalPipeline approvalPipeline = approvalPipelines.get(approvalPipelines.size() - 1);
+
+        if(approvalPipeline == null)
+            return 0; // dossier not associated with a pipeline yet
+
+        return approvalPipeline.getId();
+    }
+
     /**
      * Returns a list representation of an approval pipeline
      *
