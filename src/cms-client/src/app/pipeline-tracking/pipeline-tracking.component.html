@@ -29,7 +29,7 @@
     <h2>Approval Pipeline Tracking Package (ID: #{{ id }})</h2>
 
     <table>
-        <tbody>
+        <tbody *ngIf="approved != true">
             <tr *ngFor="let item of pipeline; let i=index">
 
                 <td  *ngIf="i < packageLocation && item !== null">
@@ -69,6 +69,10 @@
                 </td>
 
                 </tr>
+            </tbody>
+            <tbody *ngIf="approved==true">
+                <br />
+                Package #{{ id }} has been approved and is no longer in the approval pipeline.
             </tbody>
     </table>
 </div>

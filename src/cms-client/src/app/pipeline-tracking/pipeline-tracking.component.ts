@@ -40,6 +40,7 @@ export class PipelineTrackingComponent implements OnInit {
   public pipelineId = 1;
   public pipeline = [];
   public userId = '0';
+  public approved = false;
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
   //}
@@ -63,11 +64,14 @@ export class PipelineTrackingComponent implements OnInit {
         const utf8decoder = new TextDecoder();
         let i;
         for (i in this.pipeline) {
-          if (this.pipeline[i] === utf8decoder.decode(data)) {
+          if ((this.pipeline[i] === utf8decoder.decode(data)) && utf8decoder.decode(data) !== 'Approved') {
             this.packageLocation = i;
+            console.log(this.packageLocation);
+          } else if (utf8decoder.decode(data) === 'Approved') {
+            this.approved = true;
+            console.log('Approved');
           }
         }
-        console.log(this.packageLocation);
       });
   }
   public generatePDF() {
