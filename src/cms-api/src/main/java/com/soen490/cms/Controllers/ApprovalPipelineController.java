@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -58,8 +59,7 @@ public class ApprovalPipelineController {
     @GetMapping(value = "/approvalPipelinePosition")
     public String getCurrentPosition(@RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
         log.info(packageId + " " + approvalPipelineId);
-        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineService.findApprovalPipelineRequestPackage(approvalPipelineId, packageId);
-        return approvalPipelineRequestPackage.getPosition();
+        return approvalPipelineService.getPipelinePosition(approvalPipelineId, packageId);
     }
 
     /**
@@ -141,17 +141,19 @@ public class ApprovalPipelineController {
     public int get(@RequestParam int package_id){
 
         log.info("get pipeline for package " + package_id);
-
-        List<ApprovalPipeline> approvalPipelines = approvalPipelineService.getPipelineByPackageId(package_id);
-
-        ApprovalPipeline approvalPipeline = approvalPipelines.get(approvalPipelines.size() - 1);
-
-        if(approvalPipeline == null)
-            return 0;
-
-        return approvalPipeline.getId();
+        return approvalPipelineService.getPipelineId(package_id);
     }
 
+    /**
+     * Returns a list of request packages by user type
+     *
+     * @param userType
+     * @return
+     */
+    @GetMapping(value = "/get_packages_by_type")
+    public List<RequestPackage> getPackages(@RequestParam String userType) {
+        return approvalPipelineService.getRequestPackagesByUserType(userType);
+    }
 
     /**
      * Returns true if the user is able to approve/request changes at the current approval position

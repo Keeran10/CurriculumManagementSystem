@@ -73,6 +73,29 @@ public class ApprovalPipelineService {
     }
 
     /**
+     * Returns the current approval position of a dossier as a string
+     * Returns "Approved" if the dossier received final approval
+     * Returns "Not Submitted" if the dossier has not been submitted for approval
+     *
+     * @param approvalPipelineId
+     * @param requestPackageId
+     * @return
+     */
+    public String getPipelinePosition(int approvalPipelineId, int requestPackageId) {
+        log.info("get position for request package: " + requestPackageId);
+        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = findApprovalPipelineRequestPackage(approvalPipelineId, requestPackageId);
+        if(approvalPipelineRequestPackage == null) {
+            RequestPackage dossier = findRequestPackage(requestPackageId);
+            if(dossier == null) {
+                return "Approved";
+            } else {
+                return "Not Submitted";
+            }
+        }
+        return approvalPipelineRequestPackage.getPosition();
+    }
+
+    /**
      * Adds a new one-to-one relationship between an approval pipeline and a request package
      *
      * @param approvalPipelineRequestPackage
@@ -150,6 +173,22 @@ public class ApprovalPipelineService {
         saveApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
 
         return "";
+    }
+
+    /**
+     * Returns a list of request packages by position/user type
+     *
+     * @param userType
+     * @return
+     */
+    public List<RequestPackage> getRequestPackagesByUserType(String userType) {
+        List<RequestPackage> requestPackages = new ArrayList<>();
+        List<ApprovalPipelineRequestPackage> approvalPipelineRequestPackages = approvalPipelineRequestPackageRepository.findByPosition(userType); // userType == position
+        for(ApprovalPipelineRequestPackage approvalPipelineRequestPackage : approvalPipelineRequestPackages) {
+            RequestPackage requestPackage = approvalPipelineRequestPackage.getRequestPackage();
+            requestPackages.add(requestPackage);
+        }
+        return requestPackages;
     }
 
     /**
@@ -293,6 +332,21 @@ public class ApprovalPipelineService {
         }
 
         return approvalPipeline;
+    }
+
+    public int getPipelineId(int id) {
+        RequestPackage requestPackage = requestPackageRepository.findById(id);
+        if(requestPackage == null) {
+            return -1; // no package with that id in the database
+        }
+
+        List<ApprovalPipeline> approvalPipelines = getPipelineByPackageId(id);
+        ApprovalPipeline approvalPipeline = approvalPipelines.get(approvalPipelines.size() - 1);
+
+        if(approvalPipeline == null)
+            return 0; // dossier not associated with a pipeline yet
+
+        return approvalPipeline.getId();
     }
 
     /**
