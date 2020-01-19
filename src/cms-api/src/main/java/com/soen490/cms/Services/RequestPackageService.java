@@ -202,8 +202,6 @@ public class RequestPackageService {
 
         requestPackage.getRequests().add(request);
 
-        generatePdf(package_id, user_id);
-
         return request.getId();
     }
 
@@ -215,7 +213,7 @@ public class RequestPackageService {
      * @return request_id if course and request have been successfully added to database.
      * @throws JSONException
      */
-    private int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files) throws JSONException {
+    public int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files) throws JSONException {
 
         log.info("Inserting course creation request to database...");
 
@@ -239,7 +237,7 @@ public class RequestPackageService {
         }
 
         c.setName((String) course.get("name"));
-        c.setNumber((Integer.parseInt((String)course.get("number"))));
+        c.setNumber((Integer) course.get("number"));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
@@ -312,8 +310,6 @@ public class RequestPackageService {
 
         requestPackage.getRequests().add(request);
 
-        generatePdf(package_id, user_id);
-
         return request.getId();
     }
 
@@ -370,7 +366,7 @@ public class RequestPackageService {
 
         requestRepository.save(request);
 
-        generatePdf(package_id, user_id);
+        requestPackage.getRequests().add(request);
 
         return request.getId();
     }
@@ -386,38 +382,30 @@ public class RequestPackageService {
         if (request == null)
             return true;
 
+        int user_id = request.getUser().getId();
+        int package_id = request.getRequestPackage().getId();
 
         if(request.getRequestType() == 3){
 
-            int user_id = request.getUser().getId();
-            int package_id = request.getRequestPackage().getId();
-
             requestRepository.delete(request);
-
             generatePdf(user_id, package_id);
-
             return true;
         }
 
         Course requested_course = courseRepository.findById(request.getTargetId());
-
         courseRepository.delete(requested_course);
-
-        int user_id = request.getUser().getId();
-        int package_id = request.getRequestPackage().getId();
-
         requestRepository.delete(request);
-
         generatePdf(user_id, package_id);
-
         return true;
     }
+
 
     // returns list of packages
     public List<RequestPackage> getRequestPackagesByDepartment(int department_id) {
 
         return requestPackageRepository.findByDepartment(department_id);
     }
+
 
     public RequestPackage findById(int id) {
         return requestPackageRepository.findById(id);
@@ -498,7 +486,7 @@ public class RequestPackageService {
     }
 
     // Called after any request transaction
-    private void generatePdf(int package_id, int user_id) {
+    public void generatePdf(int package_id, int user_id) {
 
         try {
             pdfService.generatePDF(package_id, user_id);
