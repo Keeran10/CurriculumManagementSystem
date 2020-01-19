@@ -23,6 +23,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pipeline-tracking',
@@ -32,7 +33,8 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class PipelineTrackingComponent implements OnInit {
 
-  constructor(private api: ApiService, private cookieService: CookieService) {
+  constructor(private api: ApiService, private cookieService: CookieService,
+    private router: Router) {
   }
 
   public id = 1;
@@ -41,6 +43,10 @@ export class PipelineTrackingComponent implements OnInit {
   public pipeline = [];
   public userId = '0';
   public approved = false;
+  public userType = 'User';
+  public correctUser = false;
+  public userAllowedToEdit = false; // only dcc and ugsc are allowed to edit, other can only view
+  public userMap = new Map();
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
   //}
@@ -66,6 +72,12 @@ export class PipelineTrackingComponent implements OnInit {
         for (i in this.pipeline) {
           if ((this.pipeline[i] === utf8decoder.decode(data)) && utf8decoder.decode(data) !== 'Approved') {
             this.packageLocation = i;
+            if (this.userMap.get(this.pipeline[i]) === this.userType) {
+              this.correctUser = true;
+            }
+            if (this.userType === 'UGSC' || this.userType === 'Department Curriculum Committee') {
+              this.userAllowedToEdit = true;
+            }
             console.log(this.packageLocation);
           } else if (utf8decoder.decode(data) === 'Approved') {
             this.approved = true;
@@ -93,7 +105,32 @@ export class PipelineTrackingComponent implements OnInit {
     this.api.getPipeline(this.id).subscribe(data => this.pipelineId = data);
   }
 
+  // on edit
+  public packageSelect(packageId) {
+    this.cookieService.set('package', packageId);
+    console.log(packageId);
+    this.router.navigate(['/package']);
+  }
+  // on review
+  public packageReview(packageId) {
+    this.cookieService.set('package', packageId);
+    console.log(packageId);
+    this.router.navigate(['/homepage']);
+  }
+
+  public populateUserMap() {
+    this.userMap.set('Department Curriculum Committee', 'Department Curriculum Committee');
+    this.userMap.set('Faculty Council', 'Faculty Council');
+    this.userMap.set('APC', 'APC');
+    this.userMap.set('Department Council', 'Department Council');
+    this.userMap.set('Associate Dean Academic Programs Under Graduate Studies Committee', 'UGSC');
+    this.userMap.set('Senate', 'Senate');
+  }
+
   public ngOnInit() {
+    this.userType = this.cookieService.get('userType');
+    console.log(this.userType);
+    this.populateUserMap();
     //this.getPipelineID();
     this.getPackageID();
     this.getPipeline();

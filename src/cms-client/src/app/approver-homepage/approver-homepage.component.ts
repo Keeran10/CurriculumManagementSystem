@@ -40,6 +40,7 @@ export class ApproverHomepageComponent implements OnInit {
     pipelineId = '0';
     user_id = '0';
     departmentId = 0;
+    userType = 'User';
 
     constructor(private cookieService: CookieService,
         private api: ApiService,
@@ -47,8 +48,8 @@ export class ApproverHomepageComponent implements OnInit {
     }
 
     ngOnInit() {
-        const userType = this.cookieService.get('userType');
-        this.api.getPackagesToBeApproved(userType).subscribe(data => {
+        this.userType = this.cookieService.get('userType');
+        this.api.getPackagesToBeApproved(this.userType).subscribe(data => {
             this.packages = data;
             if (data.length === 0) {
                 document.getElementById('empty').style.visibility = 'display';
