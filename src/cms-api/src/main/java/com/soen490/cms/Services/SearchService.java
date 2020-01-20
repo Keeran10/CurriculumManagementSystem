@@ -122,6 +122,11 @@ public class SearchService {
         return facultyRepository.findByName(name);
     }
 
+    public SubSection70719 findSubSectionById(int id){
+        log.info("find SubSection70719 " + id);
+        return null;
+    }
+
     public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){
         log.info("Course "+id+" requisites: ");
         Course course = courseRepository.findById(id);
