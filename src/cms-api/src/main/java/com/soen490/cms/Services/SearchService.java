@@ -48,6 +48,8 @@ public class SearchService {
     RequisiteRepository requisiteRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    SubSection70719Repository subSection70719Repository;
 
     public Collection<Course> findAllCourses(){
         log.info("findAllCourses()");
@@ -124,7 +126,7 @@ public class SearchService {
 
     public SubSection70719 findSubSectionById(int id){
         log.info("find SubSection70719 " + id);
-        return null;
+        return subSection70719Repository.findBySubSectionId(id);
     }
 
     public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){
