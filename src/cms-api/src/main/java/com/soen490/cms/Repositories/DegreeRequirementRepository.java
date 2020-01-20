@@ -24,8 +24,17 @@ package com.soen490.cms.Repositories;
 
 import com.soen490.cms.Models.DegreeRequirement;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface DegreeRequirementRepository extends JpaRepository<DegreeRequirement, Integer> {
+
+    @Query(value = "SELECT degree_id FROM degree_requirement WHERE core=?", nativeQuery = true)
+    int findDegreeByCore(String core);
+
+    @Query(value = "SELECT course_id FROM degree_requirement WHERE core=?", nativeQuery = true)
+    List<Integer> findCoursesByCore(String core);
 }
