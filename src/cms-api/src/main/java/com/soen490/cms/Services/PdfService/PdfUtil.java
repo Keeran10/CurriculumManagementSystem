@@ -245,4 +245,49 @@ public class PdfUtil {
         }
 
     }
+
+
+    /**
+     * Handles program string differences which are slightly distinct from the course diff method.
+     * @param o
+     * @param c
+     * @param present
+     * @param proposed
+     */
+    public static void processProgramDifference(Paragraph o, Paragraph c, String present, String proposed){
+
+        String[] processed = generateDiffs(present, proposed);
+        String[] o_partitions = processed[0].split("~");
+        String[] c_partitions = processed[1].split("~");
+        int ctr = 0;
+
+
+        for(String partition : o_partitions){
+
+            if(ctr % 2 != 0 && !partition.equals("")){
+                o.add(new Chunk(partition, arial_10_red).setUnderline(0.1f, 3f));
+            }
+            else if(!partition.equals("")){
+                o.add(new Chunk(partition, arial_10));
+            }
+
+            ctr++;
+        }
+
+        ctr = 0;
+
+        for(String partition : c_partitions){
+
+            if(ctr % 2 != 0 && !partition.equals("")){
+                c.add(new Chunk(partition, arial_10_blue).setUnderline(0.1f, -1f));
+            }
+            else if(!partition.equals("")){
+                c.add(new Chunk(partition, arial_10));
+            }
+
+            ctr++;
+        }
+
+    }
+
 }

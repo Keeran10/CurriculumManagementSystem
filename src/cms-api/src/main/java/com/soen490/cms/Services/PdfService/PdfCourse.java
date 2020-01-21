@@ -209,7 +209,6 @@ public class PdfCourse {
 
         rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
         rationale_phrase.add(Chunk.NEWLINE);
-        rationale_phrase.add(Chunk.NEWLINE);
 
         if(rationale != null && !rationale.equals(""))
             rationale_phrase.add(new Chunk(rationale, arial_10));
@@ -225,7 +224,6 @@ public class PdfCourse {
         Phrase resource_phrase = new Phrase();
 
         resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
-        resource_phrase.add(Chunk.NEWLINE);
         resource_phrase.add(Chunk.NEWLINE);
 
         if(resource_implications != null && !resource_implications.equals(""))
