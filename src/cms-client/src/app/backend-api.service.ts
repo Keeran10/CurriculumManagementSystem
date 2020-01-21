@@ -258,4 +258,32 @@ export class ApiService {
       params: new HttpParams().set('userType', userType)
     });
   }
+
+  public getEditKey(packageId: any) {
+    console.log('api-getEditKey ' + packageId);
+    return this.http.get<any>(this.url + 'get_edit_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public getReviewKey(packageId: any) {
+    console.log('api-getReviewKey ' + packageId);
+    return this.http.get<any>(this.url + 'get_review_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public releaseEditKey(packageId: any) {
+    console.log('api-releaseEditKey ' + packageId);
+    return this.http.get<any>(this.url + 'release_edit_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public releaseReviewKey(packageId: any) {
+    console.log('api-releaseReviewKey ' + packageId);
+    return this.http.get<any>(this.url + 'release_review_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
 }

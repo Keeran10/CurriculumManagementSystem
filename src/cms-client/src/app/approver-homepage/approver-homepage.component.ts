@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Package } from '../models/package';
 import { Router } from '@angular/router';
+import { ɵAnimationGroupPlayer } from '@angular/animations';
 
 @Component({
     selector: 'app-approver-homepage',
@@ -41,6 +42,8 @@ export class ApproverHomepageComponent implements OnInit {
     user_id = '0';
     departmentId = 0;
     userType = 'User';
+    userMap = new Map();
+    locks = new Array();
 
     constructor(private cookieService: CookieService,
         private api: ApiService,
@@ -49,11 +52,13 @@ export class ApproverHomepageComponent implements OnInit {
 
     ngOnInit() {
         this.userType = this.cookieService.get('userType');
-        this.api.getPackagesToBeApproved(this.userType).subscribe(data => {
+        this.populateUserMap();
+        this.api.getPackagesToBeApproved(this.userMap.get(this.userType)).subscribe(data => {
             this.packages = data;
             if (data.length === 0) {
                 document.getElementById('empty').style.visibility = 'display';
             }
+            this.populateInitialLocks();
         });
         this.userName = this.cookieService.get('userName');
         this.userId = parseInt(this.cookieService.get('user'), 10);
@@ -104,6 +109,25 @@ export class ApproverHomepageComponent implements OnInit {
             this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, rationale, true).subscribe(
                 data => this.router.navigateByUrl('/pipeline')
             );
+        });
+    }
+
+    public populateUserMap() {
+        this.userMap.set('Department Curriculum Committee', 'Department Curriculum Committee');
+        this.userMap.set('Faculty Council', 'Faculty Council');
+        this.userMap.set('APC', 'APC');
+        this.userMap.set('Department Council', 'Department Council');
+        this.userMap.set('UGSC', 'Associate Dean Academic Programs Under Graduate Studies Committee');
+        this.userMap.set('Senate', 'Senate');
+      }
+
+    public isLocked(packageId: any) {
+        this.api.getReviewKey(packageId).subscribe(data => { console.log(data) } );
+    }
+
+    public populateInitialLocks() {
+        this.packages.forEach(p => {
+            this.api.getReviewKey(p.id).subscribe(data => this.locks[p.id]=data );
         });
     }
 }
