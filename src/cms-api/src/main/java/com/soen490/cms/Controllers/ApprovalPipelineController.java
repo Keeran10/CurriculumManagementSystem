@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 @Log4j2
 @RestController
@@ -23,6 +26,8 @@ public class ApprovalPipelineController {
 
     @Autowired
     RequestPackageService requestPackageService;
+
+    Map<String, Semaphore> mutexes = new HashMap<>();
 
     /**
      * Returns an approval pipeline
@@ -153,6 +158,49 @@ public class ApprovalPipelineController {
     @GetMapping(value = "/get_packages_by_type")
     public List<RequestPackage> getPackages(@RequestParam String userType) {
         return approvalPipelineService.getRequestPackagesByUserType(userType);
+    }
+
+    @GetMapping(value = "/get_edit_key")
+    public boolean getEditKey(@RequestParam int package_id) throws InterruptedException {
+        return getMutex(package_id);
+    }
+
+    @GetMapping(value = "/get_review_key")
+    public boolean getReviewKey(@RequestParam int package_id) throws InterruptedException {
+        return getMutex(package_id);
+    }
+
+    @GetMapping(value = "/release_edit_key")
+    public boolean releaseEditKey(@RequestParam int package_id) {
+        return releaseMutex(package_id);
+    }
+
+    @GetMapping(value = "/release_review_key")
+    public boolean releaseReviewKey(@RequestParam int package_id) {
+        return releaseMutex(package_id);
+    }
+
+    private boolean getMutex(int package_id) throws InterruptedException {
+        String mutexName = "package_" + package_id;
+        if(!mutexes.containsKey(mutexName)) {
+            Semaphore mutex = new Semaphore(1);
+            mutex.acquire();
+            mutexes.put(mutexName, mutex);
+            return true;
+        }
+        Semaphore mutex = mutexes.get(mutexName);
+        return mutex.tryAcquire();
+    }
+
+    private boolean releaseMutex(int packageId) {
+        String mutexName = "package_" + packageId;
+        if(!mutexes.containsKey(mutexName)) {
+            return false;
+        }
+
+        Semaphore mutex = mutexes.get(mutexName);
+        mutex.release();
+        return true;
     }
 
     /**
