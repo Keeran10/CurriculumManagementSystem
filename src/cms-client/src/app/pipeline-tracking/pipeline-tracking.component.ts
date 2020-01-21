@@ -47,6 +47,7 @@ export class PipelineTrackingComponent implements OnInit {
   public correctUser = false;
   public userAllowedToEdit = false; // only dcc and ugsc are allowed to edit, other can only view
   public userMap = new Map();
+  public isEditLocked = false;
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
   //}
@@ -127,6 +128,10 @@ export class PipelineTrackingComponent implements OnInit {
     this.userMap.set('Senate', 'Senate');
   }
 
+  public getEditLock() {
+    this.api.getEditKey(this.id).subscribe(data => this.isEditLocked = data );
+  }
+
   public ngOnInit() {
     this.userType = this.cookieService.get('userType');
     console.log(this.userType);
@@ -137,5 +142,6 @@ export class PipelineTrackingComponent implements OnInit {
     this.getPackageLocation();
     this.getNewPipelineId();
     this.userId = this.cookieService.get('user');
+    this.getEditLock();
   }
 }
