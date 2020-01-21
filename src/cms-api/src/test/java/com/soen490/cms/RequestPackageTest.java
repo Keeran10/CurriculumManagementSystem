@@ -44,7 +44,7 @@ public class RequestPackageTest {
 
     }
 
-    String courseJSON = "{\"id\":5,\"name\":\"SOEN\",\"number\":344,\"title\":\"Advanced Software Architecture and" +
+    String courseJSON = "{\"id\":5,\"name\":\"SOEN\",\"number\":\"344\",\"title\":\"Advanced Software Architecture and" +
             " Design\",\"credits\":\"5\",\"note\":\"\",\"level\":2,\"lectureHours\":3,\"tutorialHours\":1,\"" +
             "labHours\":0,\"description\":\"Architectural activities, roles, and deliverables. Architectural view" +
             " models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, " +
