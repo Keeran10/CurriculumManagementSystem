@@ -32,7 +32,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(exclude= {"requests", "approvals", "department"})
+@ToString(exclude= {"requests", "department"})
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
