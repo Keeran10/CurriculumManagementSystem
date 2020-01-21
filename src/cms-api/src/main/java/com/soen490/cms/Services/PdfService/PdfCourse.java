@@ -211,7 +211,7 @@ public class PdfCourse {
         rationale_phrase.add(Chunk.NEWLINE);
         rationale_phrase.add(Chunk.NEWLINE);
 
-        if(!rationale.equals(""))
+        if(rationale != null && !rationale.equals(""))
             rationale_phrase.add(new Chunk(rationale, arial_10));
         else
             rationale_phrase.add(new Chunk("None.", arial_10));
@@ -228,7 +228,7 @@ public class PdfCourse {
         resource_phrase.add(Chunk.NEWLINE);
         resource_phrase.add(Chunk.NEWLINE);
 
-        if(!resource_implications.equals(""))
+        if(resource_implications != null && !resource_implications.equals(""))
             resource_phrase.add(new Chunk(resource_implications, arial_10));
         else
             resource_phrase.add(new Chunk("None.", arial_10));

@@ -28,6 +28,7 @@ import com.soen490.cms.Services.PdfService.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -162,10 +163,20 @@ public class RequestPackageController {
                                         @RequestParam(required = false) MultipartFile[] files) {
 
         try {
-            return requestPackageService.saveCourseRequest(course, courseExtras, files);
+            JSONObject courseExtrasJson = new JSONObject(courseExtras);
+            int user_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveCourseRequest(course, courseExtras, files);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return 0;
     }
 
@@ -175,7 +186,16 @@ public class RequestPackageController {
                                   @RequestParam(required = false) MultipartFile[] files) {
 
         try {
-            return requestPackageService.saveRemovalRequest(course, courseExtras, files);
+            JSONObject courseExtrasJson = new JSONObject(courseExtras);
+            int user_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveRemovalRequest(course, courseExtras, files);
+
+            if(request_id != 0) {
+                requestPackageService.generatePdf(package_id, user_id);
+            }
+            return request_id;
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -31,10 +31,45 @@ INSERT INTO program (id, description, is_active, name, department_id) VALUES  (1
 
 INSERT INTO degree (id, credits, level, name, program_id) VALUES (1, 120, 1, 'Bachelor of Software Engineering (BEng)', 1);
 
-INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, title, tutorial_hours, program_id) VALUES (1, 4.00, 'Processor structure...',
+INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, title, tutorial_hours, program_id)
+VALUES (1, 4.00, 'Processor structure...',
 1, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, 'System Hardware', 2, 1);
 
+INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, title, tutorial_hours, program_id)
+VALUES (2, 4.00, 'Brocessor structure...',
+0, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, 'System Hardware', 2, 1);
+
+INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, title, tutorial_hours, program_id)
+VALUES (3, 4.00, 'Crocessor structure...',
+1, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, 'System Hardware', 2, 1);
+
+INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, title, tutorial_hours, program_id)
+VALUES (4, 4.00, 'Drocessor structure...',
+1, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 228, 'System Hardware', 2, 1);
+
+INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, title, tutorial_hours, program_id)
+VALUES (5, 4.00, 'Drocessor structure...',
+1, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 344, 'Software Architecture', 2, 1);
+
+INSERT INTO course (id, credits, description, is_active, lab_hours, lecture_hours, level, name, note, number, title, tutorial_hours, program_id)
+VALUES (6, 4.00, 'Drocessor structure...',
+0, 2, 3, 1, 'SOEN', 'NOTE: Students who have received credit for COMP 228 may not take this course for credit.', 344, 'Software Architecture', 2, 1);
+
+
+INSERT INTO degree_requirement (id, core, course_id, degree_id) VALUES (1, 'Software Engineering Core', 1, 1);
+INSERT INTO degree_requirement (id, core, course_id, degree_id) VALUES (2, 'Software Engineering Core', 2, 1);
+INSERT INTO degree_requirement (id, core, course_id, degree_id) VALUES (3, 'Software Engineering Core', 3, 1);
+INSERT INTO degree_requirement (id, core, course_id, degree_id) VALUES (4, 'Software Engineering Core', 4, 1);
+INSERT INTO degree_requirement (id, core, course_id, degree_id) VALUES (5, 'Software Engineering Core', 5, 1);
+INSERT INTO degree_requirement (id, core, course_id, degree_id) VALUES (6, 'Software Engineering Core', 6, 1);
+
 INSERT INTO request_package (id, user_id, department_id) VALUES (1, 1, 4);
+
+
+INSERT INTO request (id, origin_id, original_id, request_type, target_id, target_type, title, package_id, user_id) VALUES (1, 1, 1, 2, 2, 2, 'SOEN344_update', 1, 1);
+INSERT INTO request (id, origin_id, original_id, request_type, target_id, target_type, title, package_id, user_id) VALUES (2, 0, 0, 1, 3, 2, 'SOEN344_update', 1, 1);
+INSERT INTO request (id, origin_id, original_id, request_type, target_id, target_type, title, package_id, user_id) VALUES (3, 4, 4, 3, 0, 2, 'SOEN344_update', 1, 1);
+INSERT INTO request (id, origin_id, original_id, request_type, target_id, target_type, title, package_id, user_id) VALUES (4, 5, 5, 2, 6, 2, 'SOEN344_update', 1, 1);
 
 INSERT INTO approval_pipeline (id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee) VALUES (1, 4, 0, 1, 2, 5, 3);
 
