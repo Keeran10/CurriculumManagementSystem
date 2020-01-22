@@ -27,15 +27,12 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CookieService } from 'ngx-cookie-service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RevisionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
+        HttpClientTestingModule
       ],
       declarations: [PipelineAuditComponent],
       providers: [
@@ -53,9 +50,8 @@ describe('RevisionsComponent', () => {
       const apiService = TestBed.get(ApiService);
       const cookieService = TestBed.get(CookieService);
       const httpClient = TestBed.get(HttpTestingController);
-      const router = TestBed.get(Router);
 
-      return { fixture, component, apiService, cookieService, httpClient, router };
+      return { fixture, component, apiService, cookieService, httpClient };
     }
 
     it('should create', () => {
