@@ -32,19 +32,7 @@
         </h4>
         <table>
             <td *ngIf="revisions.length > 0">
-                <strong>Revision Type</strong>
-                <tr *ngFor="let rev of revisions">
-                    {{ rev.rev_type }}
-                </tr>
-            </td>
-            <td *ngIf="revisions.length > 0">
-                <strong>Modified By</strong>
-                <tr *ngFor="let rev of revisions">
-                    {{ rev.modified_by }}
-                </tr>
-            </td>
-            <td *ngIf="revisions.length > 0">
-                <strong>Modified Date</strong>
+                <strong>Approved Date</strong>
                 <tr *ngFor="let rev of revisions">
                     {{ rev.modified_date }}
                 </tr>
@@ -52,11 +40,17 @@
             <td *ngIf="revisions.length > 0">
                 <strong>Approved By</strong>
                 <tr *ngFor="let rev of revisions">
+                    {{ rev.modified_by }}
+                </tr>
+            </td>
+            <td *ngIf="revisions.length > 0">
+                <strong>Approving Body</strong>
+                <tr *ngFor="let rev of revisions">
                     {{ rev.from_position }}
                 </tr>
             </td>
             <td *ngIf="revisions.length > 0">
-                <strong>Moved To</strong>
+                <strong>Dossier Moved To</strong>
                 <tr *ngFor="let rev of revisions">
                     {{ rev.to_position }}
                 </tr>
