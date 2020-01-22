@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Package } from '../models/package';
 import { Router } from '@angular/router';
-import { ɵAnimationGroupPlayer } from '@angular/animations';
 
 @Component({
     selector: 'app-approver-homepage',
@@ -121,13 +120,9 @@ export class ApproverHomepageComponent implements OnInit {
         this.userMap.set('Senate', 'Senate');
       }
 
-    public isLocked(packageId: any) {
-        this.api.getReviewKey(packageId).subscribe(data => { console.log(data) } );
-    }
-
     public populateInitialLocks() {
         this.packages.forEach(p => {
-            this.api.getReviewKey(p.id).subscribe(data => this.locks[p.id]=data );
+            this.api.getReviewKey(p.id).subscribe(data => this.locks[p.id] = data ); // replace with new "get" endpoint
         });
     }
 }

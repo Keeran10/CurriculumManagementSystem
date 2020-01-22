@@ -110,6 +110,7 @@ export class PipelineTrackingComponent implements OnInit {
   public packageSelect(packageId) {
     this.cookieService.set('package', packageId);
     console.log(packageId);
+    this.api.getEditKey(this.id).subscribe(data => this.isEditLocked = data ); // get the lock, review will be blocked
     this.router.navigate(['/package']);
   }
   // on review
@@ -129,7 +130,7 @@ export class PipelineTrackingComponent implements OnInit {
   }
 
   public getEditLock() {
-    this.api.getEditKey(this.id).subscribe(data => this.isEditLocked = data );
+    this.api.getEditKey(this.id).subscribe(data => this.isEditLocked = data ); // replace this with new "get" endpoint
   }
 
   public ngOnInit() {
