@@ -160,6 +160,21 @@ public class ApprovalPipelineController {
         return approvalPipelineService.getRequestPackagesByUserType(userType);
     }
 
+    @GetMapping(value = "/is_mutex_available")
+    public boolean isMutexAvailable(@RequestParam int package_id) {
+        String mutexName = "package_" + package_id;
+        if(!mutexes.containsKey(mutexName)) {
+            return true;
+        }
+
+        Semaphore mutex = mutexes.get(mutexName);
+        if(mutex.availablePermits() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @GetMapping(value = "/get_edit_key")
     public boolean getEditKey(@RequestParam int package_id) throws InterruptedException {
         return getMutex(package_id);
