@@ -19,7 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
-
 .hg__main { grid-area: main; }
 .hg__header { grid-area: header; }
 .hg__footer { grid-area: footer; }
@@ -40,47 +39,25 @@ body {
   background-color: #F3E7E9;
 }
 
-.container {
-    margin-left: 30px;
-    margin-bottom: 30px;
-    padding-top: none;
+table td {
+  table-layout:fixed;
+  width: 5%;
+  overflow:hidden;
+  word-wrap:break-word;
 }
 
-.item {
-    padding-top: 5%;
-    padding-left: 5%;
+table tr:nth-child(even){
+    background-color: #f2f2f2;
+    display: block;
 }
 
-.status {
-    font-size: 60%;
-    padding-left: 5%;
-    padding-top: 1%;
+table {
+    margin: 2%;
 }
 
-.view {
-    border:none;
-    font-size: 60%;
-    padding: 0%;
-    color: blue;
-    text-decoration: underline;
-    background-color: transparent;
+h4 {
+    margin: 2%;
 }
-
-.seeRevisionsDiv {
-  font-size: 80%;
-  margin-left: 85%;
-}
-
-.seeRevisionsButton {
-  background-color: transparent;
-  border: none;
-  color: blue;
-}
-
-button:hover {
-  text-decoration: underline;
-}
-
 
 @media screen and (max-width: 600px) {
   .hg {
@@ -89,4 +66,3 @@ button:hover {
     grid-template-rows: 100px 50px 1fr 50px 30px;
   }
 }
-

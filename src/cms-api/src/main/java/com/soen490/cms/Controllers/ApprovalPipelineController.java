@@ -229,4 +229,10 @@ public class ApprovalPipelineController {
             return false;
         }
     }
+
+
+    @GetMapping("/pipeline_revisions")
+    public List getPipelineRevisions(@RequestParam int pipeline_id){
+        return approvalPipelineService.getPipelineRevisions(pipeline_id);
+    }
 }

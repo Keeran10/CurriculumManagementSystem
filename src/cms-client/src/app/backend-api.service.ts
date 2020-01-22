@@ -32,6 +32,7 @@ import { Package } from './models/package';
 import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
+import { PipelineRevisions } from './models/pipeline-revisions';
 
 @Injectable({
   providedIn: 'root'
@@ -284,6 +285,13 @@ export class ApiService {
     console.log('api-releaseReviewKey ' + packageId);
     return this.http.get<any>(this.url + 'release_review_key', {
       params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public getPipelineAudit(pipelineId: any) {
+    console.log('api-getPipelineRevisions ' + pipelineId);
+    return this.http.get<PipelineRevisions[]>(this.url + '/pipeline_revisions', {
+      params: new HttpParams().set('pipeline_id', pipelineId)
     });
   }
 }

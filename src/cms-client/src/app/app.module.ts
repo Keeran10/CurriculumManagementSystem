@@ -55,6 +55,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { PackageComponent } from './package/package.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
+import { PipelineAuditComponent } from './pipeline-audit/pipeline-audit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RevisionsComponent } from './revisions/revisions.component';
 import { SearchPageComponent } from './search-page/search-page.component';
@@ -80,6 +81,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     LoginComponent,
     PackageComponent,
     PipelineTrackingComponent,
+    PipelineAuditComponent,
     RevisionsComponent,
     SearchPageComponent,
     SupportDocumentComponent,

@@ -24,6 +24,11 @@
   <app-top-nav-bar></app-top-nav-bar>
 </header>
 <main class="hg__main">
+
+    <div class="seeRevisionsDiv">
+        <button (click)="seePipelineRevisions(pipelineId)" class="seeRevisionsButton">see all revisions</button>
+    </div>
+
 <div class="container">
 
     <h2>Approval Pipeline Tracking Package (ID: #{{ id }})</h2>

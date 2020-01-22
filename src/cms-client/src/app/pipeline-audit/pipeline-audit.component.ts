@@ -20,41 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.soen490.cms.Models;
+import { ApiService } from '../backend-api.service';
+import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { PipelineRevisions } from '../models/pipeline-revisions';
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.ToString;
+@Component({
+  selector: 'app-pipeline-audit',
+  templateUrl: './pipeline-audit.component.html',
+  styleUrls: ['./pipeline-audit.component.css']
+})
+export class PipelineAuditComponent implements OnInit {
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+  revisions = new Array<PipelineRevisions>();
+  pipelineId: string;
 
-@Entity
-@Data
-@ToString(exclude= {"requests", "department"})
-public class User {
+  constructor(private cookieService: CookieService,
+              private api: ApiService) { }
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private int id;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String userType; // values = ("admin" | "user" | "senate" | "dcc" | "departmentCouncil" | "apc" | "fcc" | "ugsc"
-
-    private String email;
-
-    private String password;
-
-    @JsonIgnoreProperties("users")
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
-
-    @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user")
-    private List<Request> requests = new ArrayList<>();
+  ngOnInit() {
+    this.pipelineId = this.cookieService.get('pipeline');
+    console.log(this.pipelineId);
+    this.api.getPipelineAudit(this.pipelineId).subscribe(
+        data => { this.revisions = data;
+    }
+    );
+    }
 }

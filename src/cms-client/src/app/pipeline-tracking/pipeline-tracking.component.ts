@@ -145,4 +145,11 @@ export class PipelineTrackingComponent implements OnInit {
     this.userId = this.cookieService.get('user');
     this.getEditLock();
   }
+
+  public seePipelineRevisions(pipelineId: any) {
+    const utf8decoder = new TextDecoder();
+    const pId = utf8decoder.decode(pipelineId);
+    this.cookieService.set('pipeline', pId);
+    this.router.navigate(['/audit']);
+  }
 }
