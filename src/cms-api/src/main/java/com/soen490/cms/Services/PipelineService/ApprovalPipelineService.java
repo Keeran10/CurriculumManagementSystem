@@ -1,9 +1,6 @@
 package com.soen490.cms.Services.PipelineService;
 
-import com.soen490.cms.Models.ApprovalPipeline;
-import com.soen490.cms.Models.ApprovalPipelineRequestPackage;
-import com.soen490.cms.Models.RequestPackage;
-import com.soen490.cms.Models.User;
+import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.ApprovalPipelineRepository;
 import com.soen490.cms.Repositories.ApprovalPipelineRequestPackageRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
@@ -15,6 +12,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.*;
 
 @Log4j2
@@ -390,5 +388,22 @@ public class ApprovalPipelineService {
     public List<ApprovalPipeline> getPipelineByPackageId(int package_id) {
 
         return approvalPipelineRepository.findByPackageId(package_id);
+    }
+
+    public List getPipelineRevisions(int id) {
+
+        log.info("Retrieving revision history for pipeline " + id + ".");
+
+        List<Object[]> revisions = approvalPipelineRequestPackageRepository.getRevisions(id);
+
+        List<PipelineRevision> versions = new ArrayList<>();
+
+        if (revisions.isEmpty()) return null;
+
+        for (Object[] r : revisions)
+            versions.add(new PipelineRevision((Integer) r[0], (Integer) r[1], (Byte) r[2],(BigInteger) r[3],
+                    userRepository.findUserById((Integer) r[4]), (String) r[5]));
+
+        return versions;
     }
 }
