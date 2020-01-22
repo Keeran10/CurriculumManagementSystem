@@ -23,6 +23,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pipeline-tracking',
@@ -32,7 +33,8 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class PipelineTrackingComponent implements OnInit {
 
-  constructor(private api: ApiService, private cookieService: CookieService) {
+  constructor(private api: ApiService, private cookieService: CookieService,
+    private router: Router) {
   }
 
   public id = 1;
@@ -95,5 +97,12 @@ export class PipelineTrackingComponent implements OnInit {
     this.getPackageLocation();
     this.getNewPipelineId();
     this.userId = this.cookieService.get('user');
+  }
+
+  public seePipelineRevisions(pipelineId: any) {
+    const utf8decoder = new TextDecoder();
+    const pId = utf8decoder.decode(pipelineId);
+    this.cookieService.set('pipeline', pId);
+    this.router.navigate(['/audit']);
   }
 }

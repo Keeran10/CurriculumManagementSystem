@@ -21,23 +21,20 @@
 // SOFTWARE.
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PipelineTrackingComponent } from './pipeline-tracking.component';
+import { PipelineAuditComponent } from './pipeline-audit.component';
 import { ApiService } from '../backend-api.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CookieService } from 'ngx-cookie-service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 
-describe('PipelineTrackingComponent', () => {
+describe('RevisionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
+        HttpClientTestingModule
       ],
-      declarations: [ PipelineTrackingComponent ],
+      declarations: [PipelineAuditComponent],
       providers: [
         ApiService,
         CookieService
@@ -46,16 +43,15 @@ describe('PipelineTrackingComponent', () => {
     }).compileComponents();
   }));
 
-  describe('Pipeline Tracking tests', () => {
+  describe('Pipeline Revisions tests', () => {
     function setup() {
-      const fixture = TestBed.createComponent(PipelineTrackingComponent);
+      const fixture = TestBed.createComponent(PipelineAuditComponent);
       const component = fixture.componentInstance;
       const apiService = TestBed.get(ApiService);
       const cookieService = TestBed.get(CookieService);
       const httpClient = TestBed.get(HttpTestingController);
-      const router = TestBed.get(Router);
 
-      return { fixture, component, apiService, cookieService, httpClient, router };
+      return { fixture, component, apiService, cookieService, httpClient };
     }
 
     it('should create', () => {
@@ -63,52 +59,5 @@ describe('PipelineTrackingComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should get the package ID', () => {
-      const { component, cookieService } = setup();
-      spyOn(cookieService, 'get').and.returnValue('15');
-
-      component.getPackageID();
-      expect(component.id).toEqual(15);
-    });
-
-    it('should get the pipeline', () => {
-      const { component, apiService } = setup();
-      const pipelines = ['pipeline1', 'pipeline2'];
-      spyOn(apiService, 'getApprovalPipeline').and.returnValue(new Observable((observer) => {
-    
-        // observable execution
-        observer.next(pipelines);
-        observer.complete();
-      }));
-
-      component.getPipeline();
-      expect(component.pipeline).toEqual(pipelines);
-    });
-
-    it('should get the package location', () => {
-      const { component, apiService } = setup();
-      spyOn(apiService, 'getCurrentPosition').and.returnValue(new Observable((observer) => {
-    
-        // observable execution
-        observer.next('test');
-        observer.complete();
-      }));;
-
-      component.getPackageLocation();
-      expect(apiService.getCurrentPosition).toHaveBeenCalled();
-    });
-
-    it('should generate pdf', () => {
-      const { component, apiService } = setup();
-      spyOn(apiService, 'generatePdf').and.returnValue(new Observable((observer) => {
-    
-        // observable execution
-        observer.next('test');
-        observer.complete();
-      }));
-
-      component.generatePDF();
-      expect(apiService.generatePdf).toHaveBeenCalled();
-    });
   });
 });
