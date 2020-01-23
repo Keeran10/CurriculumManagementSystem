@@ -334,10 +334,7 @@ public class PdfProgram {
             }
 
             if(present_courses.size() != 0 && !present_courses.isEmpty()){
-
-                System.out.println(index);
                 while(index != -1) {
-                    System.out.println("removing: " + present_courses.get(0).getNumber());
                     present_courses.remove(0);
                     index--;
                 }

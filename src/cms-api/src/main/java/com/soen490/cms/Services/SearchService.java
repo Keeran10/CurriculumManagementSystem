@@ -136,8 +136,8 @@ public class SearchService {
         SubSection70719 subSection70719 = subSection70719Repository.findBySubSectionId(section_id);
 
         // can add as many core here for the entire section of 70.71.9
-        subSection70719.setFirst_core_courses(retrieveSectionCourseLists(subSection70719.getFirst_core()));
-        subSection70719.setSecond_core_courses(retrieveSectionCourseLists(subSection70719.getSecond_core()));
+        subSection70719.setFirstCoreCourses(retrieveSectionCourseLists(subSection70719.getFirstCore()));
+        subSection70719.setSecondCoreCourses(retrieveSectionCourseLists(subSection70719.getSecondCore()));
 
         return subSection70719;
     }

@@ -80,37 +80,81 @@ public class RequestPackageService {
     /**
      * Saves an edited course to the database.
      *
-     * @param subSection70719JSON       Stringified subsection70719 JSON received from client
-     * @param sectionExtrasJSON Stringified subsection JSON received from client
+     * @param subSections70719      Stringified subsection70719 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @return True if susection70719 has been successfully added to database.
      * @throws JSONException
      */
-    public boolean saveSubsection70719(String subSection70719JSON, String sectionExtrasJSON, MultipartFile[] files) throws JSONException {
+    public int saveSubsection70719(String subSections70719, String sectionExtras, MultipartFile[] files) throws JSONException {
 
-        log.info("Json substring70719 received: " + subSection70719JSON);
-        log.info("Json subsectionExtras received: " + sectionExtrasJSON);
+        log.info("Json substring70719 received: " + subSections70719);
+        log.info("Json subsectionExtras received: " + sectionExtras);
+
         if(files != null) {
             for (MultipartFile file : files)
                 log.info("File received received: " + file.getOriginalFilename());
         }
-        if(subSection70719JSON != null && !(subSection70719JSON.equals(""))) {
-            JSONObject subsubSection70719JSONObject = new JSONObject(subSection70719JSON);
 
-            SubSection70719 subSection70719 = null;
-            subSection70719.setSecond_core((String) subsubSection70719JSONObject.get("Second_core"));
-            subSection70719.setFirst_core((String) subsubSection70719JSONObject.get("First_core"));
-            subSection70719.setFirst_core_courses(null);
-            subSection70719.setFirst_paragraph((String) subsubSection70719JSONObject.get("First_paragraph"));
-            subSection70719.setSection_id((String) subsubSection70719JSONObject.get("Section_title"));
-            subSection70719.setSection_title((String) subsubSection70719JSONObject.get("Section_title"));
+        JSONObject sectionExtrasJSON = new JSONObject(sectionExtras);
 
-            subSection70719Repository.save(subSection70719);
-            return true;
+        int user_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("userId")));
+        int package_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("requestId")));
+
+        RequestPackage requestPackage = requestPackageRepository.findById(package_id);
+
+        Request request = requestRepository.findByRequestId(request_id);
+
+        User user = userRepository.findById(user_id);
+
+        SubSection70719 subSection70719 = null;
+
+        if (request == null) {
+            request = new Request();
+            subSection70719 = new SubSection70719();
+        } else {
+            subSection70719 = subSection70719Repository.findById(request.getTargetId());
         }
+
+        JSONObject subSection70719JSON = new JSONObject(subSections70719);
+
+        subSection70719.setSecondCore((String) subSection70719JSON.get("second_core"));
+        subSection70719.setFirstCore((String) subSection70719JSON.get("first_core"));
+        subSection70719.setFirstParagraph((String) subSection70719JSON.get("first_paragraph"));
+        subSection70719.setSectionId((String) subSection70719JSON.get("section_id"));
+        subSection70719.setSectionTitle((String) subSection70719JSON.get("section_title"));
+        subSection70719.setIsActive(0);
+
+        subSection70719Repository.save(subSection70719);
+
+        // Requests
+        request.setRequestType(2); // update
+        request.setTargetType(1); // calendar change
+        request.setTargetId(subSection70719.getId());
+        request.setOriginalId((Integer) subSection70719JSON.get("id"));
+        request.setRationale((String) sectionExtrasJSON.get("rationale"));
+        request.setResourceImplications((String) sectionExtrasJSON.get("implications"));
+        request.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        request.setUser(user);
+        request.setRequestPackage(requestPackage);
+
+        if(request.getId() == 0)
+            request.setTitle(subSection70719.getSectionId().toUpperCase() + "_create");
         else
-            return false;
+            request.setTitle(subSection70719.getSectionId().toUpperCase() + "_update");
+
+        requestRepository.save(request);
+
+        log.info("section70719 saved: " + subSection70719);
+        log.info("request saved: " + request);
+
+        requestPackage.getRequests().add(request);
+
+        return request.getId();
     }
+
+
         /**
          * Saves an edited course to the database.
          *

@@ -5,6 +5,7 @@ import com.soen490.cms.Controllers.RequestPackageController;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.RequestRepository;
+import com.soen490.cms.Repositories.SubSection70719Repository;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
@@ -38,6 +39,8 @@ public class RequestPackageTest {
     private RequestRepository requestRepository;
     @Autowired
     private RequestPackageController requestPackageController;
+    @Autowired
+    private SubSection70719Repository subSection70719Repository;
 
     @Before
     public void init(){
@@ -224,5 +227,19 @@ public class RequestPackageTest {
     }
 
 
-    //
+    // Assert subsection functionality
+    @Test
+    public void testSubSectionSave(){
+
+        String section70719JSON = "{\"id\":1,\"first_core\":\"Engineering Core\",\"second_core\":\"Software Engineering Core\"," +
+                "\"first_paragraph\":\"test\",\"isActive\":0,\"section_id\":\"70.71.9\", " +
+                "\"section_title\":\"Degree Requirements for the BEng in Software Engineering\"}";
+
+        String section70719ExtrasJSON = "{\"implications\":\"\",\"packageId\":1,\"prerequisites\":\"SOEN343; SOEN384; \",\"" +
+                "rationale\":\"\",\"userId\":1,\"requestId\":0}";
+
+        requestPackageController.saveSubSection70719(section70719JSON, section70719ExtrasJSON, null);
+
+        assertEquals("test", subSection70719Repository.findById(2).getFirstParagraph());
+    }
 }
