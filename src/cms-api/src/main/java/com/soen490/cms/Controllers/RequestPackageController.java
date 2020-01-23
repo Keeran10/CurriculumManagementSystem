@@ -152,6 +152,19 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
+     * @param SubSection70719 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70719 was successfully added to database.
+     * @throws JSONException
+     */
+    @PostMapping(value="/save_subsection70719")
+    public boolean saveSubSection70719 (@RequestParam String SubSection70719 , @RequestParam String sectionExtras,
+                                        @RequestParam(required = false) MultipartFile[] files) {
+        return true;
+    }
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
      * @param course stringified JSON received from front-end.
      * @param courseExtras stringified JSON received from front-end.
      * @param files supporting docs
