@@ -180,7 +180,7 @@ public class RequestPackageController {
         return 0;
     }
 
-    
+
     /**
      * Receives data from client and populates the database for course and its dependencies.
      * @param course stringified JSON received from front-end.

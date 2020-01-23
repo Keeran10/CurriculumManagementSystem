@@ -317,7 +317,11 @@ public class RequestPackageService {
         }
 
         c.setName((String) course.get("name"));
-        c.setNumber((Integer) course.get("number"));
+
+        if(files != null && files.length != 0)
+            c.setNumber((Integer) course.get("number"));
+        else
+            c.setNumber(Integer.valueOf((String) course.get("number")));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
