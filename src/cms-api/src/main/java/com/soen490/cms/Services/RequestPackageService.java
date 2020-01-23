@@ -90,20 +90,26 @@ public class RequestPackageService {
 
         log.info("Json substring70719 received: " + subSection70719JSON);
         log.info("Json subsectionExtras received: " + sectionExtrasJSON);
-        for (MultipartFile file : files)
-            log.info("File received received: " + file.getOriginalFilename());
-        JSONObject subsubSection70719JSONObject = new JSONObject(subSection70719JSON);
+        if(files != null) {
+            for (MultipartFile file : files)
+                log.info("File received received: " + file.getOriginalFilename());
+        }
+        if(subSection70719JSON != null && !(subSection70719JSON.equals(""))) {
+            JSONObject subsubSection70719JSONObject = new JSONObject(subSection70719JSON);
 
-        SubSection70719 subSection70719 = null;
-        subSection70719.setSecond_core((String) subsubSection70719JSONObject.get("Second_core"));
-        subSection70719.setFirst_core((String) subsubSection70719JSONObject.get("First_core"));
-        subSection70719.setFirst_core_courses(null);
-        subSection70719.setFirst_paragraph((String) subsubSection70719JSONObject.get("First_paragraph"));
-        subSection70719.setSection_id((String) subsubSection70719JSONObject.get("Section_title"));
-        subSection70719.setSection_title((String) subsubSection70719JSONObject.get("Section_title"));
+            SubSection70719 subSection70719 = null;
+            subSection70719.setSecond_core((String) subsubSection70719JSONObject.get("Second_core"));
+            subSection70719.setFirst_core((String) subsubSection70719JSONObject.get("First_core"));
+            subSection70719.setFirst_core_courses(null);
+            subSection70719.setFirst_paragraph((String) subsubSection70719JSONObject.get("First_paragraph"));
+            subSection70719.setSection_id((String) subsubSection70719JSONObject.get("Section_title"));
+            subSection70719.setSection_title((String) subsubSection70719JSONObject.get("Section_title"));
 
-        subSection70719Repository.save(subSection70719);
-        return true;
+            subSection70719Repository.save(subSection70719);
+            return true;
+        }
+        else
+            return false;
     }
         /**
          * Saves an edited course to the database.
