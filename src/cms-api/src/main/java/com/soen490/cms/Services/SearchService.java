@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 @Log4j2
@@ -52,6 +53,8 @@ public class SearchService {
     UserRepository userRepository;
     @Autowired
     SubSection70719Repository subSection70719Repository;
+    @Autowired
+    DegreeRequirementRepository degreeRequirementRepository;
 
     public Collection<Course> findAllCourses(){
         log.info("findAllCourses()");
@@ -126,11 +129,33 @@ public class SearchService {
         return facultyRepository.findByName(name);
     }
 
-    public SubSection70719 findsection70719ById(int id){
-        log.info("find SubSection70719 " + id);
-        SubSection70719 subSection70719 = subSection70719Repository.findBySubSectionId(id);
-        List<Course> courseList = new ArrayList<>();
-        return null;
+    public SubSection70719 findsection70719ById(int section_id){
+
+        log.info("find SubSection70719 " + section_id);
+
+        SubSection70719 subSection70719 = subSection70719Repository.findBySubSectionId(section_id);
+
+        // can add as many core here for the entire section of 70.71.9
+        subSection70719.setFirst_core_courses(retrieveSectionCourseLists(subSection70719.getFirst_core()));
+        subSection70719.setSecond_core_courses(retrieveSectionCourseLists(subSection70719.getSecond_core()));
+
+        return subSection70719;
+    }
+
+    private List<Course> retrieveSectionCourseLists(String core) {
+
+        List<Integer> courses_id = degreeRequirementRepository.findCoursesByCore(core);
+        List<Course> second_core_courses = new ArrayList<>();
+
+        for(int id : courses_id){
+            Course course = courseRepository.findById(id);
+            if(course != null && course.getIsActive() != 0)
+                second_core_courses.add(course);
+        }
+        second_core_courses.sort(Comparator.comparing(Course::getName));
+        second_core_courses.sort(Comparator.comparing(Course::getNumber));
+
+        return second_core_courses;
     }
 
     public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){
