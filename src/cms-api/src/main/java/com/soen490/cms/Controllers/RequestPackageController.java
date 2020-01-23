@@ -150,6 +150,7 @@ public class RequestPackageController {
         return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
+
     /**
      * Receives data from client and populates the database for course and its dependencies.
      * @param subSection70719 stringified JSON received from front-end.
@@ -161,7 +162,6 @@ public class RequestPackageController {
     @PostMapping(value="/save_subsection70719")
     public int saveSubSection70719 (@RequestParam String subSection70719 , @RequestParam String sectionExtras,
                                         @RequestParam(required = false) MultipartFile[] files) {
-
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
@@ -178,8 +178,9 @@ public class RequestPackageController {
         }
 
         return 0;
-
     }
+
+    
     /**
      * Receives data from client and populates the database for course and its dependencies.
      * @param course stringified JSON received from front-end.
