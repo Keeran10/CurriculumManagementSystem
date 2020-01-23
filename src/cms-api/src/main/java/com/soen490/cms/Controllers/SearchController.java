@@ -94,8 +94,8 @@ public class SearchController {
     public Faculty getFaculty(@RequestParam String name){
         return searchService.findFacultyByName(name); }
 
-    // URL should be 8080/calendar_search?id=id
-    @GetMapping("/calendar_search")
-    public SubSection70719 getCalendar(@RequestParam int id){
-        return searchService.findSubSectionById(id); }
+    // URL should be 8080/section70719
+    @GetMapping("/section70719")
+    public SubSection70719 getSection70719(){
+        return searchService.findsection70719ById(1); }
 }

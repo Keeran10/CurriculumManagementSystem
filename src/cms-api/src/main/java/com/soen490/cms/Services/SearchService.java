@@ -126,7 +126,7 @@ public class SearchService {
         return facultyRepository.findByName(name);
     }
 
-    public SubSection70719 findSubSectionById(int id){
+    public SubSection70719 findsection70719ById(int id){
         log.info("find SubSection70719 " + id);
         SubSection70719 subSection70719 = subSection70719Repository.findBySubSectionId(id);
         List<String> stringCourseList=  degreeRepository.findCoreCoursesByProgram("Software Engineering Core");
