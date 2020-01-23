@@ -75,15 +75,19 @@ public class RequestPackageService {
         return requestPackageRepository.findById(package_id);
     }
 
-    /**
-     * Saves an edited course to the database.
-     *
-     * @param courseJSON       Stringified course JSON received from client
-     * @param courseExtrasJSON Stringified course JSON received from client
-     * @param files            uploaded course outline
-     * @return True if course has been successfully added to database.
-     * @throws JSONException
-     */
+    public boolean saveSubsection70719(String subSection70719JSON, String sectionExtrasJSON, MultipartFile[] files) throws JSONException {
+
+         return true;
+    }
+        /**
+         * Saves an edited course to the database.
+         *
+         * @param courseJSON       Stringified course JSON received from client
+         * @param courseExtrasJSON Stringified course JSON received from client
+         * @param files            uploaded course outline
+         * @return True if course has been successfully added to database.
+         * @throws JSONException
+         */
     public int saveCourseRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files) throws JSONException {
 
         log.info("Json course received: " + courseJSON);

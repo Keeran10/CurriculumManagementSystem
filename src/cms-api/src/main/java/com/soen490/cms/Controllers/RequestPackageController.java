@@ -159,9 +159,16 @@ public class RequestPackageController {
      * @throws JSONException
      */
     @PostMapping(value="/save_subsection70719")
-    public boolean saveSubSection70719 (@RequestParam String SubSection70719 , @RequestParam String sectionExtras,
+    public boolean saveSubSection70719 (@RequestParam String subSection70719 , @RequestParam String sectionExtras,
                                         @RequestParam(required = false) MultipartFile[] files) {
-        return true;
+        try{
+            return requestPackageService.saveSubsection70719(subSection70719, sectionExtras, files);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        return false;
+        }
+
     }
     /**
      * Receives data from client and populates the database for course and its dependencies.
