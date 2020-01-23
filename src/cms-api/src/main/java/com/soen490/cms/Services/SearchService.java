@@ -129,29 +129,8 @@ public class SearchService {
     public SubSection70719 findsection70719ById(int id){
         log.info("find SubSection70719 " + id);
         SubSection70719 subSection70719 = subSection70719Repository.findBySubSectionId(id);
-        List<String> stringCourseList=  degreeRepository.findCoreCoursesByProgram("Software Engineering Core");
         List<Course> courseList = new ArrayList<>();
-        for(int i = 0; i<stringCourseList.size(); i++){
-           Course course = new Course();
-           String[] array = stringCourseList.get(i).split(",");
-           course.setName(array[0]);
-           course.setNumber(Integer.parseInt(array[1]));
-           if(array.length>4) {
-               String title = "";
-               for(int j = 2; j<array.length-1; j++){
-                   title += array[j];
-               }
-               course.setTitle(title);
-           }
-           else{
-               course.setTitle(array[2]);
-           }
-           course.setCredits(Double.parseDouble(array[array.length-1]));
-           courseList.add(course);
-        }
-        subSection70719.setSecond_core_courses(courseList);
-       return subSection70719;
-
+        return null;
     }
 
     public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){
