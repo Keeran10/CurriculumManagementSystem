@@ -62,6 +62,8 @@ public class RequestPackageService {
     private SupportingDocumentRepository supportingDocumentsRepository;
     @Autowired
     private PdfService pdfService;
+    @Autowired
+    private SubSection70719Repository subSection70719Repository;
 
 
     // Return package with right id, if id given is 0, a new package is created and returned
@@ -75,9 +77,33 @@ public class RequestPackageService {
         return requestPackageRepository.findById(package_id);
     }
 
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSection70719JSON       Stringified subsection70719 JSON received from client
+     * @param sectionExtrasJSON Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @return True if susection70719 has been successfully added to database.
+     * @throws JSONException
+     */
     public boolean saveSubsection70719(String subSection70719JSON, String sectionExtrasJSON, MultipartFile[] files) throws JSONException {
 
-         return true;
+        log.info("Json substring70719 received: " + subSection70719JSON);
+        log.info("Json subsectionExtras received: " + sectionExtrasJSON);
+        for (MultipartFile file : files)
+            log.info("File received received: " + file.getOriginalFilename());
+        JSONObject subsubSection70719JSONObject = new JSONObject(subSection70719JSON);
+
+        SubSection70719 subSection70719 = null;
+        subSection70719.setSecond_core((String) subsubSection70719JSONObject.get("Second_core"));
+        subSection70719.setFirst_core((String) subsubSection70719JSONObject.get("First_core"));
+        subSection70719.setFirst_core_courses(null);
+        subSection70719.setFirst_paragraph((String) subsubSection70719JSONObject.get("First_paragraph"));
+        subSection70719.setSection_id((String) subsubSection70719JSONObject.get("Section_title"));
+        subSection70719.setSection_title((String) subsubSection70719JSONObject.get("Section_title"));
+
+        subSection70719Repository.save(subSection70719);
+        return true;
     }
         /**
          * Saves an edited course to the database.
