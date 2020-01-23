@@ -12,8 +12,8 @@ import java.util.List;
 public class PdfUtil {
 
     // preface fonts
-    static final Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
-    static final Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD);
+    public static final Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
+    public static final Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD);
     // table fonts
     static final Font arial_9 = FontFactory.getFont("Arial", 9, BaseColor.BLACK);
     static final Font arial_10 = FontFactory.getFont("Arial", 10, BaseColor.BLACK);

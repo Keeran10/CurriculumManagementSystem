@@ -28,6 +28,7 @@ import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.SupportingDocumentRepository;
+import com.soen490.cms.Services.PdfService.PdfSections.PdfSection;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,8 @@ public class PdfService {
     private PdfCourse pdfCourse;
     @Autowired
     private PdfProgram pdfProgram;
+    @Autowired
+    private PdfSection pdfSection;
 
 
     public byte[] getPDF(int package_id) { return requestPackageRepository.findPdfById(package_id); }
@@ -158,7 +161,17 @@ public class PdfService {
                 }
                 else if(request.getTargetType() == 1){
 
-                    // program requests
+                    ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
+                    PdfWriter.getInstance(doc, request_stream);
+
+                    doc.open();
+
+                    // calendar request
+                    pdfSection.addSectionPage(doc, request);
+
+                    doc.close();
+
+                    request_streams.add(request_stream);
                 }
             }
 
