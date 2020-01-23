@@ -194,7 +194,7 @@ public class RequestPackageTest {
 
         int id = requestPackageController.saveRemovalRequest(courseJSON, courseExtras, files);
 
-        assertEquals(3, requestRepository.findByRequestId(6).getRequestType());
+        assertEquals(3, requestRepository.findByRequestId(7).getRequestType());
 
     }
 
