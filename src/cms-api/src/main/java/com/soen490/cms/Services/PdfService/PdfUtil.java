@@ -15,8 +15,11 @@ public class PdfUtil {
     static final Font times_10 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
     static final Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD);
     // table fonts
+    static final Font arial_9 = FontFactory.getFont("Arial", 9, BaseColor.BLACK);
     static final Font arial_10 = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
+    static final Font arial_9_bold = FontFactory.getFont("Arial", 9, Font.BOLD);
     static final Font arial_10_bold = FontFactory.getFont("Arial", 10, Font.BOLD);
+    static final Font arial_9_italic = FontFactory.getFont("Arial", 9, Font.ITALIC);
     static final Font arial_10_italic = FontFactory.getFont("Arial", 10, Font.ITALIC);
     static final Font arial_10_bold_italic = FontFactory.getFont("Arial", 10, Font.BOLDITALIC);
     // table column names share same font
@@ -242,4 +245,49 @@ public class PdfUtil {
         }
 
     }
+
+
+    /**
+     * Handles program string differences which are slightly distinct from the course diff method.
+     * @param o
+     * @param c
+     * @param present
+     * @param proposed
+     */
+    public static void processProgramDifference(Paragraph o, Paragraph c, String present, String proposed){
+
+        String[] processed = generateDiffs(present, proposed);
+        String[] o_partitions = processed[0].split("~");
+        String[] c_partitions = processed[1].split("~");
+        int ctr = 0;
+
+
+        for(String partition : o_partitions){
+
+            if(ctr % 2 != 0 && !partition.equals("")){
+                o.add(new Chunk(partition, arial_10_red).setUnderline(0.1f, 3f));
+            }
+            else if(!partition.equals("")){
+                o.add(new Chunk(partition, arial_10));
+            }
+
+            ctr++;
+        }
+
+        ctr = 0;
+
+        for(String partition : c_partitions){
+
+            if(ctr % 2 != 0 && !partition.equals("")){
+                c.add(new Chunk(partition, arial_10_blue).setUnderline(0.1f, -1f));
+            }
+            else if(!partition.equals("")){
+                c.add(new Chunk(partition, arial_10));
+            }
+
+            ctr++;
+        }
+
+    }
+
 }
