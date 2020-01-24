@@ -48,6 +48,7 @@ export class PipelineTrackingComponent implements OnInit {
   public userAllowedToEdit = false; // only dcc and ugsc are allowed to edit, other can only view
   public userMap = new Map();
   public isEditMutexAvailable = false;
+  public isProfessor = false;
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
   //}
@@ -73,10 +74,13 @@ export class PipelineTrackingComponent implements OnInit {
         for (i in this.pipeline) {
           if ((this.pipeline[i] === utf8decoder.decode(data)) && utf8decoder.decode(data) !== 'Approved') {
             this.packageLocation = i;
-            if (this.userMap.get(this.pipeline[i]) === this.userType) {
+            if (this.userMap.get(this.pipeline[i]) === this.userType || this.userType === 'Professor') {
               this.correctUser = true;
             }
-            if (this.userType === 'UGSC' || this.userType === 'Department Curriculum Committee') {
+            if (this.userType === 'Professor') {
+              this.isProfessor = true;
+            }
+            if (this.userType === 'UGSC' || this.userType === 'Department Curriculum Committee' || this.userType === 'Professor') {
               this.userAllowedToEdit = true;
             }
             console.log(this.packageLocation);

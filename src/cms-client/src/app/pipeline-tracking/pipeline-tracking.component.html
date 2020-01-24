@@ -69,11 +69,12 @@
 
                 <td>
                     <div class="item" >{{ item }}</div>
-                    <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==true && isEditMutexAvailable==true" class="status">package (<button class="view" (click)="packageSelect(packageId)">edit</button>||<button class="view" (click)="viewPdf()">view</button>||<button class="view" (click)="packageReview(packageId)">review</button>)</div>
+                    <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==true && isEditMutexAvailable==true && isProfessor==false" class="status">package (<button class="view" (click)="packageSelect(packageId)">edit</button>||<button class="view" (click)="viewPdf()">view</button>||<button class="view" (click)="packageReview(packageId)">review</button>)</div>
                     <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==true && isEditMutexAvailable==false" class="status">package currently being reviewed... (<button class="view" (click)="viewPdf()">view</button>)</div>
                     <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==false" class="status">package under review... (<button class="view" (click)="viewPdf()">view</button>)</div>
                     <div *ngIf="i < packageLocation" class="status">package (<button class="view" (click)="viewPdf()">view</button>)</div>
                     <div *ngIf="i == packageLocation && correctUser==false" class="status">package under review...</div>
+                    <div *ngIf="i == packageLocation && userAllowedToEdit==true && isProfessor==true" class="status">package (<button class="view" (click)="packageSelect(packageId)">edit</button>)</div>
                 </td>
 
                 </tr>
