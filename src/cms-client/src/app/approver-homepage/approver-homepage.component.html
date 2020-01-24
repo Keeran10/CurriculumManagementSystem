@@ -49,8 +49,8 @@
                         </mat-card-content>
                         <div *ngIf="package.id == packageUnderReview">
                             <div class="buttons">
-                                <button mat-button (click)="accept(package.id, val.value)">Accept</button>
-                                <button mat-button (click)="decline(package.id, val.value)">Decline</button>
+                                <button mat-button (click)="accept(package.id, value)">Accept</button>
+                                <button mat-button (click)="decline(package.id, value)">Decline</button>
                                 <button mat-button color="warn" (click)="releaseReviewMutex(package.id)">Cancel Review</button>
                             </div>
                         </div>

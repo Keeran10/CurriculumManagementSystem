@@ -95,8 +95,10 @@ export class ApproverHomepageComponent implements OnInit {
             const utf8decoder = new TextDecoder();
             this.pipelineId = utf8decoder.decode(data);
             this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, value, false).subscribe(
-                data => window.location.reload()
-            );
+                data => {
+                    window.location.reload(),
+                    this.releaseReviewMutex(packageId);
+                    });
         });
     }
 
@@ -110,9 +112,11 @@ export class ApproverHomepageComponent implements OnInit {
             const utf8decoder = new TextDecoder();
             this.pipelineId = utf8decoder.decode(data);
             this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, rationale, true).subscribe(
-                data => this.router.navigateByUrl('/pipeline')
-            );
-        });
+                data => {
+                this.router.navigateByUrl('/pipeline'),
+                this.releaseReviewMutex(packageId);
+                });
+            });
     }
 
     public populateUserMap() {

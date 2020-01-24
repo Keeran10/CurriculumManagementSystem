@@ -78,20 +78,20 @@
                         <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                             PDF</button>
                         -->
+                        <a  (click)="viewAllRevisions(package.id, 'revisions')">
+                          <button class="seeRevisionsButton" color="primary">view all revisions</button>
+                        </a>
+                        <br /><br />
                         <button mat-stroked-button color="primary" (click)="upload(package.id)">Upload
                           Files</button>
                         <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
-
-                        <a (click)="viewAllRevisions(package.id, 'revisions')">
-                          <button mat-stroked-button color="primary">View All Revisions</button>
-                        </a>
 
                         <a *ngIf="package.approvalPipelineRequestPackages.length == 0" (click)="packageSelect(package.id, 0, 'approval')">
                           <button mat-stroked-button color="primary">Submit for Approval</button>
                         </a>
 
                       </div>
-                      <div class="right">
+                      <div class="mutexButtons">
                         <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
                           <button mat-stroked-button color="warn">Save and Quit</button>
                         </a>
