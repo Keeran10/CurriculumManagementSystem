@@ -19,6 +19,7 @@ public class Section70719 {
 
     private String sectionTitle; // "Degree Requirement for Beng ..."
 
+    @Lob
     private String firstParagraph;
 
     private String firstCore; // Engineering Core

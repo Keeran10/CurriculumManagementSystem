@@ -2,18 +2,21 @@ package com.soen490.cms.Services.PdfService.PdfSections;
 
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.soen490.cms.Models.Degree;
 import com.soen490.cms.Models.Request;
 import com.soen490.cms.Models.Sections.Section70719;
 import com.soen490.cms.Repositories.DegreeRepository;
 import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
+import com.soen490.cms.Services.PdfService.PdfUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import static com.soen490.cms.Services.PdfService.PdfUtil.times_10;
-import static com.soen490.cms.Services.PdfService.PdfUtil.times_10_bold;
+import static com.soen490.cms.Services.PdfService.PdfUtil.*;
+import static com.soen490.cms.Services.PdfService.PdfUtil.arial_10;
+import static com.soen490.cms.Services.PdfService.PdfUtil.column_font;
 
 @Service
 @Log4j2
@@ -157,6 +160,116 @@ public class PdfSection70719 {
 
     private void addSectionDiffTable(Document doc, Request request, Section70719 section70719_present, Section70719 section70719_proposed) {
 
+        // Creates a table with 2 column.
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        float CELL_PADDING = 7f;
 
+        // static headers
+        table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold))).setPadding(3f);
+        table.addCell(new PdfPCell(new Phrase("Proposed Text", times_10_bold))).setPadding(3f);
+        table.completeRow();
+
+        Paragraph present = new Paragraph();
+        Paragraph proposed = new Paragraph();
+
+        Phrase header_present = new Phrase();
+        Phrase header_proposed = new Phrase();
+
+        PdfUtil.processDifferences(header_present, header_proposed,
+                section70719_present.getSectionId() + "\t" + section70719_present.getSectionTitle(),
+                section70719_proposed.getSectionId() + "\t" + section70719_proposed.getSectionTitle(),
+                1);
+
+
+        Phrase first_paragraph_present = new Phrase();
+        Phrase first_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(first_paragraph_present, first_paragraph_proposed,
+                section70719_present.getFirstParagraph(), section70719_proposed.getFirstParagraph(),
+                4);
+
+        Phrase first_core_present = new Phrase();
+        Phrase first_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(first_core_present, first_core_proposed,
+                section70719_present.getFirstCore(), section70719_proposed.getFirstCore(),
+                1);
+
+        Phrase second_core_present = new Phrase();
+        Phrase second_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(second_core_present, second_core_proposed,
+                section70719_present.getSecondCore(), section70719_proposed.getSecondCore(),
+                1);
+
+        present.add(header_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(header_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(first_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(first_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(first_core_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(first_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(second_core_present);
+        proposed.add(second_core_proposed);
+
+        // once all program details are done
+        table.addCell(new PdfPCell(present)).setPadding(CELL_PADDING);
+        table.addCell(new PdfPCell(proposed)).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        // add rationale cell which spans 2 columns
+        String rationale = request.getRationale();
+        Phrase rationale_phrase = new Phrase();
+
+        rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
+        rationale_phrase.add(Chunk.NEWLINE);
+
+        if(rationale != null && !rationale.equals(""))
+            rationale_phrase.add(new Chunk(rationale, arial_10));
+        else
+            rationale_phrase.add(new Chunk("None.", arial_10));
+
+        PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
+        rationale_cell.setColspan(2);
+        table.addCell(rationale_cell).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        // add resource implications cell which spans 2 columns
+        String resource_implications = request.getResourceImplications();
+        Phrase resource_phrase = new Phrase();
+
+        resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
+        resource_phrase.add(Chunk.NEWLINE);
+
+        if(resource_implications != null && !resource_implications.equals(""))
+            resource_phrase.add(new Chunk(resource_implications, arial_10));
+        else
+            resource_phrase.add(new Chunk("None.", arial_10));
+
+        PdfPCell resource_cell = new PdfPCell(resource_phrase);
+        resource_cell.setColspan(2);
+        table.addCell(resource_cell).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        try {
+            doc.add(table);
+        }catch(DocumentException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -343,7 +343,7 @@ public class PdfProgram {
 
         }
 
-        // once all course details are done
+        // once all program details are done
         table.addCell(new PdfPCell(original_paragraph)).setPadding(CELL_PADDING);
         table.addCell(new PdfPCell(changed_paragraph)).setPadding(CELL_PADDING);
         table.completeRow();

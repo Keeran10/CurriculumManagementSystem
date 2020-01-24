@@ -16,14 +16,14 @@ public class PdfUtil {
     public static final Font times_10_bold = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD);
     // table fonts
     static final Font arial_9 = FontFactory.getFont("Arial", 9, BaseColor.BLACK);
-    static final Font arial_10 = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
+    public static final Font arial_10 = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
     static final Font arial_9_bold = FontFactory.getFont("Arial", 9, Font.BOLD);
     static final Font arial_10_bold = FontFactory.getFont("Arial", 10, Font.BOLD);
     static final Font arial_9_italic = FontFactory.getFont("Arial", 9, Font.ITALIC);
     static final Font arial_10_italic = FontFactory.getFont("Arial", 10, Font.ITALIC);
     static final Font arial_10_bold_italic = FontFactory.getFont("Arial", 10, Font.BOLDITALIC);
     // table column names share same font
-    static final Font column_font = arial_10;
+    public static final Font column_font = arial_10;
     // diffs fonts
     // for credits & description removals
     static final Font arial_10_red = FontFactory.getFont
