@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 import { ApiService } from '../backend-api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Package } from '../models/package';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./approver-homepage.component.css']
 })
 
-export class ApproverHomepageComponent implements OnInit {
+export class ApproverHomepageComponent implements OnInit, OnDestroy {
 
     packages: Package[];
     userName = 'User';
@@ -43,6 +43,7 @@ export class ApproverHomepageComponent implements OnInit {
     userType = 'User';
     userMap = new Map();
     locks = new Array();
+    packageUnderReview = '0';
 
     constructor(private cookieService: CookieService,
         private api: ApiService,
@@ -52,6 +53,7 @@ export class ApproverHomepageComponent implements OnInit {
     ngOnInit() {
         this.userType = this.cookieService.get('userType');
         this.populateUserMap();
+        this.packageUnderReview = this.cookieService.get('reviewingPackage');
         this.api.getPackagesToBeApproved(this.userMap.get(this.userType)).subscribe(data => {
             this.packages = data;
             if (data.length === 0) {
@@ -62,6 +64,7 @@ export class ApproverHomepageComponent implements OnInit {
         this.userName = this.cookieService.get('userName');
         this.userId = parseInt(this.cookieService.get('user'), 10);
         this.user_id = this.cookieService.get('user');
+        //this.api.releaseReviewKey(1).subscribe(data => console.log(data));
     }
 
     // generate PDF before viewing
@@ -122,7 +125,20 @@ export class ApproverHomepageComponent implements OnInit {
 
     public populateInitialLocks() {
         this.packages.forEach(p => {
-            this.api.getReviewKey(p.id).subscribe(data => this.locks[p.id] = data ); // replace with new "get" endpoint
+            this.api.isMutexAvailable(p.id).subscribe(data => this.locks[p.id] = data );
         });
+    }
+
+    public reviewPackage(packageId: any) {
+        this.packageUnderReview = packageId;
+        this.cookieService.set('reviewingPackage', packageId);
+        this.api.getReviewKey(packageId).subscribe(data => console.log('get review key for package ' + packageId + ' ' + data));
+    }
+
+    public releaseReviewMutex(packageId: any) {
+        this.cookieService.set('reviewingPackage', '0');
+        console.log(this.cookieService.get('reviewingPackage'));
+        this.packageUnderReview = '0';
+        this.api.releaseReviewKey(packageId).subscribe(data => console.log('release review key for package ' + packageId + ' ' + data));
     }
 }

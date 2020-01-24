@@ -288,10 +288,18 @@ export class ApiService {
     });
   }
 
+  public isMutexAvailable(packageId: any) {
+    console.log('api-isMutexAvailable ' + packageId);
+    return this.http.get<any>(this.url + 'is_mutex_available', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
   public getPipelineAudit(pipelineId: any) {
     console.log('api-getPipelineRevisions ' + pipelineId);
     return this.http.get<PipelineRevisions[]>(this.url + '/pipeline_revisions', {
       params: new HttpParams().set('pipeline_id', pipelineId)
     });
   }
+
 }

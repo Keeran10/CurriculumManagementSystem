@@ -47,7 +47,7 @@ export class PipelineTrackingComponent implements OnInit {
   public correctUser = false;
   public userAllowedToEdit = false; // only dcc and ugsc are allowed to edit, other can only view
   public userMap = new Map();
-  public isEditLocked = false;
+  public isEditMutexAvailable = false;
   //public getPipelineID() {
   //this.pipelineId = 1; // will be replaced when connected to Packages
   //}
@@ -108,14 +108,15 @@ export class PipelineTrackingComponent implements OnInit {
 
   // on edit
   public packageSelect(packageId) {
-    this.cookieService.set('package', packageId);
-    console.log(packageId);
-    this.api.getEditKey(this.id).subscribe(data => this.isEditLocked = data ); // get the lock, review will be blocked
+    this.cookieService.set('editingPackage', this.id.toString());
+    console.log(this.cookieService.get('editingPackage'));
+    this.api.getEditKey(this.id).subscribe(data => 
+      console.log('get edit key of package ' + this.id.toString() + ' ' + data)); // get the lock, review will be blocked
     this.router.navigate(['/package']);
   }
   // on review
   public packageReview(packageId) {
-    this.cookieService.set('package', packageId);
+    this.cookieService.set('package', this.id.toString());
     console.log(packageId);
     this.router.navigate(['/homepage']);
   }
@@ -129,21 +130,18 @@ export class PipelineTrackingComponent implements OnInit {
     this.userMap.set('Senate', 'Senate');
   }
 
-  public getEditLock() {
-    this.api.getEditKey(this.id).subscribe(data => this.isEditLocked = data ); // replace this with new "get" endpoint
-  }
-
   public ngOnInit() {
     this.userType = this.cookieService.get('userType');
     console.log(this.userType);
     this.populateUserMap();
     //this.getPipelineID();
     this.getPackageID();
+    //this.checkMutex();
     this.getPipeline();
     this.getPackageLocation();
     this.getNewPipelineId();
     this.userId = this.cookieService.get('user');
-    this.getEditLock();
+    this.api.isMutexAvailable(this.id).subscribe(data =>  this.isEditMutexAvailable = data );
   }
 
   public seePipelineRevisions(pipelineId: any) {

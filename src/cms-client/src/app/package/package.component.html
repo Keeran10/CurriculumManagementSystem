@@ -32,7 +32,7 @@
               <br>
               <mat-accordion class="example-headers-align" multi="false">
                 <div *ngFor="let package of packages; let i = index">
-                    <mat-expansion-panel [expanded]>
+                    <mat-expansion-panel [expanded]="package.id == editingPackage">
                       <mat-expansion-panel-header>
                         <mat-panel-title>
                           <span>{{ packages[0].department.name}}, Dossier #{{package.id}}</span>
@@ -47,7 +47,7 @@
                         </a>
                       </div>
 
-                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0">
+                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
                         <div *ngFor="let request of package.requests">
                           <a class="request"
                             (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
@@ -63,17 +63,17 @@
                           -->
                         </div>
                       </div>
-                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0">
+                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
                         <br> <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
                           request</a>
                       </div >
                       <br><br>
-                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0">
+                      <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
                         <app-support-documents></app-support-documents>
                       </div>
                       <br>
 
-                      <div class="right" *ngIf="package.approvalPipelineRequestPackages.length == 0">
+                      <div class="right" *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
                         <!--
                         <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                             PDF</button>
@@ -86,8 +86,17 @@
                           <button mat-stroked-button color="primary">View All Revisions</button>
                         </a>
 
-                        <a (click)="packageSelect(package.id, 0, 'approval')">
+                        <a *ngIf="package.approvalPipelineRequestPackages.length == 0" (click)="packageSelect(package.id, 0, 'approval')">
                           <button mat-stroked-button color="primary">Submit for Approval</button>
+                        </a>
+
+                      </div>
+                      <div class="right">
+                        <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
+                          <button mat-stroked-button color="warn">Save/Send for Approval</button>
+                        </a>
+                        <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
+                          <button mat-stroked-button color="warn">Cancel Updates</button>
                         </a>
                       </div>
                     </mat-expansion-panel>
