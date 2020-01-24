@@ -63,6 +63,22 @@ body {
     padding: 0%;
     color: blue;
     text-decoration: underline;
+    background-color: transparent;
+}
+
+.seeRevisionsDiv {
+  font-size: 80%;
+  margin-left: 85%;
+}
+
+.seeRevisionsButton {
+  background-color: transparent;
+  border: none;
+  color: blue;
+}
+
+button:hover {
+  text-decoration: underline;
 }
 
 .seeRevisionsDiv {
