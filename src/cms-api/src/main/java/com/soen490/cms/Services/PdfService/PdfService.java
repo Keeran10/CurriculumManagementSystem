@@ -115,13 +115,12 @@ public class PdfService {
                 doc.setPageSize(PageSize.A4.rotate());
                 doc.setMargins(25, 25, 10, 25);
 
+                ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
+                PdfWriter.getInstance(doc, request_stream);
+
+                doc.open();
 
                 if(request.getTargetType() == 2) {
-
-                    ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
-                    PdfWriter.getInstance(doc, request_stream);
-
-                    doc.open();
 
                     // course requests
                     Course original_course = courseRepository.findById(request.getOriginalId());
@@ -155,24 +154,15 @@ public class PdfService {
 
                     }
 
-                    doc.close();
-
-                    request_streams.add(request_stream);
                 }
                 else if(request.getTargetType() == 1){
 
-                    ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
-                    PdfWriter.getInstance(doc, request_stream);
-
-                    doc.open();
-
                     // calendar request
                     pdfSection.addSectionPage(doc, request);
-
-                    doc.close();
-
-                    request_streams.add(request_stream);
                 }
+
+                doc.close();
+                request_streams.add(request_stream);
             }
 
         } catch (DocumentException | FileNotFoundException e){

@@ -166,7 +166,7 @@ public class RequestPackageController {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSubsection70719(subSection70719, sectionExtras, files);
+            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);

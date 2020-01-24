@@ -88,7 +88,7 @@ public class RequestPackageService {
      * @return True if susection70719 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSubsection70719(String subSections70719, String sectionExtras, MultipartFile[] files) throws JSONException {
+    public int saveSection70719(String subSections70719, String sectionExtras, MultipartFile[] files) throws JSONException {
 
         log.info("Json substring70719 received: " + subSections70719);
         log.info("Json subsectionExtras received: " + sectionExtras);
@@ -142,9 +142,9 @@ public class RequestPackageService {
         request.setRequestPackage(requestPackage);
 
         if(request.getId() == 0)
-            request.setTitle(section70719.getSectionId().toUpperCase() + "_create");
+            request.setTitle(section70719.getSectionId() + "_create");
         else
-            request.setTitle(section70719.getSectionId().toUpperCase() + "_update");
+            request.setTitle(section70719.getSectionId() + "_update");
 
         requestRepository.save(request);
 

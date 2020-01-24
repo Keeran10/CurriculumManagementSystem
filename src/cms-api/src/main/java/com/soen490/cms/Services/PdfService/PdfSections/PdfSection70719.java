@@ -2,6 +2,7 @@ package com.soen490.cms.Services.PdfService.PdfSections;
 
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfAction;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.soen490.cms.Models.Degree;
@@ -164,6 +165,7 @@ public class PdfSection70719 {
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100);
         float CELL_PADDING = 7f;
+        float LINE_SPACING = 17f;
 
         // static headers
         table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold))).setPadding(3f);
@@ -206,21 +208,36 @@ public class PdfSection70719 {
         present.add(header_present);
         present.add(Chunk.NEWLINE);
         present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
         proposed.add(header_proposed);
+        proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
 
         present.add(first_paragraph_present);
         present.add(Chunk.NEWLINE);
         present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
         proposed.add(first_paragraph_proposed);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        Chunk engineering_section = new Chunk("§71.20.5", arial_10);
+        engineering_section.setGenericTag("http://pages.itextpdf.com/ebook-stackoverflow-questions.html");
+        //engineering_section.setAction("");
 
         present.add(first_core_present);
         present.add(Chunk.NEWLINE);
+        present.add(new Chunk("See ", arial_10).setLineHeight(LINE_SPACING));
+        present.add(engineering_section);
         present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+
         proposed.add(first_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(new Chunk("See ", arial_10).setLineHeight(LINE_SPACING));
+        proposed.add(engineering_section);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
 
