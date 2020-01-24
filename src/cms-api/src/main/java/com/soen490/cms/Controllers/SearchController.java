@@ -23,6 +23,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Models.Sections.Section70719;
 import com.soen490.cms.Services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -93,4 +94,9 @@ public class SearchController {
     @GetMapping("/faculty_search")
     public Faculty getFaculty(@RequestParam String name){
         return searchService.findFacultyByName(name); }
+
+    // URL should be 8080/section70719
+    @GetMapping("/section70719")
+    public Section70719 getSection70719(){
+        return searchService.findsection70719ById(1); }
 }

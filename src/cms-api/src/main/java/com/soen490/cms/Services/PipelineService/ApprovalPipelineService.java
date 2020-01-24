@@ -125,7 +125,7 @@ public class ApprovalPipelineService {
 
         try{
             nextPosition = pipeline.get(currentPosition + 1); // get next position if it exists
-        } catch(NullPointerException | IndexOutOfBoundsException e) {
+        } catch(NullPointerException | ArrayIndexOutOfBoundsException e) {
             return finalizeDossierRequests(requestPackageRepository.findById(packageId), approvalPipelineRequestPackage, user);
         }
 
@@ -201,7 +201,9 @@ public class ApprovalPipelineService {
         boolean success = true;
 
         for(User user : users) {
-            //success = mailService.sendMailService(dossier.getId(), user);
+
+            if(user != null && !user.getEmail().contains("@soen.com"))
+                success = mailService.sendMailService(dossier.getId(), user);
         }
 
         return success;
@@ -227,53 +229,6 @@ public class ApprovalPipelineService {
     public String getRejectionRationale(int packageId) {
         RequestPackage requestPackage = requestPackageRepository.findById(packageId);
         return requestPackage.getRejectionRationale();
-    }
-
-    /**
-     * Pushes an approval package from one approving body to the previous one in the approval pipeline
-     *
-     * @param packageId
-     * @param pipelineId
-     * @param pipeline
-     * @param currentPosition
-     */
-    public void pushToPrevious(int packageId, int pipelineId, List<String> pipeline, int currentPosition, String rationale) {
-        log.info("push package " + packageId + " to previous position in pipeline");
-        String position = pipeline.get(currentPosition);
-        String previousPosition = pipeline.get(currentPosition + 1);
-        RequestPackage requestPackage = null;
-        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineRequestPackageRepository.findApprovalPipelineRequestPackage(pipelineId, packageId);
-
-        if(position.equals("Department Curriculum Committee")) {
-            requestPackage = dccService.sendPackage(packageId);
-        } else if(position.equals("Department Council")) {
-            requestPackage = departmentCouncilService.sendPackage(packageId);
-        } else if(position.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
-            requestPackage = undergradStudiesCommitteeService.sendPackage(packageId);
-        } else if(position.equals("Faculty Council")) {
-            requestPackage = facultyCouncilService.sendPackage(packageId);
-        } else if(position.equals("APC")) {
-            requestPackage = apcService.sendPackage(packageId);
-        } else if(position.equals("Senate")) {
-            requestPackage = senateService.sendPackage(packageId);
-        }
-
-        // push package to next service, update one-to-one relationship
-        if(previousPosition.equals("Department Curriculum Committee")) {
-            dccService.receivePackage(requestPackage);
-        } else if(previousPosition.equals("Department Council")) {
-            departmentCouncilService.receivePackage(requestPackage);
-        } else if(previousPosition.equals("Associate Dean Academic Programs Under Graduate Studies Committee")) {
-            undergradStudiesCommitteeService.receivePackage(requestPackage);
-        } else if(previousPosition.equals("Faculty Council")) {
-            facultyCouncilService.receivePackage(requestPackage);
-        } else if(previousPosition.equals("APC")) {
-            apcService.receivePackage(requestPackage);
-        } else if(previousPosition.equals("Senate")) {
-            senateService.receivePackage(requestPackage);
-        }
-        approvalPipelineRequestPackage.setPosition(pipeline.get(currentPosition + 1));
-        saveApprovalPipelineRequestPackage(approvalPipelineRequestPackage);
     }
 
     /**
