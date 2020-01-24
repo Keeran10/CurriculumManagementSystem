@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 import { ApiService } from '../backend-api.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Package } from '../models/package';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./approver-homepage.component.css']
 })
 
-export class ApproverHomepageComponent implements OnInit, OnDestroy {
+export class ApproverHomepageComponent implements OnInit {
 
     packages: Package[];
     userName = 'User';
