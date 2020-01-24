@@ -36,6 +36,10 @@
   min-height: 100vh;
 }
 
+body {
+    background-color: #F3E7E9;
+  }
+
 .container {
     margin: 30px;
     display: flex;
