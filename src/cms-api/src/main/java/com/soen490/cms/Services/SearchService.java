@@ -23,7 +23,9 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Models.Sections.Section70719;
 import com.soen490.cms.Repositories.*;
+import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,7 @@ public class SearchService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    SubSection70719Repository subSection70719Repository;
+    Section70719Repository section70719Repository;
     @Autowired
     DegreeRequirementRepository degreeRequirementRepository;
 
@@ -129,17 +131,17 @@ public class SearchService {
         return facultyRepository.findByName(name);
     }
 
-    public SubSection70719 findsection70719ById(int section_id){
+    public Section70719 findsection70719ById(int section_id){
 
-        log.info("find SubSection70719 " + section_id);
+        log.info("find Section70719 " + section_id);
 
-        SubSection70719 subSection70719 = subSection70719Repository.findBySubSectionId(section_id);
+        Section70719 section70719 = section70719Repository.findBySubSectionId(section_id);
 
         // can add as many core here for the entire section of 70.71.9
-        subSection70719.setFirstCoreCourses(retrieveSectionCourseLists(subSection70719.getFirstCore()));
-        subSection70719.setSecondCoreCourses(retrieveSectionCourseLists(subSection70719.getSecondCore()));
+        section70719.setFirstCoreCourses(retrieveSectionCourseLists(section70719.getFirstCore()));
+        section70719.setSecondCoreCourses(retrieveSectionCourseLists(section70719.getSecondCore()));
 
-        return subSection70719;
+        return section70719;
     }
 
     private List<Course> retrieveSectionCourseLists(String core) {

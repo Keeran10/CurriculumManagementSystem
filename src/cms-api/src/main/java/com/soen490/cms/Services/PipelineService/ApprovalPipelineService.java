@@ -203,7 +203,8 @@ public class ApprovalPipelineService {
         boolean success = true;
 
         for(User user : users) {
-            //success = mailService.sendMailService(dossier.getId(), user);
+            if(!user.getEmail().contains("@soen.com"))
+                success = mailService.sendMailService(dossier.getId(), user);
         }
 
         return success;

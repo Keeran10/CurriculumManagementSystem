@@ -4,15 +4,13 @@ package com.soen490.cms.Services.PdfService.PdfSections;
 import com.itextpdf.text.*;
 import com.soen490.cms.Models.Degree;
 import com.soen490.cms.Models.Request;
-import com.soen490.cms.Models.SubSection70719;
+import com.soen490.cms.Models.Sections.Section70719;
 import com.soen490.cms.Repositories.DegreeRepository;
-import com.soen490.cms.Repositories.SubSection70719Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
 
 import static com.soen490.cms.Services.PdfService.PdfUtil.times_10;
 import static com.soen490.cms.Services.PdfService.PdfUtil.times_10_bold;
@@ -23,34 +21,35 @@ public class PdfSection70719 {
 
 
     @Autowired
-    private SubSection70719Repository subSection70719Repository;
+    private Section70719Repository section70719Repository;
     @Autowired
     private DegreeRepository degreeRepository;
 
-    static int SECTION70719_DEGREE_ID = 1;
+    private static int SECTION70719_DEGREE_ID = 1;
 
     public void addSectionPage(Document doc, Request request) {
 
-        SubSection70719 subSection70719_present = null;
-        SubSection70719 subSection70719_proposed = null;
+        Section70719 section70719_present = null;
+        Section70719 section70719_proposed = null;
 
         if(request.getRequestType() == 2) {
-            subSection70719_present = subSection70719Repository.findById(request.getOriginalId());
-            subSection70719_proposed = subSection70719Repository.findById(request.getTargetId());
+            section70719_present = section70719Repository.findById(request.getOriginalId());
+            section70719_proposed = section70719Repository.findById(request.getTargetId());
         }
 
-        doc = addSectionPreface(doc, request, subSection70719_proposed);
-        addSectionDiffTable(doc, request, subSection70719_present, subSection70719_proposed);
+        doc = addSectionPreface(doc, request, section70719_proposed);
+        addSectionDiffTable(doc, request, section70719_present, section70719_proposed);
     }
 
 
-    public Document addSectionPreface(Document doc, Request request, SubSection70719 subSection70719){
+    public Document addSectionPreface(Document doc, Request request, Section70719 section70719){
 
         // preface paragraph
         Paragraph preface1 = new Paragraph();
 
         Phrase page_header = new Phrase();
-        page_header.add(new Chunk("PACKAGE_" + request.getRequestPackage().getId(), times_10));
+        page_header.add(new Chunk(request.getRequestPackage().getDepartment().getName() + ", dossier_" +
+                request.getRequestPackage().getId(), times_10));
 
         preface1.add(page_header);
         preface1.add(Chunk.NEWLINE);
@@ -58,7 +57,7 @@ public class PdfSection70719 {
 
         Phrase request_type_phrase = new Phrase();
         request_type_phrase.add(new Chunk("CALENDAR CHANGE: ", times_10_bold));
-        request_type_phrase.add(new Chunk(subSection70719.getSectionTitle(), times_10));
+        request_type_phrase.add(new Chunk(section70719.getSectionTitle(), times_10));
 
 
         preface1.add(request_type_phrase);
@@ -136,7 +135,7 @@ public class PdfSection70719 {
 
         calendar.add(Chunk.TABBING);
 
-        calendar.add(new Chunk("§" + subSection70719.getSectionId(), times_10));
+        calendar.add(new Chunk("§" + section70719.getSectionId(), times_10));
 
         preface3.add(calendar);
         preface3.add(Chunk.NEWLINE);
@@ -156,7 +155,7 @@ public class PdfSection70719 {
     }
 
 
-    private void addSectionDiffTable(Document doc, Request request, SubSection70719 subSection70719_present, SubSection70719 subSection70719_proposed) {
+    private void addSectionDiffTable(Document doc, Request request, Section70719 section70719_present, Section70719 section70719_proposed) {
 
 
     }

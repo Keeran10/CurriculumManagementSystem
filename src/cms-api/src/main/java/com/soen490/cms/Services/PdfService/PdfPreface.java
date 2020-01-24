@@ -38,8 +38,9 @@ public class PdfPreface {
         Paragraph preface1 = new Paragraph();
 
         Phrase page_header = new Phrase();
-        page_header.add(new Chunk("PACKAGE_" + request.getRequestPackage().getId() + ": " +
-                "REQUEST_" + request.getId(), times_10));
+        page_header.add(new Chunk(request.getRequestPackage().getDepartment().getName() + ", dossier_" +
+                request.getRequestPackage().getId(), times_10));
+
 
         preface1.add(page_header);
         preface1.add(Chunk.NEWLINE);
@@ -292,7 +293,9 @@ public class PdfPreface {
         Paragraph preface1 = new Paragraph();
 
         Phrase page_header = new Phrase();
-        page_header.add(new Chunk("PACKAGE_" + requestPackage.getId(), times_10));
+        page_header.add(new Chunk(requestPackage.getDepartment().getName() + ", dossier_" +
+                requestPackage.getId(), times_10));
+
 
         preface1.add(page_header);
         preface1.add(Chunk.NEWLINE);

@@ -1,13 +1,11 @@
 package com.soen490.cms;
 
-import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Controllers.RequestPackageController;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.RequestRepository;
-import com.soen490.cms.Repositories.SubSection70719Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
 import com.soen490.cms.Services.RequestPackageService;
-import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -18,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +37,7 @@ public class RequestPackageTest {
     @Autowired
     private RequestPackageController requestPackageController;
     @Autowired
-    private SubSection70719Repository subSection70719Repository;
+    private Section70719Repository section70719Repository;
 
     @Before
     public void init(){
@@ -240,6 +237,6 @@ public class RequestPackageTest {
 
         requestPackageController.saveSubSection70719(section70719JSON, section70719ExtrasJSON, null);
 
-        assertEquals("test", subSection70719Repository.findById(2).getFirstParagraph());
+        assertEquals("test", section70719Repository.findById(2).getFirstParagraph());
     }
 }

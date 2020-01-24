@@ -24,7 +24,9 @@ package com.soen490.cms.Services;
 
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Models.Sections.Section70719;
 import com.soen490.cms.Repositories.*;
+import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
 import com.soen490.cms.Services.PdfService.PdfService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
@@ -63,7 +65,7 @@ public class RequestPackageService {
     @Autowired
     private PdfService pdfService;
     @Autowired
-    private SubSection70719Repository subSection70719Repository;
+    private Section70719Repository section70719Repository;
 
 
     // Return package with right id, if id given is 0, a new package is created and returned
@@ -108,30 +110,30 @@ public class RequestPackageService {
 
         User user = userRepository.findById(user_id);
 
-        SubSection70719 subSection70719 = null;
+        Section70719 section70719 = null;
 
         if (request == null) {
             request = new Request();
-            subSection70719 = new SubSection70719();
+            section70719 = new Section70719();
         } else {
-            subSection70719 = subSection70719Repository.findById(request.getTargetId());
+            section70719 = section70719Repository.findById(request.getTargetId());
         }
 
         JSONObject subSection70719JSON = new JSONObject(subSections70719);
 
-        subSection70719.setSecondCore((String) subSection70719JSON.get("second_core"));
-        subSection70719.setFirstCore((String) subSection70719JSON.get("first_core"));
-        subSection70719.setFirstParagraph((String) subSection70719JSON.get("first_paragraph"));
-        subSection70719.setSectionId((String) subSection70719JSON.get("section_id"));
-        subSection70719.setSectionTitle((String) subSection70719JSON.get("section_title"));
-        subSection70719.setIsActive(0);
+        section70719.setSecondCore((String) subSection70719JSON.get("second_core"));
+        section70719.setFirstCore((String) subSection70719JSON.get("first_core"));
+        section70719.setFirstParagraph((String) subSection70719JSON.get("first_paragraph"));
+        section70719.setSectionId((String) subSection70719JSON.get("section_id"));
+        section70719.setSectionTitle((String) subSection70719JSON.get("section_title"));
+        section70719.setIsActive(0);
 
-        subSection70719Repository.save(subSection70719);
+        section70719Repository.save(section70719);
 
         // Requests
         request.setRequestType(2); // update
         request.setTargetType(1); // calendar change
-        request.setTargetId(subSection70719.getId());
+        request.setTargetId(section70719.getId());
         request.setOriginalId((Integer) subSection70719JSON.get("id"));
         request.setRationale((String) sectionExtrasJSON.get("rationale"));
         request.setResourceImplications((String) sectionExtrasJSON.get("implications"));
@@ -140,13 +142,13 @@ public class RequestPackageService {
         request.setRequestPackage(requestPackage);
 
         if(request.getId() == 0)
-            request.setTitle(subSection70719.getSectionId().toUpperCase() + "_create");
+            request.setTitle(section70719.getSectionId().toUpperCase() + "_create");
         else
-            request.setTitle(subSection70719.getSectionId().toUpperCase() + "_update");
+            request.setTitle(section70719.getSectionId().toUpperCase() + "_update");
 
         requestRepository.save(request);
 
-        log.info("section70719 saved: " + subSection70719);
+        log.info("section70719 saved: " + section70719);
         log.info("request saved: " + request);
 
         requestPackage.getRequests().add(request);

@@ -1,5 +1,6 @@
-package com.soen490.cms.Models;
+package com.soen490.cms.Models.Sections;
 
+import com.soen490.cms.Models.Course;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class SubSection70719 {
+public class Section70719 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
