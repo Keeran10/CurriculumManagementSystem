@@ -129,6 +129,10 @@ export class ApiService {
     });
   }
 
+  public getCalendar(){
+    return this.http.get<any>(this.url + 'section70719');
+  }
+
   public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
       params: new HttpParams().set('package_id', packageId).set('user_id', userId)

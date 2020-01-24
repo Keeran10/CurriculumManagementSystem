@@ -48,6 +48,10 @@
                       </div>
 
                       <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
+                        <div>
+                          <a (click)=>{{ packages[0].department.name}} Calendar</a>
+                        </div>
+
                         <div *ngFor="let request of package.requests">
                           <a class="request"
                             (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:

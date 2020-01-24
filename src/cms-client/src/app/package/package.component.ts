@@ -126,4 +126,8 @@ export class PackageComponent implements OnInit {
     this.editingPackage = '0'; // release the package from editing
     this.api.releaseEditKey(packageId).subscribe(data => console.log('Release edit key of package ' + packageId + ' ' + data));
   }
+
+  public getCalendar(){
+    this.api.getCalendar().subscribe(data => console.log(data));
+  }
 }
