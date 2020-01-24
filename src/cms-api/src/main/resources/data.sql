@@ -102,7 +102,7 @@ INSERT IGNORE INTO course VALUES (13, 3.50, 'Students work in teams to design an
 INSERT IGNORE INTO course VALUES (14, 4.00, 'Students work in teams of at least four members to construct a significant software application. The class meets at regular intervals. Team members will give a presentation of their contribution to the project. Lectures: one hour per week. Laboratory: two hours per week. Two terms.',
 1, 2, 1, 1, 'SOEN', "",  490, 'Capstone Software Engineering Design Project', 0, 1);
 INSERT IGNORE INTO course VALUES (15, 4.00, 'Architectural activities, roles, and deliverables. Architectural view models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, process control) and frameworks. Architectural analysis and the interplay with requirements elicitation. Notations for expressing architectural designs, structural and behavioural specifications. From architectural design to detailed design. Domain specific architectures and design patterns. Evaluation and performance estimation of designs. Advanced object‑oriented design patterns and idioms. Lectures: three hours per week. Tutorial: one hour per week.',
-0, 0, 3, 2, 'SOEN', "", 6441, 'Advanced Software Architecture and Design', 1, 1);
+0, 0, 3, 2, 'SOEN', "", 344, 'Advanced Software Architecture and Design', 1, 1);
 
 INSERT IGNORE INTO course VALUES (16, 3.00, 'Resultant of force systems; equilibrium of particles and rigid bodies; distributed forces; statically determinate systems; trusses; friction; moments of inertia; virtual work. Shear and bending moment diagrams. Lectures: three hours per week. Tutorial: two hours per week.',
 1, 0, 3, 1, 'ENGR', "", 242, 'Statics', 2, 3);
@@ -254,7 +254,6 @@ INSERT IGNORE INTO degree_requirement VALUES (11, "Software Engineering Core", 1
 INSERT IGNORE INTO degree_requirement VALUES (12, "Software Engineering Core", 12, 1);
 INSERT IGNORE INTO degree_requirement VALUES (13, "Software Engineering Core", 13, 1);
 INSERT IGNORE INTO degree_requirement VALUES (14, "Software Engineering Core", 14, 1);
-INSERT IGNORE INTO degree_requirement VALUES (15, "Computer Science Electives; Graduate", 15, 2);
 INSERT IGNORE INTO degree_requirement VALUES (16, "Computer Science Electives", 15, 1);
 INSERT IGNORE INTO degree_requirement VALUES (17, "Mechanical Engineering Core", 16, 5);
 INSERT IGNORE INTO degree_requirement VALUES (18, "Mechanical Engineering Core", 17, 5);

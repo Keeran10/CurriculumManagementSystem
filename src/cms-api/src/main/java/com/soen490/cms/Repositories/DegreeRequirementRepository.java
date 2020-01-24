@@ -33,7 +33,7 @@ import java.util.List;
 public interface DegreeRequirementRepository extends JpaRepository<DegreeRequirement, Integer> {
 
     @Query(value = "SELECT degree_id FROM degree_requirement WHERE core=?", nativeQuery = true)
-    int findDegreeByCore(String core);
+    List<Integer> findDegreeByCore(String core);
 
     @Query(value = "SELECT course_id FROM degree_requirement WHERE core=?", nativeQuery = true)
     List<Integer> findCoursesByCore(String core);

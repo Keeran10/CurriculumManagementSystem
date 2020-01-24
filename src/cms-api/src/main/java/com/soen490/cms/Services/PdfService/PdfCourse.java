@@ -555,7 +555,7 @@ public class PdfCourse {
                                             impact_line = ("- Course will be migrated to: " + updated_pair.getKey() + ".");
                                         }
                                         else if(Double.valueOf(updated_pair.getValue().toString()) > temp_credits){
-                                            impact_line = ("- Core credits will be added to become: " +
+                                            impact_line = ("- Core credits will be changed to become: " +
                                                     updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
                                         }
                                         else{
@@ -591,7 +591,7 @@ public class PdfCourse {
                                             impact_line = ("- Course will be removed from: " + updated_pair.getKey() + ".");
                                         }
                                         else {
-                                            impact_line = ("- Core credits will be added to become: " +
+                                            impact_line = ("- Core credits will be changed to become: " +
                                                     updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
                                         }
 
@@ -623,7 +623,7 @@ public class PdfCourse {
                                             impact_line = ("- Course will be migrated to: " + updated_pair.getKey() + ".");
                                         }
                                         else {
-                                            impact_line = ("- Core credits will be added to become: " +
+                                            impact_line = ("- Core credits will be changed to become: " +
                                                     updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
                                         }
 

@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.soen490.cms.Services.PdfService.PdfUtil.times_10;
@@ -314,10 +315,37 @@ public class PdfPreface {
         Phrase proposed = new Phrase();
         proposed.add(new Chunk("Proposed: ", times_10_bold));
 
-        int degree_id = degreeRequirementRepository.findDegreeByCore(core);
-        Degree degree = degreeRepository.findById(degree_id);
+        List<Integer> degree_ids = degreeRequirementRepository.findDegreeByCore(core);
+        List<Degree> core_degrees = new ArrayList<>();
+        boolean undergrad = false;
+        boolean grad = false;
 
-        if(degree.getLevel() < 2)
+        for(int degree_id : degree_ids) {
+            Degree degree = degreeRepository.findById(degree_id);
+            core_degrees.add(degree);
+
+            if(degree.getLevel() == 1)
+                undergrad = true;
+            else
+                grad = true;
+        }
+
+        Degree degree = null;
+
+        for(Degree d : core_degrees){
+
+            if(requestPackage.getDepartment().getId() == d.getProgram().getDepartment().getId()) {
+                degree = d;
+                break;
+            }
+        }
+
+        if(degree == null)
+            degree = core_degrees.get(0);
+
+        if(undergrad && grad)
+            proposed.add(new Chunk("Undergraduate And Graduate Curriculum Changes", times_10));
+        else if(undergrad)
             proposed.add(new Chunk("Undergraduate Curriculum Changes", times_10));
         else
             proposed.add(new Chunk("Graduate Curriculum Changes", times_10));
@@ -345,7 +373,7 @@ public class PdfPreface {
         Phrase faculty = new Phrase();
         faculty.add(new Chunk("Faculty/School:", times_10_bold));
         faculty.add(Chunk.TABBING);
-        faculty.add(new Chunk(degree.getProgram().getDepartment().getFaculty().getName(), times_10));
+        faculty.add(new Chunk(requestPackage.getDepartment().getFaculty().getName(), times_10));
         preface3.add(faculty);
         preface3.add(Chunk.NEWLINE);
 
@@ -353,7 +381,7 @@ public class PdfPreface {
         Phrase department = new Phrase();
         department.add(new Chunk("Department:", times_10_bold));
         department.add(Chunk.TABBING);
-        department.add(new Chunk(degree.getProgram().getDepartment().getName(), times_10));
+        department.add(new Chunk(requestPackage.getDepartment().getName(), times_10));
         preface3.add(department);
         preface3.add(Chunk.NEWLINE);
 
@@ -375,7 +403,10 @@ public class PdfPreface {
 
         // calendar phrase
         Phrase calendar = new Phrase();
-        if(degree.getLevel() < 2)
+        if (undergrad && grad) {
+            calendar.add(new Chunk("Calendar Section(s):", times_10_bold));
+        }
+        else if(undergrad)
             calendar.add(new Chunk("Undergraduate Calendar Section:", times_10_bold));
         else
             calendar.add(new Chunk("Graduate Page Number:", times_10_bold));
