@@ -131,7 +131,7 @@ public class RequestPackageTest {
     @Test
     public void testSaveCreateCourseRequest(){
 
-        String course = "{\"id\":0,\"name\":\"SOEN\",\"number\":344,\"title\":\"Advanced Software Architecture and" +
+        String course = "{\"id\":0,\"name\":\"SOEN\",\"number\":\"344\",\"title\":\"Advanced Software Architecture and" +
                 " Design\",\"credits\":\"5\",\"note\":\"\",\"level\":2,\"lectureHours\":3,\"tutorialHours\":1,\"" +
                 "labHours\":0,\"description\":\"Architectural activities, roles, and deliverables. Architectural view" +
                 " models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, " +
@@ -226,7 +226,7 @@ public class RequestPackageTest {
 
     // Assert subsection functionality
     @Test
-    public void testSubSectionSave(){
+    public void testSectionSave(){
 
         String section70719JSON = "{\"id\":1,\"first_core\":\"Engineering Core\",\"second_core\":\"Software Engineering Core\"," +
                 "\"first_paragraph\":\"test\",\"isActive\":0,\"section_id\":\"70.71.9\", " +

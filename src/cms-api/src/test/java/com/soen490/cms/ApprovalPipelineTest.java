@@ -95,10 +95,12 @@ public class ApprovalPipelineTest {
         dccUser = new User();
         dccUser.setId(1);
         dccUser.setUserType("Department Curriculum Committee");
+        dccUser.setEmail("Dcc@soen.com");
         //
         senateUser = new User();
         senateUser.setId(2);
         senateUser.setUserType("Senate");
+        senateUser.setEmail("Senate@soen.com");
 
         userList = new ArrayList<>();
         userList.add(dccUser);
