@@ -81,6 +81,21 @@ button:hover {
   text-decoration: underline;
 }
 
+.seeRevisionsDiv {
+  font-size: 80%;
+  margin-left: 85%;
+}
+
+.seeRevisionsButton {
+  background-color: transparent;
+  border: none;
+  color: blue;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
 
 @media screen and (max-width: 600px) {
   .hg {
