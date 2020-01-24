@@ -1,0 +1,68 @@
+/* // MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE. */
+.hg__main { grid-area: main; }
+.hg__footer { grid-area: footer; }
+
+.hg {
+  display: grid;
+  grid-template-areas: "main main main"
+  "main main main"
+  "footer footer footer";
+  grid-template-columns: 150px 1fr 150px;
+  grid-template-rows: 100px
+  1fr
+  80px;
+  min-height: 100vh;
+}
+
+body{
+  background-color: #F3E7E9;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin: 2% 10% 20% 30%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.input-field.col.s12 {
+  margin-left: 409px;
+}
+
+h1 {
+  margin: 3% 10% 0% 30%;
+  font-family: Calibri;
+  color: black;
+}
+
+@media screen and (max-width: 600px) {
+  .hg {
+    grid-template-areas: "header" "main" "main" "main" "footer";
+    grid-template-columns: 100%;
+    grid-template-rows: 100px 50px 1fr 50px 30px;
+  }
+}
