@@ -32,6 +32,7 @@ import { Package } from './models/package';
 import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
+import { PipelineRevisions } from './models/pipeline-revisions';
 
 @Injectable({
   providedIn: 'root'
@@ -252,4 +253,53 @@ export class ApiService {
 
     return formdata;
   }
+
+  public getPackagesToBeApproved(userType: string) {
+    return this.http.get<Package[]>(this.url + 'get_packages_by_type', {
+      params: new HttpParams().set('userType', userType)
+    });
+  }
+
+  public getEditKey(packageId: any) {
+    console.log('api-getEditKey ' + packageId);
+    return this.http.get<any>(this.url + 'get_edit_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public getReviewKey(packageId: any) {
+    console.log('api-getReviewKey ' + packageId);
+    return this.http.get<any>(this.url + 'get_review_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public releaseEditKey(packageId: any) {
+    console.log('api-releaseEditKey ' + packageId);
+    return this.http.get<any>(this.url + 'release_edit_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public releaseReviewKey(packageId: any) {
+    console.log('api-releaseReviewKey ' + packageId);
+    return this.http.get<any>(this.url + 'release_review_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public isMutexAvailable(packageId: any) {
+    console.log('api-isMutexAvailable ' + packageId);
+    return this.http.get<any>(this.url + 'is_mutex_available', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public getPipelineAudit(pipelineId: any) {
+    console.log('api-getPipelineRevisions ' + pipelineId);
+    return this.http.get<PipelineRevisions[]>(this.url + '/pipeline_revisions', {
+      params: new HttpParams().set('pipeline_id', pipelineId)
+    });
+  }
+
 }

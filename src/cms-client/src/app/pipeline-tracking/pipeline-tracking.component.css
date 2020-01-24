@@ -41,7 +41,9 @@ body {
 }
 
 .container {
-    margin: 30px;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    padding-top: none;
 }
 
 .item {
@@ -61,6 +63,37 @@ body {
     padding: 0%;
     color: blue;
     text-decoration: underline;
+    background-color: transparent;
+}
+
+.seeRevisionsDiv {
+  font-size: 80%;
+  margin-left: 85%;
+}
+
+.seeRevisionsButton {
+  background-color: transparent;
+  border: none;
+  color: blue;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+.seeRevisionsDiv {
+  font-size: 80%;
+  margin-left: 85%;
+}
+
+.seeRevisionsButton {
+  background-color: transparent;
+  border: none;
+  color: blue;
+}
+
+button:hover {
+  text-decoration: underline;
 }
 
 

@@ -24,12 +24,17 @@
   <app-top-nav-bar></app-top-nav-bar>
 </header>
 <main class="hg__main">
+
+    <div class="seeRevisionsDiv">
+        <button (click)="seePipelineRevisions(pipelineId)" class="seeRevisionsButton">see all revisions</button>
+    </div>
+
 <div class="container">
 
     <h2>Approval Pipeline Tracking Package (ID: #{{ id }})</h2>
 
     <table>
-        <tbody>
+        <tbody *ngIf="approved != true">
             <tr *ngFor="let item of pipeline; let i=index">
 
                 <td  *ngIf="i < packageLocation && item !== null">
@@ -64,11 +69,19 @@
 
                 <td>
                     <div class="item" >{{ item }}</div>
-                    <div *ngIf="i < packageLocation" class="status">package (edit | <button class="view" (click)="viewPdf()">view pdf</button>)</div>
-                    <div *ngIf="i == packageLocation" class="status">package under review...</div>
+                    <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==true && isEditMutexAvailable==true && isProfessor==false" class="status">package (<button class="view" (click)="packageSelect(packageId)">edit</button>||<button class="view" (click)="viewPdf()">view</button>||<button class="view" (click)="packageReview(packageId)">review</button>)</div>
+                    <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==true && isEditMutexAvailable==false" class="status">package currently being reviewed... (<button class="view" (click)="viewPdf()">view</button>)</div>
+                    <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==false" class="status">package under review... (<button class="view" (click)="viewPdf()">view</button>)</div>
+                    <div *ngIf="i < packageLocation" class="status">package (<button class="view" (click)="viewPdf()">view</button>)</div>
+                    <div *ngIf="i == packageLocation && correctUser==false" class="status">package under review...</div>
+                    <div *ngIf="i == packageLocation && userAllowedToEdit==true && isProfessor==true && isEditMutexAvailable==true" class="status">package (<button class="view" (click)="packageSelect(packageId)">edit</button>)</div>
                 </td>
 
                 </tr>
+            </tbody>
+            <tbody *ngIf="approved==true">
+                <br />
+                Package #{{ id }} has been approved and is no longer in the approval pipeline.
             </tbody>
     </table>
 </div>

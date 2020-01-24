@@ -2,10 +2,13 @@ package com.soen490.cms.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 @Entity
 @Data
@@ -23,8 +26,10 @@ public class ApprovalPipelineRequestPackage implements Serializable {
     @JoinColumn(name = "package_id")
     private RequestPackage requestPackage;
 
+    @Audited
     private String position;
 
+    @Audited(targetAuditMode = NOT_AUDITED)
     @JsonIgnoreProperties({"supportingDocuments", "requests", "approvals", "approvalPipelineRequestPackages"})
     @ManyToOne
     @JoinColumn(name = "user_id")

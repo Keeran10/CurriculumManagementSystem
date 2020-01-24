@@ -19,7 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
-
 .hg__main { grid-area: main; }
 .hg__header { grid-area: header; }
 .hg__footer { grid-area: footer; }
@@ -40,92 +39,24 @@ body {
   background-color: #F3E7E9;
 }
 
-mat-card{
-  right: 0px;
-  padding: 0;
-  margin-left: 120px;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  max-width: 1200px;
+table td {
+  table-layout:fixed;
+  width: 5%;
+  overflow:hidden;
+  word-wrap:break-word;
 }
 
-.outerMatCard{
-  background-color: #F3E7E9;
+table tr:nth-child(even){
+    background-color: #f2f2f2;
+    display: block;
 }
 
-.container{
-    display: grid;
-    grid-template-columns: 300px auto;
-    grid-template-rows: 150px auto 100px;
-    margin-left: 0;
-    margin-right: 50px;
-    background-color: #F3E7E9;
+table {
+    margin: 2%;
 }
 
-
-.packages{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 3;
-    background-color: #F3E7E9;
-
-}
-
-.bottom{
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 3;
-    grid-row-end: 4;
-}
-
-.inner-container{
-    display: grid;
-    grid-template-columns: 7fr 1fr;
-    grid-template-rows: auto;
-    margin-left: 1px;
-}
-
-.left{
-    grid-column-start: 1;
-    grid-column-end: 2;
-    padding-left: 10px;
-    padding-top: 10px;
-}
-
-.right{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    justify-self: auto;
-    align-self: auto;
-}
-
-.mat-stroked-button{
-  margin: 5px;
-}
-
-.mat-raised-button{
-  margin: 10px;
-}
-
-.request {
-    color: dodgerblue;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-.new-request{
-  color: crimson;
-}
-
-.seeRevisionsButton {
-  background-color: transparent;
-  border: none;
-  color: blue;
-}
-
-.mutexButtons {
-  margin-left: 70%;
+h4 {
+    margin: 2%;
 }
 
 @media screen and (max-width: 600px) {
@@ -135,4 +66,3 @@ mat-card{
     grid-template-rows: 100px 50px 1fr 50px 30px;
   }
 }
-

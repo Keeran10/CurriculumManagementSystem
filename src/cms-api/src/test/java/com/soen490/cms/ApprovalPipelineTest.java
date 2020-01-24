@@ -49,6 +49,9 @@ public class ApprovalPipelineTest {
     @Autowired
     ApprovalPipelineService approvalPipelineService;
 
+    @Autowired
+    ApprovalPipelineController approvalPipelineController;
+
     @MockBean
     ApprovalPipelineRequestPackageRepository approvalPipelineRequestPackageRepository;
 
@@ -141,5 +144,22 @@ public class ApprovalPipelineTest {
         approvalPipelineRequestPackage.setPosition("Senate");
         String finalApprovalMessage = approvalPipelineService.finalizeDossierRequests(requestPackage, approvalPipelineRequestPackage, senateUser);
         assertEquals("Making the requested changes to the database", finalApprovalMessage);
+    }
+
+    @Test
+    public void testSynchronous() throws InterruptedException {
+        approvalPipelineController.getEditKey(1); // cannot review package 1
+        approvalPipelineController.getReviewKey(2); // cannot edit package 2
+
+        assertEquals(false, approvalPipelineController.getReviewKey(1));
+        assertEquals(false, approvalPipelineController.getEditKey(2));
+
+        approvalPipelineController.releaseEditKey(1);
+        assertEquals(false, approvalPipelineController.getEditKey(2));
+        assertEquals(true, approvalPipelineController.getReviewKey(1));
+
+        approvalPipelineController.releaseReviewKey(2);
+        assertEquals(false, approvalPipelineController.getEditKey(1));
+        assertEquals(true, approvalPipelineController.getReviewKey(2));
     }
 }

@@ -39,6 +39,7 @@ export class PackageComponent implements OnInit {
 
   packages = new Array();
   isPdfAvailable = new Array();
+  isSubmitted = new Array();
   userName = 'User';
   userId = '0';
   selectedFiles: FileList;
@@ -46,10 +47,12 @@ export class PackageComponent implements OnInit {
   msg;
   files: File[] = [];
   step = 0;
+  editingPackage = '0'; // if coming from pipeline to edit
 
   constructor(private cookieService: CookieService,
               private api: ApiService,
-              private router: Router) { }
+              private router: Router) {
+               }
 
   ngOnInit() {
      // let departmentId = this.cookieService.get('department'); // replace 4 with department id
@@ -60,6 +63,8 @@ export class PackageComponent implements OnInit {
     });
      this.userName = this.cookieService.get('userName');
      this.userId = this.cookieService.get('user');
+     this.editingPackage = this.cookieService.get('editingPackage');
+     console.log(this.editingPackage);
   }
 
   public packageSelect(packageId, requestId, href) {
@@ -113,5 +118,12 @@ export class PackageComponent implements OnInit {
         console.log(response.body);
       }
     });
+  }
+
+  public releaseMutex(packageId: any) {
+    this.cookieService.set('editingPackage', '0'); // release the package from editing
+    console.log(this.cookieService.get('editingPackage'));
+    this.editingPackage = '0'; // release the package from editing
+    this.api.releaseEditKey(packageId).subscribe(data => console.log('Release edit key of package ' + packageId + ' ' + data));
   }
 }
