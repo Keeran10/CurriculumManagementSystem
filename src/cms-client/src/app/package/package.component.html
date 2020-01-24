@@ -93,7 +93,7 @@
                       </div>
                       <div class="right">
                         <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
-                          <button mat-stroked-button color="warn">Save/Send for Approval</button>
+                          <button mat-stroked-button color="warn">Save and Quit</button>
                         </a>
                         <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
                           <button mat-stroked-button color="warn">Cancel Updates</button>

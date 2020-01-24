@@ -99,8 +99,7 @@ export class PipelineTrackingComponent implements OnInit {
     this.api.viewPdf(this.id.toString()).subscribe(data => {
       const file = new Blob([data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
-      window.open(fileURL, '_blank');
-      // for Mac: window.location.assign(fileURL); instead of .open
+      window.location.assign(fileURL);
     });
   }
 
