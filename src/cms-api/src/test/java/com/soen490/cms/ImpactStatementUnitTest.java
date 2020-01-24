@@ -24,10 +24,17 @@ package com.soen490.cms;
 
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.SectionRepository;
+import com.soen490.cms.Services.ImpactAssessmentService;
 import com.soen490.cms.Services.SearchService;
 import com.soen490.cms.Services.ImpactAssessmentCourseService;
+import lombok.extern.log4j.Log4j2;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +44,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@Log4j2
 public class ImpactStatementUnitTest {
 
     SearchService searchService = mock(SearchService.class);
     SectionRepository sectionRepository = mock(SectionRepository.class);
     Course course;
     ImpactAssessmentCourseService impactAssessmentCourse;
+
+    @Autowired
+    ImpactAssessmentService impactAssessmentService;
 
     @Before
     public void initiation(){
@@ -130,5 +144,21 @@ public class ImpactStatementUnitTest {
 
         assertThat(mapResponse.containsValue(course.getName())).isEqualTo(true);
         assertThat(mapResponse.containsValue(course.getNumber())).isEqualTo(true);
+    }
+
+
+    @Test
+    public void testGetCourseImpact(){
+
+        String requestForm = "{\"params\":{\"updates\":[{\"param\":\"course\",\"value\":\"{\\\"id\\\":8,\\\"name\\\":\\\"SOEN\\\",\\\"number\\\":344,\\\"title\\\":\\\"Advanced Software Architecture and Design\\\",\\\"credits\\\":\\\"5\\\",\\\"note\\\":\\\"\\\",\\\"level\\\":2,\\\"lectureHours\\\":3,\\\"tutorialHours\\\":1,\\\"labHours\\\":0,\\\"description\\\":\\\"Architectural activities, roles, and deliverables. Architectural view models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, process control) and frameworks. Architectural analysis and the interplay with requirements elicitation. Notations for expressing architectural designs, structural and behavioural specifications. From architectural design to detailed design. Domain specific architectures and design patterns. Evaluation and performance estimation of designs. Advanced object‑oriented design patterns and idioms. Lectures: three hours per week. Tutorial: one hour per week.\\\",\\\"isActive\\\":0,\\\"program\\\":{\\\"id\\\":1,\\\"name\\\":\\\"Software Engineering\\\",\\\"description\\\":\\\"The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics. The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.\\\",\\\"isActive\\\":1,\\\"department\\\":{\\\"id\\\":4,\\\"name\\\":\\\"Computer Science & Software Engineering\\\",\\\"faculty\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Gina Cody School of Engineering and Computer Science\\\"}}},\\\"requisites\\\":[{\\\"id\\\":7,\\\"name\\\":\\\"SOEN\\\",\\\"number\\\":343,\\\"type\\\":\\\"prerequisite\\\",\\\"isActive\\\":0},{\\\"id\\\":8,\\\"name\\\":\\\"SOEN\\\",\\\"number\\\":384,\\\"type\\\":\\\"prerequisite\\\",\\\"isActive\\\":0}],\\\"degreeRequirements\\\":[{\\\"id\\\":16,\\\"core\\\":\\\"Computer Science Electives\\\",\\\"degree\\\":{\\\"id\\\":1,\\\"name\\\":\\\"Bachelor of Software Engineering (BEng)\\\",\\\"level\\\":1,\\\"credits\\\":120}}]}\",\"op\":\"s\"},{\"param\":\"courseExtras\",\"value\":\"{\\\"antirequisites\\\":\\\"\\\",\\\"corequisites\\\":\\\"SOEN357;\\\",\\\"equivalents\\\":\\\"\\\",\\\"implications\\\":\\\"\\\",\\\"packageId\\\":1,\\\"prerequisites\\\":\\\"SOEN343; SOEN384;\\\",\\\"rationale\\\":\\\"\\\",\\\"userId\\\":1,\\\"requestId\\\":1}\",\"op\":\"s\"}],\"cloneFrom\":{\"updates\":null,\"cloneFrom\":null,\"encoder\":{},\"map\":null},\"encoder\":{},\"map\":null}}\n";
+
+        Map<String, Object> impact_report = null;
+        try {
+            impact_report = impactAssessmentService.getCourseImpact(requestForm);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        assertThat(impact_report != null && !impact_report.isEmpty());
     }
 }

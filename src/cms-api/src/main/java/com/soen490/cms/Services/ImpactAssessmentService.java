@@ -75,7 +75,7 @@ public class ImpactAssessmentService {
         Course c = new Course();
 
         c.setName((String) course.get("name"));
-        c.setNumber(Integer.valueOf((String) course.get("number")));
+        c.setNumber((Integer) course.get("number"));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
