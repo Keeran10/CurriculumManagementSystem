@@ -1,6 +1,7 @@
 package com.soen490.cms;
 
 import com.soen490.cms.Controllers.RequestPackageController;
+import com.soen490.cms.Models.Course;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.RequestRepository;
@@ -169,9 +170,13 @@ public class RequestPackageTest {
             JSONObject courseJSON = new JSONObject(course);
             JSONObject courseExtrasJSON = new JSONObject(courseExtras);
 
-            requestPackageService.saveCreateRequest(courseJSON, courseExtrasJSON, files);
+            int id = requestPackageService.saveCreateRequest(courseJSON, courseExtrasJSON, files);
 
-            assertEquals("Advanced Software Architecture and Design", courseRepository.findById(7).getTitle());
+            Course test_course = courseRepository.findById(requestRepository.findByRequestId(id).getTargetId());
+
+            assert test_course != null;
+
+            assertEquals("Advanced Software Architecture and Design", test_course.getTitle());
 
         } catch (JSONException e) {
             e.printStackTrace();

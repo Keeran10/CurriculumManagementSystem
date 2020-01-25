@@ -23,6 +23,7 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Repositories.RequisiteRepository;
 import com.soen490.cms.Repositories.SectionRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class ImpactAssessmentCourseService {
     SearchService searchService;
     @Autowired
     private SectionRepository sectionRepository;
+    @Autowired
+    private RequisiteRepository requisiteRepository;
 
     // Object request causes trouble. Methods have been refactored to accept other parameters to avoid creating
     // unsaved request objects.
@@ -519,6 +522,11 @@ public class ImpactAssessmentCourseService {
         Collection<Requisite> requestedRequisites = requestedCourse.getRequisites();
         Map<String, Object> responseMap = new HashMap();
         List<String> coursesList = new ArrayList();
+
+        if(originalCourse.getId() != 0)
+            originalRequisites = requisiteRepository.findByCourseId(originalCourse.getId());
+        if(requestedCourse.getId() != 0)
+            requestedRequisites = requisiteRepository.findByCourseId(requestedCourse.getId());
 
         for(Requisite original : originalRequisites){
             String oldName = original.getName();

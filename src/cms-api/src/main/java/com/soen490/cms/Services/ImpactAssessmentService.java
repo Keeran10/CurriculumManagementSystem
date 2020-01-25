@@ -75,7 +75,7 @@ public class ImpactAssessmentService {
         Course c = new Course();
 
         c.setName((String) course.get("name"));
-        c.setNumber(Integer.valueOf((String) course.get("number")));
+        c.setNumber((Integer) course.get("number"));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
@@ -93,7 +93,9 @@ public class ImpactAssessmentService {
         // Degree Requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-        for(DegreeRequirement dr : original.getDegreeRequirements()){
+        List<DegreeRequirement> original_drs = degreeRequirementRepository.findByCourseId(original.getId());
+
+        for(DegreeRequirement dr : original_drs){
 
             DegreeRequirement cdr = new DegreeRequirement();
 
@@ -103,7 +105,7 @@ public class ImpactAssessmentService {
 
             degreeRequirementRepository.save(cdr);
 
-            dr.getDegree().getDegreeRequirements().add(cdr);
+            //dr.getDegree().getDegreeRequirements().add(cdr);
 
             list.add(cdr);
 
