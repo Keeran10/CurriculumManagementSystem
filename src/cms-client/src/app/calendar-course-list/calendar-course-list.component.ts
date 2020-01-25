@@ -20,21 +20,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from '../backend-api.service';
+import { Course } from '../models/course';
 
 @Component({
-  selector: 'app-calendar-sections',
-  templateUrl: './calendar-sections.component.html',
-  styleUrls: ['./calendar-sections.component.css']
+  selector: 'app-calendar-course-list',
+  templateUrl: './calendar-course-list.component.html',
+  styleUrls: ['./calendar-course-list.component.css']
 })
-export class CalendarSectionsComponent implements OnInit {
+export class CalendarCourseListComponent implements OnInit {
 
-  constructor(private api: ApiService) { }
+  originalCourses;
+  editedCourses : Course[] = [];
+  isGetCalendarCourses = false;
+  isGetPackageCourses = false;
+
+  constructor(private cookieService: CookieService,
+    private api: ApiService) { }
 
   ngOnInit() {
+    let packageNumber = this.cookieService.get('package');
+    this.api.getCalendar().subscribe(data => {
+      this.originalCourses = data.secondCoreCourses;
+      this.isGetCalendarCourses = true;
+    });
+    this.api.getPackage(packageNumber, '4').subscribe(data => {
+      let requests = data.requests;
+      requests.forEach(request => {
+        this.api.getCourse(String(request.targetId)).subscribe(data => {
+          this.editedCourses.push(data);
+        });
+      });
+      this.isGetPackageCourses = true;
+    })
   }
 
-  public getCalendarData(){
-    this.api.getCalendar().subscribe(data => console.log(data));
+  public logData(){
+    console.log(this.originalCourses);
+    console.log(this.editedCourses);
   }
+
 }

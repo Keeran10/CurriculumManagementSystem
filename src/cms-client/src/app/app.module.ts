@@ -65,6 +65,7 @@ import { RevisionsComponent } from './revisions/revisions.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
+import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
 
 
 
@@ -89,7 +90,8 @@ import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
     RevisionsComponent,
     SearchPageComponent,
     SupportDocumentComponent,
-    TopNavBarComponent
+    TopNavBarComponent,
+    CalendarCourseListComponent
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control

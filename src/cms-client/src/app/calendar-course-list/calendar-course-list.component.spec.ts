@@ -1,4 +1,4 @@
-<!-- // MIT License
+/* // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,24 +18,29 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE. -->
-<body class="hg">
-<header class="hg__header">
-    <app-top-nav-bar></app-top-nav-bar>
-</header>
+// SOFTWARE. */
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-<main class="hg__main">
-    <div class="list">
-        <h1>Please select a Section to edit</h1>
+import { CalendarCourseListComponent } from './calendar-course-list.component';
 
-        <br>
-        <span>71.70.8    Curriculum for the Degree of BEng in Software Engineering</span><br>
-        <a (click)="getCalendarData()"><span>71.70.9    Degree Requirements for the BEng in Software Engineering</span></a><br>
-        <span>71.70.10    Course Descriptions</span><br>
+describe('CalendarCourseListComponent', () => {
+  let component: CalendarCourseListComponent;
+  let fixture: ComponentFixture<CalendarCourseListComponent>;
 
-    </div>
-</main>
-<footer class="hg__footer">
-  <app-footer></app-footer>
-</footer>
-</body>
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ CalendarCourseListComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CalendarCourseListComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
