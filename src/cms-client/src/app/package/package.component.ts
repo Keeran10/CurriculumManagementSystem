@@ -128,6 +128,6 @@ export class PackageComponent implements OnInit {
   }
 
   public getCalendar(){
-    this.api.getCalendar().subscribe(data => console.log(data));
+    this.api.getCalendar().subscribe(data => this.router.navigate(['calendar']));
   }
 }
