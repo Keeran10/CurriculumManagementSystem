@@ -30,6 +30,7 @@ import { Degree } from '../models/degree';
 import { Faculty } from '../models/faculty';
 import { Program } from '../models/program';
 import { Department } from '../models/department';
+import { Section } from '../models/section';
 
 
 export interface SearchCategory {
@@ -55,12 +56,14 @@ export class SearchPageComponent implements OnInit {
   storedDepartmentNames: string[] = [];
   storedProgramNames: string[] = [];
   storedFacultyNames: string[] = [];
+  storedSectionNames: string[] = [];
 
   courses: Course[];
   degrees: Degree[];
   faculties: Faculty[];
   programs: Program[];
   departments: Department[];
+  sections: Section[];
 
   isResultShown = false;
   searchFormPlaceholder = 'Select Search Category';
@@ -73,7 +76,8 @@ export class SearchPageComponent implements OnInit {
     {value: 'department', viewValue: 'Department'},
     {value: 'program', viewValue: 'Program'},
     {value: 'degree', viewValue: 'Degree'},
-    {value: 'course', viewValue: 'Course'}
+    {value: 'course', viewValue: 'Course'},
+    {value: 'section', viewValue: 'Section'},
   ];
 
   constructor(private apiService: ApiService) { }
@@ -94,6 +98,9 @@ export class SearchPageComponent implements OnInit {
     });
     this.apiService.getAllPrograms().subscribe(data => {
       this.programs = data;
+    });
+    this.apiService.getAllSections().subscribe(data => {
+      this.sections = data;
     });
   }
 

@@ -20,43 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Requisite } from '../models/requisite';
-import { Program } from './program';
-
-export class Course {
+export class Section {
   id: number;
-  credits: number;
-  degreeRequirements: object[];
-  description: string;
-  equivalent: string[];
-  isActive: boolean;
-  labHours: number;
-  lectureHours: number;
-  level: number;
-  name: string;
-  note: string;
-  number: number;
-  program: object;
-  requisites: Requisite[];
+  sectionId: number;
   title: string;
-  tutorialHours: number;
-
-  constructor() {
-    this.id = 0;
-    this.credits = 0;
-    this.degreeRequirements = [];
-    this.description = '';
-    this.equivalent = [];
-    this.isActive = false;
-    this.labHours = 0;
-    this.lectureHours = 0;
-    this.level = 1;
-    this.name = '';
-    this.note = '';
-    this.number = 100;
-    this.program = new Program();
-    this.requisites = [];
-    this.title = '';
-    this.tutorialHours = 0;
-  }
+  firstParagraph: string;
+  firstCore: string;
+  secondCore: string;
+  firstCoreCourses: object[];
+  secondCoreCourses: object[];
 }

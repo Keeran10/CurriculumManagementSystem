@@ -33,6 +33,7 @@ import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
 import { PipelineRevisions } from './models/pipeline-revisions';
+import {Section} from "./models/section";
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,10 @@ export class ApiService {
 
   public getAllPrograms() {
     return this.http.get<Program[]>(this.url + 'programs');
+  }
+
+  public getAllSections() {
+    return this.http.get<Section[]>(this.url + 'section70719');
   }
 
   public getCourse(id: string) {

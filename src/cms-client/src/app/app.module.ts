@@ -64,6 +64,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { SectionComponent } from './section/section.component';
 
 
 
@@ -87,7 +88,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     SupportDocumentComponent,
     GenericFileUploaderComponent,
     TopNavBarComponent,
-    FooterComponent
+    FooterComponent,
+    SectionComponent
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
