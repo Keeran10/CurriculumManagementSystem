@@ -72,6 +72,7 @@ export class ApiService {
   }
 
   public getAllSections() {
+    // this returns this one section
     return this.http.get<Section[]>(this.url + 'section70719');
   }
 
@@ -81,8 +82,20 @@ export class ApiService {
     });
   }
 
+  public getSection(id: string) {
+    // this returns this one section
+    return this.http.get<Section>(this.url + 'section70719', {
+      params: new HttpParams().set('id', id)
+    } );
+  }
+
   public saveCourse(course: Course) {
     return this.http.post<Course>(this.url + 'courses', course);
+  }
+
+  // for future implementation when we have all sections
+  public saveSection(section: Section) {
+    return this.http.post<Section>(this.url + 'sections', section);
   }
 
 

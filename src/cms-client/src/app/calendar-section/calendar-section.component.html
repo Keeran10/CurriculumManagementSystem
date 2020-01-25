@@ -1,0 +1,78 @@
+<body class="hg">
+<header class="hg__header">
+  <app-top-nav-bar></app-top-nav-bar>
+</header>
+<main class="hg__main">
+  <mat-card class="matCardBackground">
+    <div class="container">
+      <mat-card>
+        <mat-card-header>
+          <h1 class="title">Edit Section Page</h1>
+        </mat-card-header><br>
+        <form class="edit-form">
+          <mat-form-field class="row1">
+            <input matInput placeholder="Section Id" spellcheck="true" [(ngModel)]="sectionEditable.sectionId" name="sectionId">
+          </mat-form-field>
+          <mat-form-field class="row2">
+            <input matInput placeholder="Section title" spellcheck="true" [(ngModel)]="sectionEditable.title" name="sectionTitle">
+          </mat-form-field>
+          <mat-form-field class="row3">
+            <textarea matInput placeholder="First Paragraph"
+                      [(ngModel)]="sectionEditable.firstParagraph" spellcheck="true" name="firstParagraph"></textarea>
+          </mat-form-field>
+          <mat-form-field class="row4">
+            <textarea matInput placeholder="First Core"
+                      [(ngModel)]="sectionEditable.firstCore" spellcheck="true" name="firstCore"></textarea>
+          </mat-form-field>
+          <mat-form-field class="row5">
+            <textarea matInput placeholder="Second Core"
+                      [(ngModel)]="sectionEditable.secondCore" spellcheck="true" name="secondCore"></textarea>
+          </mat-form-field>
+        </form>
+      </mat-card>
+
+      <div class="edited-text">
+        <mat-card>
+          <span>
+            <b>
+              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.title"
+                    [right]="sectionEditable.title"></span>
+              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sectionId"
+                    [right]="sectionOriginal.sectionId"></span><br><br>
+            </b>
+          </span>
+          <br>
+          <span>
+
+              <i>
+                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstParagraph"
+                      [right]="sectionEditable.firstParagraph"></span><br><br>
+              </i>
+
+
+            <b>First Core: </b>
+            <span style="display: inline-block">
+              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
+                    [right]="sectionEditable.firstCore"></span>
+            </span>
+            <br>
+            <b>Second Core: </b>
+             <span style="display: inline-block">
+              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
+                    [right]="sectionEditable.secondCore"></span>
+            </span>
+            </span>
+          <br>
+          <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
+        </mat-card>
+      </div>
+    </div>
+    <br><br>
+    <button class="submitButton" mat-raised-button color="primary">Submit</button>
+    <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn">Delete Section</button>
+  </mat-card>
+</main>
+<footer class="hg__footer">
+  <app-footer></app-footer>
+</footer>
+</body>
