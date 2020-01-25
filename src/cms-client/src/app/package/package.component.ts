@@ -50,21 +50,21 @@ export class PackageComponent implements OnInit {
   editingPackage = '0'; // if coming from pipeline to edit
 
   constructor(private cookieService: CookieService,
-              private api: ApiService,
-              private router: Router) {
-               }
+    private api: ApiService,
+    private router: Router) {
+  }
 
   ngOnInit() {
-     // let departmentId = this.cookieService.get('department'); // replace 4 with department id
-     this.api.getAllPackages('4').subscribe(data => {
+    // let departmentId = this.cookieService.get('department'); // replace 4 with department id
+    this.api.getAllPackages('4').subscribe(data => {
       console.log(data);
       this.packages = data;
       this.packages.forEach(() => this.isPdfAvailable.push(false));
     });
-     this.userName = this.cookieService.get('userName');
-     this.userId = this.cookieService.get('user');
-     this.editingPackage = this.cookieService.get('editingPackage');
-     console.log(this.editingPackage);
+    this.userName = this.cookieService.get('userName');
+    this.userId = this.cookieService.get('user');
+    this.editingPackage = this.cookieService.get('editingPackage');
+    console.log(this.editingPackage);
   }
 
   public packageSelect(packageId, requestId, href) {
@@ -111,13 +111,14 @@ export class PackageComponent implements OnInit {
 
   upload(packageId: any) {
 
-    this.api.uploadFile(this.supportDocumentComponent.documents, packageId, this.userId).subscribe(response => {
-      if (response instanceof HttpResponse) {
-        this.supportDocumentComponent.documents = [];
-        this.msg = response.body;
-        console.log(response.body);
-      }
-    });
+    this.api.uploadFile(this.supportDocumentComponent.documents, this.supportDocumentComponent.descriptions,
+      packageId, this.userId).subscribe(response => {
+        if (response instanceof HttpResponse) {
+          this.supportDocumentComponent.documents = [];
+          this.msg = response.body;
+          console.log(response.body);
+        }
+      });
   }
 
   public releaseMutex(packageId: any) {

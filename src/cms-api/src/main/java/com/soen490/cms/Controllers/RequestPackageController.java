@@ -161,12 +161,13 @@ public class RequestPackageController {
      */
     @PostMapping(value="/save_subsection70719")
     public int saveSubSection70719 (@RequestParam String subSection70719 , @RequestParam String sectionExtras,
-                                        @RequestParam(required = false) MultipartFile[] files) {
+                                        @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files);
+            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -191,13 +192,14 @@ public class RequestPackageController {
      */
     @PostMapping(value="/save_request")
     public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras,
-                                        @RequestParam(required = false) MultipartFile[] files) {
+                                        @RequestParam(required = false) MultipartFile[] files,
+                                        @RequestParam(required = false) String descriptions) {
 
         try {
             JSONObject courseExtrasJson = new JSONObject(courseExtras);
             int user_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveCourseRequest(course, courseExtras, files);
+            int request_id = requestPackageService.saveCourseRequest(course, courseExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -214,13 +216,14 @@ public class RequestPackageController {
 
     @PostMapping(value="/save_removal_request")
     public int saveRemovalRequest(@RequestParam String course, @RequestParam String courseExtras,
-                                  @RequestParam(required = false) MultipartFile[] files) {
+                                  @RequestParam(required = false) MultipartFile[] files,
+                                  @RequestParam(required = false) String descriptions) {
 
         try {
             JSONObject courseExtrasJson = new JSONObject(courseExtras);
             int user_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveRemovalRequest(course, courseExtras, files);
+            int request_id = requestPackageService.saveRemovalRequest(course, courseExtras, files, descriptions);
 
             if(request_id != 0) {
                 requestPackageService.generatePdf(package_id, user_id);
@@ -284,8 +287,8 @@ public class RequestPackageController {
      * @return
      */
     @PostMapping(value = "/upload_files")
-    public String uploadFiles(@RequestParam MultipartFile[] files, @RequestParam int package_id,
-                                  @RequestParam int user_id) throws IOException {
+    public String uploadFiles(@RequestParam MultipartFile[] files, @RequestParam String descriptions,
+                              @RequestParam int package_id, @RequestParam int user_id) throws IOException, JSONException {
 
         if(files.length == 0)
             return "No files uploaded.";
@@ -293,7 +296,7 @@ public class RequestPackageController {
         for(MultipartFile file : files)
             log.info("Uploaded file: " + file.getOriginalFilename());
 
-        requestPackageService.saveSupportingDocument(files, "dossier", package_id, user_id);
+        requestPackageService.saveSupportingDocument(files, descriptions,"dossier", package_id, user_id);
 
         try {
             generatePdf(package_id, user_id);

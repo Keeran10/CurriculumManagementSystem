@@ -29,6 +29,7 @@ import com.soen490.cms.Repositories.*;
 import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
 import com.soen490.cms.Services.PdfService.PdfService;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,10 +86,11 @@ public class RequestPackageService {
      * @param subSections70719      Stringified subsection70719 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
+     * @param descriptions
      * @return True if susection70719 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70719(String subSections70719, String sectionExtras, MultipartFile[] files) throws JSONException {
+    public int saveSection70719(String subSections70719, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {
 
         log.info("Json substring70719 received: " + subSections70719);
         log.info("Json subsectionExtras received: " + sectionExtras);
@@ -163,10 +165,11 @@ public class RequestPackageService {
          * @param courseJSON       Stringified course JSON received from client
          * @param courseExtrasJSON Stringified course JSON received from client
          * @param files            uploaded course outline
+         * @param descriptions
          * @return True if course has been successfully added to database.
          * @throws JSONException
          */
-    public int saveCourseRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files) throws JSONException {
+    public int saveCourseRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files, String descriptions) throws JSONException {
 
         log.info("Json course received: " + courseJSON);
         log.info("Json courseExtras received: " + courseExtrasJSON);
@@ -179,7 +182,7 @@ public class RequestPackageService {
         int original_id = (Integer) course.get("id");
 
         if (original_id == 0)
-            return saveCreateRequest(course, courseExtras, files);
+            return saveCreateRequest(course, courseExtras, files, descriptions);
 
         // Changed Course and Original Course
         List<Course> o = courseRepository.findByJsonId(original_id);
@@ -225,7 +228,7 @@ public class RequestPackageService {
         courseRepository.save(c);
 
         try {
-            saveSupportingDocument(files, "course", c.getId(), user_id);
+            saveSupportingDocument(files, descriptions, "course", c.getId(), user_id);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -295,7 +298,7 @@ public class RequestPackageService {
      * @return request_id if course and request have been successfully added to database.
      * @throws JSONException
      */
-    public int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files) throws JSONException {
+    public int saveCreateRequest(JSONObject course, JSONObject courseExtras, MultipartFile[] files, String descriptions) throws JSONException {
 
         log.info("Inserting course creation request to database...");
 
@@ -337,7 +340,7 @@ public class RequestPackageService {
         courseRepository.save(c);
 
         try {
-            saveSupportingDocument(files, "course", c.getId(), user_id);
+            saveSupportingDocument(files, descriptions, "course", c.getId(), user_id);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -400,7 +403,7 @@ public class RequestPackageService {
     }
 
 
-    public int saveRemovalRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files) throws JSONException {
+    public int saveRemovalRequest(String courseJSON, String courseExtrasJSON, MultipartFile[] files, String descriptions) throws JSONException {
 
         JSONObject course = new JSONObject(courseJSON);
         JSONObject courseExtras = new JSONObject(courseExtrasJSON);
@@ -445,7 +448,7 @@ public class RequestPackageService {
         request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_remove");
 
         try {
-            saveSupportingDocument(files, "course", original.getId(), user_id);
+            saveSupportingDocument(files, descriptions, "course", original.getId(), user_id);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -586,13 +589,29 @@ public class RequestPackageService {
      * Adds support documents to database.
      *
      * @param files      The files to be added.
-     * @param targetType dossier or course.
+     * @param descriptions
+     *@param targetType dossier or course.
      * @param targetId   The designated package.
-     * @param userId     user who uploaded the files.
-     * @return The saved supporting document object.
+     * @param userId     user who uploaded the files.    @return The saved supporting document object.
      * @throws IOException
      */
-    public void saveSupportingDocument(MultipartFile[] files, String targetType, int targetId, int userId) throws IOException {
+    public void saveSupportingDocument(MultipartFile[] files, String descriptions, String targetType, int targetId, int userId) throws IOException, JSONException {
+
+        System.out.println("Hello: " + descriptions);
+
+        HashMap<String, String> desc = new HashMap<>();
+
+        if(descriptions != null && descriptions.length() != 0) {
+
+            JSONArray file_desc = new JSONArray(descriptions);
+
+            for(int i = 0; i < file_desc.length(); i++){
+
+                JSONArray a = (JSONArray) file_desc.get(i);
+
+                desc.put((String) a.get(0), (String) a.get(1));
+            }
+        }
 
         for (MultipartFile file : files) {
 
@@ -606,7 +625,7 @@ public class RequestPackageService {
             supportingDocument.setFileName(file.getOriginalFilename());
             supportingDocument.setFileType(file.getContentType());
             supportingDocument.setFile(file.getBytes());
-
+            supportingDocument.setFileDescription(desc.get(file.getOriginalFilename()));
             supportingDocumentsRepository.save(supportingDocument);
         }
 

@@ -35,6 +35,13 @@
           <td class="fake-link">
             {{ item.name }}
           </td>
+          <td>
+            <input type="text" id="description" #input class="form-control" placeholder="description {press enter}"
+              (change)="storeDescription(input.value, item.name); input.value=''">
+          </td>
+          <td>
+            <span> {{ descriptions.get(item.name) }} </span>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -35,6 +35,7 @@ export class SupportDocumentComponent {
   public files: NgxFileDropEntry[] = [];
   public documents: File[] = [];
   public fileObjectArray: File[];
+  public descriptions = new Map<string, string>();
   public pdfSrc;
 
   public dropped(files: NgxFileDropEntry[]) {
@@ -60,6 +61,11 @@ export class SupportDocumentComponent {
 
   public fileLeave(event) {
     console.log(event);
+  }
+
+  storeDescription(newValue, fileName) {
+    this.descriptions.set(fileName, newValue);
+    console.log(this.descriptions);
   }
 
 }

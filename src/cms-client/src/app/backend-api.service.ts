@@ -189,13 +189,14 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public uploadFile(files: File[], packageId: any, userId: any) {
+  public uploadFile(files: File[], descriptions: Map<string, string>, packageId: any, userId: any) {
     const formdata: FormData = new FormData();
 
     for (const file of files) {
       formdata.append('files', file);
     }
 
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
     formdata.append('package_id', packageId);
     formdata.append('user_id', userId);
 
@@ -207,8 +208,10 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public submitCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
-    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+  public submitCourseRequestForm(files: File[], descriptions: Map<string, string>,
+    course: Course, courseExtras: CourseExtras) {
+
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
     const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,
@@ -232,8 +235,8 @@ export class ApiService {
     });
   }
 
-  public submitDeleteCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
-    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+  public submitDeleteCourseRequestForm(files: File[], descriptions: Map<string, string>, course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
     const req = new HttpRequest('POST', this.url + 'save_removal_request', formdata, {
       reportProgress: true,
@@ -243,8 +246,9 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  private fileCourseAndExtrasToFormData(files: File[], course: Course, courseExtras: CourseExtras) {
+  private fileCourseAndExtrasToFormData(files: File[], descriptions: Map<string, string>, course: Course, courseExtras: CourseExtras) {
     const formdata: FormData = new FormData();
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
     formdata.append('course', JSON.stringify(course));
     formdata.append('courseExtras', JSON.stringify(courseExtras));
     for (const file of files) {
