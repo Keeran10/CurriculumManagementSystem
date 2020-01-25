@@ -72,8 +72,8 @@ export class ApiService {
   }
 
   public getAllSections() {
-    // this returns this one section
-    return this.http.get<Section[]>(this.url + 'section70719');
+    // this returns all sections
+    return this.http.get<Section[]>(this.url + 'sections');
   }
 
   public getCourse(id: string) {

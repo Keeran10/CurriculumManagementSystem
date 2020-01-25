@@ -125,6 +125,8 @@ export class SearchPageComponent implements OnInit {
     push(value.name + ' '));
     this.programs.forEach(value => this.storedProgramNames.
     push(value.name + ' '));
+    this.sections.forEach(value => this.storedSectionNames.
+    push(value.title + ' '));
 
   }
 
@@ -135,6 +137,7 @@ export class SearchPageComponent implements OnInit {
     this.departments.forEach(value => this.descriptionList.push(value.programs.toString()));
     this.faculties.forEach(value => this.descriptionList.push(value.departments.toString()));
     this.programs.forEach(value => this.descriptionList.push(value.description));
+    this.sections.forEach(value => this.descriptionList.push(value.firstParagraph));
 
     this.descriptionList = this.descriptionList.filter((el, i, a) => i === a.indexOf(el));
   }
