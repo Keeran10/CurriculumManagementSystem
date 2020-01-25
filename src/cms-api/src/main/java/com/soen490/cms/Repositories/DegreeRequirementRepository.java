@@ -41,4 +41,7 @@ public interface DegreeRequirementRepository extends JpaRepository<DegreeRequire
     @Query(value = "SELECT dr.course_id FROM degree_requirement dr INNER JOIN course c ON c.id=dr.course_id" +
             "WHERE dr.core=? AND c.is_active=0", nativeQuery = true)
     List<Integer> findChangedCoursesByCore(String core);
+
+    @Query(value = "SELECT * FROM degree_requirement WHERE course_id=?", nativeQuery = true)
+    List<DegreeRequirement> findByCourseId(int id);
 }
