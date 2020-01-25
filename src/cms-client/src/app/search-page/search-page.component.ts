@@ -126,7 +126,7 @@ export class SearchPageComponent implements OnInit {
     this.programs.forEach(value => this.storedProgramNames.
     push(value.name + ' '));
     this.sections.forEach(value => this.storedSectionNames.
-    push(value.title + ' '));
+    push(value.sectionTitle + ' '));
 
   }
 
@@ -302,7 +302,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   public getSectionId(listItem: string) {
-    const tmpSection: Section = this.sections.find(c => listItem.includes(c.title));
+    const tmpSection: Section = this.sections.find(c => listItem.includes(c.sectionTitle));
     return tmpSection.id;
   }
 

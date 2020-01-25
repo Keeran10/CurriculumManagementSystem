@@ -23,7 +23,7 @@
 export class Section {
   id: number;
   sectionId: number;
-  title: string;
+  sectionTitle: string;
   firstParagraph: string;
   firstCore: string;
   secondCore: string;
