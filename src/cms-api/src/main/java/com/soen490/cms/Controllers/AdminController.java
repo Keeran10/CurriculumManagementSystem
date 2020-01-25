@@ -17,7 +17,7 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping(value = "/register_user")
+    @PostMapping(value = "/register_new_user")
     public boolean registerUser(@RequestParam User user) {
         return adminService.saveUser(user);
     }
