@@ -19,22 +19,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+package com.soen490.cms.Repositories.SectionsRepositories;
 
-package com.soen490.cms.Repositories;
-
-import com.soen490.cms.Models.Requisite;
+import com.soen490.cms.Models.Sections.Section70719;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-
 @Repository
-public interface RequisiteRepository extends JpaRepository<Requisite, Integer>{
+public interface Section70719Repository extends JpaRepository<Section70719, Integer> {
 
-    @Query(value = "SELECT * FROM requisite WHERE name=?1 AND number=?2", nativeQuery = true)
-    Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(String name, int id);
+    @Query(value = "SELECT * FROM section70719 WHERE id=? AND is_active=1", nativeQuery = true)
+    Section70719 findBySubSectionId(int id);
 
-    @Query(value = "SELECT * FROM requisite WHERE course_id=?", nativeQuery = true)
-    Collection<Requisite> findByCourseId(int id);
+
+    @Query(value = "SELECT * FROM section70719 WHERE id=?", nativeQuery = true)
+    Section70719 findById(int id);
 }

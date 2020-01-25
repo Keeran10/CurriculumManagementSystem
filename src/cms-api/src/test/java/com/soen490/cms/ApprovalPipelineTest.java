@@ -111,26 +111,33 @@ public class ApprovalPipelineTest {
         dccUser = new User();
         dccUser.setId(1);
         dccUser.setUserType("Department Curriculum Committee");
+        dccUser.setEmail("Dcc@soen.com");
         //
         senateUser = new User();
         senateUser.setId(2);
         senateUser.setUserType("Senate");
+        senateUser.setEmail("Senate@soen.com");
+
         //
         facultyUser = new User();
         facultyUser.setId(3);
         facultyUser.setUserType("Faculty Council");
+        facultyUser.setEmail("Faculty@soen.com");
         //
         uscUser = new User();
         uscUser.setId(4);
         uscUser.setUserType("UGSC");
+        uscUser.setEmail("Usc@soen.com");
         //
         apcUser = new User();
         apcUser.setId(5);
         apcUser.setUserType("APC");
+        apcUser.setEmail("Apc@soen.com");
         //
         departmentCouncilUser = new User();
         departmentCouncilUser.setId(6);
         departmentCouncilUser.setUserType("Department Council");
+        departmentCouncilUser.setEmail("Dc@soen.com");
 
         userList = new ArrayList<>();
         userList.add(dccUser);
