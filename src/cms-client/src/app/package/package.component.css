@@ -118,6 +118,16 @@ mat-card{
   color: crimson;
 }
 
+.seeRevisionsButton {
+  background-color: transparent;
+  border: none;
+  color: blue;
+}
+
+.mutexButtons {
+  margin-left: 70%;
+}
+
 @media screen and (max-width: 600px) {
   .hg {
     grid-template-areas: "header" "main" "main" "main" "footer";

@@ -1,3 +1,24 @@
+// MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 package com.soen490.cms.Services.PdfService;
 
 import com.itextpdf.text.*;
@@ -209,7 +230,6 @@ public class PdfCourse {
 
         rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
         rationale_phrase.add(Chunk.NEWLINE);
-        rationale_phrase.add(Chunk.NEWLINE);
 
         if(rationale != null && !rationale.equals(""))
             rationale_phrase.add(new Chunk(rationale, arial_10));
@@ -225,7 +245,6 @@ public class PdfCourse {
         Phrase resource_phrase = new Phrase();
 
         resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
-        resource_phrase.add(Chunk.NEWLINE);
         resource_phrase.add(Chunk.NEWLINE);
 
         if(resource_implications != null && !resource_implications.equals(""))
@@ -557,7 +576,7 @@ public class PdfCourse {
                                             impact_line = ("- Course will be migrated to: " + updated_pair.getKey() + ".");
                                         }
                                         else if(Double.valueOf(updated_pair.getValue().toString()) > temp_credits){
-                                            impact_line = ("- Core credits will be added to become: " +
+                                            impact_line = ("- Core credits will be changed to become: " +
                                                     updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
                                         }
                                         else{
@@ -593,7 +612,7 @@ public class PdfCourse {
                                             impact_line = ("- Course will be removed from: " + updated_pair.getKey() + ".");
                                         }
                                         else {
-                                            impact_line = ("- Core credits will be added to become: " +
+                                            impact_line = ("- Core credits will be changed to become: " +
                                                     updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
                                         }
 
@@ -625,7 +644,7 @@ public class PdfCourse {
                                             impact_line = ("- Course will be migrated to: " + updated_pair.getKey() + ".");
                                         }
                                         else {
-                                            impact_line = ("- Core credits will be added to become: " +
+                                            impact_line = ("- Core credits will be changed to become: " +
                                                     updated_pair.getKey() + " (" + updated_pair.getValue() + " credits).");
                                         }
 

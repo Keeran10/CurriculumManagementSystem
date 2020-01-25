@@ -23,6 +23,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Models.Sections.Section70719;
 import com.soen490.cms.Services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,7 +31,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
@@ -93,4 +96,18 @@ public class SearchController {
     @GetMapping("/faculty_search")
     public Faculty getFaculty(@RequestParam String name){
         return searchService.findFacultyByName(name); }
+
+    // URL should be 8080/sections
+    @GetMapping("/sections")
+    public List<Object> getSections(){
+        List<Object> sections = new ArrayList<>();
+         sections.add(searchService.findsection70719ById(1));
+         return sections;
+    }
+
+    // URL should be 8080/section70719
+    @GetMapping("/section70719")
+    public Section70719 getSection70719(){
+        return searchService.findsection70719ById(1);
+    }
 }

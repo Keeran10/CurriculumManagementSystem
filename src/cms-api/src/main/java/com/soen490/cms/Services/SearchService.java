@@ -23,12 +23,17 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Models.Sections.Section70719;
 import com.soen490.cms.Repositories.*;
+import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 @Log4j2
 @Service
@@ -48,6 +53,10 @@ public class SearchService {
     RequisiteRepository requisiteRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    Section70719Repository section70719Repository;
+    @Autowired
+    DegreeRequirementRepository degreeRequirementRepository;
 
     public Collection<Course> findAllCourses(){
         log.info("findAllCourses()");
@@ -120,6 +129,35 @@ public class SearchService {
     public Faculty findFacultyByName(String name){
         log.info("find faculty " + name);
         return facultyRepository.findByName(name);
+    }
+
+    public Section70719 findsection70719ById(int section_id){
+
+        log.info("find Section70719 " + section_id);
+
+        Section70719 section70719 = section70719Repository.findBySubSectionId(section_id);
+
+        // can add as many core here for the entire section of 70.71.9
+        section70719.setFirstCoreCourses(retrieveSectionCourseLists(section70719.getFirstCore()));
+        section70719.setSecondCoreCourses(retrieveSectionCourseLists(section70719.getSecondCore()));
+
+        return section70719;
+    }
+
+    private List<Course> retrieveSectionCourseLists(String core) {
+
+        List<Integer> courses_id = degreeRequirementRepository.findCoursesByCore(core);
+        List<Course> second_core_courses = new ArrayList<>();
+
+        for(int id : courses_id){
+            Course course = courseRepository.findById(id);
+            if(course != null && course.getIsActive() != 0)
+                second_core_courses.add(course);
+        }
+        second_core_courses.sort(Comparator.comparing(Course::getName));
+        second_core_courses.sort(Comparator.comparing(Course::getNumber));
+
+        return second_core_courses;
     }
 
     public Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(int id){

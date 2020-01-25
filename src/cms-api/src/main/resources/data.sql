@@ -102,7 +102,7 @@ INSERT IGNORE INTO course VALUES (13, 3.50, 'Students work in teams to design an
 INSERT IGNORE INTO course VALUES (14, 4.00, 'Students work in teams of at least four members to construct a significant software application. The class meets at regular intervals. Team members will give a presentation of their contribution to the project. Lectures: one hour per week. Laboratory: two hours per week. Two terms.',
 1, 2, 1, 1, 'SOEN', "",  490, 'Capstone Software Engineering Design Project', 0, 1);
 INSERT IGNORE INTO course VALUES (15, 4.00, 'Architectural activities, roles, and deliverables. Architectural view models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, process control) and frameworks. Architectural analysis and the interplay with requirements elicitation. Notations for expressing architectural designs, structural and behavioural specifications. From architectural design to detailed design. Domain specific architectures and design patterns. Evaluation and performance estimation of designs. Advanced object‑oriented design patterns and idioms. Lectures: three hours per week. Tutorial: one hour per week.',
-0, 0, 3, 2, 'SOEN', "", 6441, 'Advanced Software Architecture and Design', 1, 1);
+0, 0, 3, 2, 'SOEN', "", 344, 'Advanced Software Architecture and Design', 1, 1);
 
 INSERT IGNORE INTO course VALUES (16, 3.00, 'Resultant of force systems; equilibrium of particles and rigid bodies; distributed forces; statically determinate systems; trusses; friction; moments of inertia; virtual work. Shear and bending moment diagrams. Lectures: three hours per week. Tutorial: two hours per week.',
 1, 0, 3, 1, 'ENGR', "", 242, 'Statics', 2, 3);
@@ -254,7 +254,6 @@ INSERT IGNORE INTO degree_requirement VALUES (11, "Software Engineering Core", 1
 INSERT IGNORE INTO degree_requirement VALUES (12, "Software Engineering Core", 12, 1);
 INSERT IGNORE INTO degree_requirement VALUES (13, "Software Engineering Core", 13, 1);
 INSERT IGNORE INTO degree_requirement VALUES (14, "Software Engineering Core", 14, 1);
-INSERT IGNORE INTO degree_requirement VALUES (15, "", 15, 2);
 INSERT IGNORE INTO degree_requirement VALUES (16, "Computer Science Electives", 15, 1);
 INSERT IGNORE INTO degree_requirement VALUES (17, "Mechanical Engineering Core", 16, 5);
 INSERT IGNORE INTO degree_requirement VALUES (18, "Mechanical Engineering Core", 17, 5);
@@ -381,6 +380,7 @@ INSERT IGNORE INTO request VALUES (1, 8, 8, "rationale", 2, "resource implicatio
 INSERT IGNORE INTO request VALUES (2, 1, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
 INSERT IGNORE INTO request VALUES (3, 0, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
 INSERT IGNORE INTO request VALUES (4, 30, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
+INSERT IGNORE INTO request VALUES (5, 1, 1, "None.", 2, "None.", 2, 1, NULL, "SECTION_70.71.9_update", 1, 1); -- thermodynamics II updated
 
 -- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate
@@ -388,3 +388,7 @@ INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc
 -- pipeline_id, package_id, position
 INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department Curriculum Committee", NULL);
 INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department Curriculum Committee", NULL);
+
+-- id, first_core, first_paragraph, is_active, second_core, section_id, section_title
+INSERT IGNORE INTO section70719 VALUES (1, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.", 1, "Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
+INSERT IGNORE INTO section70719 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");

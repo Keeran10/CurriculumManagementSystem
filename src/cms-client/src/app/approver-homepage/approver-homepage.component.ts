@@ -39,6 +39,11 @@ export class ApproverHomepageComponent implements OnInit {
     userId = 0;
     pipelineId = '0';
     user_id = '0';
+    departmentId = 0;
+    userType = 'User';
+    userMap = new Map();
+    locks = new Array();
+    packageUnderReview = '0';
 
     constructor(private cookieService: CookieService,
         private api: ApiService,
@@ -46,16 +51,20 @@ export class ApproverHomepageComponent implements OnInit {
     }
 
     ngOnInit() {
-        //const departmentId = this.cookieService.get('department'); //replace 4 with department id
-        this.api.getAllPackages('4').subscribe(data => {
+        this.userType = this.cookieService.get('userType');
+        this.populateUserMap();
+        this.packageUnderReview = this.cookieService.get('reviewingPackage');
+        this.api.getPackagesToBeApproved(this.userMap.get(this.userType)).subscribe(data => {
             this.packages = data;
-            if (this.packages.length === 0) {
+            if (data.length === 0) {
                 document.getElementById('empty').style.visibility = 'display';
             }
+            this.populateInitialLocks();
         });
         this.userName = this.cookieService.get('userName');
         this.userId = parseInt(this.cookieService.get('user'), 10);
         this.user_id = this.cookieService.get('user');
+        //this.api.releaseReviewKey(1).subscribe(data => console.log(data));
     }
 
     // generate PDF before viewing
@@ -76,6 +85,7 @@ export class ApproverHomepageComponent implements OnInit {
     public packageSelect(packageId) {
         this.cookieService.set('package', packageId);
         console.log(packageId);
+        this.cookieService.set('editingPackage', packageId);
         this.router.navigate(['/package']);
     }
 
@@ -85,8 +95,10 @@ export class ApproverHomepageComponent implements OnInit {
             const utf8decoder = new TextDecoder();
             this.pipelineId = utf8decoder.decode(data);
             this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, value, false).subscribe(
-                data => window.location.reload()
-            );
+                data => {
+                    window.location.reload(),
+                    this.releaseReviewMutex(packageId);
+                    });
         });
     }
 
@@ -100,8 +112,38 @@ export class ApproverHomepageComponent implements OnInit {
             const utf8decoder = new TextDecoder();
             this.pipelineId = utf8decoder.decode(data);
             this.api.setApprovalStatus(this.userId, packageId, this.pipelineId, rationale, true).subscribe(
-                data => this.router.navigateByUrl('/pipeline')
-            );
+                data => {
+                this.router.navigateByUrl('/pipeline'),
+                this.releaseReviewMutex(packageId);
+                });
+            });
+    }
+
+    public populateUserMap() {
+        this.userMap.set('Department Curriculum Committee', 'Department Curriculum Committee');
+        this.userMap.set('Faculty Council', 'Faculty Council');
+        this.userMap.set('APC', 'APC');
+        this.userMap.set('Department Council', 'Department Council');
+        this.userMap.set('UGSC', 'Associate Dean Academic Programs Under Graduate Studies Committee');
+        this.userMap.set('Senate', 'Senate');
+      }
+
+    public populateInitialLocks() {
+        this.packages.forEach(p => {
+            this.api.isMutexAvailable(p.id).subscribe(data => this.locks[p.id] = data );
         });
+    }
+
+    public reviewPackage(packageId: any) {
+        this.packageUnderReview = packageId;
+        this.cookieService.set('reviewingPackage', packageId);
+        this.api.getReviewKey(packageId).subscribe(data => console.log('get review key for package ' + packageId + ' ' + data));
+    }
+
+    public releaseReviewMutex(packageId: any) {
+        this.cookieService.set('reviewingPackage', '0');
+        console.log(this.cookieService.get('reviewingPackage'));
+        this.packageUnderReview = '0';
+        this.api.releaseReviewKey(packageId).subscribe(data => console.log('release review key for package ' + packageId + ' ' + data));
     }
 }

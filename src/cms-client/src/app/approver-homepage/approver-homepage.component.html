@@ -24,16 +24,21 @@
   <app-top-nav-bar></app-top-nav-bar>
 </header>
 <main class="hg__main">
-<h2>Packages requesting approval:</h2>
+<h2>Dossiers requesting approval:</h2>
 <div class="container">
     <table class="half">
         <tbody>
-            <tr id="empty">No packages to display currently...</tr>
+            <tr id="empty">No dossiers to display currently...</tr>
             <tr *ngFor="let package of packages">
                 <td>
                     <mat-card class="packages">
-                        <mat-card-title>Package #{{ package.id }} </mat-card-title>
+                        <mat-card-title>Dossier #{{ package.id }} </mat-card-title>
                         <mat-card-content>
+                            <button *ngIf="locks[package.id] === true" class="option" mat-button color="primary" (click)="reviewPackage(package.id)">
+                                Review this dossier
+                            </button>
+                        </mat-card-content>
+                        <mat-card-content *ngIf="package.id == packageUnderReview">
                             <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
                             <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
                             <br />
@@ -42,9 +47,15 @@
                             {{value}}
                             </mat-form-field>
                         </mat-card-content>
-                        <div class="buttons">
-                            <button mat-button (click)="accept(package.id, val.value)">Accept</button>
-                            <button mat-button color="warn" (click)="decline(package.id, val.value)">Decline</button>
+                        <div *ngIf="package.id == packageUnderReview">
+                            <div class="buttons">
+                                <button mat-button (click)="accept(package.id, value)">Accept</button>
+                                <button mat-button (click)="decline(package.id, value)">Decline</button>
+                                <button mat-button color="warn" (click)="releaseReviewMutex(package.id)">Cancel Review</button>
+                            </div>
+                        </div>
+                        <div *ngIf="locks[package.id] === false && package.id != packageUnderReview">
+                            Review blocked, dossier is being modified.
                         </div>
                     </mat-card>
                 </td>

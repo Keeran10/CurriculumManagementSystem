@@ -150,6 +150,37 @@ public class RequestPackageController {
         return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
     }
 
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70719 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70719 was successfully added to database.
+     * @throws JSONException
+     */
+    @PostMapping(value="/save_subsection70719")
+    public int saveSubSection70719 (@RequestParam String subSection70719 , @RequestParam String sectionExtras,
+                                        @RequestParam(required = false) MultipartFile[] files) {
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+
     /**
      * Receives data from client and populates the database for course and its dependencies.
      * @param course stringified JSON received from front-end.

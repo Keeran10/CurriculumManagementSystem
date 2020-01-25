@@ -28,6 +28,7 @@ import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.SupportingDocumentRepository;
+import com.soen490.cms.Services.PdfService.PdfSections.PdfSection;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,9 +51,12 @@ public class PdfService {
     private CourseRepository courseRepository;
     @Autowired
     private SupportingDocumentRepository supportingDocumentRepository;
-
     @Autowired
     private PdfCourse pdfCourse;
+    @Autowired
+    private PdfProgram pdfProgram;
+    @Autowired
+    private PdfSection pdfSection;
 
 
     public byte[] getPDF(int package_id) { return requestPackageRepository.findPdfById(package_id); }
@@ -70,7 +74,8 @@ public class PdfService {
         ByteArrayOutputStream course_outline_stream;
         ByteArrayOutputStream support_stream = null;
         ArrayList<ByteArrayOutputStream> request_streams = new ArrayList<>();
-        ByteArrayOutputStream final_stream = new ByteArrayOutputStream();
+        ByteArrayOutputStream program_stream = null;
+        ByteArrayOutputStream final_stream;
 
         RequestPackage requestPackage = requestPackageRepository.findById(package_id);
 
@@ -93,6 +98,12 @@ public class PdfService {
             }
         }
 
+        // Program pages
+        ArrayList<ByteArrayOutputStream> program_streams = pdfProgram.addProgramPage(requestPackage);
+
+        if(program_streams != null && !program_streams.isEmpty())
+            program_stream = mergeStreams(program_streams);
+
         try {
             // for each page
             for(Request request : requestPackage.getRequests()){
@@ -105,11 +116,9 @@ public class PdfService {
                 doc.setMargins(25, 25, 10, 25);
 
                 ByteArrayOutputStream request_stream = new ByteArrayOutputStream();
-
                 PdfWriter.getInstance(doc, request_stream);
 
                 doc.open();
-
 
                 if(request.getTargetType() == 2) {
 
@@ -144,16 +153,16 @@ public class PdfService {
                         continue;
 
                     }
+
                 }
                 else if(request.getTargetType() == 1){
 
-                    // program requests
+                    // calendar request
+                    pdfSection.addSectionPage(doc, request);
                 }
 
                 doc.close();
-
                 request_streams.add(request_stream);
-
             }
 
         } catch (DocumentException | FileNotFoundException e){
@@ -167,10 +176,18 @@ public class PdfService {
         final_stream = mergeStreams(request_streams);
 
 
-        if(support_stream != null) {
+        if(support_stream != null || program_stream != null) {
+
             ArrayList<ByteArrayOutputStream> streams = new ArrayList<>();
-            streams.add(support_stream);
+
+            if (support_stream != null)
+                streams.add(support_stream);
+
+            if (program_stream != null)
+                streams.add(program_stream);
+
             streams.add(final_stream);
+
             final_stream = mergeStreams(streams);
         }
 

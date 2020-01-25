@@ -19,22 +19,28 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+package com.soen490.cms.Services.PdfService.PdfSections;
 
-package com.soen490.cms.Repositories;
 
-import com.soen490.cms.Models.Requisite;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import com.itextpdf.text.Document;
+import com.soen490.cms.Models.Request;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+@Service
+@Log4j2
+public class PdfSection {
 
-@Repository
-public interface RequisiteRepository extends JpaRepository<Requisite, Integer>{
+    @Autowired
+    private PdfSection70719 pdfSection70719;
 
-    @Query(value = "SELECT * FROM requisite WHERE name=?1 AND number=?2", nativeQuery = true)
-    Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(String name, int id);
+    public void addSectionPage(Document doc, Request request){
 
-    @Query(value = "SELECT * FROM requisite WHERE course_id=?", nativeQuery = true)
-    Collection<Requisite> findByCourseId(int id);
+        // replace with valid section identifier
+        if(true){
+
+            pdfSection70719.addSectionPage(doc, request);
+        }
+    }
 }
