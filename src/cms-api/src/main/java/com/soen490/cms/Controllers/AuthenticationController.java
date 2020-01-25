@@ -19,22 +19,26 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+package com.soen490.cms.Controllers;
 
-package com.soen490.cms.Repositories;
+import com.soen490.cms.Models.User;
+import com.soen490.cms.Services.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import com.soen490.cms.Models.Requisite;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
+@RestController
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
+public class AuthenticationController {
 
-@Repository
-public interface RequisiteRepository extends JpaRepository<Requisite, Integer>{
+    @Autowired
+    private AuthenticationService authenticationService;
 
-    @Query(value = "SELECT * FROM requisite WHERE name=?1 AND number=?2", nativeQuery = true)
-    Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(String name, int id);
+    // todo: to be refactored into POST and password encrypted
+    @GetMapping(value = "/login")
+    public User login(@RequestParam String email, String password){
 
-    @Query(value = "SELECT * FROM requisite WHERE course_id=?", nativeQuery = true)
-    Collection<Requisite> findByCourseId(int id);
+        return authenticationService.authenticate(email, password);
+    }
+
 }

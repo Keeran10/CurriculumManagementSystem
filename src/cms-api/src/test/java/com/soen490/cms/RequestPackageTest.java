@@ -1,12 +1,12 @@
 package com.soen490.cms;
 
-import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Controllers.RequestPackageController;
+import com.soen490.cms.Models.Course;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.RequestRepository;
+import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
 import com.soen490.cms.Services.RequestPackageService;
-import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -38,13 +37,15 @@ public class RequestPackageTest {
     private RequestRepository requestRepository;
     @Autowired
     private RequestPackageController requestPackageController;
+    @Autowired
+    private Section70719Repository section70719Repository;
 
     @Before
     public void init(){
 
     }
 
-    String courseJSON = "{\"id\":5,\"name\":\"SOEN\",\"number\":344,\"title\":\"Advanced Software Architecture and" +
+    String courseJSON = "{\"id\":5,\"name\":\"SOEN\",\"number\":\"344\",\"title\":\"Advanced Software Architecture and" +
             " Design\",\"credits\":\"5\",\"note\":\"\",\"level\":2,\"lectureHours\":3,\"tutorialHours\":1,\"" +
             "labHours\":0,\"description\":\"Architectural activities, roles, and deliverables. Architectural view" +
             " models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, " +
@@ -131,7 +132,7 @@ public class RequestPackageTest {
     @Test
     public void testSaveCreateCourseRequest(){
 
-        String course = "{\"id\":0,\"name\":\"SOEN\",\"number\":344,\"title\":\"Advanced Software Architecture and" +
+        String course = "{\"id\":0,\"name\":\"SOEN\",\"number\":\"344\",\"title\":\"Advanced Software Architecture and" +
                 " Design\",\"credits\":\"5\",\"note\":\"\",\"level\":2,\"lectureHours\":3,\"tutorialHours\":1,\"" +
                 "labHours\":0,\"description\":\"Architectural activities, roles, and deliverables. Architectural view" +
                 " models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, " +
@@ -169,9 +170,13 @@ public class RequestPackageTest {
             JSONObject courseJSON = new JSONObject(course);
             JSONObject courseExtrasJSON = new JSONObject(courseExtras);
 
-            requestPackageService.saveCreateRequest(courseJSON, courseExtrasJSON, files);
+            int id = requestPackageService.saveCreateRequest(courseJSON, courseExtrasJSON, files);
 
-            assertEquals("Advanced Software Architecture and Design", courseRepository.findById(7).getTitle());
+            Course test_course = courseRepository.findById(requestRepository.findByRequestId(id).getTargetId());
+
+            assert test_course != null;
+
+            assertEquals("Advanced Software Architecture and Design", test_course.getTitle());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -191,7 +196,7 @@ public class RequestPackageTest {
 
         int id = requestPackageController.saveRemovalRequest(courseJSON, courseExtras, files);
 
-        assertEquals(3, requestRepository.findByRequestId(6).getRequestType());
+        assertEquals(3, requestRepository.findByRequestId(7).getRequestType());
 
     }
 
@@ -224,5 +229,19 @@ public class RequestPackageTest {
     }
 
 
-    //
+    // Assert subsection functionality
+    @Test
+    public void testSectionSave(){
+
+        String section70719JSON = "{\"id\":1,\"first_core\":\"Engineering Core\",\"second_core\":\"Software Engineering Core\"," +
+                "\"first_paragraph\":\"test\",\"isActive\":0,\"section_id\":\"70.71.9\", " +
+                "\"section_title\":\"Degree Requirements for the BEng in Software Engineering\"}";
+
+        String section70719ExtrasJSON = "{\"implications\":\"\",\"packageId\":1,\"prerequisites\":\"SOEN343; SOEN384; \",\"" +
+                "rationale\":\"\",\"userId\":1,\"requestId\":0}";
+
+        requestPackageController.saveSubSection70719(section70719JSON, section70719ExtrasJSON, null);
+
+        assertEquals("test", section70719Repository.findById(2).getFirstParagraph());
+    }
 }

@@ -93,7 +93,9 @@ public class ImpactAssessmentService {
         // Degree Requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-        for(DegreeRequirement dr : original.getDegreeRequirements()){
+        List<DegreeRequirement> original_drs = degreeRequirementRepository.findByCourseId(original.getId());
+
+        for(DegreeRequirement dr : original_drs){
 
             DegreeRequirement cdr = new DegreeRequirement();
 
@@ -103,7 +105,7 @@ public class ImpactAssessmentService {
 
             degreeRequirementRepository.save(cdr);
 
-            dr.getDegree().getDegreeRequirements().add(cdr);
+            //dr.getDegree().getDegreeRequirements().add(cdr);
 
             list.add(cdr);
 
