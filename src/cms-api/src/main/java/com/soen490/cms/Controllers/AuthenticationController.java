@@ -19,40 +19,26 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-package com.soen490.cms.Models.Sections;
+package com.soen490.cms.Controllers;
 
-import com.soen490.cms.Models.Course;
-import lombok.Data;
+import com.soen490.cms.Models.User;
+import com.soen490.cms.Services.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-@Entity
-@Data
-public class Section70719 {
+@RestController
+@CrossOrigin(origins = ControllerConfiguration.ENDPOINT_URL)
+public class AuthenticationController {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Autowired
+    private AuthenticationService authenticationService;
 
-    private String sectionId; // i.e. "70.71.9"
+    // todo: to be refactored into POST and password encrypted
+    @GetMapping(value = "/login")
+    public User login(@RequestParam String email, String password){
 
-    private String sectionTitle; // "Degree Requirement for Beng ..."
-
-    @Lob
-    private String firstParagraph;
-
-    private String firstCore; // Engineering Core
-
-    private String secondCore; // Software Engineering Core
-
-    private int isActive;
-
-    @Transient
-    List<Course> firstCoreCourses = new ArrayList<>(); // null since we don't have ENGR courses
-
-    @Transient
-    List<Course> secondCoreCourses = new ArrayList<>(); // retrieve from database before sending
+        return authenticationService.authenticate(email, password);
+    }
 
 }
