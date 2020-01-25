@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: 'revisions', component: RevisionsComponent},
   { path: 'audit', component: PipelineAuditComponent},
   { path: '', component: LoginComponent },
-  { path: 'section', component: CalendarSectionComponent},
+  { path: 'section/:id', component: CalendarSectionComponent},
 ];
 
 @NgModule({

@@ -305,5 +305,4 @@ export class SearchPageComponent implements OnInit {
     const tmpSection: Section = this.sections.find(c => listItem.includes(c.sectionId.toString()));
     return tmpSection.id;
   }
-
 }
