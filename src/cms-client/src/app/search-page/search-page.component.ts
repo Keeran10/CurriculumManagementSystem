@@ -125,6 +125,7 @@ export class SearchPageComponent implements OnInit {
     push(value.name + ' '));
     this.programs.forEach(value => this.storedProgramNames.
     push(value.name + ' '));
+
   }
 
   private getDescription() {
@@ -206,6 +207,18 @@ export class SearchPageComponent implements OnInit {
         this.searchType = 'course';
         break;
       }
+      case 'section': {
+        returnedList = returnedList.concat(this.storedSectionNames.filter(c => c
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, '')
+          .includes(filterValue)));
+        const filteredList = returnedList;
+        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.isResultShown = false;
+        this.searchType = 'section';
+        break;
+      }
       default: {
         // Need to add default to return everything from all categories
         returnedList = [];
@@ -248,6 +261,10 @@ export class SearchPageComponent implements OnInit {
         this.searchFormPlaceholder = 'Search courses';
         break;
       }
+      case 'section': {
+        this.searchFormPlaceholder = 'Search calendar sections';
+        break;
+      }
       default: {
         this.searchFormPlaceholder = 'Select Search Category';
         break;
@@ -279,6 +296,11 @@ export class SearchPageComponent implements OnInit {
   public getProgramId(listItem: string) {
     const tmpProgram: Program = this.programs.find(c => listItem.includes(c.name));
     return tmpProgram.id;
+  }
+
+  public getSectionId(listItem: string) {
+    const tmpSection: Section = this.sections.find(c => listItem.includes(c.title));
+    return tmpSection.id;
   }
 
 }

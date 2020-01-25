@@ -33,7 +33,7 @@ import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
 import { PipelineRevisions } from './models/pipeline-revisions';
-import {Section} from "./models/section";
+import {Section} from './models/section';
 
 @Injectable({
   providedIn: 'root'
