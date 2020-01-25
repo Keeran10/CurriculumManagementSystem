@@ -34,13 +34,18 @@ import { CookieService } from 'ngx-cookie-service';
 
   export class RegistrationComponent implements OnInit {
 
-    user: User;
-    userTypes = {};
-
+    userTypes = ['Professor', 'Department Curriculum Committee', 'Faculty Council', 'APC', 'Department Council', 'UGSC', 'Senate'];
+    departmentId = 0;
     constructor(private formBuilder: FormBuilder, private api: ApiService, private cookieService: CookieService
     ) {}
 
     ngOnInit() {
-        
+        this.departmentId = parseInt(this.cookieService.get('department'), 10);
+    }
+
+    OnSubmit(firstname: any, lastname: any, usertype: any, email: any, password: any) {
+      const registerUser = new User(firstname, lastname, usertype, email, password, this.departmentId);
+      console.log(registerUser);
+      this.api.registerUser(registerUser).subscribe(data => console.log(data));
     }
 }

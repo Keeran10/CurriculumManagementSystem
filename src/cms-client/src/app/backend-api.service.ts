@@ -302,4 +302,10 @@ export class ApiService {
     });
   }
 
+  public registerUser(registerUser: User) {
+    return this.http.post<User>(this.url + 'register_user', {
+      params: new HttpParams().set('user', JSON.stringify(registerUser))
+    });
+  }
+
 }

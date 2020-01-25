@@ -25,32 +25,33 @@
     </header>
     <main class="hg__main">
     <div class="top-container">
-    <h1>User Information:</h1>
+    <h1>Register User Below:</h1>
     </div>
     <br><br>
     <div class="middle-container">
     <div *ngIf="isLoginError" class="red-text center error-message">
       <i class="material-icons">error</i> Incorrect username or password
     </div>
-    <form class="example-form" #loginForm="ngForm" (ngSubmit)="OnSubmit(UserName.value,Password.value)">
+    <form class="example-form" #loginForm="ngForm" (ngSubmit)="OnSubmit(FirstName.value, LastName.value, userType.value, UserName.value, Password.value)">
         <mat-form-field class="example-full-width">
-            <input matInput type="text" #FirstName ngModel name="FirstName" placeholder="First Name" required>
+            <input matInput type="text" #FirstName ngModel name="FirstName" value="FirstName" placeholder="First Name" required>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input matInput type="text" #LastName ngModel name="LastName" placeholder="Last Name" required>
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-            <input matInput type="text" #UserName ngModel name="UserName" placeholder="Email" required>
+            <input matInput type="text" #LastName ngModel name="LastName" value="LastName" placeholder="Last Name" required>
         </mat-form-field>
         <mat-form-field>
-            <mat-select>
-                <mat-option *ngFor="let i of userTypes" [value]="userTypes.value">
-                  {{i}}
+          <mat-label>User Type</mat-label>
+            <mat-select #userType>
+                <mat-option *ngFor="let i of userTypes" [value]="i">
+                  {{ i }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input matInput type="password" #Password ngModel name="Password" placeholder="Password" required>
+            <input matInput type="text" #UserName ngModel name="UserName" value="UserName" placeholder="Email" required>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput type="password" #Password ngModel name="Password" value="Password" placeholder="Password" required>
         </mat-form-field>
       <div class="row">
         <div class="input-field col s12">
