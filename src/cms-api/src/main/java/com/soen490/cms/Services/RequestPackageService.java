@@ -210,7 +210,7 @@ public class RequestPackageService {
         }
 
         c.setName((String) course.get("name"));
-        c.setNumber(Integer.valueOf((String) course.get("number")));
+        c.setNumber(Integer.valueOf((String.valueOf(course.get("number")))));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
