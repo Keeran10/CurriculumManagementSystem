@@ -121,7 +121,7 @@ public class RequestPackageTest {
 
         MultipartFile[] files = new MultipartFile[0];
 
-        int id = requestPackageController.saveCreateAndEditRequest(courseJSON, courseExtrasJSON, files);
+        int id = requestPackageController.saveCreateAndEditRequest(courseJSON, courseExtrasJSON, files, null);
 
         assertEquals("Advanced Software Architecture and Design", courseRepository.findById(6).getTitle());
 
@@ -170,7 +170,7 @@ public class RequestPackageTest {
             JSONObject courseJSON = new JSONObject(course);
             JSONObject courseExtrasJSON = new JSONObject(courseExtras);
 
-            int id = requestPackageService.saveCreateRequest(courseJSON, courseExtrasJSON, files);
+            int id = requestPackageService.saveCreateRequest(courseJSON, courseExtrasJSON, files, null);
 
             Course test_course = courseRepository.findById(requestRepository.findByRequestId(id).getTargetId());
 
@@ -194,7 +194,7 @@ public class RequestPackageTest {
 
         MultipartFile[] files = new MultipartFile[0];
 
-        int id = requestPackageController.saveRemovalRequest(courseJSON, courseExtras, files);
+        int id = requestPackageController.saveRemovalRequest(courseJSON, courseExtras, files, null);
 
         assertEquals(3, requestRepository.findByRequestId(7).getRequestType());
 
@@ -240,7 +240,7 @@ public class RequestPackageTest {
         String section70719ExtrasJSON = "{\"implications\":\"\",\"packageId\":1,\"prerequisites\":\"SOEN343; SOEN384; \",\"" +
                 "rationale\":\"\",\"userId\":1,\"requestId\":0}";
 
-        requestPackageController.saveSubSection70719(section70719JSON, section70719ExtrasJSON, null);
+        requestPackageController.saveSubSection70719(section70719JSON, section70719ExtrasJSON, null, null);
 
         assertEquals("test", section70719Repository.findById(2).getFirstParagraph());
     }
