@@ -44,8 +44,9 @@ import { CookieService } from 'ngx-cookie-service';
     }
 
     OnSubmit(firstname: any, lastname: any, usertype: any, email: any, password: any) {
-      const registerUser = new User(firstname, lastname, usertype, email, password, this.departmentId);
-      console.log(registerUser);
-      this.api.registerUser(registerUser).subscribe(data => console.log(data));
+      // const registerUser = new User(firstname, lastname, usertype, email, password, this.departmentId);
+      // console.log(registerUser);
+      //this.api.registerUser(registerUser).subscribe(data => console.log(data));
+      this.api.registerUser(firstname, lastname, usertype, email, password, this.departmentId).subscribe(data => console.log(data));
     }
 }

@@ -32,11 +32,11 @@ export class User {
   department: Department;
 
   constructor(first, last, type, em, pass, depId) {
-    this.department = new Department(depId);
     this.firstName = first;
     this.lastName = last;
     this.userType = type;
     this.email = em;
     this.password = pass;
+    this.department = new Department(depId);
   }
 }
