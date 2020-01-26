@@ -474,6 +474,8 @@ public class RequestPackageService {
         int user_id = request.getUser().getId();
         int package_id = request.getRequestPackage().getId();
 
+        request.getRequestPackage().getRequests().remove(request);
+
         if(request.getRequestType() == 3){
 
             requestRepository.delete(request);
@@ -481,8 +483,7 @@ public class RequestPackageService {
             return true;
         }
 
-        Course requested_course = courseRepository.findById(request.getTargetId());
-        courseRepository.delete(requested_course);
+        courseRepository.deleteById(request.getTargetId());
         requestRepository.delete(request);
         generatePdf(user_id, package_id);
         return true;

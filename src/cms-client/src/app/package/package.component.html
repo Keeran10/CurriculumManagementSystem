@@ -46,12 +46,17 @@
                     Track Progress
                   </a>
                 </div>
-
+                <br>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <div *ngFor="let request of package.requests">
-                    <a class="request"
-                      (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
-                      {{request.title}}</a>
+                  <table>
+                    <tr *ngFor="let request of package.requests">
+                      <td class="request"
+                        (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
+                        {{request.title}}</td>
+                      <td (click)="removeRequest(request.id)">
+                        &nbsp;&nbsp;<font color="red" style="cursor: pointer;">[x]</font>
+                      </td>
+                    </tr>
                     <!--
                           <div>
                               <label>
@@ -61,7 +66,8 @@
                                   Document</button><br><br>
                           </div>
                           -->
-                  </div>
+                  </table>
+
                 </div>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
                   <br> <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
