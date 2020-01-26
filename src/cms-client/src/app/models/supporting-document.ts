@@ -1,3 +1,5 @@
+import { User } from './user';
+
 // MIT License
 
 // Copyright (c) 2019 teamCMS
@@ -20,15 +22,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export class Department {
-  id: number;
-  name: string;
-  faculty: object;
-  users: object;
-  programs: object;
-  requestPackages: object;
+export class SupportingDocument {
+    id: number;
+    userId: number;
+    targetType: string;
+    targetId: number;
+    fileName: string;
+    fileType: string;
+    fileDescription: string;
+    file: any;
 
-  constructor(depId: any) {
-    this.id = depId;
-  }
 }

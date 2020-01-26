@@ -45,6 +45,8 @@ public class SupportingDocument {
 
     private String fileType;
 
+    private String fileDescription;
+
     @Lob
     private byte[] file;
 }

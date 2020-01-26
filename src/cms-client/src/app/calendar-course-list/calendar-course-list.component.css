@@ -1,4 +1,4 @@
-// MIT License
+/* // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,17 +18,24 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE. */
+.container{
+    display: grid;
+    grid-template-columns: auto auto;
+}
 
-export class Department {
-  id: number;
-  name: string;
-  faculty: object;
-  users: object;
-  programs: object;
-  requestPackages: object;
+.left-side{
+    grid-column-start: 0;
+    grid-column-end: 1;
+}
 
-  constructor(depId: any) {
-    this.id = depId;
-  }
+.right-side{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.link {
+    color: dodgerblue;
+    text-decoration: underline;
+    cursor: pointer;
 }

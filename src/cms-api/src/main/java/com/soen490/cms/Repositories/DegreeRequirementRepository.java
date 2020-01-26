@@ -44,4 +44,7 @@ public interface DegreeRequirementRepository extends JpaRepository<DegreeRequire
 
     @Query(value = "SELECT * FROM degree_requirement WHERE course_id=?", nativeQuery = true)
     List<DegreeRequirement> findByCourseId(int id);
+
+    @Query(value = "SELECT * FROM degree_requirement WHERE id=?", nativeQuery = true)
+    DegreeRequirement findById(int id);
 }

@@ -1,4 +1,4 @@
-// MIT License
+/* // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,36 +18,43 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-
+// SOFTWARE. */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SupportDocumentComponent } from './support-documents.component';
-import { NgxFileDropModule } from 'ngx-file-drop';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ApiService } from '../backend-api.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('SupportDocumentComponent', () => {
-  let component: SupportDocumentComponent;
-  let fixture: ComponentFixture<SupportDocumentComponent>;
+import { CalendarSectionsComponent } from './calendar-sections.component';
 
+describe('CalendarSectionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        NgxFileDropModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
-      declarations: [SupportDocumentComponent]
-    })
-      .compileComponents();
+      declarations: [CalendarSectionsComponent],
+      providers: [
+        ApiService
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SupportDocumentComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe('Calendar course list tests', () => {
+    function setup() {
+      const fixture = TestBed.createComponent(CalendarSectionsComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
 
-  /*
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-*/
+      return { fixture, component, apiService };
+    }
 
+    it('should create', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
+
+  });
 });

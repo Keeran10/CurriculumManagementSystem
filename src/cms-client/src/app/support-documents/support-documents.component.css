@@ -30,3 +30,19 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.form-control{
+  width: auto;
+  height: min-content;
+  font-size: 0.8em;
+}
+
+caption {
+  display: table-caption;
+  text-align: left;
+  caption-side: top;
+}
+
+.table {
+  width: 25em;
+}

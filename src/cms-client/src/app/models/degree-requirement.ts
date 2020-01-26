@@ -19,16 +19,11 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+import { Degree } from './degree';
 
-export class Department {
-  id: number;
-  name: string;
-  faculty: object;
-  users: object;
-  programs: object;
-  requestPackages: object;
-
-  constructor(depId: any) {
-    this.id = depId;
+export class DegreeRequirement {
+    id: number;
+    core: string;
+    degree: Degree;
   }
-}
+  

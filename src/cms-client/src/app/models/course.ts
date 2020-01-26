@@ -22,11 +22,12 @@
 
 import { Requisite } from '../models/requisite';
 import { Program } from './program';
+import { DegreeRequirement } from './degree-requirement';
 
 export class Course {
   id: number;
   credits: number;
-  degreeRequirements: object[];
+  degreeRequirements: DegreeRequirement[];
   description: string;
   equivalent: string[];
   isActive: boolean;
