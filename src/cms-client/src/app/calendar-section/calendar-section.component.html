@@ -5,6 +5,8 @@
   <main class="hg__main">
     <mat-card class="matCardBackground">
       <div class="container">
+
+        <div>
         <mat-card>
           <mat-card-header>
             <h1 class="title">Edit Section Page</h1>
@@ -41,6 +43,7 @@
 
           </form>
         </mat-card>
+        </div>
 
         <div class="edited-text">
           <mat-card>
@@ -80,7 +83,9 @@
                     [right]="sectionEditable.secondCore"></span>
                 </span>
               </b>
-              <app-calendar-course-list></app-calendar-course-list>
+
+               <app-calendar-course-list></app-calendar-course-list>
+
             </span>
             <br>
             <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
@@ -98,11 +103,13 @@
             <div *ngIf="editedExtraModel.implications == '' ">
               No implication is available for this section.
             </div>
-
           </mat-card>
         </div>
+
       </div>
       <br><br>
+
+
 
       <br><br>
       <app-support-documents [sectionId]="id" [target_type]="3"></app-support-documents>

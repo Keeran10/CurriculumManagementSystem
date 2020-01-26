@@ -64,6 +64,10 @@ export class CalendarCourseListComponent implements OnInit {
             });
           }
         });
+        if (i === 0) {
+          this.isDoneLoading = true;
+          this.getPrintedCourses();
+        }
       });
     });
   }

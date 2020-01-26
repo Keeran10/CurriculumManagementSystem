@@ -38,6 +38,6 @@ export class CalendarSectionsComponent implements OnInit {
 
   public getCalendarData() {
     this.api.getCalendar().subscribe(data => console.log(data));
-    this.router.navigate(['section/:id']);
+    this.router.navigate(['section/1']);
   }
 }
