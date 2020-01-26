@@ -358,4 +358,11 @@ public class RequestPackageController {
         return supportingDocuments;
     }
 
+
+    @GetMapping("/remove_supporting_document")
+    public boolean removeSupportingDocument(@RequestParam int file_id){
+        log.info("Removing supporting doc " + file_id);
+        return requestPackageService.removeSupportingDocument(file_id);
+    }
+
 }

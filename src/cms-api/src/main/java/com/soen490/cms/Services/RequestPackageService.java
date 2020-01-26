@@ -890,4 +890,9 @@ public class RequestPackageService {
 
         return supportingDocumentsRepository.findByTarget(target_type, target_id);
     }
+
+    public boolean removeSupportingDocument(int file_id) {
+        supportingDocumentsRepository.deleteById(file_id);
+        return true;
+    }
 }

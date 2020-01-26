@@ -161,7 +161,7 @@
         </div>
 
       </div>
-      <app-support-documents [courseId]="courseEditable.id" [target_type]="2"></app-support-documents>
+      <app-support-documents [courseId]="id" [target_type]="2"></app-support-documents>
       <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
       <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn"
         (click)="openDeleteDialog()">Delete Course</button>

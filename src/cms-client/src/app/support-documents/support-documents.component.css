@@ -39,10 +39,10 @@
 
 caption {
   display: table-caption;
-  text-align: center;
+  text-align: left;
   caption-side: top;
 }
 
 .table {
-  width: 20em;
+  width: 30em;
 }

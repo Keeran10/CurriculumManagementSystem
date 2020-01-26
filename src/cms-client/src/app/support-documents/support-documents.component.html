@@ -48,13 +48,18 @@
   </div>
   <div>
     <table class="table">
-      <caption> {{ supportingDocs[0].targetType }} files </caption>
+      <caption *ngIf="supportingDocs.length != 0"> {{ type }} files </caption>
+      <tr *ngIf="supportingDocs.length == 0">
+        No files found for this {{type}}.
       <tr *ngFor="let doc of supportingDocs; let i=index">
         <td class="fake-link" (click)="showPDF(doc.id)">
           {{ doc.fileName }}
         </td>
         <td>
           {{ doc.fileDescription}}
+        </td>
+        <td class="fake-link" (click)="removeSupportingDoc(doc.id)">
+          [X]
         </td>
       </tr>
     </table>

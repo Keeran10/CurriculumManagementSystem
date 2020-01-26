@@ -39,7 +39,8 @@ export class SupportDocumentComponent {
   public fileObjectArray: File[];
   public descriptions = new Map<string, string>();
   public pdfSrc;
-  supportingDocs = new Array<SupportingDocument>();
+  public supportingDocs = new Array<SupportingDocument>();
+  public type: string;
   @Input() packageId: any;
   @Input() courseId: any;
   @Input() target_type: any;
@@ -48,20 +49,22 @@ export class SupportDocumentComponent {
 
   ngOnInit() {
     var id = 0;
-    var type = "";
-    console.log("target_type: " + this.target_type);
+
     if (this.target_type == 2) {
       id = this.courseId;
-      type = "course";
+      this.type = "course";
     }
     else if (this.target_type == 1) {
       id = this.packageId;
-      type = "dossier";
+      this.type = "dossier";
     }
-    else {
+
+    if (this.target_type == 1 && id == 0 || this.target_type == 2 && id == 0) {
+      console.log("undefined id for " + this.type);
       return;
     }
-    this.api.getSupportingDocuments(id, type).subscribe(
+
+    this.api.getSupportingDocuments(id, this.type).subscribe(
       data => {
         this.supportingDocs = data;
         console.log(this.supportingDocs);
@@ -107,6 +110,15 @@ export class SupportDocumentComponent {
         window.location.assign(fileURL);
       }
     )
+  }
+
+  public removeSupportingDoc(file_id: any) {
+    this.api.removeSupportingDocument(file_id).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+    window.location.reload();
   }
 
 }

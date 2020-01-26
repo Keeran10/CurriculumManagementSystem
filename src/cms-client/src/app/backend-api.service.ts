@@ -321,4 +321,10 @@ export class ApiService {
     });
   }
 
+  public removeSupportingDocument(file_id: any) {
+    return this.http.get<string>(this.url + 'remove_supporting_document', {
+      params: new HttpParams().set('file_id', file_id)
+    });
+  }
+
 }

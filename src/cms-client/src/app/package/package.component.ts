@@ -119,6 +119,7 @@ export class PackageComponent implements OnInit {
           console.log(response.body);
         }
       });
+    window.location.reload();
   }
 
   public releaseMutex(packageId: any) {
