@@ -61,6 +61,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 import { PipelineAuditComponent } from './pipeline-audit/pipeline-audit.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './admin-registration/admin-registration.component';
 import { RevisionsComponent } from './revisions/revisions.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
@@ -88,6 +89,7 @@ import { CalendarCourseListComponent } from './calendar-course-list/calendar-cou
     PipelineTrackingComponent,
     PipelineAuditComponent,
     RevisionsComponent,
+    RegistrationComponent,
     SearchPageComponent,
     SupportDocumentComponent,
     TopNavBarComponent,

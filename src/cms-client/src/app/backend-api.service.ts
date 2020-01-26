@@ -343,4 +343,21 @@ export class ApiService {
     });
   }
 
+  public registerUser(first: any, last: any, type: any, email: any, pass: any, depId: any) {
+    const formdata: FormData = new FormData();
+
+    formdata.append('first_name', first);
+    formdata.append('last_name', last);
+    formdata.append('user_type', type);
+    formdata.append('email', email);
+    formdata.append('password', pass);
+    formdata.append('department_id', depId);
+
+    const req = new HttpRequest('POST', this.url + 'register_user', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
 }

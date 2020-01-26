@@ -22,6 +22,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.User;
+import com.soen490.cms.Services.AdminService;
 import com.soen490.cms.Services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,24 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Autowired
+    private AdminService adminService;
+
     // todo: to be refactored into POST and password encrypted
     @GetMapping(value = "/login")
     public User login(@RequestParam String email, String password){
 
         return authenticationService.authenticate(email, password);
     }
-
+/*
+    @PostMapping(value = "/register_user")
+    public boolean registerUser(@RequestParam User user) {
+        return adminService.saveUser(user);
+    }
+*/
+    @PostMapping(value = "/register_user")
+    public boolean registerUser(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String user_type,
+                                @RequestParam String email, @RequestParam String password, @RequestParam int department_id) {
+        return adminService.saveUser(first_name, last_name, user_type, email, password, department_id);
+    }
 }

@@ -124,6 +124,15 @@ mat-card{
   color: blue;
 }
 
+.viewRevisions {
+  margin-left: 85%;
+  height: fit-content;
+}
+
+.saveButton {
+  margin-left: 50%;
+}
+
 .mutexButtons {
   margin-left: 70%;
 }

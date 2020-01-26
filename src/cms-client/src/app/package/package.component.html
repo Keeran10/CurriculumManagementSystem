@@ -43,6 +43,9 @@
                   <a class="request" (click)="getCalendar(package.id)">{{ packages[0].department.name}} Calendar</a>
                 </div>
 
+                <a class="viewRevisions" (click)="viewAllRevisions(package.id, 'revisions')">
+                  <button class="seeRevisionsButton" color="primary">view all revisions</button>
+                </a>
                 <div *ngIf="package.approvalPipelineRequestPackages.length != 0">
                   This package has been submitted for approval.
                   <br /><br />
@@ -89,10 +92,7 @@
                         <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                             PDF</button>
                         -->
-                  <a (click)="viewAllRevisions(package.id, 'revisions')">
-                    <button class="seeRevisionsButton" color="primary">view all revisions</button>
-                  </a>
-                  <br /><br />
+                  
                   <button mat-stroked-button color="primary" (click)="upload(package.id)">Upload
                     Files</button>
                   <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
@@ -101,16 +101,14 @@
                     (click)="packageSelect(package.id, 0, 'approval')">
                     <button mat-stroked-button color="primary">Submit for Approval</button>
                   </a>
-
+                  <a class="saveButton" *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
+                      <button mat-stroked-button color="warn">Save and Quit</button>
+                    </a>
+                    <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
+                      <button mat-stroked-button color="warn">Cancel Updates</button>
+                    </a>
                 </div>
-                <div class="mutexButtons">
-                  <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
-                    <button mat-stroked-button color="warn">Save and Quit</button>
-                  </a>
-                  <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
-                    <button mat-stroked-button color="warn">Cancel Updates</button>
-                  </a>
-                </div>
+                
               </mat-expansion-panel>
             </div>
           </mat-accordion> <br>
