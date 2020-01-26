@@ -33,8 +33,8 @@ import { Revision } from './models/revision';
 import { User } from './models/user';
 import { PipelineRevisions } from './models/pipeline-revisions';
 import { SupportingDocument } from './models/supporting-document';
-import {Section} from './models/section';
-import {SectionExtras} from './models/section-extras';
+import { Section } from './models/section';
+import { SectionExtras } from './models/section-extras';
 
 @Injectable({
   providedIn: 'root'
@@ -87,7 +87,7 @@ export class ApiService {
     // this returns this one section
     return this.http.get<Section>(this.url + 'section70719', {
       params: new HttpParams().set('id', id)
-    } );
+    });
   }
 
   public saveCourse(course: Course) {
@@ -232,7 +232,7 @@ export class ApiService {
   }
 
   public submitCourseRequestForm(files: File[], descriptions: Map<string, string>,
-                                 course: Course, courseExtras: CourseExtras) {
+    course: Course, courseExtras: CourseExtras) {
 
     const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
@@ -245,14 +245,14 @@ export class ApiService {
   }
 
   public submitCalendarSectionForm(files: File[], descriptions: Map<string, string>,
-                                   section: Section, sectionExtras: SectionExtras) {
+    section: Section, sectionExtras: SectionExtras) {
 
     const formdata: FormData = this.submitSection(files, descriptions, section, sectionExtras);
 
-    const req = new HttpRequest('POST', this.url + 'save_subSection70719', formdata, {
-        reportProgress: true,
-        responseType: 'text',
-      });
+    const req = new HttpRequest('POST', this.url + 'save_section70719', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
     return this.http.request(req);
   }
 

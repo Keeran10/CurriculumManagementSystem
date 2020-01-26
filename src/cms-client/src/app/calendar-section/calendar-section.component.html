@@ -1,113 +1,115 @@
 <body class="hg">
-<header class="hg__header">
-  <app-top-nav-bar></app-top-nav-bar>
-</header>
-<main class="hg__main">
-  <mat-card class="matCardBackground">
-    <div class="container">
-      <mat-card>
-        <mat-card-header>
-          <h1 class="title">Edit Section Page</h1>
-        </mat-card-header><br>
-        <form class="edit-form">
-          <mat-form-field class="row1">
-            <input matInput placeholder="Section Id" spellcheck="true" [(ngModel)]="sectionEditable.sectionId" name="sectionId">
-          </mat-form-field>
-          <mat-form-field class="row2">
-            <input matInput placeholder="Section title" spellcheck="true" [(ngModel)]="sectionEditable.sectionTitle" name="sectionTitle">
-          </mat-form-field>
-          <mat-form-field class="row3">
-            <textarea matInput placeholder="First Paragraph"
-                      [(ngModel)]="sectionEditable.firstParagraph" spellcheck="true" name="firstParagraph"></textarea>
-          </mat-form-field>
-          <mat-form-field class="row4">
-            <textarea matInput placeholder="First Core"
-                      [(ngModel)]="sectionEditable.firstCore" spellcheck="true" name="firstCore"></textarea>
-          </mat-form-field>
-          <mat-form-field class="row5">
-            <textarea matInput placeholder="Second Core"
-                      [(ngModel)]="sectionEditable.secondCore" spellcheck="true" name="secondCore"></textarea>
-          </mat-form-field>
-          <mat-form-field class="row6">
-              <textarea matInput placeholder="Rationale" spellcheck="true" [(ngModel)]="editedExtraModel.rationale"
-                        name="rationale"></textarea>
-          </mat-form-field>
-          <mat-form-field class="row7">
-              <textarea matInput placeholder="Resource Implications" spellcheck="true"
-                        [(ngModel)]="editedExtraModel.implications" name="implications"></textarea>
-          </mat-form-field>
-
-        </form>
-      </mat-card>
-
-      <div class="edited-text">
+  <header class="hg__header">
+    <app-top-nav-bar></app-top-nav-bar>
+  </header>
+  <main class="hg__main">
+    <mat-card class="matCardBackground">
+      <div class="container">
         <mat-card>
+          <mat-card-header>
+            <h1 class="title">Edit Section Page</h1>
+          </mat-card-header><br>
+          <form class="edit-form">
+            <mat-form-field class="row1">
+              <input matInput placeholder="Section Id" spellcheck="true" [(ngModel)]="sectionEditable.sectionId"
+                name="sectionId">
+            </mat-form-field>
+            <mat-form-field class="row2">
+              <input matInput placeholder="Section title" spellcheck="true" [(ngModel)]="sectionEditable.sectionTitle"
+                name="sectionTitle">
+            </mat-form-field>
+            <mat-form-field class="row3">
+              <textarea matInput placeholder="First Paragraph" [(ngModel)]="sectionEditable.firstParagraph"
+                spellcheck="true" name="firstParagraph"></textarea>
+            </mat-form-field>
+            <mat-form-field class="row4">
+              <textarea matInput placeholder="First Core" [(ngModel)]="sectionEditable.firstCore" spellcheck="true"
+                name="firstCore"></textarea>
+            </mat-form-field>
+            <mat-form-field class="row5">
+              <textarea matInput placeholder="Second Core" [(ngModel)]="sectionEditable.secondCore" spellcheck="true"
+                name="secondCore"></textarea>
+            </mat-form-field>
+            <mat-form-field class="row6">
+              <textarea matInput placeholder="Rationale" spellcheck="true" [(ngModel)]="editedExtraModel.rationale"
+                name="rationale"></textarea>
+            </mat-form-field>
+            <mat-form-field class="row7">
+              <textarea matInput placeholder="Resource Implications" spellcheck="true"
+                [(ngModel)]="editedExtraModel.implications" name="implications"></textarea>
+            </mat-form-field>
 
-          <!-- Section and title -->
-          <span>
-            <b>
-              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sectionId"
-                    [right]="sectionOriginal.sectionId"></span>&nbsp;
-            <b>
-              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sectionTitle"
-                    [right]="sectionEditable.sectionTitle"></span> <br>
-            </b>
-              </b>
-          </span>
-          <br>
-
-          <!-- paragraph description -->
-          <span>
-                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstParagraph"
-                      [right]="sectionEditable.firstParagraph"></span><br><br>
-
-            <!-- first core -->
-
-            <b>
-            <span style="display: inline-block">
-              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
-                    [right]="sectionEditable.firstCore"></span>
-            </span> (30.5 Credits) </b>
-            <br>
-            See&nbsp;<a href="">&#167;71.20.5</a><br><br>
-
-            <!-- second core -->
-            <b>
-             <span style="display: inline-block">
-              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
-                    [right]="sectionEditable.secondCore"></span>
-            </span>
-              </b>
-            <app-calendar-course-list></app-calendar-course-list>
-            </span>
-          <br>
-          <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
-          <br>
-          <span><b>Rationale:</b></span>
-          <br>
-          <span>{{editedExtraModel.rationale}}</span>
-          <div *ngIf="editedExtraModel.rationale == '' ">
-            No rationale is available for this section.
-          </div>
-          <br>
-          <span><b>Resource Implications:</b></span>
-          <br>
-          <span>{{editedExtraModel.implications}}</span>
-          <div *ngIf="editedExtraModel.implications == '' ">
-            No implication is available for this section.
-          </div>
-
+          </form>
         </mat-card>
-      </div>
-    </div>
-    <br><br>
 
-    <br><br>
-    <app-support-documents [courseId]="id" [target_type]="2"></app-support-documents>
-    <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
-  </mat-card>
-</main>
-<footer class="hg__footer">
-  <app-footer></app-footer>
-</footer>
+        <div class="edited-text">
+          <mat-card>
+
+            <!-- Section and title -->
+            <span>
+              <b>
+                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sectionId"
+                  [right]="sectionOriginal.sectionId"></span>&nbsp;
+                <b>
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sectionTitle"
+                    [right]="sectionEditable.sectionTitle"></span> <br>
+                </b>
+              </b>
+            </span>
+            <br>
+
+            <!-- paragraph description -->
+            <span>
+              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstParagraph"
+                [right]="sectionEditable.firstParagraph"></span><br><br>
+
+              <!-- first core -->
+
+              <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
+                    [right]="sectionEditable.firstCore"></span>
+                </span> (30.5 Credits) </b>
+              <br>
+              See&nbsp;<a href="">&#167;71.20.5</a><br><br>
+
+              <!-- second core -->
+              <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
+                    [right]="sectionEditable.secondCore"></span>
+                </span>
+              </b>
+              <app-calendar-course-list></app-calendar-course-list>
+            </span>
+            <br>
+            <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
+            <br>
+            <span><b>Rationale:</b></span>
+            <br>
+            <span>{{editedExtraModel.rationale}}</span>
+            <div *ngIf="editedExtraModel.rationale == '' ">
+              No rationale is available for this section.
+            </div>
+            <br>
+            <span><b>Resource Implications:</b></span>
+            <br>
+            <span>{{editedExtraModel.implications}}</span>
+            <div *ngIf="editedExtraModel.implications == '' ">
+              No implication is available for this section.
+            </div>
+
+          </mat-card>
+        </div>
+      </div>
+      <br><br>
+
+      <br><br>
+      <app-support-documents [sectionId]="id" [target_type]="3"></app-support-documents>
+      <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
+    </mat-card>
+  </main>
+  <footer class="hg__footer">
+    <app-footer></app-footer>
+  </footer>
 </body>

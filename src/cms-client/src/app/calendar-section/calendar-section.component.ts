@@ -23,7 +23,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { CookieService } from 'ngx-cookie-service';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Section } from '../models/section';
 import { SectionExtras } from '../models/section-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
@@ -52,8 +52,8 @@ export class CalendarSectionComponent implements OnInit {
   isDeleteVisible = true;
 
   constructor(private route: ActivatedRoute, private api: ApiService,
-              private cookieService: CookieService,
-              private router: Router) { }
+    private cookieService: CookieService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -63,6 +63,11 @@ export class CalendarSectionComponent implements OnInit {
 
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
+
+      // quick fix for calendar request through matthew's component on dossier
+      if (this.id === '0') {
+        this.id = '1';
+      }
     });
 
     const requestId = this.cookieService.get('request');
@@ -86,7 +91,8 @@ export class CalendarSectionComponent implements OnInit {
         this.sectionOriginal = data;
         this.sectionEditable = Object.assign({}, data);
         this.sectionEditable.sectionId = this.sectionOriginal.sectionId;
-      }); } else {
+      });
+    } else {
       const originalId = this.cookieService.get('originalSection');
       const editedId = this.cookieService.get('editedSection');
       this.api.getSection(originalId).subscribe(data => {

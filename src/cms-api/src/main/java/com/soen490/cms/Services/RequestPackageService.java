@@ -125,11 +125,11 @@ public class RequestPackageService {
 
         JSONObject subSection70719JSON = new JSONObject(subSections70719);
 
-        section70719.setSecondCore((String) subSection70719JSON.get("second_core"));
-        section70719.setFirstCore((String) subSection70719JSON.get("first_core"));
-        section70719.setFirstParagraph((String) subSection70719JSON.get("first_paragraph"));
-        section70719.setSectionId((String) subSection70719JSON.get("section_id"));
-        section70719.setSectionTitle((String) subSection70719JSON.get("section_title"));
+        section70719.setSecondCore((String) subSection70719JSON.get("secondCore"));
+        section70719.setFirstCore((String) subSection70719JSON.get("firstCore"));
+        section70719.setFirstParagraph((String) subSection70719JSON.get("firstParagraph"));
+        section70719.setSectionId((String) subSection70719JSON.get("sectionId"));
+        section70719.setSectionTitle((String) subSection70719JSON.get("sectionTitle"));
         section70719.setIsActive(0);
 
         section70719Repository.save(section70719);
