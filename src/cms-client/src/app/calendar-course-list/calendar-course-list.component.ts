@@ -23,6 +23,7 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar-course-list',
@@ -34,11 +35,14 @@ export class CalendarCourseListComponent implements OnInit {
   originalCourses;
   editedCourses : Course[] = [];
   printedCourses : Course[] = [];
-  isGetCalendarCourses = false;
+
+  courseIds = [];
+
   isDoneLoading = false;
 
   constructor(private cookieService: CookieService,
-    private api: ApiService) { }
+    private api: ApiService,
+    private router: Router) { }
 
   ngOnInit() {
     let packageNumber = this.cookieService.get('package');
@@ -58,10 +62,8 @@ export class CalendarCourseListComponent implements OnInit {
             i++;
           });
         });
-        
       })
     });
-    
   }
 
   public getPrintedCourses(){
@@ -71,16 +73,25 @@ export class CalendarCourseListComponent implements OnInit {
         if(ec.number === oc.number){
           isRepeated = true;
           this.printedCourses.push(ec);
+
+          this.courseIds.push(oc.id);
+          this.courseIds.push(ec.id);
         }
       })
       if(!isRepeated){
         this.printedCourses.push(oc)
+        
+        this.courseIds.push(oc.id);
+        this.courseIds.push(oc.id);
       }
     });
   }
 
-  public navigateToEditFormEdited(a, b){
+  public navigateToEditFormEdited(courseOriginalId, courseEditedId){
+    this.cookieService.set('originalCourse', courseOriginalId.toString());
+    this.cookieService.set('editedCourse', courseEditedId.toString());
 
+    this.router.navigate(['editForm/' + courseOriginalId]);
   }
 
   public navigateToEditForm(a){

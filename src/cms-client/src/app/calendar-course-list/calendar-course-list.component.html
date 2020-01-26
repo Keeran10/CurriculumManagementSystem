@@ -19,21 +19,22 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-<div *ngIf="isDoneLoading">
-    <div *ngFor="let oc of originalCourses">
-        <div *ngFor="let ec of editedCourses">
-            <div *ngIf="ec.number === oc.number">
-                <span (click)="navigateToEditFormEdited(oc.id, ec.id)">{{ ec.name }} {{ec.number}} {{ec.title}} {{ec.credits.toFixed(2)}}</span><br>
+<div class="container">
+    <mat-card class="left-side" *ngIf="isDoneLoading">
+        <div *ngFor="let c of printedCourses; let i = index">
+            <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+        </div>
+    </mat-card>
+
+    <mat-card class="right-side" *ngIf="isDoneLoading">
+        <div *ngFor="let c of printedCourses; let i = index">
+            <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+                <span>{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            </div>
+            <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span><br>
             </div>
         </div>
-        <span (click)="navigateToEditForm(oc.id)">{{ oc.name }} {{oc.number}} {{oc.title}} {{oc.credits.toFixed(2)}}</span><br>
-    </div>
-</div>
-
-<br><br>
-
-<div *ngIf="isDoneLoading">
-    <div *ngFor="let c of printedCourses">
-        <span (click)="navigateToEditFormEdited(oc.id, ec.id)">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
-    </div>
+    </mat-card>
 </div>

@@ -35,6 +35,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import { RevisionsComponent } from './revisions/revisions.component';
 import { CalendarSectionsComponent } from './calendar-sections/calendar-sections.component';
 import { RegistrationComponent } from './admin-registration/admin-registration.component';
+import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
 
 const routes: Routes = [
   { path: 'addcourse', component: CourseFormComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'audit', component: PipelineAuditComponent},
   { path: 'calendar', component: CalendarSectionsComponent },
   { path: 'registration', component: RegistrationComponent},
+  { path: 'tempPage', component: CalendarCourseListComponent },
   { path: '', component: LoginComponent }
 ];
 
