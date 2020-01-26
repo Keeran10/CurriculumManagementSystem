@@ -27,6 +27,8 @@ import { Component, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseExtras } from '../models/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
+import { distinct } from 'rxjs/operators';
+import { DegreeRequirement } from '../models/degree-requirement';
 
 @Component({
   selector: 'app-edit-form',
@@ -51,6 +53,9 @@ export class EditFormComponent {
   files: File[] = [];
 
   isDeleteVisible = true;
+
+  availableDegrees = [];
+  availableCores = [];
 
   constructor(private route: ActivatedRoute, private api: ApiService,
     private cookieService: CookieService,
@@ -87,6 +92,7 @@ export class EditFormComponent {
       this.api.getCourse(this.id).subscribe(data => {
         this.courseOriginal = data;
         this.courseEditable = Object.assign({}, data);
+        this.courseEditable.degreeRequirements = this.courseOriginal.degreeRequirements;
         this.setRequisitesStrings(data, this.model);
         this.setRequisitesStrings(data, this.editedModel)
       });
@@ -96,14 +102,22 @@ export class EditFormComponent {
       let editedId = this.cookieService.get('editedCourse');
       this.api.getCourse(originalId).subscribe(data => {
         this.courseOriginal = data;
+        console.log(this.courseOriginal);
         this.setRequisitesStrings(data, this.model);
       });
       this.api.getCourse(editedId).subscribe(data => {
         this.courseEditable = data;
+        console.log(this.courseEditable);
         this.courseEditable.id = Number(originalId);
         this.setRequisitesStrings(data, this.editedModel);
       });
     }
+
+    this.api.getDegreeRequirements('4').subscribe(data => {
+      this.availableDegrees = data;
+      console.log(this.availableDegrees);
+      this.getCoresOfDegree(this.availableDegrees[0]);
+    });
   }
 
   public highlightChanges(): void {
@@ -178,6 +192,42 @@ export class EditFormComponent {
         this.supportDocumentComponent.descriptions, this.courseEditable, this.editedModel)
         .subscribe(() => this.router.navigate(['/package']));
     }
+  }
+
+  public getCoresOfDegree(degreeName){
+    let degree = this.availableDegrees.find(e => e.name == degreeName);
+    let cores = []
+    if (degree != null){
+      degree.degreeRequirements.forEach(d => {
+        cores.push(d.core)
+      });
+    }
+    cores.push("None")
+    cores = [...new Set(cores)];
+    return cores;
+  }
+
+  public changeDegree(event, i)
+  {
+    if(event.isUserInput) {
+      console.log(event.source.value);
+      let degree = this.availableDegrees.find(e => e.name == event.source.value);
+      this.courseEditable.degreeRequirements[i].degree.credits = degree.credits;
+      this.courseEditable.degreeRequirements[i].degree.id = degree.id;
+      this.courseEditable.degreeRequirements[i].degree.level = degree.level;
+    }
+  }
+
+  public addDegree(){
+    let degreeReq = new DegreeRequirement();
+    degreeReq.core = "None";
+    degreeReq.id = 0;
+    degreeReq.degree = Object.assign({}, this.courseEditable.degreeRequirements[0].degree);
+    this.courseEditable.degreeRequirements.push(degreeReq);
+  }
+
+  public removeDegree(){
+    this.courseEditable.degreeRequirements.pop();
   }
 
 }

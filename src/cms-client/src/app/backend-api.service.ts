@@ -337,4 +337,10 @@ export class ApiService {
     });
   }
 
+  public getDegreeRequirements(department_id){
+    return this.http.get<any>(this.url + 'get_degrees_by_department', {
+      params: new HttpParams().set('department_id', department_id)
+    });
+  }
+
 }
