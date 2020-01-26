@@ -476,8 +476,13 @@ public class RequestPackageService {
 
         request.getRequestPackage().getRequests().remove(request);
 
+        if(request.getTargetType() == 1){
+            // TODO: change this to account for all sections
+            section70719Repository.deleteById(request.getTargetId());
+            requestRepository.delete(request);
+            return true;
+        }
         if(request.getRequestType() == 3){
-
             requestRepository.delete(request);
             generatePdf(user_id, package_id);
             return true;
