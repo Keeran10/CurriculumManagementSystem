@@ -52,4 +52,7 @@ public interface DegreeRepository extends JpaRepository<Degree, Integer>{
     Degree findById(int id);
 
 
+    @Query(value = "SELECT d.id, d.credits, d.level, d.name, d.program_id FROM degree d INNER JOIN program p ON " +
+            "d.program_id = p.id INNER JOIN department dept ON dept.id = p.department_id WHERE dept.id=?", nativeQuery = true)
+    List<Degree> findDegreesByDepartment(int department_id);
 }

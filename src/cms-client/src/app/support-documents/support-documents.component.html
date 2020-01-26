@@ -58,8 +58,8 @@
         <td>
           {{ doc.fileDescription}}
         </td>
-        <td class="fake-link" (click)="removeSupportingDoc(doc.id)">
-          [X]
+        <td (click)="removeSupportingDoc(doc.id)">
+          <font color="red" style="cursor: pointer;">[x]</font>
         </td>
       </tr>
     </table>
