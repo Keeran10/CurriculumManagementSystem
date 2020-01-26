@@ -53,14 +53,16 @@ export class CalendarCourseListComponent implements OnInit {
         const requests = data.requests;
         let i = 0;
         requests.forEach(request => {
-          this.api.getCourse(String(request.targetId)).subscribe(data => {
-            this.editedCourses.push(data);
-            if ((requests.length - 1) === i) {
-              this.isDoneLoading = true;
-              this.getPrintedCourses();
-            }
-            i++;
-          });
+          if (request.targetType === 2) {
+            this.api.getCourse(String(request.targetId)).subscribe(data => {
+              this.editedCourses.push(data);
+              if ((requests.length - 1) === i) {
+                this.isDoneLoading = true;
+                this.getPrintedCourses();
+              }
+              i++;
+            });
+          }
         });
       });
     });
