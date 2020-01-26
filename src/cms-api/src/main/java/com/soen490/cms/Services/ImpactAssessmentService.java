@@ -24,6 +24,7 @@ package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Repositories.CourseRepository;
+import com.soen490.cms.Repositories.DegreeRepository;
 import com.soen490.cms.Repositories.DegreeRequirementRepository;
 import com.soen490.cms.Repositories.RequestRepository;
 import lombok.extern.log4j.Log4j2;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +53,8 @@ public class ImpactAssessmentService {
     CourseRepository courseRepository;
     @Autowired
     DegreeRequirementRepository degreeRequirementRepository;
+    @Autowired
+    DegreeRepository degreeRepository;
 
     public Map<String, Object> getCourseImpact(String requestForm) throws JSONException {
 
@@ -63,19 +67,20 @@ public class ImpactAssessmentService {
         JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
         JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
 
-        // Changed Course and Original Course
-        List<Course> o = courseRepository.findByJsonId((Integer) course.get("id"));
+        int original_id = (Integer) course.get("id");
 
         Course original = null;
 
-        if(!o.isEmpty())
-            original = o.get(0);
-        else return null;
+        if (original_id != 0)
+            original = courseRepository.findById(original_id);
+
+        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
+        Request request = requestRepository.findByRequestId(request_id);
 
         Course c = new Course();
 
         c.setName((String) course.get("name"));
-        c.setNumber((Integer) course.get("number"));
+        c.setNumber(Integer.valueOf((String.valueOf(course.get("number")))));
         c.setTitle((String) course.get("title"));
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
@@ -85,32 +90,14 @@ public class ImpactAssessmentService {
         c.setTutorialHours(Double.valueOf(String.valueOf(course.get("tutorialHours"))));
         c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
         c.setIsActive(0);
-        c.setProgram(original.getProgram());
 
-        // this needs to be deleted upon successful impact.
         courseRepository.save(c);
 
-        // Degree Requirements
-        ArrayList<DegreeRequirement> list = new ArrayList<>();
 
-        List<DegreeRequirement> original_drs = degreeRequirementRepository.findByCourseId(original.getId());
-
-        for(DegreeRequirement dr : original_drs){
-
-            DegreeRequirement cdr = new DegreeRequirement();
-
-            cdr.setCore(dr.getCore());
-            cdr.setDegree(dr.getDegree());
-            cdr.setCourse(c);
-
-            degreeRequirementRepository.save(cdr);
-
-            //dr.getDegree().getDegreeRequirements().add(cdr);
-
-            list.add(cdr);
-
-        }
-        c.setDegreeRequirements(list);
+        if(original != null)
+            request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
+        else
+            request.setTitle(c.getName().toUpperCase() + c.getNumber() + "_create");
 
         // Requisites
         String pre = (String) courseExtras.get("prerequisites");
@@ -118,74 +105,48 @@ public class ImpactAssessmentService {
         String anti = (String) courseExtras.get("antirequisites");
         String eq = (String) courseExtras.get("equivalents");
 
-        String[] prerequisites = pre.split(";|\\,");
-        String[] corequisites = co.split(";|\\,");
-        String[] antirequisites = anti.split(";|\\,");
-        String[] equivalents = eq.split(";|,|or");
+        courseRepository.save(c);
 
-        for(String prerequisite : prerequisites){
+        // Set degree requirements
+        ArrayList<DegreeRequirement> list = new ArrayList<>();
+        int size = course.getJSONArray("degreeRequirements").length();
+        int ctr = 0;
 
-            prerequisite = prerequisite.trim();
+        for(int i = 0; i < size; i++){
 
-            if(prerequisite.length() >= 7){
+            JSONObject degreeRequirements = (JSONObject) course.getJSONArray("degreeRequirements").get(i);
+            int degreeReq_id = (Integer) degreeRequirements.get("id");
 
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                if(prerequisite.startsWith("credits", 3)){
-                    requisite.setName(prerequisite);
-                    requisite.setNumber(0);
-                }
-                else{
-                    requisite.setName(prerequisite.substring(0, 4).trim());
-                    requisite.setNumber(Integer.parseInt(prerequisite.substring(4).trim()));
-                }
-                requisite.setType("prerequisite");
+            JSONObject degreeJSON = (JSONObject) degreeRequirements.get("degree");
+            int degree_id = (Integer) degreeJSON.get("id");
+            Degree degree = degreeRepository.findById(degree_id);
+            String core = (String) degreeRequirements.get("core");
+
+            if(ctr == 0 && degree != null){
+                c.setProgram(degree.getProgram());
+                courseRepository.save(c);
+                ctr++;
             }
 
+            DegreeRequirement cdr = null;
+
+            if(degreeReq_id == 0)
+                cdr = new DegreeRequirement();
+            else
+                cdr = degreeRequirementRepository.findById(degreeReq_id);
+
+            if(core == null || degree == null || cdr == null)
+                continue;
+
+            cdr.setCore(core);
+            cdr.setDegree(degree);
+            cdr.setCourse(c);
+
+            degreeRequirementRepository.save(cdr);
+            list.add(cdr);
         }
-        for(String corequisite : corequisites){
 
-            corequisite = corequisite.trim();
-
-            if(corequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(corequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(corequisite.substring(4).trim()));
-                requisite.setType("corequisite");
-            }
-        }
-        for(String antirequisite : antirequisites){
-
-            antirequisite = antirequisite.trim();
-
-            if(antirequisite.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(antirequisite.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(antirequisite.substring(4).trim()));
-                requisite.setType("antirequisite");
-            }
-        }
-        for(String equivalent : equivalents){
-
-            equivalent = equivalent.trim();
-
-            if(equivalent.length() >= 7){
-
-                Requisite requisite = new Requisite();
-                requisite.setCourse(c);
-                requisite.setIsActive(0);
-                requisite.setName(equivalent.substring(0, 4).trim());
-                requisite.setNumber(Integer.parseInt(equivalent.substring(4).trim()));
-                requisite.setType("equivalent");
-            }
-        }
+        c.setDegreeRequirements(list);
 
         Map<String, Object> impact =  getCourseAssessment(original, c, 2);
 

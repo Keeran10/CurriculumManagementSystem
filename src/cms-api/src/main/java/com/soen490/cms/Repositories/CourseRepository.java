@@ -39,6 +39,4 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
     @Query(value = "SELECT * FROM course WHERE id=?1", nativeQuery = true)
     Course findById(int number);
 
-    @Query(value = "SELECT * FROM course WHERE id=?1", nativeQuery = true)
-    List<Course> findByJsonId(Integer id);
 }

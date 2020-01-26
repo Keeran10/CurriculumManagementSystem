@@ -53,6 +53,7 @@ INSERT IGNORE INTO user VALUES (4, 'chad@soen.com', 'Chad', 'Lee','123', 'APC', 
 INSERT IGNORE INTO user VALUES (5, 'rhonda@soen.com', 'Rhonda', 'Philips','123', 'Department Council', 8);
 INSERT IGNORE INTO user VALUES (6, 'billy@soen.com', 'Billy', 'Bob','123', 'UGSC', 8);
 INSERT IGNORE INTO user VALUES (7, 'olga@soen.com', 'Olga', 'Hashtag','123', 'Senate', 8);
+INSERT IGNORE INTO user VALUES (8, 'admin@soen.com', 'Admin', 'Badminton','123', 'admin', 4);
 
 -- id, desc, active, name, department_id
 INSERT IGNORE INTO program VALUES (1, "The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics. The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.",
