@@ -1,8 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import {Section} from '../models/section';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ApiService} from '../backend-api.service';
-import {CookieService} from 'ngx-cookie-service';
+// MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../backend-api.service';
+import { CookieService } from 'ngx-cookie-service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import { Section } from '../models/section';
+import { SectionExtras } from '../models/section-extras';
+import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 
 @Component({
   selector: 'app-calendar-section',
@@ -11,9 +35,19 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class CalendarSectionComponent implements OnInit {
 
+  @ViewChild(SupportDocumentComponent, { static: false })
+  supportDocumentComponent: SupportDocumentComponent;
+
   id: string;
   sectionOriginal: Section = new Section();
   sectionEditable: Section = new Section();
+
+  extrasModel = new SectionExtras();
+  editedExtraModel = new SectionExtras();
+
+  selectedFiles: FileList;
+  currentFile: File;
+  files: File[] = [];
 
   isDeleteVisible = true;
 
@@ -23,11 +57,23 @@ export class CalendarSectionComponent implements OnInit {
 
   ngOnInit() {
 
+    this.currentFile = null;
+    this.selectedFiles = null;
+    this.files = null;
+
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
+
     const requestId = this.cookieService.get('request');
+    const packageId = this.cookieService.get('package');
     const userId = this.cookieService.get('user');
+    this.extrasModel.packageId = Number(packageId);
+    this.editedExtraModel.packageId = Number(packageId);
+    this.extrasModel.userId = Number(userId);
+    this.editedExtraModel.userId = Number(userId);
+    this.extrasModel.requestId = Number(requestId);
+    this.editedExtraModel.requestId = Number(requestId);
     if (this.id === '0') {
       this.sectionEditable = new Section();
       this.sectionOriginal = Object.assign({}, this.sectionEditable);
@@ -39,6 +85,7 @@ export class CalendarSectionComponent implements OnInit {
       this.api.getSection(this.id).subscribe(data => {
         this.sectionOriginal = data;
         this.sectionEditable = Object.assign({}, data);
+        this.sectionEditable.sectionId = this.sectionOriginal.sectionId;
       }); } else {
       const originalId = this.cookieService.get('originalSection');
       const editedId = this.cookieService.get('editedSection');
@@ -66,7 +113,8 @@ export class CalendarSectionComponent implements OnInit {
   }
 
   public submitForm() {
-    this.api.submitCalendarSectionForm(this.sectionEditable)
+    this.api.submitCalendarSectionForm(this.supportDocumentComponent.documents,
+      this.supportDocumentComponent.descriptions, this.sectionEditable, this.editedExtraModel)
       .subscribe(() => this.router.navigate(['/package']));
   }
 }

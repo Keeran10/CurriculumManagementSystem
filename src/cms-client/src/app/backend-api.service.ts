@@ -34,6 +34,7 @@ import { User } from './models/user';
 import { PipelineRevisions } from './models/pipeline-revisions';
 import { SupportingDocument } from './models/supporting-document';
 import {Section} from './models/section';
+import {SectionExtras} from './models/section-extras';
 
 @Injectable({
   providedIn: 'root'
@@ -243,15 +244,15 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public submitCalendarSectionForm(section: Section) {
+  public submitCalendarSectionForm(files: File[], descriptions: Map<string, string>,
+                                   section: Section, sectionExtras: SectionExtras) {
 
-    const formdata: FormData = this.SectionToFormData(section);
+    const formdata: FormData = this.submitSection(files, descriptions, section, sectionExtras);
 
-    const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
-      reportProgress: true,
-      responseType: 'text',
-    });
-
+    const req = new HttpRequest('POST', this.url + 'save_subSection70719', formdata, {
+        reportProgress: true,
+        responseType: 'text',
+      });
     return this.http.request(req);
   }
 
@@ -292,9 +293,15 @@ export class ApiService {
     return formdata;
   }
 
-  private SectionToFormData(section: Section) {
+  private submitSection(files: File[], descriptions: Map<string, string>, section: Section, sectionExtras: SectionExtras) {
     const formdata: FormData = new FormData();
-    formdata.append('section', JSON.stringify(section));
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
+    formdata.append('subSection70719', JSON.stringify(section));
+    formdata.append('sectionExtras', JSON.stringify(sectionExtras));
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
     return formdata;
   }
 

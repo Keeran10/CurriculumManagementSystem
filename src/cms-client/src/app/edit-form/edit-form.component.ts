@@ -27,7 +27,6 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseExtras } from '../models/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
-import { distinct } from 'rxjs/operators';
 import { DegreeRequirement } from '../models/degree-requirement';
 
 @Component({
