@@ -110,4 +110,11 @@ public class SearchController {
     public Section70719 getSection70719(){
         return searchService.findsection70719ById(1);
     }
+
+
+    @GetMapping("/get_degrees_by_department")
+    public List<Degree> getDegreesFromDepartment(@RequestParam int department_id){
+
+        return searchService.findDegreesByDepartment(department_id);
+    }
 }

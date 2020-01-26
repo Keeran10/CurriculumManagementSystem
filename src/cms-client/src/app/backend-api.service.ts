@@ -33,6 +33,7 @@ import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
 import { PipelineRevisions } from './models/pipeline-revisions';
+import { SupportingDocument } from './models/supporting-document';
 
 @Injectable({
   providedIn: 'root'
@@ -193,13 +194,14 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public uploadFile(files: File[], packageId: any, userId: any) {
+  public uploadFile(files: File[], descriptions: Map<string, string>, packageId: any, userId: any) {
     const formdata: FormData = new FormData();
 
     for (const file of files) {
       formdata.append('files', file);
     }
 
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
     formdata.append('package_id', packageId);
     formdata.append('user_id', userId);
 
@@ -211,8 +213,10 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public submitCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
-    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+  public submitCourseRequestForm(files: File[], descriptions: Map<string, string>,
+    course: Course, courseExtras: CourseExtras) {
+
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
     const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,
@@ -236,8 +240,8 @@ export class ApiService {
     });
   }
 
-  public submitDeleteCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
-    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+  public submitDeleteCourseRequestForm(files: File[], descriptions: Map<string, string>, course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
     const req = new HttpRequest('POST', this.url + 'save_removal_request', formdata, {
       reportProgress: true,
@@ -247,8 +251,9 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  private fileCourseAndExtrasToFormData(files: File[], course: Course, courseExtras: CourseExtras) {
+  private fileCourseAndExtrasToFormData(files: File[], descriptions: Map<string, string>, course: Course, courseExtras: CourseExtras) {
     const formdata: FormData = new FormData();
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
     formdata.append('course', JSON.stringify(course));
     formdata.append('courseExtras', JSON.stringify(courseExtras));
     for (const file of files) {
@@ -303,6 +308,32 @@ export class ApiService {
     console.log('api-getPipelineRevisions ' + pipelineId);
     return this.http.get<PipelineRevisions[]>(this.url + '/pipeline_revisions', {
       params: new HttpParams().set('pipeline_id', pipelineId)
+    });
+  }
+
+  public getSupportingDocuments(target_id: any, target_type: any) {
+    console.log('api-getSupportingDocuments ' + target_id + target_type);
+    return this.http.get<SupportingDocument[]>(this.url + 'get_supporting_documents', {
+      params: new HttpParams().set('target_id', target_id).set('target_type', target_type)
+    });
+  }
+
+  public getSupportingDocumentPdf(file_id: any) {
+    return this.http.get<BlobPart>(this.url + 'get_supporting_document_pdf', {
+      params: new HttpParams().set('file_id', file_id),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
+
+  public removeSupportingDocument(file_id: any) {
+    return this.http.get<string>(this.url + 'remove_supporting_document', {
+      params: new HttpParams().set('file_id', file_id)
+    });
+  }
+
+  public removeRequest(request_id: any) {
+    return this.http.get<string>(this.url + 'delete_request', {
+      params: new HttpParams().set('requestId', request_id)
     });
   }
 
