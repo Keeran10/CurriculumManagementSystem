@@ -19,8 +19,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
-<div *ngIf="isGetCalendarCourses && isGetPackageCourses">
+<div *ngIf="isDoneLoading">
     <div *ngFor="let oc of originalCourses">
-        <span>{{ oc.name }} {{oc.number}} {{oc.title}} {{oc.credits.toFixed(2)}}</span><br>
+        <div *ngFor="let ec of editedCourses">
+            <div *ngIf="ec.number === oc.number">
+                <span (click)="navigateToEditFormEdited(oc.id, ec.id)">{{ ec.name }} {{ec.number}} {{ec.title}} {{ec.credits.toFixed(2)}}</span><br>
+            </div>
+        </div>
+        <span (click)="navigateToEditForm(oc.id)">{{ oc.name }} {{oc.number}} {{oc.title}} {{oc.credits.toFixed(2)}}</span><br>
+    </div>
+</div>
+
+<br><br>
+
+<div *ngIf="isDoneLoading">
+    <div *ngFor="let c of printedCourses">
+        <span (click)="navigateToEditFormEdited(oc.id, ec.id)">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
     </div>
 </div>

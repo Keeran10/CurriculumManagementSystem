@@ -33,8 +33,9 @@ export class CalendarCourseListComponent implements OnInit {
 
   originalCourses;
   editedCourses : Course[] = [];
+  printedCourses : Course[] = [];
   isGetCalendarCourses = false;
-  isGetPackageCourses = false;
+  isDoneLoading = false;
 
   constructor(private cookieService: CookieService,
     private api: ApiService) { }
@@ -43,22 +44,47 @@ export class CalendarCourseListComponent implements OnInit {
     let packageNumber = this.cookieService.get('package');
     this.api.getCalendar().subscribe(data => {
       this.originalCourses = data.secondCoreCourses;
-      this.isGetCalendarCourses = true;
-    });
-    this.api.getPackage(packageNumber, '4').subscribe(data => {
-      let requests = data.requests;
-      requests.forEach(request => {
-        this.api.getCourse(String(request.targetId)).subscribe(data => {
-          this.editedCourses.push(data);
+
+      this.api.getPackage(packageNumber, '4').subscribe(data => {
+        let requests = data.requests;
+        let i = 0;
+        requests.forEach(request => {
+          this.api.getCourse(String(request.targetId)).subscribe(data => {
+            this.editedCourses.push(data);
+            if((requests.length - 1) === i){
+              this.isDoneLoading = true
+              this.getPrintedCourses();
+            }
+            i++;
+          });
         });
-      });
-      this.isGetPackageCourses = true;
-    })
+        
+      })
+    });
+    
   }
 
-  public logData(){
-    console.log(this.originalCourses);
-    console.log(this.editedCourses);
+  public getPrintedCourses(){
+    this.originalCourses.forEach(oc => {
+      let isRepeated = false;
+      this.editedCourses.forEach(ec => {
+        if(ec.number === oc.number){
+          isRepeated = true;
+          this.printedCourses.push(ec);
+        }
+      })
+      if(!isRepeated){
+        this.printedCourses.push(oc)
+      }
+    });
+  }
+
+  public navigateToEditFormEdited(a, b){
+
+  }
+
+  public navigateToEditForm(a){
+
   }
 
 }
