@@ -20,27 +20,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ApiService } from '../backend-api.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { CookieService } from 'ngx-cookie-service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { CalendarCourseListComponent } from './calendar-course-list.component';
-
 describe('CalendarCourseListComponent', () => {
-  let component: CalendarCourseListComponent;
-  let fixture: ComponentFixture<CalendarCourseListComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarCourseListComponent ]
-    })
-    .compileComponents();
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      declarations: [CalendarCourseListComponent],
+      providers: [
+        ApiService,
+        CookieService
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CalendarCourseListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe('Calendar course list tests', () => {
+    function setup() {
+      const fixture = TestBed.createComponent(CalendarCourseListComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
+      const cookieService = TestBed.get(CookieService);
+      const httpClient = TestBed.get(HttpTestingController);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+      return { fixture, component, apiService, cookieService, httpClient };
+    }
+
+    it('should create', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
+
   });
 });
