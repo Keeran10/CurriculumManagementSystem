@@ -682,9 +682,10 @@ public class RequestPackageService {
 
         for (Request r : dossier.getRequests()) {
 
-            if (r.getTargetType() == 1)
+            if (r.getTargetType() == 1) {
                 finalizeSection70719Request(r);
-
+                continue;
+            }
             if (r.getRequestType() == 1)
                 finalizeCourseCreationRequest(r);
             if (r.getRequestType() == 2)
