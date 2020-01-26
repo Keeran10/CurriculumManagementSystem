@@ -23,7 +23,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseExtras } from '../models/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
@@ -36,7 +36,7 @@ import { DegreeRequirement } from '../models/degree-requirement';
   styleUrls: ['./edit-form.component.css']
 })
 
-export class EditFormComponent {
+export class EditFormComponent implements OnInit{
 
   @ViewChild(SupportDocumentComponent, { static: false })
   supportDocumentComponent: SupportDocumentComponent;
@@ -62,7 +62,6 @@ export class EditFormComponent {
     private router: Router) {
   }
 
-  // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
 
     this.currentFile = null;
