@@ -20,27 +20,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ApiService } from '../backend-api.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CalendarSectionsComponent } from './calendar-sections.component';
 
 describe('CalendarSectionsComponent', () => {
-  let component: CalendarSectionsComponent;
-  let fixture: ComponentFixture<CalendarSectionsComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarSectionsComponent ]
-    })
-    .compileComponents();
+      imports: [
+        HttpClientTestingModule
+      ],
+      declarations: [CalendarSectionsComponent],
+      providers: [
+        ApiService
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CalendarSectionsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe('Calendar course list tests', () => {
+    function setup() {
+      const fixture = TestBed.createComponent(CalendarSectionsComponent);
+      const component = fixture.componentInstance;
+      const apiService = TestBed.get(ApiService);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+      return { fixture, component, apiService };
+    }
+
+    it('should create', () => {
+      const { component } = setup();
+      expect(component).toBeTruthy();
+    });
+
   });
 });
