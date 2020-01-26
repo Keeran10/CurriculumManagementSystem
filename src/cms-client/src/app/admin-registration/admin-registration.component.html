@@ -24,6 +24,7 @@
     <header class="hg__header">
     </header>
     <main class="hg__main">
+      <app-top-nav-bar></app-top-nav-bar>
     <div class="top-container">
     <h1>Register User Below:</h1>
     </div>
@@ -58,6 +59,12 @@
           <button mat-raised-button [disabled]="!loginForm.valid" class="btn-large btn-submit" type="submit"><mat-icon>account_circle</mat-icon> Register</button>
         </div>
       </div>
+      <h5 id="success">
+        User Registration Successful.
+      </h5>
+      <h5 id="fail">
+        User Registration Unsuccessful.
+      </h5>
     </form>
     </div>
     </main>

@@ -59,6 +59,16 @@ h1 {
   color: black;
 }
 
+#success {
+  visibility: hidden;
+  color: green;
+}
+
+#fail {
+  visibility: hidden;
+  color: red;
+}
+
 @media screen and (max-width: 600px) {
   .hg {
     grid-template-areas: "header" "main" "main" "main" "footer";

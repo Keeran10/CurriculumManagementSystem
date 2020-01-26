@@ -20,10 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ApiService } from '../backend-api.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '../models/user';
+import { FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -33,7 +32,6 @@ import { CookieService } from 'ngx-cookie-service';
   })
 
   export class RegistrationComponent implements OnInit {
-
     userTypes = ['Professor', 'Department Curriculum Committee', 'Faculty Council', 'APC', 'Department Council', 'UGSC', 'Senate'];
     departmentId = 0;
     constructor(private formBuilder: FormBuilder, private api: ApiService, private cookieService: CookieService
@@ -44,9 +42,16 @@ import { CookieService } from 'ngx-cookie-service';
     }
 
     OnSubmit(firstname: any, lastname: any, usertype: any, email: any, password: any) {
-      // const registerUser = new User(firstname, lastname, usertype, email, password, this.departmentId);
-      // console.log(registerUser);
-      //this.api.registerUser(registerUser).subscribe(data => console.log(data));
-      this.api.registerUser(firstname, lastname, usertype, email, password, this.departmentId).subscribe(data => console.log(data));
+      this.api.registerUser(firstname, lastname, usertype, email, password, this.departmentId).subscribe(data => {
+        console.log(data);
+        const res = JSON.stringify(data);
+        if (res.includes('200')) {
+          const success = document.getElementById('success');
+          success.style.visibility = 'visible';
+        } else if (res.includes('400')) {
+          const fail = document.getElementById('fail');
+          fail.style.visibility = 'visible';
+        }
+      });
     }
 }
