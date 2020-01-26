@@ -128,62 +128,6 @@ public class RequestPackageTest {
     }
 
 
-    // Assert that a create request has been added to database.
-    @Test
-    public void testSaveCreateCourseRequest(){
-
-        String course = "{\"id\":0,\"name\":\"SOEN\",\"number\":\"344\",\"title\":\"Advanced Software Architecture and" +
-                " Design\",\"credits\":\"5\",\"note\":\"\",\"level\":2,\"lectureHours\":3,\"tutorialHours\":1,\"" +
-                "labHours\":0,\"description\":\"Architectural activities, roles, and deliverables. Architectural view" +
-                " models. Architectural styles (including client‑server, layered, pipes‑and‑filters, event‑based, " +
-                "process control) and frameworks. Architectural analysis and the interplay with requirements " +
-                "elicitation. Notations for expressing architectural designs, structural and behavioural " +
-                "specifications. From architectural design to detailed design. Domain specific architectures and " +
-                "design patterns. Evaluation and performance estimation of designs. Advanced object‑oriented design " +
-                "patterns and idioms. Lectures: three hours per week. Tutorial: one hour per week.\",\"isActive\":0,\"" +
-                "program\":{\"id\":1,\"name\":\"Software Engineering\",\"description\":\"The Software Engineering " +
-                "program is built on the fundamentals of computer science, an engineering core, and a discipline core " +
-                "in Software Engineering to cover the engineering approach to all phases of the software process and " +
-                "related topics. The curriculum builds on the traditional computer science core topics of computer " +
-                "mathematics, theory, programming methodology, and mainstream applications to provide the computing " +
-                "theory and practice which underlie the discipline. The engineering core covers basic science, " +
-                "professional topics, and introduces the engineering approach to problem solving. The program core in " +
-                "Software Engineering includes advanced programming techniques, software specification, design, " +
-                "architecture, as well as metrics, security, project management, and quality control. The options " +
-                "cover a broad range of advanced topics, from formal methods to distributed systems.\",\"isActive\":1," +
-                "\"department\":{\"id\":4,\"name\":\"Computer Science & Software Engineering\",\"faculty\":{\"id\":2," +
-                "\"name\":\"Gina Cody School of Engineering and Computer Science\"}}},\"requisites\":[{\"id\":7,\"" +
-                "name\":\"SOEN\",\"number\":343,\"type\":\"prerequisite\",\"isActive\":0},{\"id\":8,\"name\":\"" +
-                "SOEN\",\"number\":384,\"type\":\"prerequisite\",\"isActive\":0}],\"degreeRequirements\":[{\"id\":15," +
-                "\"core\":\"\",\"degree\":{\"id\":2,\"name\":\"Master of Software Engineering (MEng)\",\"level\":2,\"" +
-                "credits\":45}},{\"id\":16,\"core\":\"Computer Science Electives\",\"degree\":{\"id\":1,\"name\":\"" +
-                "Bachelor of Software Engineering (BEng)\",\"level\":1,\"credits\":120}}]}";
-
-        String courseExtras = "{\"antirequisites\":\"\",\"corequisites\":\"\",\"equivalents\":\"\"," +
-                "\"implications\":\"\",\"packageId\":1,\"prerequisites\":\"\",\"" +
-                "rationale\":\"\",\"userId\":1,\"requestId\":0}";
-
-        MultipartFile[] files = new MultipartFile[0];
-
-        try {
-
-            JSONObject courseJSON = new JSONObject(course);
-            JSONObject courseExtrasJSON = new JSONObject(courseExtras);
-
-            int id = requestPackageService.saveCreateRequest(courseJSON, courseExtrasJSON, files, null);
-
-            Course test_course = courseRepository.findById(requestRepository.findByRequestId(id).getTargetId());
-
-            assert test_course != null;
-
-            assertEquals("Advanced Software Architecture and Design", test_course.getTitle());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     // Assert that a removal request is added to database.
     @Test
     public void testSaveCourseRemovalRequest(){

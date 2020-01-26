@@ -532,6 +532,8 @@ public class PdfCourse {
 
                     if (0 < original.size()) {
 
+                        report_paragraph.add(Chunk.NEWLINE);
+
                         for (int i = 0; i < original.size(); i++) {
 
                             Iterator it_u = original.get(i).entrySet().iterator();
@@ -549,7 +551,7 @@ public class PdfCourse {
 
                                 temp_credits = (double) updated_pair.getValue();
 
-                                report_paragraph.add(Chunk.NEWLINE);
+                                //report_paragraph.add(Chunk.NEWLINE);
                                 report_paragraph.add(new Chunk(impact_line, arial_10));
                                 report_paragraph.add(Chunk.NEWLINE);
                                 isNone = false;
