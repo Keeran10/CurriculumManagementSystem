@@ -1,4 +1,4 @@
-// MIT License
+/* // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,46 +18,26 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE. */
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../backend-api.service';
+import { Router } from '@angular/router';
 
-import { Requisite } from '../models/requisite';
-import { Program } from './program';
-import { DegreeRequirement } from './degree-requirement';
+@Component({
+  selector: 'app-calendar-sections',
+  templateUrl: './calendar-sections.component.html',
+  styleUrls: ['./calendar-sections.component.css']
+})
+export class CalendarSectionsComponent implements OnInit {
 
-export class Course {
-  id: number;
-  credits: number;
-  degreeRequirements: DegreeRequirement[];
-  description: string;
-  equivalent: string[];
-  isActive: boolean;
-  labHours: number;
-  lectureHours: number;
-  level: number;
-  name: string;
-  note: string;
-  number: number;
-  program: Object;
-  requisites: Requisite[];
-  title: string;
-  tutorialHours: number;
+  constructor(private api: ApiService,
+    private router: Router) { }
 
-  constructor(){
-    this.id = 0;
-    this.credits = 0;
-    this.degreeRequirements = [];
-    this.description = '';
-    this.equivalent = [];
-    this.isActive = false;
-    this.labHours = 0;
-    this.lectureHours = 0;
-    this.level = 1;
-    this.name = '';
-    this.note = '';
-    this.number = 100;
-    this.program = new Program();
-    this.requisites = [];
-    this.title = '';
-    this.tutorialHours = 0;
+  ngOnInit() {
+  }
+
+  public getCalendarData(){
+    this.api.getCalendar().subscribe(data => console.log(data));
+    this.router.navigate(['tempPage']);
   }
 }

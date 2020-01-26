@@ -1,4 +1,4 @@
-// MIT License
+/* // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,46 +18,24 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE. */
+.container{
+    display: grid;
+    grid-template-columns: auto auto;
+}
 
-import { Requisite } from '../models/requisite';
-import { Program } from './program';
-import { DegreeRequirement } from './degree-requirement';
+.left-side{
+    grid-column-start: 0;
+    grid-column-end: 1;
+}
 
-export class Course {
-  id: number;
-  credits: number;
-  degreeRequirements: DegreeRequirement[];
-  description: string;
-  equivalent: string[];
-  isActive: boolean;
-  labHours: number;
-  lectureHours: number;
-  level: number;
-  name: string;
-  note: string;
-  number: number;
-  program: Object;
-  requisites: Requisite[];
-  title: string;
-  tutorialHours: number;
+.right-side{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
 
-  constructor(){
-    this.id = 0;
-    this.credits = 0;
-    this.degreeRequirements = [];
-    this.description = '';
-    this.equivalent = [];
-    this.isActive = false;
-    this.labHours = 0;
-    this.lectureHours = 0;
-    this.level = 1;
-    this.name = '';
-    this.note = '';
-    this.number = 100;
-    this.program = new Program();
-    this.requisites = [];
-    this.title = '';
-    this.tutorialHours = 0;
-  }
+.link {
+    color: dodgerblue;
+    text-decoration: underline;
+    cursor: pointer;
 }

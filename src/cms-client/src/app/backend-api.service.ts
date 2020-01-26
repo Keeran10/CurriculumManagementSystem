@@ -130,6 +130,10 @@ export class ApiService {
     });
   }
 
+  public getCalendar(){
+    return this.http.get<any>(this.url + 'section70719');
+  }
+
   public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
       params: new HttpParams().set('package_id', packageId).set('user_id', userId)
@@ -333,6 +337,12 @@ export class ApiService {
     });
   }
 
+  public getDegreeRequirements(department_id){
+    return this.http.get<any>(this.url + 'get_degrees_by_department', {
+      params: new HttpParams().set('department_id', department_id)
+    });
+  }
+
   public registerUser(first: any, last: any, type: any, email: any, pass: any, depId: any) {
     const formdata: FormData = new FormData();
 
@@ -350,5 +360,4 @@ export class ApiService {
 
     return this.http.request(req);
   }
-
 }

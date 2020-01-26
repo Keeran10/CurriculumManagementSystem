@@ -1,4 +1,4 @@
-// MIT License
+<!-- // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,46 +18,24 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE. -->
+<body class="hg">
+<header class="hg__header">
+    <app-top-nav-bar></app-top-nav-bar>
+</header>
 
-import { Requisite } from '../models/requisite';
-import { Program } from './program';
-import { DegreeRequirement } from './degree-requirement';
+<main class="hg__main">
+    <div class="list">
+        <h1>Please select a Section to edit</h1>
 
-export class Course {
-  id: number;
-  credits: number;
-  degreeRequirements: DegreeRequirement[];
-  description: string;
-  equivalent: string[];
-  isActive: boolean;
-  labHours: number;
-  lectureHours: number;
-  level: number;
-  name: string;
-  note: string;
-  number: number;
-  program: Object;
-  requisites: Requisite[];
-  title: string;
-  tutorialHours: number;
+        <br>
+        <span>71.70.8    Curriculum for the Degree of BEng in Software Engineering</span><br>
+        <span class="link" (click)="getCalendarData()">71.70.9    Degree Requirements for the BEng in Software Engineering</span><br>
+        <span>71.70.10    Course Descriptions</span><br>
 
-  constructor(){
-    this.id = 0;
-    this.credits = 0;
-    this.degreeRequirements = [];
-    this.description = '';
-    this.equivalent = [];
-    this.isActive = false;
-    this.labHours = 0;
-    this.lectureHours = 0;
-    this.level = 1;
-    this.name = '';
-    this.note = '';
-    this.number = 100;
-    this.program = new Program();
-    this.requisites = [];
-    this.title = '';
-    this.tutorialHours = 0;
-  }
-}
+    </div>
+</main>
+<footer class="hg__footer">
+  <app-footer></app-footer>
+</footer>
+</body>

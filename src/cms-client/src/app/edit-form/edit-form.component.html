@@ -78,7 +78,6 @@
               <textarea matInput placeholder="Resource Implications" spellcheck="true"
                 [(ngModel)]="editedModel.implications" name="implications"></textarea>
             </mat-form-field>
-
           </form>
         </mat-card>
 
@@ -157,6 +156,29 @@
             <div *ngIf="editedModel.implications == '' ">
               No implication is available for this course.
             </div>
+
+          </mat-card>
+          <mat-card>
+            <span><b>Course Degree information: </b></span><br>
+            <mat-card *ngFor="let degreeReq of courseEditable.degreeRequirements; let i = index;">
+              <span>Degree: {{degreeReq.degree.name}}</span><br>
+              <mat-card>
+                <mat-select [(value)] = "degreeReq.degree.name">
+                  <mat-option (onSelectionChange)="changeDegree($event, i)" *ngFor="let degree of availableDegrees" value="{{degree.name}}">{{degree.name}}</mat-option>
+                </mat-select>
+              </mat-card>
+              <br>
+              <span>Core: {{degreeReq.core}}</span><br>
+              <mat-card>
+                <mat-select [(value)] = "degreeReq.core">
+                  <div *ngFor="let core of getCoresOfDegree(degreeReq.degree.name)">
+                    <mat-option value="{{core}}">{{core}}</mat-option>
+                  </div>
+                </mat-select>
+              </mat-card>
+            </mat-card>
+            <button mat-raised-button color="primary" (click)="addDegree()">+</button>
+            <button mat-raised-button color="warn" (click)="removeDegree()">-</button>
           </mat-card>
         </div>
 

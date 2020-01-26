@@ -129,6 +129,11 @@ export class PackageComponent implements OnInit {
     this.api.releaseEditKey(packageId).subscribe(data => console.log('Release edit key of package ' + packageId + ' ' + data));
   }
 
+  public getCalendar(packageId){
+    this.cookieService.set('package', packageId);
+    this.api.getCalendar().subscribe(data => this.router.navigate(['calendar']));
+  }
+  
   public removeRequest(requestId: any) {
     console.log('remove request ' + requestId);
     this.api.removeRequest(requestId).subscribe(
