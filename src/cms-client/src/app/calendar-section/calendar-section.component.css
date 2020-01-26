@@ -140,6 +140,16 @@ del, del * {
   background: #ffbbbb!important;
 }
 
+.fake-link {
+  color: #0074D9;
+  cursor: pointer;
+}
+
+.fake-link:hover{
+  color: #0074D9;
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 600px) {
   .hg {
     grid-template-areas: "header" "main" "main" "main" "footer";
