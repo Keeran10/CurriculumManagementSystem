@@ -162,6 +162,10 @@ public class PdfUtil {
                     original_phrase.add(new Chunk(partition + " ",
                             arial_10_red_italic).setUnderline(0.1f, 3f));
 
+                if(type == 6) {
+                    original_phrase.add(new Chunk(partition + " ",
+                            arial_10_red).setUnderline(0.1f, 3f));
+                }
             }
             else if(!partition.equals("")){
 
@@ -188,6 +192,10 @@ public class PdfUtil {
 
                 if(type == 5) {
                     original_phrase.add(new Chunk(partition + " ", arial_10_italic));
+                }
+
+                if(type == 6) {
+                    original_phrase.add(new Chunk(partition + " ", arial_10));
                 }
 
             }
@@ -232,6 +240,11 @@ public class PdfUtil {
                     changed_phrase.add(new Chunk(partition + " ",
                             arial_10_blue_italic).setUnderline(0.1f, -1f));
 
+                if(type == 6) {
+                    changed_phrase.add(new Chunk(partition + " ",
+                            arial_10_blue).setUnderline(0.1f, -1f));
+                }
+
             }
             else if(!partition.equals("")){
 
@@ -260,6 +273,9 @@ public class PdfUtil {
                     changed_phrase.add(new Chunk(partition + " ", arial_10_italic));
                 }
 
+                if(type == 6) {
+                    changed_phrase.add(new Chunk(partition + " ", arial_10));
+                }
             }
 
             ctr++;
