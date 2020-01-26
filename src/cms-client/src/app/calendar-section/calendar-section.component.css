@@ -96,9 +96,21 @@ body{
 }
 
 .row5{
+   grid-column: span 50;
+   grid-row-start: 4;
+   grid-row-end: 5;
+ }
+
+.row6{
   grid-column: span 50;
-  grid-row-start: 4;
-  grid-row-end: 5;
+  grid-row-start: 5;
+  grid-row-end: 6;
+}
+
+.row7{
+  grid-column: span 50;
+  grid-row-start: 6;
+  grid-row-end: 7;
 }
 
 

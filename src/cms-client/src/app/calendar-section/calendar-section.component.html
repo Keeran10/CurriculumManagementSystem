@@ -28,6 +28,15 @@
             <textarea matInput placeholder="Second Core"
                       [(ngModel)]="sectionEditable.secondCore" spellcheck="true" name="secondCore"></textarea>
           </mat-form-field>
+          <mat-form-field class="row6">
+              <textarea matInput placeholder="Rationale" spellcheck="true" [(ngModel)]="editedExtraModel.rationale"
+                        name="rationale"></textarea>
+          </mat-form-field>
+          <mat-form-field class="row7">
+              <textarea matInput placeholder="Resource Implications" spellcheck="true"
+                        [(ngModel)]="editedExtraModel.implications" name="implications"></textarea>
+          </mat-form-field>
+
         </form>
       </mat-card>
 
@@ -65,6 +74,21 @@
             </span>
           <br>
           <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
+          <br>
+          <span><b>Rationale:</b></span>
+          <br>
+          <span>{{editedExtraModel.rationale}}</span>
+          <div *ngIf="editedExtraModel.rationale == '' ">
+            No rationale is available for this section.
+          </div>
+          <br>
+          <span><b>Resource Implications:</b></span>
+          <br>
+          <span>{{editedExtraModel.implications}}</span>
+          <div *ngIf="editedExtraModel.implications == '' ">
+            No implication is available for this section.
+          </div>
+
         </mat-card>
       </div>
     </div>
