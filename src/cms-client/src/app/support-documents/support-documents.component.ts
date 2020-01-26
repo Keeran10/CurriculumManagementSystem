@@ -20,9 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Component } from '@angular/core';
+import { ApiService } from '../backend-api.service';
+import { Component, Input } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { getDocument } from 'pdfjs-dist';
+import { SupportingDocument } from '../models/supporting-document';
 
 @Component({
   selector: 'app-support-documents',
@@ -37,6 +39,35 @@ export class SupportDocumentComponent {
   public fileObjectArray: File[];
   public descriptions = new Map<string, string>();
   public pdfSrc;
+  supportingDocs = new Array<SupportingDocument>();
+  @Input() packageId: any;
+  @Input() courseId: any;
+  @Input() target_type: any;
+
+  constructor(private api: ApiService) { }
+
+  ngOnInit() {
+    var id = 0;
+    var type = "";
+    console.log("target_type: " + this.target_type);
+    if (this.target_type == 2) {
+      id = this.courseId;
+      type = "course";
+    }
+    else if (this.target_type == 1) {
+      id = this.packageId;
+      type = "dossier";
+    }
+    else {
+      return;
+    }
+    this.api.getSupportingDocuments(id, type).subscribe(
+      data => {
+        this.supportingDocs = data;
+        console.log(this.supportingDocs);
+      }
+    );
+  }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -66,6 +97,16 @@ export class SupportDocumentComponent {
   storeDescription(newValue, fileName) {
     this.descriptions.set(fileName, newValue);
     console.log(this.descriptions);
+  }
+
+  public showPDF(file_id: any) {
+    this.api.getSupportingDocumentPdf(file_id).subscribe(
+      data => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.location.assign(fileURL);
+      }
+    )
   }
 
 }

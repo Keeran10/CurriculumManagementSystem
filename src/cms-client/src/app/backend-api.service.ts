@@ -33,6 +33,7 @@ import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
 import { PipelineRevisions } from './models/pipeline-revisions';
+import { SupportingDocument } from './models/supporting-document';
 
 @Injectable({
   providedIn: 'root'
@@ -303,6 +304,20 @@ export class ApiService {
     console.log('api-getPipelineRevisions ' + pipelineId);
     return this.http.get<PipelineRevisions[]>(this.url + '/pipeline_revisions', {
       params: new HttpParams().set('pipeline_id', pipelineId)
+    });
+  }
+
+  public getSupportingDocuments(target_id: any, target_type: any) {
+    console.log('api-getSupportingDocuments ' + target_id + target_type);
+    return this.http.get<SupportingDocument[]>(this.url + 'get_supporting_documents', {
+      params: new HttpParams().set('target_id', target_id).set('target_type', target_type)
+    });
+  }
+
+  public getSupportingDocumentPdf(file_id: any) {
+    return this.http.get<BlobPart>(this.url + 'get_supporting_document_pdf', {
+      params: new HttpParams().set('file_id', file_id),
+      responseType: 'arraybuffer' as 'json'
     });
   }
 

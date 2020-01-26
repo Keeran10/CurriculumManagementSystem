@@ -1,3 +1,5 @@
+import { User } from './user';
+
 // MIT License
 
 // Copyright (c) 2019 teamCMS
@@ -20,41 +22,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { ApiService } from '../backend-api.service';
-import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { Revision } from '../models/revision';
+export class SupportingDocument {
+    id: number;
+    userId: number;
+    targetType: string;
+    targetId: number;
+    fileName: string;
+    fileType: string;
+    fileDescription: string;
+    file: any;
 
-@Component({
-  selector: 'app-revisions',
-  templateUrl: './revisions.component.html',
-  styleUrls: ['./revisions.component.css']
-})
-export class RevisionsComponent implements OnInit {
-
-  revisions = new Array<Revision>();
-  packageId: string;
-
-  constructor(private cookieService: CookieService,
-    private api: ApiService) { }
-
-  ngOnInit() {
-    this.packageId = this.cookieService.get('package');
-    this.api.getRevisions(this.packageId).subscribe(
-      data => {
-        this.revisions = data;
-        console.log(this.revisions);
-      }
-    );
-  }
-
-  public showPDF(rev_id: any) {
-    this.api.getRevisionsPdf(rev_id).subscribe(
-      data => {
-        const file = new Blob([data], { type: 'application/pdf' });
-        const fileURL = URL.createObjectURL(file);
-        window.location.assign(fileURL);
-      }
-    )
-  }
 }

@@ -36,3 +36,13 @@
   height: min-content;
   font-size: 0.8em;
 }
+
+caption {
+  display: table-caption;
+  text-align: center;
+  caption-side: top;
+}
+
+.table {
+  width: 20em;
+}

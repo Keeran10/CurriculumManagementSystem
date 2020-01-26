@@ -880,4 +880,14 @@ public class RequestPackageService {
 
         return requestPackageRepository.getPdfByRevision(rev_id);
     }
+
+    public SupportingDocument getSupportingDocument(int file_id) {
+
+        return supportingDocumentsRepository.findById(file_id);
+    }
+
+    public List<SupportingDocument> getSupportingDocuments(int target_id, String target_type) {
+
+        return supportingDocumentsRepository.findByTarget(target_type, target_id);
+    }
 }

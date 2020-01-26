@@ -46,4 +46,17 @@
       </tbody>
     </table>
   </div>
+  <div>
+    <table class="table">
+      <caption> {{ supportingDocs[0].targetType }} files </caption>
+      <tr *ngFor="let doc of supportingDocs; let i=index">
+        <td class="fake-link" (click)="showPDF(doc.id)">
+          {{ doc.fileName }}
+        </td>
+        <td>
+          {{ doc.fileDescription}}
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
