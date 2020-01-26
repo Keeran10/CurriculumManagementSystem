@@ -15,9 +15,27 @@ public class AdminService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    DepartmentRepository departmentRepository;
+
     public boolean saveUser(User user) {
-        log.info("registering new user with id " + user.getId());
+        //log.info("registering new user with id " + user.getId());
         userRepository.save(user);
+        return true;
+    }
+
+    public boolean saveUser(String first_name, String last_name, String user_type, String email, String password, int department_id) {
+        log.info("registering new user: " + first_name + " " + last_name);
+        User user = new User();
+        Department department = departmentRepository.findById(department_id);
+        user.setUserType(user_type);
+        user.setDepartment(department);
+        user.setFirstName(first_name);
+        user.setLastName(last_name);
+        user.setEmail(email);
+        user.setPassword(password);
+        userRepository.save(user);
+
         return true;
     }
 }
