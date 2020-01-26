@@ -30,6 +30,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 describe('LoginComponent', () => {
   beforeEach(async(() => {
@@ -75,8 +76,9 @@ describe('LoginComponent', () => {
         lastName: 'lastTest',
         userType: 'testUser',
         email: 'test@email.com',
-        password: '123456'
-      }
+        password: '123456',
+        department: { id: 8 }
+      };
       spyOn(apiService, 'setCredentials').and.returnValue(new Observable((observer) => {
     
         // observable execution
@@ -85,7 +87,7 @@ describe('LoginComponent', () => {
       }));
       spyOn(cookieService, 'set');
       component.OnSubmit('fakename', 'fakepass');
-      expect(cookieService.set).toHaveBeenCalledTimes(3);
+      expect(cookieService.set).toHaveBeenCalledTimes(4);
     });
 
   });
