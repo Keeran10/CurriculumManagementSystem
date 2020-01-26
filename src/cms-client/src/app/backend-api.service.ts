@@ -327,6 +327,12 @@ export class ApiService {
     });
   }
 
+  public removeRequest(request_id: any) {
+    return this.http.get<string>(this.url + 'delete_request', {
+      params: new HttpParams().set('requestId', request_id)
+    });
+  }
+
   public registerUser(first: any, last: any, type: any, email: any, pass: any, depId: any) {
     const formdata: FormData = new FormData();
 
@@ -343,7 +349,6 @@ export class ApiService {
     });
 
     return this.http.request(req);
-
   }
 
 }

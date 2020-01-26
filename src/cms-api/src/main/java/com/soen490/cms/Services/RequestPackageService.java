@@ -474,15 +474,21 @@ public class RequestPackageService {
         int user_id = request.getUser().getId();
         int package_id = request.getRequestPackage().getId();
 
-        if(request.getRequestType() == 3){
+        request.getRequestPackage().getRequests().remove(request);
 
+        if(request.getTargetType() == 1){
+            // TODO: change this to account for all sections
+            section70719Repository.deleteById(request.getTargetId());
+            requestRepository.delete(request);
+            return true;
+        }
+        if(request.getRequestType() == 3){
             requestRepository.delete(request);
             generatePdf(user_id, package_id);
             return true;
         }
 
-        Course requested_course = courseRepository.findById(request.getTargetId());
-        courseRepository.delete(requested_course);
+        courseRepository.deleteById(request.getTargetId());
         requestRepository.delete(request);
         generatePdf(user_id, package_id);
         return true;

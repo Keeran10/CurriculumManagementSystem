@@ -128,4 +128,15 @@ export class PackageComponent implements OnInit {
     this.editingPackage = '0'; // release the package from editing
     this.api.releaseEditKey(packageId).subscribe(data => console.log('Release edit key of package ' + packageId + ' ' + data));
   }
+
+  public removeRequest(requestId: any) {
+    console.log('remove request ' + requestId);
+    this.api.removeRequest(requestId).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+    window.location.reload();
+  }
+
 }

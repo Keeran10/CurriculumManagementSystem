@@ -169,4 +169,8 @@ public class SearchService {
         log.info("user id searched: "+ id);
         return userRepository.findUserById(id);
     }
+
+    public List<Degree> findDegreesByDepartment(int department_id) {
+        return degreeRepository.findDegreesByDepartment(department_id);
+    }
 }

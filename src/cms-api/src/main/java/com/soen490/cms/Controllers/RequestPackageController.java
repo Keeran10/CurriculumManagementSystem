@@ -240,7 +240,7 @@ public class RequestPackageController {
     // delete course request
     @GetMapping(value="/delete_request")
     public boolean deleteCourseRequest(@RequestParam int requestId) {
-
+        log.info("remove request " + requestId);
         if(requestId != 0)
             return requestPackageService.deleteCourseRequest(requestId);
 
