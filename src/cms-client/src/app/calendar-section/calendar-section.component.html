@@ -42,35 +42,43 @@
 
       <div class="edited-text">
         <mat-card>
+
+          <!-- Section and title -->
           <span>
-            <b>Section:&nbsp;</b>
+            <b>
               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sectionId"
-                    [right]="sectionOriginal.sectionId"></span><br>
+                    [right]="sectionOriginal.sectionId"></span>&nbsp;
             <b>
               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sectionTitle"
                     [right]="sectionEditable.sectionTitle"></span> <br>
             </b>
+              </b>
           </span>
           <br>
-          <span>
 
-              <i>
+          <!-- paragraph description -->
+          <span>
                 <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstParagraph"
                       [right]="sectionEditable.firstParagraph"></span><br><br>
-              </i>
 
+            <!-- first core -->
 
-            <b>First Core: </b>
+            <b>
             <span style="display: inline-block">
               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
                     [right]="sectionEditable.firstCore"></span>
-            </span>
+            </span> (30.5 Credits) </b>
             <br>
-            <b>Second Core: </b>
+            See&nbsp;<a href="">&#167;71.20.5</a><br><br>
+
+            <!-- second core -->
+            <b>
              <span style="display: inline-block">
               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
                     [right]="sectionEditable.secondCore"></span>
             </span>
+              </b>
+            <app-calendar-course-list></app-calendar-course-list>
             </span>
           <br>
           <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
@@ -93,7 +101,7 @@
       </div>
     </div>
     <br><br>
-    <app-calendar-course-list></app-calendar-course-list>
+
     <br><br>
     <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
   </mat-card>
