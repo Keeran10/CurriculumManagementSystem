@@ -44,10 +44,15 @@ public class AuthenticationController {
 
         return authenticationService.authenticate(email, password);
     }
-
+/*
     @PostMapping(value = "/register_user")
     public boolean registerUser(@RequestParam User user) {
         return adminService.saveUser(user);
     }
-
+*/
+    @PostMapping(value = "/register_user")
+    public boolean registerUser(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String user_type,
+                                @RequestParam String email, @RequestParam String password, @RequestParam int department_id) {
+        return adminService.saveUser(first_name, last_name, user_type, email, password, department_id);
+    }
 }
