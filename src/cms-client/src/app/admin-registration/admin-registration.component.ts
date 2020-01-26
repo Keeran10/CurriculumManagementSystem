@@ -22,7 +22,7 @@
 
 import { Component, OnInit, Inject } from '@angular/core';
 import { ApiService } from '../backend-api.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({

@@ -33,7 +33,7 @@
     <div *ngIf="isLoginError" class="red-text center error-message">
       <i class="material-icons">error</i> Incorrect username or password
     </div>
-    <form class="example-form" #loginForm="ngForm" (ngSubmit)="OnSubmit(FirstName.value, LastName.value, userType.value, UserName.value, Password.value)">
+    <form class="example-form" #loginForm="ngForm" (ngSubmit)="OnSubmit(FirstName.value, LastName.value, userType.value, UserName.value, Password.value); loginForm.reset()">
         <mat-form-field class="example-full-width">
             <input matInput type="text" #FirstName ngModel name="FirstName" value="FirstName" placeholder="First Name" required>
         </mat-form-field>
