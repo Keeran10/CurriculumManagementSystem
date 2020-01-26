@@ -157,21 +157,6 @@ export class EditFormComponent {
     }
   }
 
-  // There have been some backend changes concerning these fields. Will uncomment them and complete implementation later.
-  /*
-  public setDegreesStrings(course: Course) {
-    if(course.degreeRequirements.length > 0){
-      course.degreeRequirements.forEach(d => {
-        if(d.type === 'degree'){
-          do x
-        }
-        else if(d.type === 'elective'){
-          do y
-        }
-      })
-    }
-  */
-
   public submitForm() {
     this.api.submitCourseRequestForm(this.supportDocumentComponent.documents,
       this.supportDocumentComponent.descriptions, this.courseEditable, this.editedModel)
@@ -229,5 +214,4 @@ export class EditFormComponent {
   public removeDegree(){
     this.courseEditable.degreeRequirements.pop();
   }
-
 }
