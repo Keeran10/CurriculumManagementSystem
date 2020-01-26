@@ -35,8 +35,33 @@
           <td class="fake-link">
             {{ item.name }}
           </td>
+          <td>
+            <input type="text" id="description" #input class="form-control" placeholder="description {press enter}"
+              (change)="storeDescription(input.value, item.name); input.value=''">
+          </td>
+          <td>
+            <span> {{ descriptions.get(item.name) }} </span>
+          </td>
         </tr>
       </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="table">
+      <caption *ngIf="supportingDocs.length != 0"> {{ type }} files </caption>
+      <tr *ngIf="supportingDocs.length == 0">
+        No files found for this {{type}}.
+      <tr *ngFor="let doc of supportingDocs; let i=index">
+        <td class="fake-link" (click)="showPDF(doc.id)">
+          {{ doc.fileName }}
+        </td>
+        <td>
+          {{ doc.fileDescription}}
+        </td>
+        <td class="fake-link" (click)="removeSupportingDoc(doc.id)">
+          [X]
+        </td>
+      </tr>
     </table>
   </div>
 </div>

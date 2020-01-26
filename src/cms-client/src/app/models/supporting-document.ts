@@ -1,4 +1,6 @@
-/* // MIT License
+import { User } from './user';
+
+// MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,31 +20,16 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE. */
+// SOFTWARE.
 
-.center {
-  width: 20%;
-  padding: 0%;
-}
+export class SupportingDocument {
+    id: number;
+    userId: number;
+    targetType: string;
+    targetId: number;
+    fileName: string;
+    fileType: string;
+    fileDescription: string;
+    file: any;
 
-.fake-link {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.form-control{
-  width: auto;
-  height: min-content;
-  font-size: 0.8em;
-}
-
-caption {
-  display: table-caption;
-  text-align: left;
-  caption-side: top;
-}
-
-.table {
-  width: 30em;
 }

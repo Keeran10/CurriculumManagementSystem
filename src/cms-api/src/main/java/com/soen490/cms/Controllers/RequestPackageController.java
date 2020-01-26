@@ -24,6 +24,7 @@ package com.soen490.cms.Controllers;
 
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.RequestPackage;
+import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
@@ -161,12 +162,13 @@ public class RequestPackageController {
      */
     @PostMapping(value="/save_subsection70719")
     public int saveSubSection70719 (@RequestParam String subSection70719 , @RequestParam String sectionExtras,
-                                        @RequestParam(required = false) MultipartFile[] files) {
+                                        @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files);
+            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -191,13 +193,14 @@ public class RequestPackageController {
      */
     @PostMapping(value="/save_request")
     public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras,
-                                        @RequestParam(required = false) MultipartFile[] files) {
+                                        @RequestParam(required = false) MultipartFile[] files,
+                                        @RequestParam(required = false) String descriptions) {
 
         try {
             JSONObject courseExtrasJson = new JSONObject(courseExtras);
             int user_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveCourseRequest(course, courseExtras, files);
+            int request_id = requestPackageService.saveCourseRequest(course, courseExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -214,13 +217,14 @@ public class RequestPackageController {
 
     @PostMapping(value="/save_removal_request")
     public int saveRemovalRequest(@RequestParam String course, @RequestParam String courseExtras,
-                                  @RequestParam(required = false) MultipartFile[] files) {
+                                  @RequestParam(required = false) MultipartFile[] files,
+                                  @RequestParam(required = false) String descriptions) {
 
         try {
             JSONObject courseExtrasJson = new JSONObject(courseExtras);
             int user_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(courseExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveRemovalRequest(course, courseExtras, files);
+            int request_id = requestPackageService.saveRemovalRequest(course, courseExtras, files, descriptions);
 
             if(request_id != 0) {
                 requestPackageService.generatePdf(package_id, user_id);
@@ -284,8 +288,8 @@ public class RequestPackageController {
      * @return
      */
     @PostMapping(value = "/upload_files")
-    public String uploadFiles(@RequestParam MultipartFile[] files, @RequestParam int package_id,
-                                  @RequestParam int user_id) throws IOException {
+    public String uploadFiles(@RequestParam MultipartFile[] files, @RequestParam String descriptions,
+                              @RequestParam int package_id, @RequestParam int user_id) throws IOException, JSONException {
 
         if(files.length == 0)
             return "No files uploaded.";
@@ -293,7 +297,7 @@ public class RequestPackageController {
         for(MultipartFile file : files)
             log.info("Uploaded file: " + file.getOriginalFilename());
 
-        requestPackageService.saveSupportingDocument(files, "dossier", package_id, user_id);
+        requestPackageService.saveSupportingDocument(files, descriptions,"dossier", package_id, user_id);
 
         try {
             generatePdf(package_id, user_id);
@@ -308,6 +312,57 @@ public class RequestPackageController {
     @GetMapping("/dossier_revisions")
     public List getDossierRevisions(@RequestParam int id){
         return requestPackageService.getDossierRevisions(id);
+    }
+
+
+    /**
+     * Converts a stored byte array into a pdf file and displays it on the browser.
+     * @param file_id id of the supporting document
+     * @return The pdf file to browser.
+     */
+    @GetMapping(value="/get_supporting_document_pdf")
+    public ResponseEntity<byte[]> getSupportingDocumentPdf(@RequestParam int file_id){
+
+        log.info("Retrieve supporting document pdf for " + file_id);
+
+        SupportingDocument supportingDocument = requestPackageService.getSupportingDocument(file_id);
+        byte[] pdf_bytes = supportingDocument.getFile();
+
+        if(pdf_bytes == null) {
+            return null;
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String filename = supportingDocument.getFileName();
+
+        headers.add("content-disposition", "inline;filename=" + filename);
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(pdf_bytes, headers, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/get_supporting_documents")
+    public List<SupportingDocument> getSupportingDocuments(@RequestParam int target_id, @RequestParam String target_type){
+
+        log.info("Retrieve supporting docs for " + target_type + " " + target_id);
+        List<SupportingDocument> supportingDocuments = requestPackageService.getSupportingDocuments(target_id, target_type);
+
+        for(SupportingDocument s : supportingDocuments){
+            s.setFile(null);
+        }
+
+        return supportingDocuments;
+    }
+
+
+    @GetMapping("/remove_supporting_document")
+    public boolean removeSupportingDocument(@RequestParam int file_id){
+        log.info("Removing supporting doc " + file_id);
+        return requestPackageService.removeSupportingDocument(file_id);
     }
 
 }
