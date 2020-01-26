@@ -70,8 +70,8 @@
     </div>
     <br><br>
     <app-calendar-course-list></app-calendar-course-list>
-    <button class="submitButton" mat-raised-button color="primary">Submit</button>
-    <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn">Delete Section</button>
+    <br><br>
+    <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
   </mat-card>
 </main>
 <footer class="hg__footer">

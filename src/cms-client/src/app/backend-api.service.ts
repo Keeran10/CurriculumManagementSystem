@@ -27,7 +27,6 @@ import { Degree } from './models/degree';
 import { Department } from './models/department';
 import { Faculty } from './models/faculty';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Package } from './models/package';
 import { Program } from './models/program';
 import { Revision } from './models/revision';
@@ -45,7 +44,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/';
-    //this.url = 'http://192.168.99.100:8080/';
+    // this.url = 'http://192.168.99.100:8080/';
   }
 
   public getFeatureFlagTest() {
@@ -148,7 +147,7 @@ export class ApiService {
     });
   }
 
-  public getCalendar(){
+  public getCalendar() {
     return this.http.get<any>(this.url + 'section70719');
   }
 
@@ -159,7 +158,7 @@ export class ApiService {
   }
 
   public viewPdf(packageId: string) {
-    //window.open();
+    // window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'
@@ -167,7 +166,7 @@ export class ApiService {
   }
 
   public viewPdfFromPackagePage(packageId: string, userId: string) {
-    //window.open();
+    // window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf_packagePage', {
       params: new HttpParams().set('package_id', packageId).set('user_id', userId),
       responseType: 'arraybuffer' as 'json'
@@ -232,9 +231,21 @@ export class ApiService {
   }
 
   public submitCourseRequestForm(files: File[], descriptions: Map<string, string>,
-    course: Course, courseExtras: CourseExtras) {
+                                 course: Course, courseExtras: CourseExtras) {
 
     const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
+
+    const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
+
+  public submitCalendarSectionForm(section: Section) {
+
+    const formdata: FormData = this.SectionToFormData(section);
 
     const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,
@@ -278,6 +289,12 @@ export class ApiService {
       formdata.append('files', file);
     }
 
+    return formdata;
+  }
+
+  private SectionToFormData(section: Section) {
+    const formdata: FormData = new FormData();
+    formdata.append('section', JSON.stringify(section));
     return formdata;
   }
 
@@ -355,7 +372,7 @@ export class ApiService {
     });
   }
 
-  public getDegreeRequirements(department_id){
+  public getDegreeRequirements(department_id) {
     return this.http.get<any>(this.url + 'get_degrees_by_department', {
       params: new HttpParams().set('department_id', department_id)
     });

@@ -35,13 +35,11 @@ export class CalendarSectionComponent implements OnInit {
       this.sectionOriginal.firstCore = null;
       this.sectionOriginal.secondCore = null;
       this.isDeleteVisible = false;
-    }
-    else if (requestId === '0') {
+    } else if (requestId === '0') {
       this.api.getSection(this.id).subscribe(data => {
         this.sectionOriginal = data;
         this.sectionEditable = Object.assign({}, data);
-      }); }
-    else {
+      }); } else {
       const originalId = this.cookieService.get('originalSection');
       const editedId = this.cookieService.get('editedSection');
       this.api.getSection(originalId).subscribe(data => {
@@ -65,5 +63,10 @@ export class CalendarSectionComponent implements OnInit {
     delElements.forEach((e) => {
       e.style.background = '#ffbbbb';
     });
+  }
+
+  public submitForm() {
+    this.api.submitCalendarSectionForm(this.sectionEditable)
+      .subscribe(() => this.router.navigate(['/package']));
   }
 }
