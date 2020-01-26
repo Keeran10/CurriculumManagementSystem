@@ -27,6 +27,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Section } from '../models/section';
 import { SectionExtras } from '../models/section-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
+import {Course} from '../models/course';
 
 @Component({
   selector: 'app-calendar-section',
@@ -37,6 +38,14 @@ export class CalendarSectionComponent implements OnInit {
 
   @ViewChild(SupportDocumentComponent, { static: false })
   supportDocumentComponent: SupportDocumentComponent;
+
+  originalCourses = [];
+  editedCourses: Course[] = [];
+  printedCourses: Course[] = [];
+
+  courseIds = [];
+
+  isDoneLoading = false;
 
   id: string;
   sectionOriginal: Section = new Section();
@@ -52,8 +61,8 @@ export class CalendarSectionComponent implements OnInit {
   isDeleteVisible = true;
 
   constructor(private route: ActivatedRoute, private api: ApiService,
-    private cookieService: CookieService,
-    private router: Router) { }
+              private cookieService: CookieService,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -103,6 +112,62 @@ export class CalendarSectionComponent implements OnInit {
         this.sectionEditable.id = Number(originalId);
       });
     }
+
+    const packageNumber = this.cookieService.get('package');
+    this.api.getCalendar().subscribe(data => {
+      this.originalCourses = data.secondCoreCourses;
+
+      // tslint:disable-next-line:no-shadowed-variable
+      this.api.getPackage(packageNumber, '4').subscribe(data => {
+        const requests = data.requests;
+        let i = 0;
+        requests.forEach(request => {
+          if (request.targetType === 2) {
+            // tslint:disable-next-line:no-shadowed-variable
+            this.api.getCourse(String(request.targetId)).subscribe(data => {
+              this.editedCourses.push(data);
+              if ((requests.length - 1) === i) {
+                this.isDoneLoading = true;
+                this.getPrintedCourses();
+              }
+              i++;
+            });
+          }
+        });
+        if (i === 0) {
+          this.isDoneLoading = true;
+          this.getPrintedCourses();
+        }
+      });
+    });
+  }
+
+  public getPrintedCourses() {
+    this.originalCourses.forEach(oc => {
+      let isRepeated = false;
+      this.editedCourses.forEach(ec => {
+        if (ec.number === oc.number) {
+          isRepeated = true;
+          this.printedCourses.push(ec);
+
+          this.courseIds.push(oc.id);
+          this.courseIds.push(ec.id);
+        }
+      });
+      if (!isRepeated) {
+        this.printedCourses.push(oc);
+
+        this.courseIds.push(oc.id);
+        this.courseIds.push(oc.id);
+      }
+    });
+  }
+
+  public navigateToEditFormEdited(courseOriginalId, courseEditedId) {
+    this.cookieService.set('originalCourse', courseOriginalId.toString());
+    this.cookieService.set('editedCourse', courseEditedId.toString());
+
+    this.router.navigate(['editForm/' + courseOriginalId]);
   }
 
   public highlightChanges(): void {

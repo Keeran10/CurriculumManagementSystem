@@ -72,45 +72,58 @@ body{
 }
 
 .row1{
-  grid-column: span 50;
+  grid-column: span 60;
   grid-row-start: 0;
   grid-row-end: 1;
 }
 
 .row2{
-  grid-column: span 50;
+  grid-column: span 60;
   grid-row-start: 1;
   grid-row-end: 2;
 }
 
 .row3{
-  grid-column: span 50;
+  grid-column: span 60;
   grid-row-start: 2;
   grid-row-end: 3;
 }
 
 .row4{
-  grid-column: span 50;
+  grid-column: span 60;
   grid-row-start: 3;
   grid-row-end: 4;
 }
 
 .row5{
-   grid-column: span 50;
+   grid-column: span 60;
    grid-row-start: 4;
    grid-row-end: 5;
  }
 
 .row6{
-  grid-column: span 50;
+  grid-column: span 60;
   grid-row-start: 5;
   grid-row-end: 6;
 }
 
 .row7{
-  grid-column: span 50;
+  grid-column: span 60;
   grid-row-start: 6;
   grid-row-end: 7;
+}
+
+.row8{
+  grid-column: span 60;
+  grid-row-start: 7;
+  grid-row-end: 8;
+}
+
+.courseLinks {
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 24%;
 }
 
 
@@ -141,13 +154,53 @@ del, del * {
 }
 
 .fake-link {
-  color: #0074D9;
+  color: dodgerblue;
   cursor: pointer;
 }
 
 .fake-link:hover{
   color: #0074D9;
   text-decoration: underline;
+}
+
+.link {
+  color: dodgerblue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: dodgerblue;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 0px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.courseTitle {
+  width: 100%;
+}
+
+.courseNumber{
+  width: 30%;
+}
+
+.courseCredits{
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
 @media screen and (max-width: 600px) {

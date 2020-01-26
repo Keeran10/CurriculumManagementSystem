@@ -4,9 +4,10 @@
   </header>
   <main class="hg__main">
     <mat-card class="matCardBackground">
+
+
       <div class="container">
 
-        <div>
         <mat-card>
           <mat-card-header>
             <h1 class="title">Edit Section Page</h1>
@@ -41,13 +42,19 @@
                 [(ngModel)]="editedExtraModel.implications" name="implications"></textarea>
             </mat-form-field>
 
+
+            <div class="row8" *ngIf="isDoneLoading">
+              <div *ngFor="let c of printedCourses; let i = index">
+                <br class="courseLinks">
+                <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span>
+              </div>
+            </div>
+
+
           </form>
         </mat-card>
-        </div>
 
-        <div class="edited-text">
-          <mat-card>
-
+          <mat-card class="edited-tex">
             <!-- Section and title -->
             <span>
               <b>
@@ -77,14 +84,41 @@
               See&nbsp;<span class="fake-link">&#167;71.20.5</span><br><br>
 
               <!-- second core -->
-              <b>
+
+
+              <!-- course list -->
+
+                <table>
+                  <tbody>
+                   <tr>
+                      <th width="100%"> <b>
                 <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
-                    [right]="sectionEditable.secondCore"></span>
+                        [right]="sectionEditable.secondCore">
+                  </span>
                 </span>
               </b>
+                      <i style="font-weight: normal; margin-left: 55%;">Credits:</i> </th>
 
-               <app-calendar-course-list></app-calendar-course-list>
+
+                   </tr>
+
+
+              <div class="right-side" *ngIf="isDoneLoading"><br>
+
+        <div *ngFor="let c of printedCourses; let i = index">
+            <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td> <td class="courseTitle">{{c.title}}</td><td class="courseCredits">{{c.credits.toFixed(2)}}</td></span>
+            </div>
+
+            <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+            </div>
+        </div>
+    </div></tbody></table>
+
 
             </span>
             <br>
@@ -104,16 +138,13 @@
               No implication is available for this section.
             </div>
           </mat-card>
-        </div>
-
       </div>
-      <br><br>
 
-
-
-      <br><br>
       <app-support-documents [sectionId]="id" [target_type]="3"></app-support-documents>
       <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
+
+
+
     </mat-card>
   </main>
   <footer class="hg__footer">
