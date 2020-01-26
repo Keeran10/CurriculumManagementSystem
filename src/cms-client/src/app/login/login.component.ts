@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
       this.cookieService.set('userName', this.user.firstName);
       this.cookieService.set('userType', this.user.userType);
       this.cookieService.set('department', this.user.department.id.toString());
-      if (this.user.userType === 'Professor') {
+      if (this.user.userType === 'Professor' || this.user.userType === 'admin') {
         this.router.navigate(['/package']);
       } else { // if any approval body
         this.router.navigate(['homepage']);

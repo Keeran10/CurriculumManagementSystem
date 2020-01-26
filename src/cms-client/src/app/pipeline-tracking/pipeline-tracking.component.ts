@@ -74,13 +74,14 @@ export class PipelineTrackingComponent implements OnInit {
         for (i in this.pipeline) {
           if ((this.pipeline[i] === utf8decoder.decode(data)) && utf8decoder.decode(data) !== 'Approved') {
             this.packageLocation = i;
-            if (this.userMap.get(this.pipeline[i]) === this.userType || this.userType === 'Professor') {
+            if (this.userMap.get(this.pipeline[i]) === this.userType || this.userType === 'Professor' || this.userType === 'admin') {
               this.correctUser = true;
             }
-            if (this.userType === 'Professor') {
+            if (this.userType === 'Professor' || this.userType === 'admin') {
               this.isProfessor = true;
             }
-            if (this.userType === 'UGSC' || this.userType === 'Department Curriculum Committee' || this.userType === 'Professor') {
+            if (this.userType === 'UGSC' || this.userType === 'Department Curriculum Committee' || 
+            this.userType === 'Professor' || this.userType === 'admin') {
               this.userAllowedToEdit = true;
             }
             console.log(this.packageLocation);
