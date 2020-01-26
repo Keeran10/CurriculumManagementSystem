@@ -21,6 +21,7 @@
 // SOFTWARE. */
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar-sections',
@@ -29,12 +30,14 @@ import { ApiService } from '../backend-api.service';
 })
 export class CalendarSectionsComponent implements OnInit {
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService,
+    private router: Router) { }
 
   ngOnInit() {
   }
 
   public getCalendarData(){
     this.api.getCalendar().subscribe(data => console.log(data));
+    this.router.navigate(['tempPage']);
   }
 }
