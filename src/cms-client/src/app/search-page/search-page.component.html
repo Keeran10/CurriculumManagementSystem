@@ -73,8 +73,6 @@
               </div>
 
               <div *ngIf="searchType === 'section'">
-                {{(listItem)}}
-                {{getSectionId(listItem)}}
                 <pre><a href = "http://localhost:4200/section/{{getSectionId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
 </pre>
               </div>
