@@ -54,8 +54,6 @@ public class ImpactAssessmentService {
     @Autowired
     DegreeRequirementRepository degreeRequirementRepository;
     @Autowired
-    RequestPackageService requestPackageService;
-    @Autowired
     DegreeRepository degreeRepository;
 
     public Map<String, Object> getCourseImpact(String requestForm) throws JSONException {
@@ -107,8 +105,6 @@ public class ImpactAssessmentService {
         String anti = (String) courseExtras.get("antirequisites");
         String eq = (String) courseExtras.get("equivalents");
 
-        requestPackageService.setRequisites(c, pre, co, anti, eq);
-
         courseRepository.save(c);
 
         // Set degree requirements
@@ -126,17 +122,21 @@ public class ImpactAssessmentService {
             Degree degree = degreeRepository.findById(degree_id);
             String core = (String) degreeRequirements.get("core");
 
-            if(ctr == 0){
+            if(ctr == 0 && degree != null){
                 c.setProgram(degree.getProgram());
                 courseRepository.save(c);
                 ctr++;
             }
 
             DegreeRequirement cdr = null;
+
             if(degreeReq_id == 0)
                 cdr = new DegreeRequirement();
             else
                 cdr = degreeRequirementRepository.findById(degreeReq_id);
+
+            if(core == null || degree == null || cdr == null)
+                continue;
 
             cdr.setCore(core);
             cdr.setDegree(degree);

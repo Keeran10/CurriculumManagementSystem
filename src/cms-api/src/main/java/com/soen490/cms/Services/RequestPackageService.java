@@ -270,17 +270,21 @@ public class RequestPackageService {
             Degree degree = degreeRepository.findById(degree_id);
             String core = (String) degreeRequirements.get("core");
 
-            if(ctr == 0){
+            if(ctr == 0 && degree != null){
                 c.setProgram(degree.getProgram());
                 courseRepository.save(c);
                 ctr++;
             }
 
             DegreeRequirement cdr = null;
+
             if(degreeReq_id == 0)
                 cdr = new DegreeRequirement();
             else
                 cdr = degreeRequirementRepository.findById(degreeReq_id);
+
+            if(core == null || degree == null || cdr == null)
+                continue;
 
             cdr.setCore(core);
             cdr.setDegree(degree);
@@ -507,8 +511,6 @@ public class RequestPackageService {
      * @throws IOException
      */
     public void saveSupportingDocument(MultipartFile[] files, String descriptions, String targetType, int targetId, int userId) throws IOException, JSONException {
-
-        System.out.println("Hello: " + descriptions);
 
         HashMap<String, String> desc = new HashMap<>();
 
