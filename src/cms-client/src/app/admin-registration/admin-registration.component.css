@@ -1,4 +1,4 @@
-// MIT License
+/* // MIT License
 
 // Copyright (c) 2019 teamCMS
 
@@ -18,17 +18,61 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE. */
+.hg__main { grid-area: main; }
+.hg__footer { grid-area: footer; }
 
-export class Department {
-  id: number;
-  name: string;
-  faculty: object;
-  users: object;
-  programs: object;
-  requestPackages: object;
+.hg {
+  display: grid;
+  grid-template-areas: "main main main"
+  "main main main"
+  "footer footer footer";
+  grid-template-columns: 150px 1fr 150px;
+  grid-template-rows: 100px
+  1fr
+  80px;
+  min-height: 100vh;
+}
 
-  constructor(depId: any) {
-    this.id = depId;
+body{
+  background-color: #F3E7E9;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0% 10% 0% 30%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.input-field.col.s12 {
+  margin-left: 409px;
+}
+
+h1 {
+  margin: 3% 10% 0% 30%;
+  font-family: Calibri;
+  color: black;
+}
+
+#success {
+  visibility: hidden;
+  color: green;
+}
+
+#fail {
+  visibility: hidden;
+  color: red;
+}
+
+@media screen and (max-width: 600px) {
+  .hg {
+    grid-template-areas: "header" "main" "main" "main" "footer";
+    grid-template-columns: 100%;
+    grid-template-rows: 100px 50px 1fr 50px 30px;
   }
 }
