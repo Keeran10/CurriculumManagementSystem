@@ -59,7 +59,7 @@ describe('EditFormComponent', () => {
       const httpClient = TestBed.get(HttpTestingController);
       const router = TestBed.get(Router);
       const activatedRoute = TestBed.get(ActivatedRoute);
-      component.supportDocumentComponent = new SupportDocumentComponent();
+      component.supportDocumentComponent = new SupportDocumentComponent(apiService);
 
       return { fixture, component, apiService, cookieService, httpClient, router, activatedRoute };
     }
