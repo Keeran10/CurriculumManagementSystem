@@ -32,7 +32,7 @@ import { Router } from '@angular/router';
 })
 export class CalendarCourseListComponent implements OnInit {
 
-  originalCourses;
+  originalCourses = [];
   editedCourses: Course[] = [];
   printedCourses: Course[] = [];
 
