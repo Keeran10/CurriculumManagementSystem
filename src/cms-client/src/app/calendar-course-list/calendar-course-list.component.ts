@@ -33,68 +33,68 @@ import { Router } from '@angular/router';
 export class CalendarCourseListComponent implements OnInit {
 
   originalCourses;
-  editedCourses : Course[] = [];
-  printedCourses : Course[] = [];
+  editedCourses: Course[] = [];
+  printedCourses: Course[] = [];
 
   courseIds = [];
 
   isDoneLoading = false;
 
   constructor(private cookieService: CookieService,
-    private api: ApiService,
-    private router: Router) { }
+              private api: ApiService,
+              private router: Router) { }
 
   ngOnInit() {
-    let packageNumber = this.cookieService.get('package');
+    const packageNumber = this.cookieService.get('package');
     this.api.getCalendar().subscribe(data => {
       this.originalCourses = data.secondCoreCourses;
 
       this.api.getPackage(packageNumber, '4').subscribe(data => {
-        let requests = data.requests;
+        const requests = data.requests;
         let i = 0;
         requests.forEach(request => {
           this.api.getCourse(String(request.targetId)).subscribe(data => {
             this.editedCourses.push(data);
-            if((requests.length - 1) === i){
-              this.isDoneLoading = true
+            if ((requests.length - 1) === i) {
+              this.isDoneLoading = true;
               this.getPrintedCourses();
             }
             i++;
           });
         });
-      })
+      });
     });
   }
 
-  public getPrintedCourses(){
+  public getPrintedCourses() {
     this.originalCourses.forEach(oc => {
       let isRepeated = false;
       this.editedCourses.forEach(ec => {
-        if(ec.number === oc.number){
+        if (ec.number === oc.number) {
           isRepeated = true;
           this.printedCourses.push(ec);
 
           this.courseIds.push(oc.id);
           this.courseIds.push(ec.id);
         }
-      })
-      if(!isRepeated){
-        this.printedCourses.push(oc)
-        
+      });
+      if (!isRepeated) {
+        this.printedCourses.push(oc);
+
         this.courseIds.push(oc.id);
         this.courseIds.push(oc.id);
       }
     });
   }
 
-  public navigateToEditFormEdited(courseOriginalId, courseEditedId){
+  public navigateToEditFormEdited(courseOriginalId, courseEditedId) {
     this.cookieService.set('originalCourse', courseOriginalId.toString());
     this.cookieService.set('editedCourse', courseEditedId.toString());
 
     this.router.navigate(['editForm/' + courseOriginalId]);
   }
 
-  public navigateToEditForm(a){
+  public navigateToEditForm(a) {
 
   }
 

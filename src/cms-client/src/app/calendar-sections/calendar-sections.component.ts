@@ -31,13 +31,13 @@ import { Router } from '@angular/router';
 export class CalendarSectionsComponent implements OnInit {
 
   constructor(private api: ApiService,
-    private router: Router) { }
+              private router: Router) { }
 
   ngOnInit() {
   }
 
-  public getCalendarData(){
+  public getCalendarData() {
     this.api.getCalendar().subscribe(data => console.log(data));
-    this.router.navigate(['tempPage']);
+    this.router.navigate(['section/:id']);
   }
 }
