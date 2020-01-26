@@ -74,7 +74,7 @@
                     <div *ngIf="i == packageLocation && correctUser==true && userAllowedToEdit==false" class="status">package under review... (<button class="view" (click)="viewPdf()">view</button>)</div>
                     <div *ngIf="i < packageLocation" class="status">package (<button class="view" (click)="viewPdf()">view</button>)</div>
                     <div *ngIf="i == packageLocation && correctUser==false" class="status">package under review...</div>
-                    <div *ngIf="i == packageLocation && userAllowedToEdit==true && isProfessor==true && isEditMutexAvailable==true" class="status">package (<button class="view" (click)="packageSelect(packageId)">edit</button>)</div>
+                    <div *ngIf="i == packageLocation && userAllowedToEdit==true && isProfessor==true && isEditMutexAvailable==true" class="status">package (<button class="view" (click)="packageSelect(packageId)">edit</button>||<button class="view" (click)="viewPdf()">view</button>)</div>
                 </td>
 
                 </tr>
