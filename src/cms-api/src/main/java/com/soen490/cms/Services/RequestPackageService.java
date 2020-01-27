@@ -707,8 +707,16 @@ public class RequestPackageService {
         original.setSectionId(changed.getSectionId());
         original.setSectionTitle(changed.getSectionTitle());
         original.setFirstParagraph(changed.getFirstParagraph());
-        original.setFirstCore(changed.getFirstCore());
-        original.setSecondCore(changed.getSecondCore());
+
+        if(!original.getFirstCore().equals(changed.getFirstCore())){
+            degreeRequirementRepository.overrideCore(original.getFirstCore(), changed.getFirstCore());
+            original.setFirstCore(changed.getFirstCore());
+        }
+
+        if(!original.getSecondCore().equals(changed.getSecondCore())){
+            degreeRequirementRepository.overrideCore(original.getSecondCore(), changed.getSecondCore());
+            original.setSecondCore(changed.getSecondCore());
+        }
 
         section70719Repository.save(original);
         section70719Repository.delete(changed);
