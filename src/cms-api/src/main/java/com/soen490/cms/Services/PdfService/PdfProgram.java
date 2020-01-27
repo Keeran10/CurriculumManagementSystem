@@ -115,8 +115,9 @@ public class PdfProgram {
                     }
                 }
                 else{
-
-                    if (originals.get(0).getDegree().getId() != changes.get(0).getDegree().getId() &&
+                    //TODO: bug nullexception
+                    if (!originals.isEmpty() && !changes.isEmpty() &&
+                            originals.get(0).getDegree().getId() != changes.get(0).getDegree().getId() &&
                             originals.get(0).getCore().equals(changes.get(0).getCore())) {
 
                         // outlier case for "electives" section in different degrees
@@ -137,8 +138,9 @@ public class PdfProgram {
                         if(!c_exist)
                             affected_cores.add(c_elective);
                     }
-                    else if(originals.get(0).getDegree().getId() == changes.get(0).getDegree().getId() &&
-                            !originals.get(0).getCore().equals(changes.get(0).getCore())){
+                    else if(!originals.isEmpty() && !changes.isEmpty() &&
+                                originals.get(0).getDegree().getId() == changes.get(0).getDegree().getId() &&
+                                !originals.get(0).getCore().equals(changes.get(0).getCore())){
 
                         degreeRequirements.add(originals.get(0));
                         degreeRequirements.add(changes.get(0));

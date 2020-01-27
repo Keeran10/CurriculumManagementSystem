@@ -280,16 +280,22 @@ public class RequestPackageService {
 
             if(degreeReq_id == 0)
                 cdr = new DegreeRequirement();
-            else
+            else {
                 cdr = degreeRequirementRepository.findById(degreeReq_id);
+                if(cdr != null && core.equals(cdr.getCore())) {
+                    continue;
+                }
+                else{
+                    cdr = new DegreeRequirement();
+                }
+            }
 
-            if(core == null || degree == null || cdr == null)
+            if(core == null || degree == null)
                 continue;
 
             cdr.setCore(core);
             cdr.setDegree(degree);
             cdr.setCourse(c);
-
             degreeRequirementRepository.save(cdr);
             list.add(cdr);
         }

@@ -41,6 +41,7 @@ export class EditFormComponent implements OnInit {
   supportDocumentComponent: SupportDocumentComponent;
 
   id: string;
+  editId: string;
   courseOriginal: Course = new Course();
   courseEditable: Course = new Course();
 
@@ -57,8 +58,8 @@ export class EditFormComponent implements OnInit {
   availableCores = [];
 
   constructor(private route: ActivatedRoute, private api: ApiService,
-              private cookieService: CookieService,
-              private router: Router) {
+    private cookieService: CookieService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -96,6 +97,7 @@ export class EditFormComponent implements OnInit {
     } else {
       const originalId = this.cookieService.get('originalCourse');
       const editedId = this.cookieService.get('editedCourse');
+      this.editId = editedId;
       this.api.getCourse(originalId).subscribe(data => {
         this.courseOriginal = data;
         console.log(this.courseOriginal);
