@@ -27,7 +27,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Section } from '../models/section';
 import { SectionExtras } from '../models/section-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
-import {Course} from '../models/course';
+import { Course } from '../models/course';
 
 @Component({
   selector: 'app-calendar-section',
@@ -61,8 +61,8 @@ export class CalendarSectionComponent implements OnInit {
   isDeleteVisible = true;
 
   constructor(private route: ActivatedRoute, private api: ApiService,
-              private cookieService: CookieService,
-              private router: Router) { }
+    private cookieService: CookieService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -184,6 +184,8 @@ export class CalendarSectionComponent implements OnInit {
   }
 
   public submitForm() {
+    // bug hotfix for original_id = 0
+    this.sectionEditable.id = 1;
     this.api.submitCalendarSectionForm(this.supportDocumentComponent.documents,
       this.supportDocumentComponent.descriptions, this.sectionEditable, this.editedExtraModel)
       .subscribe(() => this.router.navigate(['/package']));
