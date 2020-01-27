@@ -1,3 +1,24 @@
+// MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
@@ -10,7 +31,11 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 @Log4j2
 @RestController
@@ -22,6 +47,8 @@ public class ApprovalPipelineController {
 
     @Autowired
     RequestPackageService requestPackageService;
+
+    Map<String, Semaphore> mutexes = new HashMap<>();
 
     /**
      * Returns an approval pipeline
@@ -58,8 +85,7 @@ public class ApprovalPipelineController {
     @GetMapping(value = "/approvalPipelinePosition")
     public String getCurrentPosition(@RequestParam("package_id") int packageId, @RequestParam("approval_pipeline_id") int approvalPipelineId) {
         log.info(packageId + " " + approvalPipelineId);
-        ApprovalPipelineRequestPackage approvalPipelineRequestPackage = approvalPipelineService.findApprovalPipelineRequestPackage(approvalPipelineId, packageId);
-        return approvalPipelineRequestPackage.getPosition();
+        return approvalPipelineService.getPipelinePosition(approvalPipelineId, packageId);
     }
 
     /**
@@ -141,17 +167,77 @@ public class ApprovalPipelineController {
     public int get(@RequestParam int package_id){
 
         log.info("get pipeline for package " + package_id);
-
-        List<ApprovalPipeline> approvalPipelines = approvalPipelineService.getPipelineByPackageId(package_id);
-
-        ApprovalPipeline approvalPipeline = approvalPipelines.get(approvalPipelines.size() - 1);
-
-        if(approvalPipeline == null)
-            return 0;
-
-        return approvalPipeline.getId();
+        return approvalPipelineService.getPipelineId(package_id);
     }
 
+    /**
+     * Returns a list of request packages by user type
+     *
+     * @param userType
+     * @return
+     */
+    @GetMapping(value = "/get_packages_by_type")
+    public List<RequestPackage> getPackages(@RequestParam String userType) {
+        return approvalPipelineService.getRequestPackagesByUserType(userType);
+    }
+
+    @GetMapping(value = "/is_mutex_available")
+    public boolean isMutexAvailable(@RequestParam int package_id) {
+        String mutexName = "package_" + package_id;
+        if(!mutexes.containsKey(mutexName)) {
+            return true;
+        }
+
+        Semaphore mutex = mutexes.get(mutexName);
+        if(mutex.availablePermits() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @GetMapping(value = "/get_edit_key")
+    public boolean getEditKey(@RequestParam int package_id) throws InterruptedException {
+        return getMutex(package_id);
+    }
+
+    @GetMapping(value = "/get_review_key")
+    public boolean getReviewKey(@RequestParam int package_id) throws InterruptedException {
+        return getMutex(package_id);
+    }
+
+    @GetMapping(value = "/release_edit_key")
+    public boolean releaseEditKey(@RequestParam int package_id) {
+        return releaseMutex(package_id);
+    }
+
+    @GetMapping(value = "/release_review_key")
+    public boolean releaseReviewKey(@RequestParam int package_id) {
+        return releaseMutex(package_id);
+    }
+
+    private boolean getMutex(int package_id) throws InterruptedException {
+        String mutexName = "package_" + package_id;
+        if(!mutexes.containsKey(mutexName)) {
+            Semaphore mutex = new Semaphore(1);
+            mutex.acquire();
+            mutexes.put(mutexName, mutex);
+            return true;
+        }
+        Semaphore mutex = mutexes.get(mutexName);
+        return mutex.tryAcquire();
+    }
+
+    private boolean releaseMutex(int packageId) {
+        String mutexName = "package_" + packageId;
+        if(!mutexes.containsKey(mutexName)) {
+            return false;
+        }
+
+        Semaphore mutex = mutexes.get(mutexName);
+        mutex.release();
+        return true;
+    }
 
     /**
      * Returns true if the user is able to approve/request changes at the current approval position
@@ -178,5 +264,11 @@ public class ApprovalPipelineController {
         } else {
             return false;
         }
+    }
+
+
+    @GetMapping("/pipeline_revisions")
+    public List getPipelineRevisions(@RequestParam int pipeline_id){
+        return approvalPipelineService.getPipelineRevisions(pipeline_id);
     }
 }

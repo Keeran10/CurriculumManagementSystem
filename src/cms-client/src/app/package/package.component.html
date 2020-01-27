@@ -21,82 +21,113 @@
 // SOFTWARE. -->
 
 <body class="hg">
-<header class="hg__header">
+  <header class="hg__header">
     <app-top-nav-bar></app-top-nav-bar>
-</header>
-    <main class="hg__main">
+  </header>
+  <main class="hg__main">
     <mat-card class="outerMatCard">
-        <div class="container">
+      <div class="container">
 
-            <div class="packages">
-              <br>
-              <mat-accordion class="example-headers-align" multi="false">
-                <div *ngFor="let package of packages; let i = index">
-                    <mat-expansion-panel [expanded]>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          <span>{{ packages[0].department.name}}, Dossier #{{package.id}}</span>
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
+        <div class="packages">
+          <br>
+          <mat-accordion class="example-headers-align" multi="false">
+            <div *ngFor="let package of packages; let i = index">
+              <mat-expansion-panel [expanded]="package.id == editingPackage">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span>{{ packages[0].department.name}}, Dossier #{{package.id}}</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
 
-                        <div><a class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
-                          Progress
-                        </a></div><br><br>
+                <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
+                  <a class="request" (click)="getCalendar(package.id)">{{ packages[0].department.name}} Calendar</a>
+                </div>
 
-                      <div *ngFor="let request of package.requests">
-                        <a class="request"
-                           (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
-                          {{request.title}}</a>
-                        <!--
-                        <div>
-                            <label>
-                                <input type="file" (change)="selectFile($event)">
-                            </label>
-                            <button [disabled]="!selectedFiles" (click)="upload(request.id)">Upload Support
-                                Document</button><br><br>
-                        </div>
-                        -->
-                      </div>
-                      <div>
-                        <br> <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
-                          request</a>
-                      </div>
-                      <br><br>
-                      <app-support-documents></app-support-documents>
-                      <br>
+                <a class="viewRevisions" (click)="viewAllRevisions(package.id, 'revisions')">
+                  <button class="seeRevisionsButton" color="primary">view all revisions</button>
+                </a>
+                <div *ngIf="package.approvalPipelineRequestPackages.length != 0">
+                  This package has been submitted for approval.
+                  <br /><br />
+                  <a class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
+                    Track Progress
+                  </a>
+                </div>
+                <br>
+                <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
+                  <table>
+                    <tr *ngFor="let request of package.requests">
 
-                      <div class="right">
-                        <!--
+                      <td *ngIf="request.targetType === 2 else calendarSection" class="request"
+                        (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
+                        {{request.title}}</td>
+
+                      <ng-template #calendarSection>
+                        <td *ngIf="request.targetType !== 2" class="request"
+                            (click)="packageSelect(package.id, request.id, 'section/'+request.originalId)">Request:
+                          {{request.title}}</td>
+                      </ng-template>
+
+                      <td (click)="removeRequest(request.id)">
+                        &nbsp;&nbsp;<font color="red" style="cursor: pointer;">[x]</font>
+                      </td>
+                    </tr>
+                    <!--
+                          <div>
+                              <label>
+                                  <input type="file" (change)="selectFile($event)">
+                              </label>
+                              <button [disabled]="!selectedFiles" (click)="upload(request.id)">Upload Support
+                                  Document</button><br><br>
+                          </div>
+                          -->
+                  </table>
+
+                </div>
+                <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
+                  <br> <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
+                    request</a>
+                </div>
+                <br><br>
+                <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
+                  <app-support-documents [packageId]="package.id" [target_type]="1"></app-support-documents>
+                </div>
+                <br>
+
+                <div class="right"
+                  *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
+                  <!--
                         <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                             PDF</button>
                         -->
-                        <button mat-stroked-button color="primary" (click)="upload(package.id)">Upload
-                          Files</button>
-                        <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
 
-                        <a (click)="viewAllRevisions(package.id, 'revisions')">
-                          <button mat-stroked-button color="primary">View All Revisions</button>
-                        </a>
+                  <button mat-stroked-button color="primary" (click)="upload(package.id)">Upload
+                    Files</button>
+                  <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
 
-                        <a (click)="packageSelect(package.id, 0, 'approval')">
-                          <button mat-stroked-button color="primary">Submit for Approval</button>
-                        </a>
-                      </div>
-                    </mat-expansion-panel>
+                  <a *ngIf="package.approvalPipelineRequestPackages.length == 0"
+                    (click)="packageSelect(package.id, 0, 'approval')">
+                    <button mat-stroked-button color="primary">Submit for Approval</button>
+                  </a>
+                  <a class="saveButton" *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
+                      <button mat-stroked-button color="warn">Save and Quit</button>
+                    </a>
+                    <a *ngIf="package.id == editingPackage" (click)="releaseMutex(package.id)">
+                      <button mat-stroked-button color="warn">Cancel Updates</button>
+                    </a>
+                </div>
 
-
-
-                        </div>
-                    <br>
-          </mat-accordion> <br>
+              </mat-expansion-panel>
             </div>
-            <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
-                Package</button>
+          </mat-accordion> <br>
         </div>
+        <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
+          Package</button>
+      </div>
       <br>
     </mat-card>
-      </main>
-    <footer class="hg__footer">
+  </main>
+  <footer class="hg__footer">
     <app-footer></app-footer>
-      </footer>
+  </footer>
 </body>

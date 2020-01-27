@@ -22,7 +22,9 @@
 
 package com.soen490.cms;
 
-import com.soen490.cms.Services.PdfService;
+import com.soen490.cms.Repositories.RequestPackageRepository;
+import com.soen490.cms.Services.PdfService.PdfUtil;
+import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +34,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,7 +43,9 @@ import static org.junit.Assert.assertFalse;
 public class PdfServiceTests {
 
     @Autowired
-    private PdfService pdfService;
+    private RequestPackageService requestPackageService;
+    @Autowired
+    private RequestPackageRepository requestPackageRepository;
 
     String original = "This string, processed, should be identical to the one produced through a mere eye test.";
     String original_eye_test = "This string~,~ ~processed, ~should be ~identical to ~the ~one~ ~produced~ ~through~ ~a~ ~mere~ eye test.";
@@ -54,7 +60,7 @@ public class PdfServiceTests {
     @Test
     public void generateDiffsTest(){
 
-        String[] result = pdfService.generateDiffs(original, changed);
+        String[] result = PdfUtil.generateDiffs(original, changed);
 
         assertEquals(result[0], original_eye_test);
         assertEquals(result[1], changed_eye_test);
@@ -67,7 +73,7 @@ public class PdfServiceTests {
     @Test
     public void confirmDiffPattern() {
 
-        String[] result = pdfService.generateDiffs(original, changed);
+        String[] result = PdfUtil.generateDiffs(original, changed);
 
         String[] original_processed = result[0].split("~");
         String[] changed_processed = result[1].split("~");

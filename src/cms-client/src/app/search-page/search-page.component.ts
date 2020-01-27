@@ -30,6 +30,7 @@ import { Degree } from '../models/degree';
 import { Faculty } from '../models/faculty';
 import { Program } from '../models/program';
 import { Department } from '../models/department';
+import { Section } from '../models/section';
 
 
 export interface SearchCategory {
@@ -55,12 +56,14 @@ export class SearchPageComponent implements OnInit {
   storedDepartmentNames: string[] = [];
   storedProgramNames: string[] = [];
   storedFacultyNames: string[] = [];
+  storedSectionNames: string[] = [];
 
   courses: Course[];
   degrees: Degree[];
   faculties: Faculty[];
   programs: Program[];
   departments: Department[];
+  sections: Section[];
 
   isResultShown = false;
   searchFormPlaceholder = 'Select Search Category';
@@ -69,11 +72,12 @@ export class SearchPageComponent implements OnInit {
   searchType: string;
 
   searchCategories: SearchCategory[] = [
-    {value: 'faculty', viewValue: 'Faculty'},
+   /* {value: 'faculty', viewValue: 'Faculty'},
     {value: 'department', viewValue: 'Department'},
     {value: 'program', viewValue: 'Program'},
-    {value: 'degree', viewValue: 'Degree'},
-    {value: 'course', viewValue: 'Course'}
+    {value: 'degree', viewValue: 'Degree'},*/
+    {value: 'course', viewValue: 'Course'},
+    {value: 'section', viewValue: 'Section'},
   ];
 
   constructor(private apiService: ApiService) { }
@@ -83,7 +87,7 @@ export class SearchPageComponent implements OnInit {
     this.apiService.getAllCourses().subscribe(data => {
       this.courses = data;
     });
-    this.apiService.getAllDegrees().subscribe(data => {
+    /*this.apiService.getAllDegrees().subscribe(data => {
       this.degrees = data;
     });
     this.apiService.getAllDepartments().subscribe(data => {
@@ -94,6 +98,9 @@ export class SearchPageComponent implements OnInit {
     });
     this.apiService.getAllPrograms().subscribe(data => {
       this.programs = data;
+    });*/
+    this.apiService.getAllSections().subscribe(data => {
+      this.sections = data;
     });
   }
 
@@ -110,23 +117,27 @@ export class SearchPageComponent implements OnInit {
   private getStringValue() {
     this.courses.forEach(value => this.storedCourseNames.
     push(value.name + ' ' + value.number + ' ' + value.title));
-    this.degrees.forEach(value => this.storedDegreeNames.
+    /*this.degrees.forEach(value => this.storedDegreeNames.
     push(value.name + ' '));
     this.departments.forEach(value => this.storedDepartmentNames.
     push(value.name + ' '));
     this.faculties.forEach(value => this.storedFacultyNames.
     push(value.name + ' '));
     this.programs.forEach(value => this.storedProgramNames.
-    push(value.name + ' '));
+    push(value.name + ' '));*/
+    this.sections.forEach(value => this.storedSectionNames.
+    push(value.sectionId + ' ' + value.sectionTitle + ' '));
+
   }
 
   private getDescription() {
     // test function
     this.courses.forEach(value => this.descriptionList.push(value.description));
-    this.degrees.forEach(value => this.descriptionList.push(value.degreeRequirements.toString()));
+    /*this.degrees.forEach(value => this.descriptionList.push(value.degreeRequirements.toString()));
     this.departments.forEach(value => this.descriptionList.push(value.programs.toString()));
     this.faculties.forEach(value => this.descriptionList.push(value.departments.toString()));
-    this.programs.forEach(value => this.descriptionList.push(value.description));
+    this.programs.forEach(value => this.descriptionList.push(value.description));*/
+    this.sections.forEach(value => this.descriptionList.push(value.firstParagraph));
 
     this.descriptionList = this.descriptionList.filter((el, i, a) => i === a.indexOf(el));
   }
@@ -139,7 +150,7 @@ export class SearchPageComponent implements OnInit {
     this.getDescription();
 
     switch (this.selectedValue) {
-      case 'faculty': {
+      /*case 'faculty': {
         returnedList = returnedList.concat(this.storedFacultyNames.filter(c => c
           .toLowerCase()
           .trim()
@@ -186,7 +197,7 @@ export class SearchPageComponent implements OnInit {
         this.isResultShown = false;
         this.searchType = 'degree';
         break;
-      }
+      }*/
       case 'course': {
         returnedList = returnedList.concat(this.storedCourseNames.filter(c => c
           .toLowerCase()
@@ -197,6 +208,18 @@ export class SearchPageComponent implements OnInit {
         this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
         this.isResultShown = false;
         this.searchType = 'course';
+        break;
+      }
+      case 'section': {
+        returnedList = returnedList.concat(this.storedSectionNames.filter(c => c
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, '')
+          .includes(filterValue)));
+        const filteredList = returnedList;
+        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.isResultShown = false;
+        this.searchType = 'section';
         break;
       }
       default: {
@@ -221,7 +244,7 @@ export class SearchPageComponent implements OnInit {
 
   public selectSearchFormPlaceholder(): void {
     switch (this.selectedValue) {
-      case 'faculty': {
+      /*case 'faculty': {
         this.searchFormPlaceholder = 'Search faculties';
         break;
       }
@@ -236,9 +259,13 @@ export class SearchPageComponent implements OnInit {
       case 'degree': {
         this.searchFormPlaceholder = 'Search degrees';
         break;
-      }
+      }*/
       case 'course': {
         this.searchFormPlaceholder = 'Search courses';
+        break;
+      }
+      case 'section': {
+        this.searchFormPlaceholder = 'Search calendar sections';
         break;
       }
       default: {
@@ -250,12 +277,12 @@ export class SearchPageComponent implements OnInit {
   }
 
   public getCourseId(listItem: string) {
-    const tmpCourse: Course = this.courses.find(c => listItem.includes(c.title));
+    const tmpCourse: Course = this.courses.find(c => listItem.includes(c.number.toString()));
     return tmpCourse.id;
   }
 
-  public getDepartmentId(listItem: string) {
-    const tmpDepartment: Department = this.departments.find(c => listItem.includes(c.name));
+  /*public getDepartmentId(listItem: string) {
+    const tmpDepartment: Department = this.departments.find(c => listItem.includes(c.name.toString()));
     return tmpDepartment.id;
   }
 
@@ -272,6 +299,10 @@ export class SearchPageComponent implements OnInit {
   public getProgramId(listItem: string) {
     const tmpProgram: Program = this.programs.find(c => listItem.includes(c.name));
     return tmpProgram.id;
-  }
+  }*/
 
+  public getSectionId(listItem: string) {
+    const tmpSection: Section = this.sections.find(c => listItem.includes(c.sectionId.toString()));
+    return tmpSection.id;
+  }
 }

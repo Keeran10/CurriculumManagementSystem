@@ -22,11 +22,12 @@
 
 import { Requisite } from '../models/requisite';
 import { Program } from './program';
+import { DegreeRequirement } from './degree-requirement';
 
 export class Course {
   id: number;
   credits: number;
-  degreeRequirements: Object[];
+  degreeRequirements: DegreeRequirement[];
   description: string;
   equivalent: string[];
   isActive: boolean;
@@ -36,12 +37,12 @@ export class Course {
   name: string;
   note: string;
   number: number;
-  program: Object;
+  program: object;
   requisites: Requisite[];
   title: string;
   tutorialHours: number;
 
-  constructor(){
+  constructor() {
     this.id = 0;
     this.credits = 0;
     this.degreeRequirements = [];

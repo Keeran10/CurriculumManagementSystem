@@ -27,12 +27,15 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CookieService } from 'ngx-cookie-service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PipelineTrackingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [ PipelineTrackingComponent ],
       providers: [
@@ -40,18 +43,19 @@ describe('PipelineTrackingComponent', () => {
         CookieService
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();;
+    }).compileComponents();
   }));
 
-  describe('Pipeline Tracking tests', ()=> {
+  describe('Pipeline Tracking tests', () => {
     function setup() {
       const fixture = TestBed.createComponent(PipelineTrackingComponent);
       const component = fixture.componentInstance;
       const apiService = TestBed.get(ApiService);
-      const cookieService = TestBed.get(CookieService); 
+      const cookieService = TestBed.get(CookieService);
       const httpClient = TestBed.get(HttpTestingController);
+      const router = TestBed.get(Router);
 
-      return { fixture, component, apiService, cookieService, httpClient };
+      return { fixture, component, apiService, cookieService, httpClient, router };
     }
 
     it('should create', () => {
@@ -101,7 +105,7 @@ describe('PipelineTrackingComponent', () => {
         // observable execution
         observer.next('test');
         observer.complete();
-      }));;
+      }));
 
       component.generatePDF();
       expect(apiService.generatePdf).toHaveBeenCalled();

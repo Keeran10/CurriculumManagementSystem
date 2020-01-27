@@ -20,9 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Component } from '@angular/core';
+import { ApiService } from '../backend-api.service';
+import { Component, Input } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { getDocument } from 'pdfjs-dist';
+import { SupportingDocument } from '../models/supporting-document';
 
 @Component({
   selector: 'app-support-documents',
@@ -35,7 +37,45 @@ export class SupportDocumentComponent {
   public files: NgxFileDropEntry[] = [];
   public documents: File[] = [];
   public fileObjectArray: File[];
+  public descriptions = new Map<string, string>();
   public pdfSrc;
+  public supportingDocs = new Array<SupportingDocument>();
+  public type: string;
+  @Input() packageId: any;
+  @Input() courseId: any;
+  @Input() sectionId: any;
+  @Input() target_type: any;
+
+  constructor(private api: ApiService) { }
+
+  ngOnInit() {
+    var id = 0;
+
+    if (this.target_type == 2) {
+      id = this.courseId;
+      this.type = "course";
+    }
+    else if (this.target_type == 1) {
+      id = this.packageId;
+      this.type = "dossier";
+    }
+    else if (this.target_type == 3) {
+      id = this.sectionId;
+      this.type = "section";
+    }
+
+    if (this.target_type == 1 && id == 0 || this.target_type == 2 && id == 0) {
+      console.log("undefined id for " + this.type);
+      return;
+    }
+
+    this.api.getSupportingDocuments(id, this.type).subscribe(
+      data => {
+        this.supportingDocs = data;
+        console.log(this.supportingDocs);
+      }
+    );
+  }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -60,6 +100,30 @@ export class SupportDocumentComponent {
 
   public fileLeave(event) {
     console.log(event);
+  }
+
+  storeDescription(newValue, fileName) {
+    this.descriptions.set(fileName, newValue);
+    console.log(this.descriptions);
+  }
+
+  public showPDF(file_id: any) {
+    this.api.getSupportingDocumentPdf(file_id).subscribe(
+      data => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.location.assign(fileURL);
+      }
+    )
+  }
+
+  public removeSupportingDoc(file_id: any) {
+    this.api.removeSupportingDocument(file_id).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+    window.location.reload();
   }
 
 }

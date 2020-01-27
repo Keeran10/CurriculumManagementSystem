@@ -1,3 +1,5 @@
+import { Department } from './department';
+
 // MIT License
 
 // Copyright (c) 2019 teamCMS
@@ -27,4 +29,14 @@ export class User {
   userType: string;
   email: string;
   password: string;
+  department: Department;
+
+  constructor(first, last, type, em, pass, depId) {
+    this.firstName = first;
+    this.lastName = last;
+    this.userType = type;
+    this.email = em;
+    this.password = pass;
+    this.department = new Department(depId);
+  }
 }

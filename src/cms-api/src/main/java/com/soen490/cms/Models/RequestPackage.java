@@ -45,8 +45,6 @@ public class RequestPackage {
     @Audited
     private int userId;
 
-    //private String file_name;
-
     private String rejectionRationale;
 
     @Audited
@@ -59,7 +57,7 @@ public class RequestPackage {
     private Department department;
 
     @JsonIgnoreProperties("requestPackage")
-    @OneToMany(mappedBy = "requestPackage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "requestPackage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Request> requests = new ArrayList<>();
 
     @JsonIgnoreProperties("requestPackages")

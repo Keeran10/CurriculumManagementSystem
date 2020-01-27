@@ -36,23 +36,25 @@ export class RevisionsComponent implements OnInit {
   packageId: string;
 
   constructor(private cookieService: CookieService,
-              private api: ApiService) { }
+    private api: ApiService) { }
 
   ngOnInit() {
     this.packageId = this.cookieService.get('package');
     this.api.getRevisions(this.packageId).subscribe(
-        data => { this.revisions = data;
-        }
-        );
-    }
+      data => {
+        this.revisions = data;
+        console.log(this.revisions);
+      }
+    );
+  }
 
-    public showPDF(rev_id: any) {
-      this.api.getRevisionsPdf(rev_id).subscribe(
-        data => {
-          const file = new Blob([data], { type: 'application/pdf' });
-          const fileURL = URL.createObjectURL(file);
-          window.location.assign(fileURL);
-        }
-      )
-    }
+  public showPDF(rev_id: any) {
+    this.api.getRevisionsPdf(rev_id).subscribe(
+      data => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.location.assign(fileURL);
+      }
+    )
+  }
 }

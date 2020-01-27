@@ -35,4 +35,6 @@ public interface RequisiteRepository extends JpaRepository<Requisite, Integer>{
     @Query(value = "SELECT * FROM requisite WHERE name=?1 AND number=?2", nativeQuery = true)
     Collection<Requisite> findAllOccurrencesOfCourseAsRequisite(String name, int id);
 
+    @Query(value = "SELECT * FROM requisite WHERE course_id=?", nativeQuery = true)
+    Collection<Requisite> findByCourseId(int id);
 }

@@ -26,6 +26,7 @@ import { ApiService } from '../backend-api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../models/user';
 import { CookieService } from 'ngx-cookie-service';
+import { Department } from '../models/department';
 
 @Component({
   selector: 'app-login',
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit {
   login: string;
   password: string;
   user: User;
+  department: Department;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -63,7 +65,9 @@ export class LoginComponent implements OnInit {
       this.user = data;
       this.cookieService.set('user', this.user.id.toString());
       this.cookieService.set('userName', this.user.firstName);
-      if (this.user.userType === 'Professor') {
+      this.cookieService.set('userType', this.user.userType);
+      this.cookieService.set('department', this.user.department.id.toString());
+      if (this.user.userType === 'Professor' || this.user.userType === 'admin') {
         this.router.navigate(['/package']);
       } else { // if any approval body
         this.router.navigate(['homepage']);

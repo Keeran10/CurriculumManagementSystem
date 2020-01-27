@@ -27,11 +27,14 @@ import { Degree } from './models/degree';
 import { Department } from './models/department';
 import { Faculty } from './models/faculty';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Package } from './models/package';
 import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
+import { PipelineRevisions } from './models/pipeline-revisions';
+import { SupportingDocument } from './models/supporting-document';
+import { Section } from './models/section';
+import { SectionExtras } from './models/section-extras';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +45,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/';
-    //this.url = 'http://192.168.99.100:8080/';
+    // this.url = 'http://192.168.99.100:8080/';
   }
 
   public getFeatureFlagTest() {
@@ -69,14 +72,31 @@ export class ApiService {
     return this.http.get<Program[]>(this.url + 'programs');
   }
 
+  public getAllSections() {
+    // this returns all sections
+    return this.http.get<Section[]>(this.url + 'sections');
+  }
+
   public getCourse(id: string) {
     return this.http.get<Course>(this.url + 'course_edit', {
       params: new HttpParams().set('id', id)
     });
   }
 
+  public getSection(id: string) {
+    // this returns this one section
+    return this.http.get<Section>(this.url + 'section70719', {
+      params: new HttpParams().set('id', id)
+    });
+  }
+
   public saveCourse(course: Course) {
     return this.http.post<Course>(this.url + 'courses', course);
+  }
+
+  // for future implementation when we have all sections
+  public saveSection(section: Section) {
+    return this.http.post<Section>(this.url + 'sections', section);
   }
 
 
@@ -128,6 +148,10 @@ export class ApiService {
     });
   }
 
+  public getCalendar() {
+    return this.http.get<any>(this.url + 'section70719');
+  }
+
   public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
       params: new HttpParams().set('package_id', packageId).set('user_id', userId)
@@ -135,7 +159,7 @@ export class ApiService {
   }
 
   public viewPdf(packageId: string) {
-    //window.open();
+    // window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'
@@ -143,7 +167,7 @@ export class ApiService {
   }
 
   public viewPdfFromPackagePage(packageId: string, userId: string) {
-    //window.open();
+    // window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf_packagePage', {
       params: new HttpParams().set('package_id', packageId).set('user_id', userId),
       responseType: 'arraybuffer' as 'json'
@@ -188,13 +212,14 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public uploadFile(files: File[], packageId: any, userId: any) {
+  public uploadFile(files: File[], descriptions: Map<string, string>, packageId: any, userId: any) {
     const formdata: FormData = new FormData();
 
     for (const file of files) {
       formdata.append('files', file);
     }
 
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
     formdata.append('package_id', packageId);
     formdata.append('user_id', userId);
 
@@ -206,14 +231,28 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  public submitCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
-    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+  public submitCourseRequestForm(files: File[], descriptions: Map<string, string>,
+    course: Course, courseExtras: CourseExtras) {
+
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
     const req = new HttpRequest('POST', this.url + 'save_request', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
 
+    return this.http.request(req);
+  }
+
+  public submitCalendarSectionForm(files: File[], descriptions: Map<string, string>,
+    section: Section, sectionExtras: SectionExtras) {
+
+    const formdata: FormData = this.submitSection(files, descriptions, section, sectionExtras);
+
+    const req = new HttpRequest('POST', this.url + 'save_section70719', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
     return this.http.request(req);
   }
 
@@ -231,8 +270,8 @@ export class ApiService {
     });
   }
 
-  public submitDeleteCourseRequestForm(files: File[], course: Course, courseExtras: CourseExtras) {
-    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, course, courseExtras);
+  public submitDeleteCourseRequestForm(files: File[], descriptions: Map<string, string>, course: Course, courseExtras: CourseExtras) {
+    const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
     const req = new HttpRequest('POST', this.url + 'save_removal_request', formdata, {
       reportProgress: true,
@@ -242,8 +281,9 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  private fileCourseAndExtrasToFormData(files: File[], course: Course, courseExtras: CourseExtras) {
+  private fileCourseAndExtrasToFormData(files: File[], descriptions: Map<string, string>, course: Course, courseExtras: CourseExtras) {
     const formdata: FormData = new FormData();
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
     formdata.append('course', JSON.stringify(course));
     formdata.append('courseExtras', JSON.stringify(courseExtras));
     for (const file of files) {
@@ -251,5 +291,115 @@ export class ApiService {
     }
 
     return formdata;
+  }
+
+  private submitSection(files: File[], descriptions: Map<string, string>, section: Section, sectionExtras: SectionExtras) {
+    const formdata: FormData = new FormData();
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
+    formdata.append('subSection70719', JSON.stringify(section));
+    formdata.append('sectionExtras', JSON.stringify(sectionExtras));
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
+    return formdata;
+  }
+
+  public getPackagesToBeApproved(userType: string) {
+    return this.http.get<Package[]>(this.url + 'get_packages_by_type', {
+      params: new HttpParams().set('userType', userType)
+    });
+  }
+
+  public getEditKey(packageId: any) {
+    console.log('api-getEditKey ' + packageId);
+    return this.http.get<any>(this.url + 'get_edit_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public getReviewKey(packageId: any) {
+    console.log('api-getReviewKey ' + packageId);
+    return this.http.get<any>(this.url + 'get_review_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public releaseEditKey(packageId: any) {
+    console.log('api-releaseEditKey ' + packageId);
+    return this.http.get<any>(this.url + 'release_edit_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public releaseReviewKey(packageId: any) {
+    console.log('api-releaseReviewKey ' + packageId);
+    return this.http.get<any>(this.url + 'release_review_key', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public isMutexAvailable(packageId: any) {
+    console.log('api-isMutexAvailable ' + packageId);
+    return this.http.get<any>(this.url + 'is_mutex_available', {
+      params: new HttpParams().set('package_id', packageId)
+    });
+  }
+
+  public getPipelineAudit(pipelineId: any) {
+    console.log('api-getPipelineRevisions ' + pipelineId);
+    return this.http.get<PipelineRevisions[]>(this.url + '/pipeline_revisions', {
+      params: new HttpParams().set('pipeline_id', pipelineId)
+    });
+  }
+
+  public getSupportingDocuments(target_id: any, target_type: any) {
+    console.log('api-getSupportingDocuments ' + target_id + target_type);
+    return this.http.get<SupportingDocument[]>(this.url + 'get_supporting_documents', {
+      params: new HttpParams().set('target_id', target_id).set('target_type', target_type)
+    });
+  }
+
+  public getSupportingDocumentPdf(file_id: any) {
+    return this.http.get<BlobPart>(this.url + 'get_supporting_document_pdf', {
+      params: new HttpParams().set('file_id', file_id),
+      responseType: 'arraybuffer' as 'json'
+    });
+  }
+
+  public removeSupportingDocument(file_id: any) {
+    return this.http.get<string>(this.url + 'remove_supporting_document', {
+      params: new HttpParams().set('file_id', file_id)
+    });
+  }
+
+  public removeRequest(request_id: any) {
+    return this.http.get<string>(this.url + 'delete_request', {
+      params: new HttpParams().set('requestId', request_id)
+    });
+  }
+
+  public getDegreeRequirements(department_id) {
+    return this.http.get<any>(this.url + 'get_degrees_by_department', {
+      params: new HttpParams().set('department_id', department_id)
+    });
+  }
+
+  public registerUser(first: any, last: any, type: any, email: any, pass: any, depId: any) {
+    const formdata: FormData = new FormData();
+
+    formdata.append('first_name', first);
+    formdata.append('last_name', last);
+    formdata.append('user_type', type);
+    formdata.append('email', email);
+    formdata.append('password', pass);
+    formdata.append('department_id', depId);
+
+    const req = new HttpRequest('POST', this.url + 'register_user', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
   }
 }

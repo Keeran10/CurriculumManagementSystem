@@ -27,4 +27,8 @@ export class Department {
   users: object;
   programs: object;
   requestPackages: object;
+
+  constructor(depId: any) {
+    this.id = depId;
+  }
 }

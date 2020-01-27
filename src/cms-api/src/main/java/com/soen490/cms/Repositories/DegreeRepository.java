@@ -29,6 +29,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface DegreeRepository extends JpaRepository<Degree, Integer>{
@@ -47,4 +48,11 @@ public interface DegreeRepository extends JpaRepository<Degree, Integer>{
     @Query(value = "SELECT SUM(c.credits) FROM course c INNER JOIN degree_requirement ON c.id = degree_requirement.course_id WHERE degree_requirement.core=?1 AND c.is_active=1 ", nativeQuery = true)
     Double findCreditsTotalOfCoreProgram(String name);
 
+    @Query(value = "SELECT * FROM degree WHERE id=?", nativeQuery = true)
+    Degree findById(int id);
+
+
+    @Query(value = "SELECT d.id, d.credits, d.level, d.name, d.program_id FROM degree d INNER JOIN program p ON " +
+            "d.program_id = p.id INNER JOIN department dept ON dept.id = p.department_id WHERE dept.id=?", nativeQuery = true)
+    List<Degree> findDegreesByDepartment(int department_id);
 }

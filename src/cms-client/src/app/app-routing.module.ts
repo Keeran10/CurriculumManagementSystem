@@ -28,10 +28,15 @@ import { EditFormComponent } from './edit-form/edit-form.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { PackageComponent } from './package/package.component';
+import { PipelineAuditComponent } from './pipeline-audit/pipeline-audit.component';
 import { PipelineTrackingComponent } from './pipeline-tracking/pipeline-tracking.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { RevisionsComponent } from './revisions/revisions.component';
+import {CalendarSectionComponent} from './calendar-section/calendar-section.component';
+import { CalendarSectionsComponent } from './calendar-sections/calendar-sections.component';
+import { RegistrationComponent } from './admin-registration/admin-registration.component';
+import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
 
 const routes: Routes = [
   { path: 'addcourse', component: CourseFormComponent },
@@ -42,6 +47,11 @@ const routes: Routes = [
   { path: 'pipeline', component: PipelineTrackingComponent },
   { path: 'package', component: PackageComponent },
   { path: 'revisions', component: RevisionsComponent},
+  { path: 'audit', component: PipelineAuditComponent},
+  { path: 'section/:id', component: CalendarSectionComponent},
+  { path: 'calendar', component: CalendarSectionsComponent },
+  { path: 'registration', component: RegistrationComponent},
+  { path: 'tempPage', component: CalendarCourseListComponent },
   { path: '', component: LoginComponent }
 ];
 
