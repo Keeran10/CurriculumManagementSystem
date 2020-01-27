@@ -64,6 +64,7 @@ export class SupportDocumentComponent {
       this.type = "section";
     }
 
+    console.log("support doc id=" + id);
     if (this.target_type == 1 && id == 0 || this.target_type == 2 && id == 0) {
       console.log("undefined id for " + this.type);
       return;
