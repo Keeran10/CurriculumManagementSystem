@@ -61,8 +61,8 @@ export class CalendarSectionComponent implements OnInit {
   isDeleteVisible = true;
 
   constructor(private route: ActivatedRoute, private api: ApiService,
-    private cookieService: CookieService,
-    private router: Router) { }
+              private cookieService: CookieService,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -134,7 +134,7 @@ export class CalendarSectionComponent implements OnInit {
             });
           }
         });
-        if (i === 0) {
+        if (!requests.find(r => r.targetType === 2)) {
           this.isDoneLoading = true;
           this.getPrintedCourses();
         }
