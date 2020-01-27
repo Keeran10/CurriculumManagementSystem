@@ -50,8 +50,8 @@ export class PackageComponent implements OnInit {
   editingPackage = '0'; // if coming from pipeline to edit
 
   constructor(private cookieService: CookieService,
-    private api: ApiService,
-    private router: Router) {
+              private api: ApiService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -71,7 +71,7 @@ export class PackageComponent implements OnInit {
     this.cookieService.set('package', packageId);
     console.log(packageId);
     this.cookieService.set('request', requestId);
-    if (requestId != 0) {
+    if (requestId !== 0) {
       const request = this.packages.find(p => p.id === packageId).requests.find(r => r.id === requestId);
       this.cookieService.set('originalCourse', request.originalId.toString());
       this.cookieService.set('editedCourse', request.targetId.toString());
@@ -129,11 +129,11 @@ export class PackageComponent implements OnInit {
     this.api.releaseEditKey(packageId).subscribe(data => console.log('Release edit key of package ' + packageId + ' ' + data));
   }
 
-  public getCalendar(packageId){
+  public getCalendar(packageId) {
     this.cookieService.set('package', packageId);
     this.api.getCalendar().subscribe(data => this.router.navigate(['calendar']));
   }
-  
+
   public removeRequest(requestId: any) {
     console.log('remove request ' + requestId);
     this.api.removeRequest(requestId).subscribe(

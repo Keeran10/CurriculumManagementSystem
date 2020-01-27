@@ -158,12 +158,12 @@ public class RequestPackageController {
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70719 was successfully added to database.
-     * @throws JSONException
      */
-    @PostMapping(value="/save_subsection70719")
-    public int saveSubSection70719 (@RequestParam String subSection70719 , @RequestParam String sectionExtras,
-                                        @RequestParam(required = false) MultipartFile[] files,
+    @PostMapping(value="/save_section70719")
+    public int saveSubSection70719 (@RequestParam String subSection70719, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
                                     @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70719);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
@@ -189,7 +189,6 @@ public class RequestPackageController {
      * @param courseExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if course was successfully added to database.
-     * @throws JSONException
      */
     @PostMapping(value="/save_request")
     public int saveCreateAndEditRequest(@RequestParam String course, @RequestParam String courseExtras,

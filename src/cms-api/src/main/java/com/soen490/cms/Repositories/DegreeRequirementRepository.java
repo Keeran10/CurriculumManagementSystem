@@ -47,4 +47,7 @@ public interface DegreeRequirementRepository extends JpaRepository<DegreeRequire
 
     @Query(value = "SELECT * FROM degree_requirement WHERE id=?", nativeQuery = true)
     DegreeRequirement findById(int id);
+
+    @Query(value = "UPDATE degree_requirement SET core=?2 WHERE core=?1 AND id != 0", nativeQuery = true)
+    void overrideCore(String originalCore, String changedCore);
 }

@@ -177,9 +177,9 @@ public class RequestPackageTest {
     @Test
     public void testSectionSave(){
 
-        String section70719JSON = "{\"id\":1,\"first_core\":\"Engineering Core\",\"second_core\":\"Software Engineering Core\"," +
-                "\"first_paragraph\":\"test\",\"isActive\":0,\"section_id\":\"70.71.9\", " +
-                "\"section_title\":\"Degree Requirements for the BEng in Software Engineering\"}";
+        String section70719JSON = "{\"id\":1,\"firstCore\":\"Engineering Core\",\"secondCore\":\"Software Engineering Core\"," +
+                "\"firstParagraph\":\"test\",\"isActive\":0,\"sectionId\":\"70.71.9\", " +
+                "\"sectionTitle\":\"Degree Requirements for the BEng in Software Engineering\"}";
 
         String section70719ExtrasJSON = "{\"implications\":\"\",\"packageId\":1,\"prerequisites\":\"SOEN343; SOEN384; \",\"" +
                 "rationale\":\"\",\"userId\":1,\"requestId\":0}";

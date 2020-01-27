@@ -43,6 +43,7 @@ export class SupportDocumentComponent {
   public type: string;
   @Input() packageId: any;
   @Input() courseId: any;
+  @Input() sectionId: any;
   @Input() target_type: any;
 
   constructor(private api: ApiService) { }
@@ -57,6 +58,10 @@ export class SupportDocumentComponent {
     else if (this.target_type == 1) {
       id = this.packageId;
       this.type = "dossier";
+    }
+    else if (this.target_type == 3) {
+      id = this.sectionId;
+      this.type = "section";
     }
 
     if (this.target_type == 1 && id == 0 || this.target_type == 2 && id == 0) {

@@ -31,6 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ApprovalPipelineComponent } from './approval-pipeline/approval-pipeline.component';
 import { ApproverHomepageComponent } from './approver-homepage/approver-homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarSectionComponent } from './calendar-section/calendar-section.component';
 import { CalendarSectionsComponent } from './calendar-sections/calendar-sections.component';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseFormComponent } from './course-form/course-form.component';
@@ -38,15 +39,15 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { DialogImpactStatementComponent, ImpactStatementComponent } from './impact-statement/impact-statement.component';
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
 import { EditFormComponent } from './edit-form/edit-form.component';
-import { GenericFileUploaderComponent } from './generic-file-uploader/generic-file-uploader.component';
 import { FooterComponent } from './footer/footer.component';
+import { GenericFileUploaderComponent } from './generic-file-uploader/generic-file-uploader.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionModule } from "@angular/material/expansion";
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -69,14 +70,13 @@ import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
     ApprovalPipelineComponent,
     ApproverHomepageComponent,
     CalendarSectionsComponent,
+    CalendarSectionComponent,
     CourseFormComponent,
     CourseListComponent,
     DialogImpactStatementComponent,

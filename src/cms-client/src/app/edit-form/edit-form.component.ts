@@ -27,7 +27,6 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseExtras } from '../models/course-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
-import { distinct } from 'rxjs/operators';
 import { DegreeRequirement } from '../models/degree-requirement';
 
 @Component({
@@ -36,7 +35,7 @@ import { DegreeRequirement } from '../models/degree-requirement';
   styleUrls: ['./edit-form.component.css']
 })
 
-export class EditFormComponent implements OnInit{
+export class EditFormComponent implements OnInit {
 
   @ViewChild(SupportDocumentComponent, { static: false })
   supportDocumentComponent: SupportDocumentComponent;
@@ -58,8 +57,8 @@ export class EditFormComponent implements OnInit{
   availableCores = [];
 
   constructor(private route: ActivatedRoute, private api: ApiService,
-    private cookieService: CookieService,
-    private router: Router) {
+              private cookieService: CookieService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -71,9 +70,9 @@ export class EditFormComponent implements OnInit{
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
-    let requestId = this.cookieService.get('request');
-    let packageId = this.cookieService.get('package');
-    let userId = this.cookieService.get('user');
+    const requestId = this.cookieService.get('request');
+    const packageId = this.cookieService.get('package');
+    const userId = this.cookieService.get('user');
     this.model.packageId = Number(packageId);
     this.editedModel.packageId = Number(packageId);
     this.model.userId = Number(userId);
@@ -86,19 +85,17 @@ export class EditFormComponent implements OnInit{
       this.courseOriginal.number = null;
       this.courseOriginal.credits = null;
       this.isDeleteVisible = false;
-    }
-    else if (requestId === '0') {
+    } else if (requestId === '0') {
       this.api.getCourse(this.id).subscribe(data => {
         this.courseOriginal = data;
         this.courseEditable = Object.assign({}, data);
         this.courseEditable.degreeRequirements = this.courseOriginal.degreeRequirements;
         this.setRequisitesStrings(data, this.model);
-        this.setRequisitesStrings(data, this.editedModel)
+        this.setRequisitesStrings(data, this.editedModel);
       });
-    }
-    else {
-      let originalId = this.cookieService.get('originalCourse');
-      let editedId = this.cookieService.get('editedCourse');
+    } else {
+      const originalId = this.cookieService.get('originalCourse');
+      const editedId = this.cookieService.get('editedCourse');
       this.api.getCourse(originalId).subscribe(data => {
         this.courseOriginal = data;
         console.log(this.courseOriginal);
@@ -159,7 +156,7 @@ export class EditFormComponent implements OnInit{
   public submitForm() {
     this.api.submitCourseRequestForm(this.supportDocumentComponent.documents,
       this.supportDocumentComponent.descriptions, this.courseEditable, this.editedModel)
-      .subscribe(() => this.router.navigate(['/package']))
+      .subscribe(() => this.router.navigate(['/package']));
   }
 
   selectFile(event) {
@@ -170,7 +167,7 @@ export class EditFormComponent implements OnInit{
   }
 
   public openDeleteDialog() {
-    if (confirm("Are you sure you want to delete this course?")) {
+    if (confirm('Are you sure you want to delete this course?')) {
 
       this.api.submitDeleteCourseRequestForm(this.supportDocumentComponent.documents,
         this.supportDocumentComponent.descriptions, this.courseEditable, this.editedModel)
@@ -178,39 +175,38 @@ export class EditFormComponent implements OnInit{
     }
   }
 
-  public getCoresOfDegree(degreeName){
-    let degree = this.availableDegrees.find(e => e.name == degreeName);
-    let cores = []
-    if (degree != null){
+  public getCoresOfDegree(degreeName) {
+    const degree = this.availableDegrees.find(e => e.name === degreeName);
+    let cores = [];
+    if (degree != null) {
       degree.degreeRequirements.forEach(d => {
-        cores.push(d.core)
+        cores.push(d.core);
       });
     }
-    cores.push("None")
+    cores.push('None');
     cores = [...new Set(cores)];
     return cores;
   }
 
-  public changeDegree(event, i)
-  {
-    if(event.isUserInput) {
+  public changeDegree(event, i) {
+    if (event.isUserInput) {
       console.log(event.source.value);
-      let degree = this.availableDegrees.find(e => e.name == event.source.value);
+      const degree = this.availableDegrees.find(e => e.name === event.source.value);
       this.courseEditable.degreeRequirements[i].degree.credits = degree.credits;
       this.courseEditable.degreeRequirements[i].degree.id = degree.id;
       this.courseEditable.degreeRequirements[i].degree.level = degree.level;
     }
   }
 
-  public addDegree(){
-    let degreeReq = new DegreeRequirement();
-    degreeReq.core = "None";
+  public addDegree() {
+    const degreeReq = new DegreeRequirement();
+    degreeReq.core = 'None';
     degreeReq.id = 0;
     degreeReq.degree = Object.assign({}, this.courseEditable.degreeRequirements[0].degree);
     this.courseEditable.degreeRequirements.push(degreeReq);
   }
 
-  public removeDegree(){
+  public removeDegree() {
     this.courseEditable.degreeRequirements.pop();
   }
 }

@@ -19,25 +19,42 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
-import { Component, OnInit } from '@angular/core';
+
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApiService } from '../backend-api.service';
-import { Router } from '@angular/router';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { CookieService } from 'ngx-cookie-service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CalendarSectionComponent } from './calendar-section.component';
 
-@Component({
-  selector: 'app-calendar-sections',
-  templateUrl: './calendar-sections.component.html',
-  styleUrls: ['./calendar-sections.component.css']
-})
-export class CalendarSectionsComponent implements OnInit {
+describe('CalendarSectionComponent', () => {
+  let component: CalendarSectionComponent;
+  let fixture: ComponentFixture<CalendarSectionComponent>;
 
-  constructor(private api: ApiService,
-              private router: Router) { }
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      declarations: [ CalendarSectionComponent ],
+      providers: [
+        ApiService,
+        CookieService
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+    .compileComponents();
+  }));
 
-  ngOnInit() {
-  }
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CalendarSectionComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  public getCalendarData() {
-    this.api.getCalendar().subscribe(data => console.log(data));
-    this.router.navigate(['section/1']);
-  }
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

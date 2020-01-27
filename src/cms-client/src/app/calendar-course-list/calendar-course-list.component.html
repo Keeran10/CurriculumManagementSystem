@@ -19,6 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
+
 <div class="container">
     <mat-card class="left-side" *ngIf="isDoneLoading">
         <div *ngFor="let c of printedCourses; let i = index">
@@ -26,7 +27,7 @@
         </div>
     </mat-card>
 
-    <mat-card class="right-side" *ngIf="isDoneLoading">
+    <div class="right-side" *ngIf="isDoneLoading">
         <div *ngFor="let c of printedCourses; let i = index">
             <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
                 <span>{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
@@ -36,5 +37,5 @@
                 <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span><br>
             </div>
         </div>
-    </mat-card>
+    </div>
 </div>

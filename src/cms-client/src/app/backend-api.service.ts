@@ -27,13 +27,14 @@ import { Degree } from './models/degree';
 import { Department } from './models/department';
 import { Faculty } from './models/faculty';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Package } from './models/package';
 import { Program } from './models/program';
 import { Revision } from './models/revision';
 import { User } from './models/user';
 import { PipelineRevisions } from './models/pipeline-revisions';
 import { SupportingDocument } from './models/supporting-document';
+import { Section } from './models/section';
+import { SectionExtras } from './models/section-extras';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/';
-    //this.url = 'http://192.168.99.100:8080/';
+    // this.url = 'http://192.168.99.100:8080/';
   }
 
   public getFeatureFlagTest() {
@@ -71,14 +72,31 @@ export class ApiService {
     return this.http.get<Program[]>(this.url + 'programs');
   }
 
+  public getAllSections() {
+    // this returns all sections
+    return this.http.get<Section[]>(this.url + 'sections');
+  }
+
   public getCourse(id: string) {
     return this.http.get<Course>(this.url + 'course_edit', {
       params: new HttpParams().set('id', id)
     });
   }
 
+  public getSection(id: string) {
+    // this returns this one section
+    return this.http.get<Section>(this.url + 'section70719', {
+      params: new HttpParams().set('id', id)
+    });
+  }
+
   public saveCourse(course: Course) {
     return this.http.post<Course>(this.url + 'courses', course);
+  }
+
+  // for future implementation when we have all sections
+  public saveSection(section: Section) {
+    return this.http.post<Section>(this.url + 'sections', section);
   }
 
 
@@ -130,7 +148,7 @@ export class ApiService {
     });
   }
 
-  public getCalendar(){
+  public getCalendar() {
     return this.http.get<any>(this.url + 'section70719');
   }
 
@@ -141,7 +159,7 @@ export class ApiService {
   }
 
   public viewPdf(packageId: string) {
-    //window.open();
+    // window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf', {
       params: new HttpParams().set('package_id', packageId),
       responseType: 'arraybuffer' as 'json'
@@ -149,7 +167,7 @@ export class ApiService {
   }
 
   public viewPdfFromPackagePage(packageId: string, userId: string) {
-    //window.open();
+    // window.open();
     return this.http.get<BlobPart>(this.url + 'get_pdf_packagePage', {
       params: new HttpParams().set('package_id', packageId).set('user_id', userId),
       responseType: 'arraybuffer' as 'json'
@@ -226,6 +244,18 @@ export class ApiService {
     return this.http.request(req);
   }
 
+  public submitCalendarSectionForm(files: File[], descriptions: Map<string, string>,
+    section: Section, sectionExtras: SectionExtras) {
+
+    const formdata: FormData = this.submitSection(files, descriptions, section, sectionExtras);
+
+    const req = new HttpRequest('POST', this.url + 'save_section70719', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+    return this.http.request(req);
+  }
+
   public getRevisions(packageId: any) {
     console.log('api-getRevisions ' + packageId);
     return this.http.get<Revision[]>(this.url + 'dossier_revisions', {
@@ -256,6 +286,18 @@ export class ApiService {
     formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
     formdata.append('course', JSON.stringify(course));
     formdata.append('courseExtras', JSON.stringify(courseExtras));
+    for (const file of files) {
+      formdata.append('files', file);
+    }
+
+    return formdata;
+  }
+
+  private submitSection(files: File[], descriptions: Map<string, string>, section: Section, sectionExtras: SectionExtras) {
+    const formdata: FormData = new FormData();
+    formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
+    formdata.append('subSection70719', JSON.stringify(section));
+    formdata.append('sectionExtras', JSON.stringify(sectionExtras));
     for (const file of files) {
       formdata.append('files', file);
     }
@@ -337,7 +379,7 @@ export class ApiService {
     });
   }
 
-  public getDegreeRequirements(department_id){
+  public getDegreeRequirements(department_id) {
     return this.http.get<any>(this.url + 'get_degrees_by_department', {
       params: new HttpParams().set('department_id', department_id)
     });

@@ -57,9 +57,17 @@
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
                   <table>
                     <tr *ngFor="let request of package.requests">
-                      <td class="request"
+
+                      <td *ngIf="request.targetType === 2 else calendarSection" class="request"
                         (click)="packageSelect(package.id, request.id, 'editForm/'+request.originalId)">Request:
                         {{request.title}}</td>
+
+                      <ng-template #calendarSection>
+                        <td *ngIf="request.targetType !== 2" class="request"
+                            (click)="packageSelect(package.id, request.id, 'section/'+request.originalId)">Request:
+                          {{request.title}}</td>
+                      </ng-template>
+
                       <td (click)="removeRequest(request.id)">
                         &nbsp;&nbsp;<font color="red" style="cursor: pointer;">[x]</font>
                       </td>
@@ -92,7 +100,7 @@
                         <button mat-stroked-button color="primary" (click)="generatePdf(package.id, i)">Generate
                             PDF</button>
                         -->
-                  
+
                   <button mat-stroked-button color="primary" (click)="upload(package.id)">Upload
                     Files</button>
                   <button mat-stroked-button color="primary" (click)="viewPdf(package.id)">View PDF</button>
@@ -108,7 +116,7 @@
                       <button mat-stroked-button color="warn">Cancel Updates</button>
                     </a>
                 </div>
-                
+
               </mat-expansion-panel>
             </div>
           </mat-accordion> <br>

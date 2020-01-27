@@ -210,7 +210,7 @@ public class PdfSection70719 {
 
         PdfUtil.processDifferences(first_paragraph_present, first_paragraph_proposed,
                 section70719_present.getFirstParagraph(), section70719_proposed.getFirstParagraph(),
-                4);
+                6);
 
         Phrase first_core_present = new Phrase();
         Phrase first_core_proposed = new Phrase();
