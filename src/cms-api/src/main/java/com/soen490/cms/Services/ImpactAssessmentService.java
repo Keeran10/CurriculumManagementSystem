@@ -128,6 +128,9 @@ public class ImpactAssessmentService {
                 }
             }
 
+            if(core == null || degree == null)
+                continue;
+
             cdr.setCore(core);
             cdr.setDegree(degree);
             cdr.setCourse(c);

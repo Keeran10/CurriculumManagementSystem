@@ -290,6 +290,8 @@ public class RequestPackageService {
                 }
             }
 
+            if(core == null || degree == null)
+                continue;
 
             cdr.setCore(core);
             cdr.setDegree(degree);
