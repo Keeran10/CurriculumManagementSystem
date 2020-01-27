@@ -682,9 +682,10 @@ public class RequestPackageService {
 
         for (Request r : dossier.getRequests()) {
 
-            if (r.getTargetType() == 1)
+            if (r.getTargetType() == 1) {
+                finalizeSection70719Request(r);
                 continue;
-
+            }
             if (r.getRequestType() == 1)
                 finalizeCourseCreationRequest(r);
             if (r.getRequestType() == 2)
@@ -696,6 +697,21 @@ public class RequestPackageService {
 
         log.info("Deleting dossier from database: " + dossier);
         requestPackageRepository.delete(dossier);
+    }
+
+    private void finalizeSection70719Request(Request r) {
+
+        Section70719 original = section70719Repository.findById(r.getOriginalId());
+        Section70719 changed = section70719Repository.findById(r.getTargetId());
+
+        original.setSectionId(changed.getSectionId());
+        original.setSectionTitle(changed.getSectionTitle());
+        original.setFirstParagraph(changed.getFirstParagraph());
+        original.setFirstCore(changed.getFirstCore());
+        original.setSecondCore(changed.getSecondCore());
+
+        section70719Repository.save(original);
+        section70719Repository.delete(changed);
     }
 
 
