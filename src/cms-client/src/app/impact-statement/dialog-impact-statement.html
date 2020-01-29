@@ -34,9 +34,9 @@
       <h6 style="color:darkred">Calendar sections changes have been made.</h6>
       <h6> Those changes are:</h6>
 
-      <div *ngIf="data.SectionsDegree != null && data.SectionsCourse == '' && data.SectionsDepartment == ''">Degree calendar sections affected are {{data.SectionsDegree}}</div>
-      <div *ngIf="data.SectionsCourse != null && data.SectionsDegree == '' && data.SectionsDepartment == ''">Course calendar sections affected are {{data.SectionsCourse}}</div>
-      <div *ngIf="data.SectionsDepartment != null && data.SectionsDegree == '' && data.SectionsCourse == ''">Department calendar sections affected are {{data.SectionsDepartment}}</div>
+      <div *ngIf="data.SectionsDegree != null && data.SectionsCourse == '' && data.SectionsDepartment == ''">Degree calendar sections affected are {{data.SectionsDegree}}.</div>
+      <div *ngIf="data.SectionsCourse != null && data.SectionsDegree == '' && data.SectionsDepartment == ''">Course calendar sections affected are {{data.SectionsCourse}}.</div>
+      <div *ngIf="data.SectionsDepartment != null && data.SectionsDegree == '' && data.SectionsCourse == ''">Department calendar sections affected are {{data.SectionsDepartment}}.</div>
     </div>
     <hr>
   </ng-template>
@@ -46,15 +46,14 @@
     data.DegreeCourseRequiredImpactUpdated != null" [ngIfElse]="NoDegreeRequiredChanges">
       <div>
 <h6 style="color:darkred">Degree changes have been made.</h6>
-       <div> <h6>Degree was:</h6>
+       <div> <h6>Original degree to be modified:</h6>
 
 
     <div> <div *ngFor="let key of data.DegreeCourseRequiredImpactOriginalKeys">
-      {{key}} with {{data.DegreeCourseRequiredImpactOriginal[key]}} credits
+      {{key}} with ({{data.DegreeCourseRequiredImpactOriginal[key]}} credits). <h6></h6>
     </div></div>
-
-  <div *ngIf="data.DegreeCourseRequiredImpactRemoved != null">Degree course was removed.</div>
-  <div *ngIf="data.DegreeCourseRequiredImpactAdded != null">Degree course was added.</div>
+         <div *ngIf="data.DegreeCourseRequiredImpactRemoved != null"> <h6>Degree credits will be removed to become:</h6> {{data.DegreeCourseRequiredImpactRemovedKeys}} with ({{data.DegreeCourseRequiredImpactRemoved[data.DegreeCourseRequiredImpactRemovedKeys]}} credits).  </div>
+         <div *ngIf="data.DegreeCourseRequiredImpactAdded != null"><h6>Degree credits will be added to become:</h6> {{data.DegreeCourseRequiredImpactAddedKeys}} with ({{data.DegreeCourseRequiredImpactAdded[data.DegreeCourseRequiredImpactAddedKeys]}} credits). </div>
 
        </div>
         <br>
@@ -62,7 +61,7 @@
         <div *ngIf="data.DegreeCourseRequiredImpactUpdated != null"><h6>Degree is now:</h6>
 
     <div> <div *ngFor="let key of data.DegreeCourseRequiredImpactUpdatedKeys">
-    <p>{{key}} with {{data.DegreeCourseRequiredImpactUpdated[key]}} credits</p>
+    <p>{{key}} with ({{data.DegreeCourseRequiredImpactUpdated[key]}} credits).</p>
   </div></div></div>
   </div>
       <hr>
@@ -74,14 +73,14 @@
   <div>
     <h6 style="color:darkred">Core section has changed.</h6> <h6> Core section originally was:  </h6>
     <div> <div *ngFor="let key of data.ProgramImpactOriginalKeys">
-      {{key}} with {{data.ProgramImpactOriginal[key]}} credits
+      {{key}} with ({{data.ProgramImpactOriginal[key]}} credits). <h6></h6>
     </div></div>
-    <div *ngIf="data.ProgramImpactRemoved != null">Core section will be removed.</div>
-    <div *ngIf="data.ProgramImpactAdded != null">Core section will be added.</div>
+    <div *ngIf="data.ProgramImpactRemoved != null"> <h6>Core credits will be changed to become: </h6> {{data.ProgramImpactRemovedKeys}} with ({{data.ProgramImpactRemoved[data.ProgramImpactRemovedKeys]}} credits).</div>
+    <div *ngIf="data.ProgramImpactAdded != null"> <h6>Core credits will be changed to become: </h6> {{data.ProgramImpactAddedKeys}} with ({{data.ProgramImpactAdded[data.ProgramImpactRemovedKeys]}} credits).</div>
     <br>
     <div *ngIf="data.ProgramImpactUpdated != null"><h6>Core section is now:</h6>
       <div> <div *ngFor="let key of data.ProgramImpactUpdatedKeys">
-        <p>{{key}} with {{data.ProgramImpactUpdated[key]}} credits</p>
+        <p>{{key}} with ({{data.ProgramImpactUpdated[key]}} credits).</p>
       </div></div>
     </div>
   </div>
@@ -110,12 +109,12 @@
     <h6 style="color:darkred">Course changes have been made.</h6>
     <h6> Those changes are:</h6>
 
-    <div *ngIf="data.CourseEditsName != null && data.CourseEditsNumber == null ">Course is now: {{data.CourseEditsName}} {{data.OriginalCourseNumber}} </div>
-    <div *ngIf="data.CourseEditsNumber != null && data.CourseEditsName == null">Course is now: {{data.OriginalCourseName}} {{data.CourseEditsNumber}}</div>
-    <div *ngIf="data.CourseEditsNumber != null && data.CourseEditsName != null">Course is now: {{data.CourseEditsName}} {{data.CourseEditsNumber}}</div>
-    <div *ngIf="data.CourseEditsCredits != null">Course credits are now: {{data.CourseEditsCredits}} credits.</div>
-    <div *ngIf="data.CourseEditsTitle != null">Course title is now: {{data.CourseEditsTitle}}</div>
-    <div *ngIf="data.CourseEditsDescription != null">Course description is now: {{data.CourseEditsDescription}}</div>
+    <div *ngIf="data.CourseEditsName != null && data.CourseEditsNumber == null ">Course is now: {{data.CourseEditsName}} {{data.OriginalCourseNumber}}. </div>
+    <div *ngIf="data.CourseEditsNumber != null && data.CourseEditsName == null">Course is now: {{data.OriginalCourseName}} {{data.CourseEditsNumber}}.</div>
+    <div *ngIf="data.CourseEditsNumber != null && data.CourseEditsName != null">Course is now: {{data.CourseEditsName}} {{data.CourseEditsNumber}}.</div>
+    <div *ngIf="data.CourseEditsCredits != null">Course credits are now: ({{data.CourseEditsCredits}} credits).</div>
+    <div *ngIf="data.CourseEditsTitle != null">Course title is now: {{data.CourseEditsTitle}}.</div>
+    <div *ngIf="data.CourseEditsDescription != null">Course description is now: {{data.CourseEditsDescription}}.</div>
   </div>
   </ng-template>
   <hr>
