@@ -715,17 +715,27 @@ public class RequestPackageService {
         original.setFirstParagraph(changed.getFirstParagraph());
 
         if(!original.getFirstCore().equals(changed.getFirstCore())){
-            degreeRequirementRepository.overrideCore(original.getFirstCore(), changed.getFirstCore());
+            overrideCore(original.getFirstCore(), changed.getFirstCore());
             original.setFirstCore(changed.getFirstCore());
         }
 
         if(!original.getSecondCore().equals(changed.getSecondCore())){
-            degreeRequirementRepository.overrideCore(original.getSecondCore(), changed.getSecondCore());
+            overrideCore(original.getSecondCore(), changed.getSecondCore());
             original.setSecondCore(changed.getSecondCore());
         }
 
         section70719Repository.save(original);
         section70719Repository.delete(changed);
+    }
+
+    private void overrideCore(String presentCore, String proposedCore) {
+
+        List<DegreeRequirement> degreeRequirements = degreeRequirementRepository.findByCore(presentCore);
+
+        for(DegreeRequirement degreeRequirement : degreeRequirements){
+            degreeRequirement.setCore(proposedCore);
+            degreeRequirementRepository.save(degreeRequirement);
+        }
     }
 
 
