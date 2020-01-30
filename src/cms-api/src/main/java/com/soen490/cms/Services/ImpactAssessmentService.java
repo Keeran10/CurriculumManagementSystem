@@ -98,35 +98,21 @@ public class ImpactAssessmentService {
         for(int i = 0; i < size; i++){
 
             JSONObject degreeRequirements = (JSONObject) course.getJSONArray("degreeRequirements").get(i);
-            int degreeReq_id = (Integer) degreeRequirements.get("id");
 
             JSONObject degreeJSON = (JSONObject) degreeRequirements.get("degree");
             int degree_id = (Integer) degreeJSON.get("id");
 
+
             Degree degree = degreeRepository.findById(degree_id);
             String core = (String) degreeRequirements.get("core");
 
-            System.out.println("IMPACT DEGREE: " + degree);
             if(ctr == 0 && degree != null){
                 c.setProgram(degree.getProgram());
-                System.out.println("IMPACT PROGRAM: " + c.getProgram());
                 courseRepository.save(c);
                 ctr++;
             }
 
-            DegreeRequirement cdr = null;
-
-            if(degreeReq_id == 0)
-                cdr = new DegreeRequirement();
-            else {
-                cdr = degreeRequirementRepository.findById(degreeReq_id);
-                if(cdr != null && core.equals(cdr.getCore())) {
-                    continue;
-                }
-                else{
-                    cdr = new DegreeRequirement();
-                }
-            }
+            DegreeRequirement cdr = new DegreeRequirement();
 
             if(core == null || degree == null)
                 continue;
@@ -135,7 +121,6 @@ public class ImpactAssessmentService {
             cdr.setDegree(degree);
             cdr.setCourse(c);
 
-            System.out.println("IMPACT DEGREE REQ: " + cdr);
             degreeRequirementRepository.save(cdr);
             list.add(cdr);
         }
