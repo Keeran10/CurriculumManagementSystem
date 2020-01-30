@@ -195,6 +195,10 @@ td, th {
   width: 10%;
 }
 
+.courseNumberLeft{
+  width: 20%;
+}
+
 .courseCredits{
   width: 100%;
 }
