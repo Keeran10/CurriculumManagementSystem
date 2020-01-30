@@ -41,17 +41,25 @@
               <textarea matInput placeholder="Resource Implications" spellcheck="true"
                 [(ngModel)]="editedExtraModel.implications" name="implications"></textarea>
             </mat-form-field>
-
-
-            <div class="row8" *ngIf="isDoneLoading">
-              <div *ngFor="let c of printedCourses; let i = index">
-                <br class="courseLinks">
-                <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span>
-              </div>
-            </div>
-
-
           </form>
+
+          <table class="leftTable">
+            <tbody>
+            <tr>
+
+              <div class="row8" *ngIf="isDoneLoading">
+                <div *ngFor="let c of printedCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                    <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                    <td class="courseTitle"> {{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody>
+          </table>
+
         </mat-card>
 
           <mat-card class="edited-tex">
@@ -98,7 +106,7 @@
                   </span>
                 </span>
               </b>
-                      <i style="font-weight: normal; margin-left: 55%;">Credits:</i> </th>
+                      <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
 
 
                    </tr>

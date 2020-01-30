@@ -192,7 +192,11 @@ td, th {
 }
 
 .courseNumber{
-  width: 30%;
+  width: 10%;
+}
+
+.courseNumberLeft{
+  width: 20%;
 }
 
 .courseCredits{
