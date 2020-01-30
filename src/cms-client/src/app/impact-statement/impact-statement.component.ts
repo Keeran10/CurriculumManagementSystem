@@ -77,14 +77,18 @@ export class ImpactStatementComponent implements OnInit {
         DegreeCourseRequiredImpactOriginal: this.impact.DegreeCourseRequiredImpact.original[0],
         DegreeCourseRequiredImpactOriginalKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.original[0] || {}),
         DegreeCourseRequiredImpactRemoved: this.impact.DegreeCourseRequiredImpact.removed[0],
+        DegreeCourseRequiredImpactRemovedKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.removed[0] || {}),
         DegreeCourseRequiredImpactAdded: this.impact.DegreeCourseRequiredImpact.added[0],
+        DegreeCourseRequiredImpactAddedKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.added[0] || {}),
         DegreeCourseRequiredImpactUpdated: this.impact.DegreeCourseRequiredImpact.updated[0],
         DegreeCourseRequiredImpactUpdatedKeys: Object.keys(this.impact.DegreeCourseRequiredImpact.updated[0] || {}),
 
         ProgramImpactOriginal: this.impact.ProgramImpact.original[0],
         ProgramImpactOriginalKeys: Object.keys(this.impact.ProgramImpact.original[0] || {}),
         ProgramImpactRemoved: this.impact.ProgramImpact.removed[0],
+        ProgramImpactRemovedKeys: Object.keys(this.impact.ProgramImpact.removed[0] || {}),
         ProgramImpactAdded: this.impact.ProgramImpact.added[0],
+        ProgramImpactAddedKeys: Object.keys(this.impact.ProgramImpact.added[0] || {}),
         ProgramImpactUpdated: this.impact.ProgramImpact.updated[0],
         ProgramImpactUpdatedKeys: Object.keys(this.impact.ProgramImpact.updated[0] || {}),
 
