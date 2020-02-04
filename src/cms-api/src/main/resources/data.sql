@@ -393,3 +393,77 @@ INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department C
 -- id, first_core, first_paragraph, is_active, second_core, section_id, section_title
 INSERT IGNORE INTO section70719 VALUES (1, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.", 1, "Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
 INSERT IGNORE INTO section70719 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
+
+-- id, first_paragraph, section_id, section_title
+INSERT IGNORE INTO section70711 VALUES (1,"The Computer Science program emphasizes fundamentals and techniques that remain relevant and useful for many years after graduation. The program consists of a combination of core courses in computer science, elective courses in computer science and mathematics, and some free electives. The Computer Science Core provides a basic and broad study of theory, mathematical basics, programming methodology, computer architecture, data structures, operating systems, and software engineering. The option courses are designed to provide an integrated yet specialized training in particular application areas of the discipline. Students may choose either the General Program or one of eight options. Each option involves the study of selected advanced elective courses in computer science to provide further depth in computer science and the particular application area.
+The General Program and each option constitute a 90‑credit program that consists of courses in the following groups: Computer Science Core, Complementary Core, Option‑Specific Courses, Computer Science Electives, Mathematics Electives, and General Electives.
+
+The General Program is a major in Computer Science that emphasizes an exposure to a breadth of topics in Computer Science.
+The Computer Games option is a major in Computer Science that deals with the design and implementation of computer games, and the tools and techniques that are useful in developing software for computer games.
+The Web Services and Applications option is a major in Computer Science that deals with the analysis, design, and implementation of services and applications delivered over the web.
+The Computer Systems option is a major in Computer Science that focuses on state‑of‑the‑art hardware and software platforms and on the tools and techniques necessary to develop software on such platforms.
+The Software Systems option is a major in Computer Science that gives a firm grounding in diverse tools and techniques required for a wide variety of software systems.
+The Information Systems option combines a major in Computer Science with approximately a third of the credits from the John Molson School of Business to create a program focusing on business applications of computer systems.
+The Computer Applications option combines a major in Computer Science with a minor in a discipline of the student’s choice.
+The Computation Arts option combines a major in Computer Science with a major in Fine Arts specializing in the design of interactive multimedia.
+The Mathematics and Statistics option combines a major in Computer Science with a major in Mathematics and Statistics.
+There is an honours program corresponding to the General Program and each option (see §71.70.4). In addition, all programs are offered in the co‑operative format, with alternating study and work terms, for a limited number of students with suitable qualifications (see §24).","71.70.1"," Curriculum for the Degree of Bachelor of/Baccalaureate in Computer Science");
+
+-- id, first_paragraph, section_id, section_title
+--INSERT IGNORE INTO section70712 VALUES ();
+
+
+-- id, first_paragraph, section_id, section_title
+INSERT IGNORE INTO section70713 VALUES (1, "Students admitted to an Extended Credit Program (ECP) under the provisions of Sections 13.3.2 or 13.8.1 must successfully complete a minimum of 120 credits including:
+
+90	Program requirements as set out in Section 71.70.2
+9	MATH 2033, 2043, 2053
+6	Chosen from courses in Humanities or Social Sciences as noted in Section 71.110. ESL courses and courses that focus on the acquisition of a language may not be used to meet this requirement.
+15	ECP elective credits chosen from the following lists, depending on the student’s program:
+a)	General Program, and Computer Applications, Computer Games, Software Systems, and Web Services and Applications
+ 	Options:
+ 	15 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science (see Note).
+b)	Computation Arts Option:
+ 	15 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science and the Department of Design and Computation Arts (see Note).
+c)	Information Systems Option:
+ 	15 elective credits chosen from outside the John Molson School of Business and the Department of Computer Science and Software Engineering (see Note).
+d)	Mathematics and Statistics Option:
+ 	15 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science and the Department of Mathematics and Statistics (see Note).
+e)	Computer Systems Option:
+ 	CHEM 2053
+ 	PHYS 2043, 2053
+ 	and 6 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science (see Note).
+Note: ECP elective credits may be chosen as follows:
+   •   General Education Electives found in §71.110.
+   •   Basic and Natural Science Courses found in §71.70.9.
+   •   Courses not included in the above lists may be taken with prior approval of the undergraduate program director.", "71.70.3", "Extended Credit Program");
+
+
+-- id, first_core, first_paragraph, second_paragraph, section_id, section_title
+INSERT IGNORE INTO section70714 VALUES (1, "Course Requirements for Honours Programs", "Students should refer to §16.2.4 of the Calendar for academic regulations for the honours program. The following regulations are additional requirements for the Honours BCompSc program.
+
+Applications to enter an honours program must be submitted to the Office of the Associate Dean (Student Academic Services) at least three months before the start of the term in which the student wishes to enter an honours program.
+Students must complete at least 30 credits towards their degree before entering an honours program.
+Students who are required to withdraw from an honours program may continue in the regular program of their option or General Program provided they are in acceptable or conditional standing according to the academic regulations in §71.10.3.", "Honours students must fulfill the requirements of their option. In addition, to receive an honours degree:
+
+The student must have a final graduation GPA of at least 3.30.
+Students must successfully complete the course COMP 490 as one of the Computer Science electives for their option.
+For students in the General Program, and the Computer Games, Computer Systems, and Web Services and Applications Options, at least six of the General Electives credits must be chosen from the list of Computer Science Electives with at least two of the following: COMP 339, COMP 465, and COMP or SOEN courses with a number between 6000 and 6951 not marked with (*).
+For students in the Software Systems Option, at least six of the General Electives credits must be chosen from the list of Computer Science Electives with at least one of the following: SOEN 331, and COMP or SOEN courses with a number between 6000 and 6951 not marked with (*).", "71.70.4", "Honours Program");
+
+
+-- id, first_Core, first_paragraph, section_id, section_title
+INSERT IGNORE INTO section70715 VALUES (1,"Minor in Computer Science","Students who require any of the above courses as part of their major should replace these courses with elective courses chosen from the list of Computer Science Electives.","71.70.5"," Minor in Computer Science");
+
+-- id, first_paragraph, section_id, section_title
+INSERT IGNORE INTO section70716 VALUES (1, "Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61.
+The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).","71.70.6","Programs Related to Computer Science");
+
+-- id, first_paragraph, section_id, section_title
+--INSERT IGNORE INTO section70717 VALUES ();
+
+-- id, first_paragraph, section_id, section_title
+--INSERT IGNORE INTO section70718 VALUES ();
+
+-- id, first_paragraph, section_id, section_title
+--INSERT IGNORE INTO section707110 VALUES ();

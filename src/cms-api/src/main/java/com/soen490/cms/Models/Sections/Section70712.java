@@ -81,7 +81,7 @@ public class Section70712 {
     private String eighteenthCore; // Computation Arts Option
     @Lob
     private String sixteenthParagraph;
-    
+
     private String nineteenthCore; // Mathematics and Statistics Option
     @Lob
     private String seventeenthParagraph;
