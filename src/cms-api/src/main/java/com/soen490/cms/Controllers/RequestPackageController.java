@@ -152,6 +152,190 @@ public class RequestPackageController {
     }
 
 
+    @PostMapping(value="/save_section70711")
+    public int saveSubSection70711 (@RequestParam String subSection70711, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70711);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70711(subSection70711, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @PostMapping(value="/save_section70712")
+    public int saveSubSection70712 (@RequestParam String subSection70712, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70712);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70712(subSection70712, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @PostMapping(value="/save_section70713")
+    public int saveSubSection70713 (@RequestParam String subSection70713, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70713);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70713(subSection70713, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @PostMapping(value="/save_section70714")
+    public int saveSubSection70714 (@RequestParam String subSection70714, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70714);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70714(subSection70714, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @PostMapping(value="/save_section70715")
+    public int saveSubSection70715 (@RequestParam String subSection70715, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70715);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70715(subSection70715, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @PostMapping(value="/save_section70716")
+    public int saveSubSection70716 (@RequestParam String subSection70716, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70716);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70716(subSection70716, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @PostMapping(value="/save_section70717")
+    public int saveSubSection70717 (@RequestParam String subSection70717, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70717);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70717(subSection70717, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @PostMapping(value="/save_section70718")
+    public int saveSubSection70718 (@RequestParam String subSection70718, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection70718);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection70718(subSection70718, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     /**
      * Receives data from client and populates the database for course and its dependencies.
      * @param subSection70719 stringified JSON received from front-end.
@@ -182,6 +366,28 @@ public class RequestPackageController {
         return 0;
     }
 
+    @PostMapping(value="/save_section707110")
+    public int saveSubSection707110 (@RequestParam String subSection707110, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection707110);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection707110(subSection707110, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
