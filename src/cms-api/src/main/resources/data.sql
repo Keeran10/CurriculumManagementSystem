@@ -460,10 +460,22 @@ INSERT IGNORE INTO section70716 VALUES (1, "Both major and minor programs in Man
 The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).","71.70.6","Programs Related to Computer Science");
 
 -- id, first_paragraph, section_id, section_title
---INSERT IGNORE INTO section70717 VALUES ();
+INSERT IGNORE INTO section70717 VALUES (1, "Students employed full‑time in a computer science position during their non‑study terms may have this Industrial Experience listed on their official transcript and student record, provided they successfully complete the Reflective Learning course associated with this work term.
+Industrial Experience work terms will be coded as COMP 107 and 207, and the associated Reflective Learning courses will be coded as COMP 108 and 208 respectively.
+Students may only register for these courses with the permission of the Faculty.
+The Industrial Experience terms COMP 107 and 207 carry no credit value and are used to indicate that the student is on an Industrial Experience term.
+The COMP 108 and 208 Industrial Experience Reflective Learning courses are worth three credits and are marked on a pass/fail basis. They are above and beyond the credit requirements of the student’s program and are not transferable nor are they included in the full‑ or part‑time assessment status.
+Students studying for a co‑op work term or CIADI term should not register for these Industrial Experience and Reflective Learning courses.", "71.70.7", "Industrial Experience and Reflective Learning Courses");
 
 -- id, first_paragraph, section_id, section_title
---INSERT IGNORE INTO section70718 VALUES ();
+INSERT IGNORE INTO section70718 VALUES (1, "The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics.
+The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.
+
+Extended Credit Program
+The requirements of the Extended Credit Program (ECP) are set out in Section 71.20.2.", "71.70.8", "Curriculum for the Degree of BEng in Software Engineering");
 
 -- id, first_paragraph, section_id, section_title
---INSERT IGNORE INTO section707110 VALUES ();
+INSERT IGNORE INTO section707110 VALUES (1, "Students from outside the Gina Cody School of Engineering and Computer Science who are not registered in a Computer Science program may not take more than five COMP courses numbered higher than 212.
+Students from outside the Gina Cody School of Engineering and Computer Science who are registered for the Minor in Computer Science may not take more than 30 credits of COMP courses numbered higher than 212.
+Computer Science
+Software Engineering", "71.70.10", "Course Descriptions");
