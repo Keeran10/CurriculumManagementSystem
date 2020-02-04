@@ -152,6 +152,13 @@ public class RequestPackageController {
     }
 
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70711 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70711 was successfully added to database.
+     */
     @PostMapping(value="/save_section70711")
     public int saveSubSection70711 (@RequestParam String subSection70711, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -175,6 +182,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70712 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70712 was successfully added to database.
+     */
     @PostMapping(value="/save_section70712")
     public int saveSubSection70712 (@RequestParam String subSection70712, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -198,6 +212,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70713 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70713 was successfully added to database.
+     */
     @PostMapping(value="/save_section70713")
     public int saveSubSection70713 (@RequestParam String subSection70713, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -221,6 +242,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70714 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70714 was successfully added to database.
+     */
     @PostMapping(value="/save_section70714")
     public int saveSubSection70714 (@RequestParam String subSection70714, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -244,6 +272,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70715 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70715 was successfully added to database.
+     */
     @PostMapping(value="/save_section70715")
     public int saveSubSection70715 (@RequestParam String subSection70715, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -267,6 +302,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70716 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70716 was successfully added to database.
+     */
     @PostMapping(value="/save_section70716")
     public int saveSubSection70716 (@RequestParam String subSection70716, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -290,6 +332,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70717 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70717 was successfully added to database.
+     */
     @PostMapping(value="/save_section70717")
     public int saveSubSection70717 (@RequestParam String subSection70717, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -313,6 +362,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection70718 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70718 was successfully added to database.
+     */
     @PostMapping(value="/save_section70718")
     public int saveSubSection70718 (@RequestParam String subSection70718, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
@@ -366,6 +422,13 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection707110 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section707110 was successfully added to database.
+     */
     @PostMapping(value="/save_section707110")
     public int saveSubSection707110 (@RequestParam String subSection707110, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
