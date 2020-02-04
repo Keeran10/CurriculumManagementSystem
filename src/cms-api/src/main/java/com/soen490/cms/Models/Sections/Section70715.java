@@ -26,4 +26,6 @@ public class Section70715 {
 
     private String firstParagraph;
 
+    private int isActive;
+
 }

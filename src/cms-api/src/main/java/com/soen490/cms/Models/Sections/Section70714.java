@@ -24,4 +24,5 @@ public class Section70714 {
     @Lob
     private String secondParagraph;
 
+    private int isActive;
 }

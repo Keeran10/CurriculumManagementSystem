@@ -16,6 +16,8 @@ public class Section70712 {
 
     private String sectionTitle; // "Degree Requirement for Beng ..."
 
+    private int isActive;
+
     @Lob
     private String firstParagraph;
 

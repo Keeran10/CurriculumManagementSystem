@@ -18,4 +18,7 @@ public class Section707110 {
 
     @Lob
     private String firstParagraph;
+
+    private int isActive;
+
 }

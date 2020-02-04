@@ -20,4 +20,6 @@ public class Section70711 {
     @Lob
     private String firstParagraph;
 
+    private int isActive;
+
 }
