@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface Section71704Repository extends JpaRepository<Section71704, Integer>{
 
-    @Query(value = "SELECT * FROM section70714 WHERE id=? AND is_active=1", nativeQuery = true)
+    @Query(value = "SELECT * FROM section71704 WHERE id=? AND is_active=1", nativeQuery = true)
     Section71704 findBySubSectionId(int id);
 
 
-    @Query(value = "SELECT * FROM section70714 WHERE id=?", nativeQuery = true)
+    @Query(value = "SELECT * FROM section71704 WHERE id=?", nativeQuery = true)
     Section71704 findById(int id);
 }

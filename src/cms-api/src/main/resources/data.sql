@@ -410,7 +410,88 @@ The Mathematics and Statistics option combines a major in Computer Science with 
 There is an honours program corresponding to the General Program and each option (see §71.70.4). In addition, all programs are offered in the co‑operative format, with alternating study and work terms, for a limited number of students with suitable qualifications (see §24).",1,"71.70.1"," Curriculum for the Degree of Bachelor of/Baccalaureate in Computer Science");
 
 -- id, first_paragraph, section_id, section_title
---INSERT IGNORE INTO section71702 VALUES (1, "eightCore");
+INSERT IGNORE INTO section71702 VALUES (1, "Computer Games Electives", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Web Services and Applications Electives	22.00
+ 	Computer Science Electives	8.00
+ 	Mathematics Electives	6.00
+ 	General Electives	15.00
+ 	 	_____
+ 	 	90.00",
+		"Computation Arts Option", "Computer Systems Option", "Students must complete six courses (22 credits) from the following list of courses, including all the courses marked *.
+",
+"Information Systems Option", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Science Electives	18.00
+ 	Mathematics Electives	6.00
+ 	Minor*	27.00
+ 	 	_____
+ 	 	90.00", "General Electives", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Science Electives*	30.00
+ 	Mathematics Electives	6.00
+ 	General Electives	15.00
+ 	 	_____
+ 	 	90.00
+*Note: Maximum of 12 credits from any one of Computer Games Electives, Web Services and Applications Electives, Computer Systems Electives, or Software Systems Core.
+", "Computer Science Core", "To be recommended for the degree of BCompSc, students must satisfactorily complete an approved program of at least 90 credits comprising the courses of the Computer Science Core and those courses specified for their particular program in accordance with the graduation requirements of §71.10.5.
+Students may not register for a 400‑level course before completing all of the 200‑level Computer Science Core courses of their program.
+The Gina Cody School of Engineering and Computer Science is committed to ensuring that its students possess good writing skills. Hence, every student in an undergraduate degree program is required to demonstrate competence in writing English or French prior to graduation.
+All students admitted to the Gina Cody School of Engineering and Computer Science must meet the writing skills requirement as outlined in §71.20.7 (Writing Skills Requirement).
+If a student has satisfied the writing skills requirement prior to transferring to the Gina Cody School of Engineering and Computer Science, that student is deemed to have satisfied the writing skills requirement.
+Newly admitted students are strongly encouraged to meet the requirement very early in their program (fall term of first year for students starting in September or winter term of first year for students starting in January) to avoid the risk of delayed graduation should remedial work prove necessary. Students who are required to take ESL courses should meet the Faculty writing skills requirements in the term following completion of their ESL courses.
+Students registered in the Computer Science program must complete a minimum of 90 credits. The program offers the General Program and eight options (see §71.70.1). All options consist of the Computer Science Core (33 credits), the Complementary Core (6 credits), Option‑Specific Courses, Computer Science Electives, Mathematics Electives, and General Electives.
+", "Software Systems Core", "Students must complete 10 courses (31 credits) from the following list of courses, including all the courses marked *.
+", "Mathematics Electives", "General Electives must be chosen from the following list:
+
+Computer Science Electives as mentioned above.
+Mathematics Electives as mentioned above.
+General Education Electives found in §71.110.
+Basic and Natural Science Courses list found in §71.70.9.
+A course outside this list may qualify as a General Elective only with prior written permission on an GCS Student Request form, obtainable from the Office of Student Academic Services in the Gina Cody School of Engineering and Computer Science.
+", 1, "Mathematics and Statistics Option", "Web Services and Applications Option", "Students must complete six courses (22 credits) from the following list of courses, including all the courses marked *.
+", "Complementary Core", "Computer Science Electives must be chosen from the following list:
+
+All COMP courses with numbers 325 or higher.
+SOEN 287, 321, 331, 387, 422, 423, 487.
+COMP and SOEN courses with numbers between 6000 and 6951 (maximum of eight credits, and with permission from the Department).
+In every option, any credits exceeding the required number of Computer Science Elective credits will accrue towards the General Elective credits.
+", "71.70.2 ", "Degree Requirements", "Computer Applications Option", "See §71.85 for details.",
+"Computer Games Option","Students must complete six courses (24 credits) from the following list of courses, including all the courses marked *.
+", "Information Systems Electives", "See §71.80 for details.",
+"General Program", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Games Electives	24.00
+ 	Computer Science Electives	6.00
+ 	Mathematics Electives*	6.00
+ 	General Electives or Minor in Game Design**	15.00
+ 	 	_____
+ 	 	90.00
+*Note: Students must take COMP 361 as part of their Mathematics Electives.
+**Note: A maximum of 15 credits from the Minor in Game Design (see §81.90) may be counted towards the General Electives.
+", "Web Services and Applications Electives", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Systems Electives	22.00
+ 	Computer Science Electives	8.00
+ 	Mathematics Electives	6.00
+ 	General Electives	15.00
+ 	 	_____
+ 	 	90.00", "Computer Science Electives", "In every option, any credits exceeding the required number of Mathematics Elective credits will accrue towards the General Elective credits.
+*Students cannot receive credit for both COMP 339 and MATH 339; COMP 361 and MAST 334; COMP 367 and MAST 332.
+", "Software Systems Option", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Information Systems Electives	31.00
+ 	Computer Science Electives	14.00
+ 	Mathematics Electives	6.00
+ 	 	_____
+ 	 	90.00","Computer Systems Electives", "	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Software Systems Core	20.00
+ 	Computer Science Electives	13.00
+ 	Mathematics Electives	6.00
+ 	General Electives	12.00
+ 	 	_____
+ 	 	90.00");
 
 
 -- id, first_paragraph, is_Active, section_id, section_title
