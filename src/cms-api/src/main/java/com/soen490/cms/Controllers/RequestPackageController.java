@@ -154,21 +154,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70711 stringified JSON received from front-end.
+     * @param subSection71701 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70711 was successfully added to database.
      */
-    @PostMapping(value="/save_section70711")
-    public int saveSubSection70711 (@RequestParam String subSection70711, @RequestParam String sectionExtras,
+    @PostMapping(value= "/save_section71701")
+    public int saveSubSection70711 (@RequestParam String subSection71701, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
                                     @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70711);
+        log.info("Saving Section: " + subSection71701);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70711(subSection70711, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71701(subSection71701, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -184,21 +184,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70712 stringified JSON received from front-end.
+     * @param subSection71702 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70712 was successfully added to database.
      */
-    @PostMapping(value="/save_section70712")
-    public int saveSubSection70712 (@RequestParam String subSection70712, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70712);
+    @PostMapping(value= "/save_section71702")
+    public int saveSubSection71702(@RequestParam String subSection71702, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71702);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70712(subSection70712, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71702(subSection71702, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -214,21 +214,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70713 stringified JSON received from front-end.
+     * @param subSection71703 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70713 was successfully added to database.
      */
-    @PostMapping(value="/save_section70713")
-    public int saveSubSection70713 (@RequestParam String subSection70713, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70713);
+    @PostMapping(value= "/save_section71703")
+    public int saveSubSection71703(@RequestParam String subSection71703, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71703);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70713(subSection70713, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71703(subSection71703, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -244,21 +244,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70714 stringified JSON received from front-end.
+     * @param subSection71704 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70714 was successfully added to database.
      */
-    @PostMapping(value="/save_section70714")
-    public int saveSubSection70714 (@RequestParam String subSection70714, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70714);
+    @PostMapping(value= "/save_section71704")
+    public int saveSubSection71704(@RequestParam String subSection71704, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71704);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70714(subSection70714, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71704(subSection71704, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -274,21 +274,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70715 stringified JSON received from front-end.
+     * @param subSection71705 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70715 was successfully added to database.
      */
-    @PostMapping(value="/save_section70715")
-    public int saveSubSection70715 (@RequestParam String subSection70715, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70715);
+    @PostMapping(value= "/save_section71705")
+    public int saveSubSection71705(@RequestParam String subSection71705, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71705);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70715(subSection70715, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71705(subSection71705, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -304,21 +304,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70716 stringified JSON received from front-end.
+     * @param subSection71706 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70716 was successfully added to database.
      */
-    @PostMapping(value="/save_section70716")
-    public int saveSubSection70716 (@RequestParam String subSection70716, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70716);
+    @PostMapping(value= "/save_section71706")
+    public int saveSubSection71706(@RequestParam String subSection71706, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71706);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70716(subSection70716, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71706(subSection71706, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -334,21 +334,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70717 stringified JSON received from front-end.
+     * @param subSection71707 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70717 was successfully added to database.
      */
-    @PostMapping(value="/save_section70717")
-    public int saveSubSection70717 (@RequestParam String subSection70717, @RequestParam String sectionExtras,
+    @PostMapping(value= "/save_section71707")
+    public int saveSubSection70717 (@RequestParam String subSection71707, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
                                     @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70717);
+        log.info("Saving Section: " + subSection71707);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70717(subSection70717, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71707(subSection71707, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -364,21 +364,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70718 stringified JSON received from front-end.
+     * @param subSection71708 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70718 was successfully added to database.
      */
-    @PostMapping(value="/save_section70718")
-    public int saveSubSection70718 (@RequestParam String subSection70718, @RequestParam String sectionExtras,
+    @PostMapping(value= "/save_section71708")
+    public int saveSubSection70718 (@RequestParam String subSection71708, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
                                     @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70718);
+        log.info("Saving Section: " + subSection71708);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70718(subSection70718, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71708(subSection71708, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -394,21 +394,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70719 stringified JSON received from front-end.
+     * @param subSection71709 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70719 was successfully added to database.
      */
-    @PostMapping(value="/save_section70719")
-    public int saveSubSection70719 (@RequestParam String subSection70719, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70719);
+    @PostMapping(value= "/save_section71709")
+    public int saveSubSection71709(@RequestParam String subSection71709, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71709);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71709(subSection71709, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -424,21 +424,21 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection707110 stringified JSON received from front-end.
+     * @param subSection717010 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section707110 was successfully added to database.
      */
-    @PostMapping(value="/save_section707110")
-    public int saveSubSection707110 (@RequestParam String subSection707110, @RequestParam String sectionExtras,
+    @PostMapping(value= "/save_section717010")
+    public int saveSubSection717010(@RequestParam String subSection717010, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
                                     @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection707110);
+        log.info("Saving Section: " + subSection717010);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection707110(subSection707110, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection717010(subSection717010, sectionExtras, files, descriptions);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);

@@ -103,112 +103,112 @@ public class RequestPackageService {
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70711      Stringified subsection70711 JSON received from client
+     * @param subSections71701      Stringified subsection70711 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70711 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70711(String subSections70711, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71701(String subSections71701, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70712     Stringified subsection70712 JSON received from client
+     * @param subSections71702     Stringified subsection70712 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70712 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70712(String subSections70712, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71702(String subSections71702, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70713      Stringified subsection70713 JSON received from client
+     * @param subSections71703      Stringified subsection70713 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70713 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70713(String subSections70713, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71703(String subSections71703, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70714      Stringified subsection70714 JSON received from client
+     * @param subSections71704      Stringified subsection70714 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70714 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70714(String subSections70714, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71704(String subSections71704, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70715      Stringified subsection70715 JSON received from client
+     * @param subSections71705      Stringified subsection70715 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70715 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70715(String subSections70715, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71705(String subSections71705, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70716     Stringified subsection70716 JSON received from client
+     * @param subSections71706     Stringified subsection70716 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70716 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70716(String subSections70716, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71706(String subSections71706, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70717      Stringified subsection70717 JSON received from client
+     * @param subSections71707      Stringified subsection70717 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70717 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70717(String subSections70717, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71707(String subSections71707, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70718      Stringified subsection70718 JSON received from client
+     * @param subSections71708      Stringified subsection70718 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection70718 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70718(String subSections70718, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71708(String subSections71708, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
     /**
          * Saves an edited course to the database.
          *
-         * @param subSections70719      Stringified subsection70719 JSON received from client
+         * @param subSections71709      Stringified subsection70719 JSON received from client
          * @param sectionExtras Stringified subsection JSON received from client
          * @param files            uploaded course outline
          * @param descriptions
          * @return True if susection70719 has been successfully added to database.
          * @throws JSONException
          */
-    public int saveSection70719(String subSections70719, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {
+    public int saveSection71709(String subSections71709, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {
 
-        log.info("Json substring70719 received: " + subSections70719);
+        log.info("Json substring70719 received: " + subSections71709);
         log.info("Json subsectionExtras received: " + sectionExtras);
 
         if(files != null) {
@@ -237,13 +237,13 @@ public class RequestPackageService {
             section71709 = section71709Repository.findById(request.getTargetId());
         }
 
-        JSONObject subSection70719JSON = new JSONObject(subSections70719);
+        JSONObject subSection71709JSON = new JSONObject(subSections71709);
 
-        section71709.setSecondCore((String) subSection70719JSON.get("secondCore"));
-        section71709.setFirstCore((String) subSection70719JSON.get("firstCore"));
-        section71709.setFirstParagraph((String) subSection70719JSON.get("firstParagraph"));
-        section71709.setSectionId((String) subSection70719JSON.get("sectionId"));
-        section71709.setSectionTitle((String) subSection70719JSON.get("sectionTitle"));
+        section71709.setSecondCore((String) subSection71709JSON.get("secondCore"));
+        section71709.setFirstCore((String) subSection71709JSON.get("firstCore"));
+        section71709.setFirstParagraph((String) subSection71709JSON.get("firstParagraph"));
+        section71709.setSectionId((String) subSection71709JSON.get("sectionId"));
+        section71709.setSectionTitle((String) subSection71709JSON.get("sectionTitle"));
         section71709.setIsActive(0);
 
         section71709Repository.save(section71709);
@@ -252,7 +252,7 @@ public class RequestPackageService {
         request.setRequestType(2); // update
         request.setTargetType(1); // calendar change
         request.setTargetId(section71709.getId());
-        request.setOriginalId((Integer) subSection70719JSON.get("id"));
+        request.setOriginalId((Integer) subSection71709JSON.get("id"));
         request.setRationale((String) sectionExtrasJSON.get("rationale"));
         request.setResourceImplications((String) sectionExtrasJSON.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -277,14 +277,14 @@ public class RequestPackageService {
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections707110      Stringified subsection707110 JSON received from client
+     * @param subSections717010      Stringified subsection707110 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
      * @return True if susection707110 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection707110(String subSections707110, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection717010(String subSections717010, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
 
     /**

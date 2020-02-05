@@ -183,7 +183,7 @@ public class RequestPackageTest {
         String section70719ExtrasJSON = "{\"implications\":\"\",\"packageId\":1,\"prerequisites\":\"SOEN343; SOEN384; \",\"" +
                 "rationale\":\"\",\"userId\":1,\"requestId\":0}";
 
-        requestPackageController.saveSubSection70719(section70719JSON, section70719ExtrasJSON, null, null);
+        requestPackageController.saveSubSection71709(section70719JSON, section70719ExtrasJSON, null, null);
 
         assertEquals("test", section71709Repository.findById(2).getFirstParagraph());
     }
