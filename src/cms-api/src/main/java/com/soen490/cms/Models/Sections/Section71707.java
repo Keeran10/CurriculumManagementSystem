@@ -1,13 +1,12 @@
 package com.soen490.cms.Models.Sections;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-public class Section70714 {
+public class Section71707 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +18,6 @@ public class Section70714 {
 
     @Lob
     private String firstParagraph;
-
-    private String firstCore; // Course Requirements
-    @Lob
-    private String secondParagraph;
 
     private int isActive;
 }

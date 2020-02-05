@@ -24,7 +24,7 @@ package com.soen490.cms.Services;
 
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
-import com.soen490.cms.Models.Sections.Section70719;
+import com.soen490.cms.Models.Sections.Section71709;
 import com.soen490.cms.Repositories.*;
 import com.soen490.cms.Repositories.SectionsRepositories.*;
 import com.soen490.cms.Services.PdfService.PdfService;
@@ -66,25 +66,25 @@ public class RequestPackageService {
     @Autowired
     private PdfService pdfService;
     @Autowired
-    Section70711Repository section70711Repository;
+    Section71701Repository section71701Repository;
     @Autowired
-    Section70712Repository section70712Repository;
+    Section71702Repository section71702Repository;
     @Autowired
-    Section70713Repository section70713Repository;
+    Section71703Repository section71703Repository;
     @Autowired
-    Section70714Repository section70714Repository;
+    Section71704Repository section71704Repository;
     @Autowired
-    Section70715Repository section70715Repository;
+    Section71705Repository section71705Repository;
     @Autowired
-    Section70716Repository section70716Repository;
+    Section71706Repository section71706Repository;
     @Autowired
-    Section70717Repository section70717Repository;
+    Section71707Repository section71707Repository;
     @Autowired
-    Section70718Repository section70718Repository;
+    Section71708Repository section71708Repository;
     @Autowired
-    Section70719Repository section70719Repository;
+    Section71709Repository section71709Repository;
     @Autowired
-    Section707110Repository section707110Repository;
+    Section717010Repository section717010Repository;
     @Autowired
     private DegreeRepository degreeRepository;
 
@@ -228,30 +228,30 @@ public class RequestPackageService {
 
         User user = userRepository.findById(user_id);
 
-        Section70719 section70719 = null;
+        Section71709 section71709 = null;
 
         if (request == null) {
             request = new Request();
-            section70719 = new Section70719();
+            section71709 = new Section71709();
         } else {
-            section70719 = section70719Repository.findById(request.getTargetId());
+            section71709 = section71709Repository.findById(request.getTargetId());
         }
 
         JSONObject subSection70719JSON = new JSONObject(subSections70719);
 
-        section70719.setSecondCore((String) subSection70719JSON.get("secondCore"));
-        section70719.setFirstCore((String) subSection70719JSON.get("firstCore"));
-        section70719.setFirstParagraph((String) subSection70719JSON.get("firstParagraph"));
-        section70719.setSectionId((String) subSection70719JSON.get("sectionId"));
-        section70719.setSectionTitle((String) subSection70719JSON.get("sectionTitle"));
-        section70719.setIsActive(0);
+        section71709.setSecondCore((String) subSection70719JSON.get("secondCore"));
+        section71709.setFirstCore((String) subSection70719JSON.get("firstCore"));
+        section71709.setFirstParagraph((String) subSection70719JSON.get("firstParagraph"));
+        section71709.setSectionId((String) subSection70719JSON.get("sectionId"));
+        section71709.setSectionTitle((String) subSection70719JSON.get("sectionTitle"));
+        section71709.setIsActive(0);
 
-        section70719Repository.save(section70719);
+        section71709Repository.save(section71709);
 
         // Requests
         request.setRequestType(2); // update
         request.setTargetType(1); // calendar change
-        request.setTargetId(section70719.getId());
+        request.setTargetId(section71709.getId());
         request.setOriginalId((Integer) subSection70719JSON.get("id"));
         request.setRationale((String) sectionExtrasJSON.get("rationale"));
         request.setResourceImplications((String) sectionExtrasJSON.get("implications"));
@@ -260,13 +260,13 @@ public class RequestPackageService {
         request.setRequestPackage(requestPackage);
 
         if(request.getId() == 0)
-            request.setTitle(section70719.getSectionId() + "_create");
+            request.setTitle(section71709.getSectionId() + "_create");
         else
-            request.setTitle(section70719.getSectionId() + "_update");
+            request.setTitle(section71709.getSectionId() + "_update");
 
         requestRepository.save(request);
 
-        log.info("section70719 saved: " + section70719);
+        log.info("section71709 saved: " + section71709);
         log.info("request saved: " + request);
 
         requestPackage.getRequests().add(request);
@@ -519,7 +519,7 @@ public class RequestPackageService {
 
         if(request.getTargetType() == 1){
             // TODO: change this to account for all sections
-            section70719Repository.deleteById(request.getTargetId());
+            section71709Repository.deleteById(request.getTargetId());
             requestRepository.delete(request);
             return true;
         }
@@ -833,8 +833,8 @@ public class RequestPackageService {
 
     private void finalizeSection70719Request(Request r) {
 
-        Section70719 original = section70719Repository.findById(r.getOriginalId());
-        Section70719 changed = section70719Repository.findById(r.getTargetId());
+        Section71709 original = section71709Repository.findById(r.getOriginalId());
+        Section71709 changed = section71709Repository.findById(r.getTargetId());
 
         original.setSectionId(changed.getSectionId());
         original.setSectionTitle(changed.getSectionTitle());
@@ -850,8 +850,8 @@ public class RequestPackageService {
             original.setSecondCore(changed.getSecondCore());
         }
 
-        section70719Repository.save(original);
-        section70719Repository.delete(changed);
+        section71709Repository.save(original);
+        section71709Repository.delete(changed);
     }
 
     private void overrideCore(String presentCore, String proposedCore) {

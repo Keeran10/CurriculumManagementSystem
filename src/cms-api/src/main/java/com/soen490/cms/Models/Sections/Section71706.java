@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Section70716 {
+public class Section71706 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

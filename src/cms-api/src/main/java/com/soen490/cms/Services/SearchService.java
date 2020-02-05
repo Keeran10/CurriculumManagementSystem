@@ -54,25 +54,25 @@ public class SearchService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    Section70711Repository section70711Repository;
+    Section71701Repository section71701Repository;
     @Autowired
-    Section70712Repository section70712Repository;
+    Section71702Repository section71702Repository;
     @Autowired
-    Section70713Repository section70713Repository;
+    Section71703Repository section71703Repository;
     @Autowired
-    Section70714Repository section70714Repository;
+    Section71704Repository section71704Repository;
     @Autowired
-    Section70715Repository section70715Repository;
+    Section71705Repository section71705Repository;
     @Autowired
-    Section70716Repository section70716Repository;
+    Section71706Repository section71706Repository;
     @Autowired
-    Section70717Repository section70717Repository;
+    Section71707Repository section71707Repository;
     @Autowired
-    Section70718Repository section70718Repository;
+    Section71708Repository section71708Repository;
     @Autowired
-    Section70719Repository section70719Repository;
+    Section71709Repository section71709Repository;
     @Autowired
-    Section707110Repository section707110Repository;
+    Section717010Repository section717010Repository;
     @Autowired
     DegreeRequirementRepository degreeRequirementRepository;
 
@@ -149,80 +149,80 @@ public class SearchService {
         return facultyRepository.findByName(name);
     }
 
-    public Section70711 findsection70711ById(int section_id){
-        log.info("find Section70711 " + section_id);
+    public Section71701 findsection71701ById(int section_id){
+        log.info("find Section71701 " + section_id);
 
-        Section70711 section70711 = section70711Repository.findBySubSectionId(section_id);
-        return section70711;
+        Section71701 section71701 = section71701Repository.findBySubSectionId(section_id);
+        return section71701;
     }
 
-    public Section70712 findsection70712ById(int section_id){
-        log.info("find Section70712 " + section_id);
+    public Section71702 findsection71702ById(int section_id){
+        log.info("find Section71702 " + section_id);
 
-        Section70712 section70712 = section70712Repository.findBySubSectionId(section_id);
-        return section70712;
+        Section71702 section71702 = section71702Repository.findBySubSectionId(section_id);
+        return section71702;
     }
 
-    public Section70713 findsection70713ById(int section_id){
-        log.info("find Section70713 " + section_id);
+    public Section71703 findsection71703ById(int section_id){
+        log.info("find Section71703 " + section_id);
 
-        Section70713 section70713 = section70713Repository.findBySubSectionId(section_id);
-        return section70713;
+        Section71703 section71703 = section71703Repository.findBySubSectionId(section_id);
+        return section71703;
     }
 
-    public Section70714 findsection70714ById(int section_id){
-        log.info("find Section70714 " + section_id);
+    public Section71704 findsection71704ById(int section_id){
+        log.info("find Section71704 " + section_id);
 
-        Section70714 section70714 = section70714Repository.findBySubSectionId(section_id);
-        return section70714;
+        Section71704 section71704 = section71704Repository.findBySubSectionId(section_id);
+        return section71704;
     }
 
-    public Section70715 findsection70715ById(int section_id){
-        log.info("find Section70715 " + section_id);
+    public Section71705 findsection71705ById(int section_id){
+        log.info("find Section71705 " + section_id);
 
-        Section70715 section70715 = section70715Repository.findBySubSectionId(section_id);
-        return section70715;
+        Section71705 section71705 = section71705Repository.findBySubSectionId(section_id);
+        return section71705;
     }
 
-        public Section70716 findsection70716ById(int section_id){
-            log.info("find Section70716 " + section_id);
+        public Section71706 findsection71706ById(int section_id){
+            log.info("find Section71706 " + section_id);
 
-            Section70716 section70716 = section70716Repository.findBySubSectionId(section_id);
-            return section70716;
+            Section71706 section71706 = section71706Repository.findBySubSectionId(section_id);
+            return section71706;
     }
 
-    public Section70717 findsection70717ById(int section_id){
-        log.info("find Section70717 " + section_id);
+    public Section71707 findsection71707ById(int section_id){
+        log.info("find Section71707 " + section_id);
 
-        Section70717 section70717 = section70717Repository.findBySubSectionId(section_id);
-        return section70717;
+        Section71707 section71707 = section71707Repository.findBySubSectionId(section_id);
+        return section71707;
     }
 
-    public Section70718 findsection70718ById(int section_id){
-        log.info("find Section70716 " + section_id);
+    public Section71708 findsection71708ById(int section_id){
+        log.info("find Section71706 " + section_id);
 
-        Section70718 section70718 = section70718Repository.findBySubSectionId(section_id);
-        return section70718;
+        Section71708 section71708 = section71708Repository.findBySubSectionId(section_id);
+        return section71708;
     }
 
-    public Section70719 findsection70719ById(int section_id){
+    public Section71709 findsection71709ById(int section_id){
 
-        log.info("find Section70719 " + section_id);
+        log.info("find Section71709 " + section_id);
 
-        Section70719 section70719 = section70719Repository.findBySubSectionId(section_id);
+        Section71709 section71709 = section71709Repository.findBySubSectionId(section_id);
 
         // can add as many core here for the entire section of 70.71.9
-        section70719.setFirstCoreCourses(retrieveSectionCourseLists(section70719.getFirstCore()));
-        section70719.setSecondCoreCourses(retrieveSectionCourseLists(section70719.getSecondCore()));
+        section71709.setFirstCoreCourses(retrieveSectionCourseLists(section71709.getFirstCore()));
+        section71709.setSecondCoreCourses(retrieveSectionCourseLists(section71709.getSecondCore()));
 
-        return section70719;
+        return section71709;
     }
 
-    public Section707110 findsection707110ById(int section_id){
-        log.info("find Section70716 " + section_id);
+    public Section717010 findsection717010ById(int section_id){
+        log.info("find Section71706 " + section_id);
 
-        Section707110 section707110 = section707110Repository.findBySubSectionId(section_id);
-        return section707110;
+        Section717010 section717010 = section717010Repository.findBySubSectionId(section_id);
+        return section717010;
     }
 
     private List<Course> retrieveSectionCourseLists(String core) {

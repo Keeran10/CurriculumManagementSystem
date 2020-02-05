@@ -19,40 +19,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-package com.soen490.cms.Models.Sections;
+package com.soen490.cms.Repositories.SectionsRepositories;
 
-import com.soen490.cms.Models.Course;
-import lombok.Data;
+import com.soen490.cms.Models.Sections.Section71709;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+@Repository
+public interface Section71709Repository extends JpaRepository<Section71709, Integer> {
 
-@Entity
-@Data
-public class Section70719 {
+    @Query(value = "SELECT * FROM section70719 WHERE id=? AND is_active=1", nativeQuery = true)
+    Section71709 findBySubSectionId(int id);
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
-    private String sectionId; // i.e. "70.71.9"
-
-    private String sectionTitle; // "Degree Requirement for Beng ..."
-
-    @Lob
-    private String firstParagraph;
-
-    private String firstCore; // Engineering Core
-
-    private String secondCore; // Software Engineering Core
-
-    private int isActive;
-
-    @Transient
-    List<Course> firstCoreCourses = new ArrayList<>(); // null since we don't have ENGR courses
-
-    @Transient
-    List<Course> secondCoreCourses = new ArrayList<>(); // retrieve from database before sending
-
+    @Query(value = "SELECT * FROM section70719 WHERE id=?", nativeQuery = true)
+    Section71709 findById(int id);
 }
