@@ -175,6 +175,43 @@ INSERT IGNORE INTO course VALUES (47, 4.00, 'Prerequisite: COMP 346. Computer ar
 INSERT IGNORE INTO course VALUES (48, 3.00, 'Prerequisite: COMP 249. Survey of programming paradigms: Imperative, functional, and logic programming. Issues in the design and implementation of programming languages. Declaration models: binding, visibility, and scope. Type systems, including static and dynamic typing. Parameter passing mechanisms. Hybrid language design. Lectures: three hours per week. Tutorial: one hour per week.',1, 2, 3, 1, 'COMP', NULL, 348, 'Principles of Programming Languages', 1, 2);
 INSERT IGNORE INTO course VALUES (49, 3.00, 'Prerequisite: COMP 232 previously or concurrently; COMP 249. Abstract data types: stacks and queues, trees, priority queues, dictionaries. Data structures: arrays, linked lists, heaps, hash tables, search trees. Design and analysis of algorithms: asymptotic notation, recursive algorithms, searching and sorting, tree traversal, graph algorithms. Lectures: three hours per week. Tutorial: one hour per week.',1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for COEN 352 may not take this course for credit.', 352, 'Data Structures and Algorithms', 1, 2);
 INSERT IGNORE INTO course VALUES (50, 4.00, 'Prerequisite: COMP 352; ENCS 282. Software development process models (e.g. linear vs. iterative). Project management; roles, activities and deliverables for each software life cycle phase. Requirements management: analysis, elicitation, and scope. Architecture, design and the mapping of requirements to design and design to implementation. Traceability. Software quality assurance: verification, validation and the role of testing. Maintenance and evolution. Project. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week.',1, 2, 3, 1, 'COMP', 'NOTES: 1. Students who have received credit for SOEN 341 may not take this course for credit.2. Students in the BEng in Software Engineering program may not take this course for credit."', 354, 'Introduction to Software Engineering', 1, 2);
+INSERT IGNORE INTO course VALUES (51, 3.00, '',
+1, 2, 3, 1, 'ENCS', '', 282, 'Technical Writing and Communication', 1, 2);
+INSERT IGNORE INTO course VALUES (52, 3.00, '',
+1, 2, 3, 1, 'ENCS', '', 393, 'Social and Ethical Dimensions of Information and Communication Technologies', 1, 2);
+INSERT IGNORE INTO course VALUES (53, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 339, 'Combinatorics', 1, 2);
+INSERT IGNORE INTO course VALUES (54, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 361, 'Elementary Numerical Methods', 1, 2);
+INSERT IGNORE INTO course VALUES (55, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 367, 'Techniques in Symbolic Computation', 1, 2);
+INSERT IGNORE INTO course VALUES (56, 3.00, '',
+1, 2, 3, 1, 'ENGR', '', 213, 'Applied Ordinary Differential Equations', 1, 2);
+INSERT IGNORE INTO course VALUES (57, 3.00, '',
+1, 2, 3, 1, 'ENGR', '', 233, 'Applied Advanced Calculus', 1, 2);
+INSERT IGNORE INTO course VALUES (58, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 218, 'Multivariable Calculus I', 1, 2);
+INSERT IGNORE INTO course VALUES (59, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 219, 'Multivariable Calculus II', 1, 2);
+INSERT IGNORE INTO course VALUES (60, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 234, 'Linear Algebra and Applications I', 1, 2);
+INSERT IGNORE INTO course VALUES (61, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 235, 'Linear Algebra and Applications II', 1, 2);
+INSERT IGNORE INTO course VALUES (62, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 324, 'Introduction to Optimization', 1, 2);
+INSERT IGNORE INTO course VALUES (63, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 332, 'Techniques in Symbolic Computation', 1, 2);
+INSERT IGNORE INTO course VALUES (64, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 334, 'Numerical Analysis', 1, 2);
+INSERT IGNORE INTO course VALUES (65, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 251, 'Linear Algebra I', 1, 2);
+INSERT IGNORE INTO course VALUES (66, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 252, 'Linear Algebra II', 1, 2);
+INSERT IGNORE INTO course VALUES (67, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 339, 'Combinatorics', 1, 2);
+INSERT IGNORE INTO course VALUES (68, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 392, 'Elementary Number Theory', 1, 2);
+
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -308,6 +345,24 @@ INSERT IGNORE INTO degree_requirement VALUES (48, "Computer Science Core", 47, 6
 INSERT IGNORE INTO degree_requirement VALUES (49, "Computer Science Core", 48, 6);
 INSERT IGNORE INTO degree_requirement VALUES (50, "Computer Science Core", 49, 6);
 INSERT IGNORE INTO degree_requirement VALUES (51, "Computer Science Core", 50, 6);
+INSERT IGNORE INTO degree_requirement VALUES (52, "Complementary Core", 51, 6);
+INSERT IGNORE INTO degree_requirement VALUES (53, "Complementary Core", 52, 6);
+INSERT IGNORE INTO degree_requirement VALUES (54, "Mathematics Electives", 53, 6);
+INSERT IGNORE INTO degree_requirement VALUES (55, "Mathematics Electives", 54, 6);
+INSERT IGNORE INTO degree_requirement VALUES (56, "Mathematics Electives", 55, 6);
+INSERT IGNORE INTO degree_requirement VALUES (57, "Mathematics Electives", 56, 6);
+INSERT IGNORE INTO degree_requirement VALUES (58, "Mathematics Electives", 57, 6);
+INSERT IGNORE INTO degree_requirement VALUES (59, "Mathematics Electives", 58, 6);
+INSERT IGNORE INTO degree_requirement VALUES (60, "Mathematics Electives", 59, 6);
+INSERT IGNORE INTO degree_requirement VALUES (61, "Mathematics Electives", 60, 6);
+INSERT IGNORE INTO degree_requirement VALUES (62, "Mathematics Electives", 61, 6);
+INSERT IGNORE INTO degree_requirement VALUES (63, "Mathematics Electives", 62, 6);
+INSERT IGNORE INTO degree_requirement VALUES (64, "Mathematics Electives", 63, 6);
+INSERT IGNORE INTO degree_requirement VALUES (65, "Mathematics Electives", 64, 6);
+INSERT IGNORE INTO degree_requirement VALUES (66, "Mathematics Electives", 65, 6);
+INSERT IGNORE INTO degree_requirement VALUES (67, "Mathematics Electives", 66, 6);
+INSERT IGNORE INTO degree_requirement VALUES (68, "Mathematics Electives", 67, 6);
+INSERT IGNORE INTO degree_requirement VALUES (69, "Mathematics Electives", 68, 6);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
