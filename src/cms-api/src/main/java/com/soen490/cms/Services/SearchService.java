@@ -160,6 +160,7 @@ public class SearchService {
         log.info("find Section71702 " + section_id);
 
         Section71702 section71702 = section71702Repository.findBySubSectionId(section_id);
+        section71702.setFirstCoreCourses(retrieveSectionCourseLists(section71702.getFirstCore()));
         return section71702;
     }
 

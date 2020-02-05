@@ -70,6 +70,7 @@ INSERT IGNORE INTO degree VALUES (2, 45, 2, 'Master of Software Engineering (MEn
 INSERT IGNORE INTO degree VALUES (3, 45, 2, 'Master of Software Engineering (MASc)', 1);
 INSERT IGNORE INTO degree VALUES (4, 90, 3, 'Doctor of Philosophy (PhD in Software Engineering)', 1);
 INSERT IGNORE INTO degree VALUES (5, 120, 1, 'Mechanical Engineering (BEng)', 3);
+INSERT IGNORE INTO degree VALUES (6, 90, 1, 'Bachelor of Computer Science (BCompSc)', 2);
 
 -- id, credits, description,
 -- is_active, lab, lect, level, course_name, course_number, outline, title, program_id
@@ -158,6 +159,22 @@ INSERT IGNORE INTO course VALUES (39, 4.00, 'No review of ideal gas processes. S
 -- new course soen 363
 INSERT IGNORE INTO course VALUES (40, 3.00, 'Prerequisite: COMP 352. This course covers the following topics: introduction to the current data ecosystem; relational databases; key-value databases; document databases; column databases; graph databases; RDF stores; parallel and distributed file systems, data processing engines; data stream analytics; and data infrastructure. Lectures: three hours per week. Tutorial: one hour per week',
 0, 0, 3, 1, 'SOEN', "", 363, 'Data Systems for Software Engineers', 1, 1);
+INSERT IGNORE INTO course VALUES (41, 3.00, 'Prerequisite: COMP 248; MATH 203 or Cegep Mathematics 103 or NYA previously or concurrently; MATH 204 or Cegep Mathematics 105 or NYC previously or concurrently. Levels of system abstraction and von Neumann model. Basics of digital logic design. Data representation and manipulation. Instruction set architecture. Processor internals. Assembly language programming. Memory subsystem and cache management. I/O subsystem. Introduction to network organization and architecture. Lectures: three hours per week. Tutorial: two hours per week.',1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for SOEN 228 may not take this course for credit.', 228, 'System Hardware', 1, 2);
+INSERT IGNORE INTO course VALUES (42, 3.00, 'Prerequisite: MATH 203 or Cegep Mathematics 103 or NYA; MATH 204 or Cegep Mathematics 105 or NYC. Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Mathematical reasoning. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction. Lectures: three hours per week. Tutorial: two hours per week.',
+1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for COMP 238 or COEN 231 may not take this course for credit.', 232, 'Mathematics for Computer Science', 1, 2);
+INSERT IGNORE INTO course VALUES (43, 3.00, 'Prerequisite: MATH 205 or Cegep Mathematics 203 or NYB. Combinatorics. Axioms of probability. Conditional probability. Discrete and continuous probability distributions. Expectation and moments. Hypothesis testing. Parameter estimation. Correlation and linear regression. Applications to computer science. Lectures: three hours per week. Tutorial: two hours per week.',
+1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for ENGR 371, STAT 249, STAT 250, COMM 215, MAST 221, MAST 333 may not take this course for credit.
+', 233, 'Probability and Statistics for Computer Science', 1, 2);
+INSERT IGNORE INTO course VALUES (44, 3.50, 'Prerequisite: MATH 201 or equivalent. Overview of computing systems. Problem solving and algorithms. Introduction to computer programming. Hardware, software and data storage, programming languages, data organization, program design and development. Lectures: three hours per week. Tutorial: one hour per week.
+',1, 2, 3, 1, 'COMP', NULL, 248, 'Object‑Oriented Programming I', 1, 2);
+INSERT IGNORE INTO course VALUES (45, 3.50, 'Prerequisite: COMP 248; MATH 203 or Cegep Mathematics 103 or NYA; MATH 205 or Cegep Mathematics 203 or NYB previously or concurrently. Design of classes. Inheritance. Polymorphism. Static and dynamic binding. Abstract classes. Exception handling. File I/O. Recursion. Interfaces and inner classes. Graphical user interfaces. Generics. Collections and iterators. Lectures: three hours per week. Tutorial: two hours per week. Laboratory: one hour per week.
+',1, 2, 3, 1, 'COMP', NULL, 249, 'Object‑Oriented Programming II', 1, 2);
+INSERT IGNORE INTO course VALUES (46, 3.00, 'Prerequisite: COMP 232 or COEN 231; COMP 249 or COEN 244. Finite state automata and regular languages. Push‑down automata and context‑free languages. Pumping lemmas. Applications to parsing. Turing machines. Unde­cidability and decidability. Lectures: three hours per week. Tutorial: one hour per week.
+',1, 2, 3, 1, 'COMP', NULL, 335, 'Introduction to Theoretical Computer Science', 1, 2);
+INSERT IGNORE INTO course VALUES (47, 4.00, 'Prerequisite: COMP 346. Computer architecture models: control‑flow and data‑flow. Concurrency and locality, data dependency theory. Instruction level parallelism. Instruction scheduling. Pipelined processors. Vector processors. Thread level parallelism. Multiprocessors. Shared memory models. Coherence protocols. Interconnection networks. Performance issues. Advanced topics in contemporary computer architectures. Lectures: three hours per week. Tutorial: one hour per week.',0, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for COEN 346 may not take this course for credit.', 346, 'Operating Systems', 1, 2);
+INSERT IGNORE INTO course VALUES (48, 3.00, 'Prerequisite: COMP 249. Survey of programming paradigms: Imperative, functional, and logic programming. Issues in the design and implementation of programming languages. Declaration models: binding, visibility, and scope. Type systems, including static and dynamic typing. Parameter passing mechanisms. Hybrid language design. Lectures: three hours per week. Tutorial: one hour per week.',1, 2, 3, 1, 'COMP', NULL, 348, 'Principles of Programming Languages', 1, 2);
+INSERT IGNORE INTO course VALUES (49, 3.00, 'Prerequisite: COMP 232 previously or concurrently; COMP 249. Abstract data types: stacks and queues, trees, priority queues, dictionaries. Data structures: arrays, linked lists, heaps, hash tables, search trees. Design and analysis of algorithms: asymptotic notation, recursive algorithms, searching and sorting, tree traversal, graph algorithms. Lectures: three hours per week. Tutorial: one hour per week.',1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for COEN 352 may not take this course for credit.', 352, 'Data Structures and Algorithms', 1, 2);
+INSERT IGNORE INTO course VALUES (50, 4.00, 'Prerequisite: COMP 352; ENCS 282. Software development process models (e.g. linear vs. iterative). Project management; roles, activities and deliverables for each software life cycle phase. Requirements management: analysis, elicitation, and scope. Architecture, design and the mapping of requirements to design and design to implementation. Traceability. Software quality assurance: verification, validation and the role of testing. Maintenance and evolution. Project. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week.',1, 2, 3, 1, 'COMP', 'NOTES: 1. Students who have received credit for SOEN 341 may not take this course for credit.2. Students in the BEng in Software Engineering program may not take this course for credit."', 354, 'Introduction to Software Engineering', 1, 2);
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -281,6 +298,16 @@ INSERT IGNORE INTO degree_requirement VALUES (38, "Mechanical Engineering Core",
 INSERT IGNORE INTO degree_requirement VALUES (39, "Mechanical Engineering Core", 38, 5);
 INSERT IGNORE INTO degree_requirement VALUES (40, "Mechanical Engineering Core", 39, 5);
 INSERT IGNORE INTO degree_requirement VALUES (41, "Software Engineering Core", 40, 1);
+INSERT IGNORE INTO degree_requirement VALUES (42, "Computer Science Core", 41, 6);
+INSERT IGNORE INTO degree_requirement VALUES (43, "Computer Science Core", 42, 6);
+INSERT IGNORE INTO degree_requirement VALUES (44, "Computer Science Core", 43, 6);
+INSERT IGNORE INTO degree_requirement VALUES (45, "Computer Science Core", 44, 6);
+INSERT IGNORE INTO degree_requirement VALUES (46, "Computer Science Core", 45, 6);
+INSERT IGNORE INTO degree_requirement VALUES (47, "Computer Science Core", 46, 6);
+INSERT IGNORE INTO degree_requirement VALUES (48, "Computer Science Core", 47, 6);
+INSERT IGNORE INTO degree_requirement VALUES (49, "Computer Science Core", 48, 6);
+INSERT IGNORE INTO degree_requirement VALUES (50, "Computer Science Core", 49, 6);
+INSERT IGNORE INTO degree_requirement VALUES (51, "Computer Science Core", 50, 6);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);

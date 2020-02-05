@@ -1,8 +1,11 @@
 package com.soen490.cms.Models.Sections;
 
+import com.soen490.cms.Models.Course;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -87,4 +90,22 @@ public class Section71702 {
     private String nineteenthCore; // Mathematics and Statistics Option
     @Lob
     private String seventeenthParagraph;
+
+    @Transient
+    List<Course> firstCoreCourses = new ArrayList<>(); //  comp core courses
+    @Transient
+    List<Course> secondCoreCourses = new ArrayList<>(); // Complementary Core
+    @Transient
+    List<Course> thirdCoreCourses = new ArrayList<>(); //  Mathematics Electives
+    @Transient
+    List<Course> fourthCoreCourses = new ArrayList<>(); //  Computer Games Electives
+    @Transient
+    List<Course> fifthCoreCourses = new ArrayList<>(); //  Web Services and Applications Electives
+    @Transient
+    List<Course> sixthCoreCourses = new ArrayList<>(); //  Computer Systems Electives
+    @Transient
+    List<Course> seventhCoreCourses = new ArrayList<>(); //  Software Systems Core
+    @Transient
+    List<Course> eightCoreCourses = new ArrayList<>();//Information Systems Electives
+
 }
