@@ -60,8 +60,10 @@ INSERT IGNORE INTO program VALUES (1, "The Software Engineering program is built
 1, 'Software Engineering', 4);
 INSERT IGNORE INTO program VALUES (2, 'The Computer Science program emphasizes fundamentals and techniques that remain relevant and useful for many years after graduation. The program consists of a combination of core courses in computer science, elective courses in computer science and mathematics, and some free electives. The Computer Science Core provides a basic and broad study of theory, mathematical basics, programming methodology, computer architecture, data structures, operating systems, and software engineering. The option courses are designed to provide an integrated yet specialized training in particular application areas of the discipline. Students may choose either the General Program or one of eight options. Each option involves the study of selected advanced elective courses in computer science to provide further depth in computer science and the particular application area. The General Program and each option constitute a 90‑credit program that consists of courses in the following groups: Computer Science Core, Complementary Core, Option‑Specific Courses, Computer Science Electives, Mathematics Electives, and General Electives.',
 1, 'Computer Science', 4);
-INSERT IGNORE INTO program VALUES (3, 'description...',
+INSERT IGNORE INTO program VALUES (3, 'The program in Mechanical Engineering consists of the Engineering Core, the Mechanical Engineering Core, and elective credits as shown below. The minimum length of the program is 120 credits.',
 1, 'Mechanical Engineering', 8);
+INSERT IGNORE INTO program VALUES (4, 'The program in Industrial Engineering consists of the Engineering Core, the Industrial Engineering Core, and elective credits as shown below. Students must select one course from the list of Basic and Natural Science courses as part of the Industrial Engineering Core courses. The minimum length of the program is 120 credits.',
+1, 'Industrial Engineering', 8);
 
 
 -- id, credits, level, name, program_id
@@ -70,6 +72,7 @@ INSERT IGNORE INTO degree VALUES (2, 45, 2, 'Master of Software Engineering (MEn
 INSERT IGNORE INTO degree VALUES (3, 45, 2, 'Master of Software Engineering (MASc)', 1);
 INSERT IGNORE INTO degree VALUES (4, 90, 3, 'Doctor of Philosophy (PhD in Software Engineering)', 1);
 INSERT IGNORE INTO degree VALUES (5, 120, 1, 'Mechanical Engineering (BEng)', 3);
+INSERT IGNORE INTO degree VALUES (6, 120, 1, 'Industrial Engineering (BEng)', 4);
 
 -- id, credits, description,
 -- is_active, lab, lect, level, course_name, course_number, outline, title, program_id
