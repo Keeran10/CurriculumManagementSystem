@@ -24,8 +24,12 @@ package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Models.Sections.Section70719;
+import com.soen490.cms.Models.Sections.Section71401;
+import com.soen490.cms.Models.Sections.Section71402;
 import com.soen490.cms.Repositories.*;
 import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.Section71401Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.Section71402Repository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +59,10 @@ public class SearchService {
     UserRepository userRepository;
     @Autowired
     Section70719Repository section70719Repository;
+    @Autowired
+    Section71401Repository section71401Repository;
+    @Autowired
+    Section71402Repository section71402Repository;
     @Autowired
     DegreeRequirementRepository degreeRequirementRepository;
 
@@ -142,6 +150,36 @@ public class SearchService {
         section70719.setSecondCoreCourses(retrieveSectionCourseLists(section70719.getSecondCore()));
 
         return section70719;
+    }
+
+    public Section71401 findSection71401ById(int sectionId) { // BEng Mech Eng
+        log.info("search for Section 71.40.1 " + sectionId);
+
+        Section71401 section71401 = section71401Repository.findBySubSectionId(sectionId);
+
+        section71401.setFirstCoreCourses(retrieveSectionCourseLists(section71401.getFirstCore()));
+        section71401.setSecondCoreCourses(retrieveSectionCourseLists(section71401.getSecondCore()));
+        section71401.setFirstOptionCourses(retrieveSectionCourseLists(section71401.getFirstOption()));
+        section71401.setSectionOptionCourses(retrieveSectionCourseLists(section71401.getSecondOption()));
+        section71401.setThirdOptionCourses(retrieveSectionCourseLists(section71401.getThirdOption()));
+        section71401.setFourthOptionCourses(retrieveSectionCourseLists(section71401.getFourthOption()));
+        section71401.setFifthOptionCourses(retrieveSectionCourseLists(section71401.getFifthOption()));
+        section71401.setSixthOptionCourses(retrieveSectionCourseLists(section71401.getSixthOption()));
+
+        return section71401;
+    }
+
+    public Section71402 findSection71402ById(int sectionId) { // BEng Indu Eng
+        log.info("search for Section 71.40.2 " + sectionId);
+
+        Section71402 section71402 = section71402Repository.findBySubSectionId(sectionId);
+
+        section71402.setFirstCoreCourses(retrieveSectionCourseLists(section71402.getFirstCore()));
+        section71402.setSecondCoreCourses(retrieveSectionCourseLists(section71402.getSecondCore()));
+        section71402.setScienceCoreCourses(retrieveSectionCourseLists(section71402.getScienceCore()));
+        section71402.setElectiveCourses(retrieveSectionCourseLists("Indu Electives"));
+
+        return section71402;
     }
 
     private List<Course> retrieveSectionCourseLists(String core) {

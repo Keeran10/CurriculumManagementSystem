@@ -24,6 +24,8 @@ package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
 import com.soen490.cms.Models.Sections.Section70719;
+import com.soen490.cms.Models.Sections.Section71401;
+import com.soen490.cms.Models.Sections.Section71402;
 import com.soen490.cms.Services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -111,6 +113,15 @@ public class SearchController {
         return searchService.findsection70719ById(1);
     }
 
+    @GetMapping("/section71401")
+    public Section71401 getSection71401(){
+        return searchService.findSection71401ById(1);
+    }
+
+    @GetMapping("/section71402")
+    public Section71402 getSection71402(){
+        return searchService.findSection71402ById(1);
+    }
 
     @GetMapping("/get_degrees_by_department")
     public List<Degree> getDegreesFromDepartment(@RequestParam int department_id){
