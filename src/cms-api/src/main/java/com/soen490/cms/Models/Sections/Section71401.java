@@ -21,9 +21,13 @@ public class Section71401 {
 
     private String introParagraph;
 
+    private int isActive = 1;
+
     private String engCore;
 
     private String mechCore;
+
+    private String electivesHeader;
 
     private String electivesDescription;
 

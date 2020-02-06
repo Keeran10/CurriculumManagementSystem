@@ -35,12 +35,18 @@ public class PdfSection {
     @Autowired
     private PdfSection70719 pdfSection70719;
 
+    @Autowired
+    private PdfSection71401 pdfSection71401;
+
     public void addSectionPage(Document doc, Request request){
 
         // replace with valid section identifier
         if(true){
 
             pdfSection70719.addSectionPage(doc, request);
+        }
+        if(true) {
+            pdfSection71401.addSectionPage(doc, request);
         }
     }
 }
