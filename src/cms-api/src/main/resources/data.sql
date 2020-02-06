@@ -72,7 +72,8 @@ INSERT IGNORE INTO degree VALUES (2, 45, 2, 'Master of Software Engineering (MEn
 INSERT IGNORE INTO degree VALUES (3, 45, 2, 'Master of Software Engineering (MASc)', 1);
 INSERT IGNORE INTO degree VALUES (4, 90, 3, 'Doctor of Philosophy (PhD in Software Engineering)', 1);
 INSERT IGNORE INTO degree VALUES (5, 120, 1, 'Mechanical Engineering (BEng)', 3);
-INSERT IGNORE INTO degree VALUES (6, 120, 1, 'Industrial Engineering (BEng)', 4);
+INSERT IGNORE INTO degree VALUES (6, 90, 1, 'Bachelor of Computer Science (BCompSc)', 2);
+INSERT IGNORE INTO degree VALUES (7, 120, 1, 'Industrial Engineering (BEng)', 4);
 
 -- id, credits, description,
 -- is_active, lab, lect, level, course_name, course_number, outline, title, program_id
@@ -161,6 +162,59 @@ INSERT IGNORE INTO course VALUES (39, 4.00, 'No review of ideal gas processes. S
 -- new course soen 363
 INSERT IGNORE INTO course VALUES (40, 3.00, 'Prerequisite: COMP 352. This course covers the following topics: introduction to the current data ecosystem; relational databases; key-value databases; document databases; column databases; graph databases; RDF stores; parallel and distributed file systems, data processing engines; data stream analytics; and data infrastructure. Lectures: three hours per week. Tutorial: one hour per week',
 0, 0, 3, 1, 'SOEN', "", 363, 'Data Systems for Software Engineers', 1, 1);
+INSERT IGNORE INTO course VALUES (41, 3.00, 'Prerequisite: COMP 248; MATH 203 or Cegep Mathematics 103 or NYA previously or concurrently; MATH 204 or Cegep Mathematics 105 or NYC previously or concurrently. Levels of system abstraction and von Neumann model. Basics of digital logic design. Data representation and manipulation. Instruction set architecture. Processor internals. Assembly language programming. Memory subsystem and cache management. I/O subsystem. Introduction to network organization and architecture. Lectures: three hours per week. Tutorial: two hours per week.',1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for SOEN 228 may not take this course for credit.', 228, 'System Hardware', 1, 2);
+INSERT IGNORE INTO course VALUES (42, 3.00, 'Prerequisite: MATH 203 or Cegep Mathematics 103 or NYA; MATH 204 or Cegep Mathematics 105 or NYC. Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Mathematical reasoning. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction. Lectures: three hours per week. Tutorial: two hours per week.',
+1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for COMP 238 or COEN 231 may not take this course for credit.', 232, 'Mathematics for Computer Science', 1, 2);
+INSERT IGNORE INTO course VALUES (43, 3.00, 'Prerequisite: MATH 205 or Cegep Mathematics 203 or NYB. Combinatorics. Axioms of probability. Conditional probability. Discrete and continuous probability distributions. Expectation and moments. Hypothesis testing. Parameter estimation. Correlation and linear regression. Applications to computer science. Lectures: three hours per week. Tutorial: two hours per week.',
+1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for ENGR 371, STAT 249, STAT 250, COMM 215, MAST 221, MAST 333 may not take this course for credit.
+', 233, 'Probability and Statistics for Computer Science', 1, 2);
+INSERT IGNORE INTO course VALUES (44, 3.50, 'Prerequisite: MATH 201 or equivalent. Overview of computing systems. Problem solving and algorithms. Introduction to computer programming. Hardware, software and data storage, programming languages, data organization, program design and development. Lectures: three hours per week. Tutorial: one hour per week.
+',1, 2, 3, 1, 'COMP', NULL, 248, 'Object‑Oriented Programming I', 1, 2);
+INSERT IGNORE INTO course VALUES (45, 3.50, 'Prerequisite: COMP 248; MATH 203 or Cegep Mathematics 103 or NYA; MATH 205 or Cegep Mathematics 203 or NYB previously or concurrently. Design of classes. Inheritance. Polymorphism. Static and dynamic binding. Abstract classes. Exception handling. File I/O. Recursion. Interfaces and inner classes. Graphical user interfaces. Generics. Collections and iterators. Lectures: three hours per week. Tutorial: two hours per week. Laboratory: one hour per week.
+',1, 2, 3, 1, 'COMP', NULL, 249, 'Object‑Oriented Programming II', 1, 2);
+INSERT IGNORE INTO course VALUES (46, 3.00, 'Prerequisite: COMP 232 or COEN 231; COMP 249 or COEN 244. Finite state automata and regular languages. Push‑down automata and context‑free languages. Pumping lemmas. Applications to parsing. Turing machines. Unde­cidability and decidability. Lectures: three hours per week. Tutorial: one hour per week.
+',1, 2, 3, 1, 'COMP', NULL, 335, 'Introduction to Theoretical Computer Science', 1, 2);
+INSERT IGNORE INTO course VALUES (47, 4.00, 'Prerequisite: COMP 346. Computer architecture models: control‑flow and data‑flow. Concurrency and locality, data dependency theory. Instruction level parallelism. Instruction scheduling. Pipelined processors. Vector processors. Thread level parallelism. Multiprocessors. Shared memory models. Coherence protocols. Interconnection networks. Performance issues. Advanced topics in contemporary computer architectures. Lectures: three hours per week. Tutorial: one hour per week.',0, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for COEN 346 may not take this course for credit.', 346, 'Operating Systems', 1, 2);
+INSERT IGNORE INTO course VALUES (48, 3.00, 'Prerequisite: COMP 249. Survey of programming paradigms: Imperative, functional, and logic programming. Issues in the design and implementation of programming languages. Declaration models: binding, visibility, and scope. Type systems, including static and dynamic typing. Parameter passing mechanisms. Hybrid language design. Lectures: three hours per week. Tutorial: one hour per week.',1, 2, 3, 1, 'COMP', NULL, 348, 'Principles of Programming Languages', 1, 2);
+INSERT IGNORE INTO course VALUES (49, 3.00, 'Prerequisite: COMP 232 previously or concurrently; COMP 249. Abstract data types: stacks and queues, trees, priority queues, dictionaries. Data structures: arrays, linked lists, heaps, hash tables, search trees. Design and analysis of algorithms: asymptotic notation, recursive algorithms, searching and sorting, tree traversal, graph algorithms. Lectures: three hours per week. Tutorial: one hour per week.',1, 2, 3, 1, 'COMP', 'NOTE: Students who have received credit for COEN 352 may not take this course for credit.', 352, 'Data Structures and Algorithms', 1, 2);
+INSERT IGNORE INTO course VALUES (50, 4.00, 'Prerequisite: COMP 352; ENCS 282. Software development process models (e.g. linear vs. iterative). Project management; roles, activities and deliverables for each software life cycle phase. Requirements management: analysis, elicitation, and scope. Architecture, design and the mapping of requirements to design and design to implementation. Traceability. Software quality assurance: verification, validation and the role of testing. Maintenance and evolution. Project. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week.',1, 2, 3, 1, 'COMP', 'NOTES: 1. Students who have received credit for SOEN 341 may not take this course for credit.2. Students in the BEng in Software Engineering program may not take this course for credit."', 354, 'Introduction to Software Engineering', 1, 2);
+INSERT IGNORE INTO course VALUES (51, 3.00, '',
+1, 2, 3, 1, 'ENCS', '', 282, 'Technical Writing and Communication', 1, 2);
+INSERT IGNORE INTO course VALUES (52, 3.00, '',
+1, 2, 3, 1, 'ENCS', '', 393, 'Social and Ethical Dimensions of Information and Communication Technologies', 1, 2);
+INSERT IGNORE INTO course VALUES (53, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 339, 'Combinatorics', 1, 2);
+INSERT IGNORE INTO course VALUES (54, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 361, 'Elementary Numerical Methods', 1, 2);
+INSERT IGNORE INTO course VALUES (55, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 367, 'Techniques in Symbolic Computation', 1, 2);
+INSERT IGNORE INTO course VALUES (56, 3.00, '',
+1, 2, 3, 1, 'ENGR', '', 213, 'Applied Ordinary Differential Equations', 1, 2);
+INSERT IGNORE INTO course VALUES (57, 3.00, '',
+1, 2, 3, 1, 'ENGR', '', 233, 'Applied Advanced Calculus', 1, 2);
+INSERT IGNORE INTO course VALUES (58, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 218, 'Multivariable Calculus I', 1, 2);
+INSERT IGNORE INTO course VALUES (59, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 219, 'Multivariable Calculus II', 1, 2);
+INSERT IGNORE INTO course VALUES (60, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 234, 'Linear Algebra and Applications I', 1, 2);
+INSERT IGNORE INTO course VALUES (61, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 235, 'Linear Algebra and Applications II', 1, 2);
+INSERT IGNORE INTO course VALUES (62, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 324, 'Introduction to Optimization', 1, 2);
+INSERT IGNORE INTO course VALUES (63, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 332, 'Techniques in Symbolic Computation', 1, 2);
+INSERT IGNORE INTO course VALUES (64, 3.00, '',
+1, 2, 3, 1, 'MAST', '', 334, 'Numerical Analysis', 1, 2);
+INSERT IGNORE INTO course VALUES (65, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 251, 'Linear Algebra I', 1, 2);
+INSERT IGNORE INTO course VALUES (66, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 252, 'Linear Algebra II', 1, 2);
+INSERT IGNORE INTO course VALUES (67, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 339, 'Combinatorics', 1, 2);
+INSERT IGNORE INTO course VALUES (68, 3.00, '',
+1, 2, 3, 1, 'MATH ', '', 392, 'Elementary Number Theory', 1, 2);
+
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -284,6 +338,34 @@ INSERT IGNORE INTO degree_requirement VALUES (38, "Mechanical Engineering Core",
 INSERT IGNORE INTO degree_requirement VALUES (39, "Mechanical Engineering Core", 38, 5);
 INSERT IGNORE INTO degree_requirement VALUES (40, "Mechanical Engineering Core", 39, 5);
 INSERT IGNORE INTO degree_requirement VALUES (41, "Software Engineering Core", 40, 1);
+INSERT IGNORE INTO degree_requirement VALUES (42, "Computer Science Core", 41, 6);
+INSERT IGNORE INTO degree_requirement VALUES (43, "Computer Science Core", 42, 6);
+INSERT IGNORE INTO degree_requirement VALUES (44, "Computer Science Core", 43, 6);
+INSERT IGNORE INTO degree_requirement VALUES (45, "Computer Science Core", 44, 6);
+INSERT IGNORE INTO degree_requirement VALUES (46, "Computer Science Core", 45, 6);
+INSERT IGNORE INTO degree_requirement VALUES (47, "Computer Science Core", 46, 6);
+INSERT IGNORE INTO degree_requirement VALUES (48, "Computer Science Core", 47, 6);
+INSERT IGNORE INTO degree_requirement VALUES (49, "Computer Science Core", 48, 6);
+INSERT IGNORE INTO degree_requirement VALUES (50, "Computer Science Core", 49, 6);
+INSERT IGNORE INTO degree_requirement VALUES (51, "Computer Science Core", 50, 6);
+INSERT IGNORE INTO degree_requirement VALUES (52, "Complementary Core", 51, 6);
+INSERT IGNORE INTO degree_requirement VALUES (53, "Complementary Core", 52, 6);
+INSERT IGNORE INTO degree_requirement VALUES (54, "Mathematics Electives", 53, 6);
+INSERT IGNORE INTO degree_requirement VALUES (55, "Mathematics Electives", 54, 6);
+INSERT IGNORE INTO degree_requirement VALUES (56, "Mathematics Electives", 55, 6);
+INSERT IGNORE INTO degree_requirement VALUES (57, "Mathematics Electives", 56, 6);
+INSERT IGNORE INTO degree_requirement VALUES (58, "Mathematics Electives", 57, 6);
+INSERT IGNORE INTO degree_requirement VALUES (59, "Mathematics Electives", 58, 6);
+INSERT IGNORE INTO degree_requirement VALUES (60, "Mathematics Electives", 59, 6);
+INSERT IGNORE INTO degree_requirement VALUES (61, "Mathematics Electives", 60, 6);
+INSERT IGNORE INTO degree_requirement VALUES (62, "Mathematics Electives", 61, 6);
+INSERT IGNORE INTO degree_requirement VALUES (63, "Mathematics Electives", 62, 6);
+INSERT IGNORE INTO degree_requirement VALUES (64, "Mathematics Electives", 63, 6);
+INSERT IGNORE INTO degree_requirement VALUES (65, "Mathematics Electives", 64, 6);
+INSERT IGNORE INTO degree_requirement VALUES (66, "Mathematics Electives", 65, 6);
+INSERT IGNORE INTO degree_requirement VALUES (67, "Mathematics Electives", 66, 6);
+INSERT IGNORE INTO degree_requirement VALUES (68, "Mathematics Electives", 67, 6);
+INSERT IGNORE INTO degree_requirement VALUES (69, "Mathematics Electives", 68, 6);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
@@ -394,5 +476,172 @@ INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department C
 INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department Curriculum Committee", NULL);
 
 -- id, first_core, first_paragraph, is_active, second_core, section_id, section_title
-INSERT IGNORE INTO section70719 VALUES (1, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.", 1, "Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
-INSERT IGNORE INTO section70719 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
+INSERT IGNORE INTO section71709 VALUES (1, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.", 1, "Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
+INSERT IGNORE INTO section71709 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
+
+-- id, first_paragraph, is_Active, section_id, section_title
+INSERT IGNORE INTO section71701 VALUES (1,"The Computer Science program emphasizes fundamentals and techniques that remain relevant and useful for many years after graduation. The program consists of a combination of core courses in computer science, elective courses in computer science and mathematics, and some free electives. The Computer Science Core provides a basic and broad study of theory, mathematical basics, programming methodology, computer architecture, data structures, operating systems, and software engineering. The option courses are designed to provide an integrated yet specialized training in particular application areas of the discipline. Students may choose either the General Program or one of eight options. Each option involves the study of selected advanced elective courses in computer science to provide further depth in computer science and the particular application area.
+The General Program and each option constitute a 90‑credit program that consists of courses in the following groups: Computer Science Core, Complementary Core, Option‑Specific Courses, Computer Science Electives, Mathematics Electives, and General Electives.
+
+The General Program is a major in Computer Science that emphasizes an exposure to a breadth of topics in Computer Science.
+The Computer Games option is a major in Computer Science that deals with the design and implementation of computer games, and the tools and techniques that are useful in developing software for computer games.
+The Web Services and Applications option is a major in Computer Science that deals with the analysis, design, and implementation of services and applications delivered over the web.
+The Computer Systems option is a major in Computer Science that focuses on state‑of‑the‑art hardware and software platforms and on the tools and techniques necessary to develop software on such platforms.
+The Software Systems option is a major in Computer Science that gives a firm grounding in diverse tools and techniques required for a wide variety of software systems.
+The Information Systems option combines a major in Computer Science with approximately a third of the credits from the John Molson School of Business to create a program focusing on business applications of computer systems.
+The Computer Applications option combines a major in Computer Science with a minor in a discipline of the student’s choice.
+The Computation Arts option combines a major in Computer Science with a major in Fine Arts specializing in the design of interactive multimedia.
+The Mathematics and Statistics option combines a major in Computer Science with a major in Mathematics and Statistics.
+There is an honours program corresponding to the General Program and each option (see §71.70.4). In addition, all programs are offered in the co‑operative format, with alternating study and work terms, for a limited number of students with suitable qualifications (see §24).",1,"71.70.1"," Curriculum for the Degree of Bachelor of/Baccalaureate in Computer Science");
+
+-- id, first_paragraph, section_id, section_title
+INSERT IGNORE INTO section71702 VALUES (1, "Computer Games Electives", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Web Services and Applications Electives	22.00
+ 	Computer Science Electives	8.00
+ 	Mathematics Electives	6.00
+ 	General Electives	15.00
+ 	 	_____
+ 	 	90.00",
+		"Computation Arts Option", "Computer Systems Option", "Students must complete six courses (22 credits) from the following list of courses, including all the courses marked *.
+",
+"Information Systems Option", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Science Electives	18.00
+ 	Mathematics Electives	6.00
+ 	Minor*	27.00
+ 	 	_____
+ 	 	90.00", "General Electives", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Science Electives*	30.00
+ 	Mathematics Electives	6.00
+ 	General Electives	15.00
+ 	 	_____
+ 	 	90.00
+*Note: Maximum of 12 credits from any one of Computer Games Electives, Web Services and Applications Electives, Computer Systems Electives, or Software Systems Core.
+", "Computer Science Core", "To be recommended for the degree of BCompSc, students must satisfactorily complete an approved program of at least 90 credits comprising the courses of the Computer Science Core and those courses specified for their particular program in accordance with the graduation requirements of §71.10.5.
+Students may not register for a 400‑level course before completing all of the 200‑level Computer Science Core courses of their program.
+The Gina Cody School of Engineering and Computer Science is committed to ensuring that its students possess good writing skills. Hence, every student in an undergraduate degree program is required to demonstrate competence in writing English or French prior to graduation.
+All students admitted to the Gina Cody School of Engineering and Computer Science must meet the writing skills requirement as outlined in §71.20.7 (Writing Skills Requirement).
+If a student has satisfied the writing skills requirement prior to transferring to the Gina Cody School of Engineering and Computer Science, that student is deemed to have satisfied the writing skills requirement.
+Newly admitted students are strongly encouraged to meet the requirement very early in their program (fall term of first year for students starting in September or winter term of first year for students starting in January) to avoid the risk of delayed graduation should remedial work prove necessary. Students who are required to take ESL courses should meet the Faculty writing skills requirements in the term following completion of their ESL courses.
+Students registered in the Computer Science program must complete a minimum of 90 credits. The program offers the General Program and eight options (see §71.70.1). All options consist of the Computer Science Core (33 credits), the Complementary Core (6 credits), Option‑Specific Courses, Computer Science Electives, Mathematics Electives, and General Electives.
+", "Software Systems Core", "Students must complete 10 courses (31 credits) from the following list of courses, including all the courses marked *.
+", "Mathematics Electives", "General Electives must be chosen from the following list:
+
+Computer Science Electives as mentioned above.
+Mathematics Electives as mentioned above.
+General Education Electives found in §71.110.
+Basic and Natural Science Courses list found in §71.70.9.
+A course outside this list may qualify as a General Elective only with prior written permission on an GCS Student Request form, obtainable from the Office of Student Academic Services in the Gina Cody School of Engineering and Computer Science.
+", 1, "Mathematics and Statistics Option", "Web Services and Applications Option", "Students must complete six courses (22 credits) from the following list of courses, including all the courses marked *.
+", "Complementary Core", "Computer Science Electives must be chosen from the following list:
+
+All COMP courses with numbers 325 or higher.
+SOEN 287, 321, 331, 387, 422, 423, 487.
+COMP and SOEN courses with numbers between 6000 and 6951 (maximum of eight credits, and with permission from the Department).
+In every option, any credits exceeding the required number of Computer Science Elective credits will accrue towards the General Elective credits.
+", "71.70.2 ", "Degree Requirements", "Computer Applications Option", "See §71.85 for details.",
+"Computer Games Option","Students must complete six courses (24 credits) from the following list of courses, including all the courses marked *.
+", "Information Systems Electives", "See §71.80 for details.",
+"General Program", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Games Electives	24.00
+ 	Computer Science Electives	6.00
+ 	Mathematics Electives*	6.00
+ 	General Electives or Minor in Game Design**	15.00
+ 	 	_____
+ 	 	90.00
+*Note: Students must take COMP 361 as part of their Mathematics Electives.
+**Note: A maximum of 15 credits from the Minor in Game Design (see §81.90) may be counted towards the General Electives.
+", "Web Services and Applications Electives", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Computer Systems Electives	22.00
+ 	Computer Science Electives	8.00
+ 	Mathematics Electives	6.00
+ 	General Electives	15.00
+ 	 	_____
+ 	 	90.00", "Computer Science Electives", "In every option, any credits exceeding the required number of Mathematics Elective credits will accrue towards the General Elective credits.
+*Students cannot receive credit for both COMP 339 and MATH 339; COMP 361 and MAST 334; COMP 367 and MAST 332.
+", "Software Systems Option", " 	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Information Systems Electives	31.00
+ 	Computer Science Electives	14.00
+ 	Mathematics Electives	6.00
+ 	 	_____
+ 	 	90.00","Computer Systems Electives", "	Computer Science Core	33.00
+ 	Complementary Core	6.00
+ 	Software Systems Core	20.00
+ 	Computer Science Electives	13.00
+ 	Mathematics Electives	6.00
+ 	General Electives	12.00
+ 	 	_____
+ 	 	90.00");
+
+
+-- id, first_paragraph, is_Active, section_id, section_title
+INSERT IGNORE INTO section71703 VALUES (1, "Students admitted to an Extended Credit Program (ECP) under the provisions of Sections 13.3.2 or 13.8.1 must successfully complete a minimum of 120 credits including:
+
+90	Program requirements as set out in Section 71.70.2
+9	MATH 2033, 2043, 2053
+6	Chosen from courses in Humanities or Social Sciences as noted in Section 71.110. ESL courses and courses that focus on the acquisition of a language may not be used to meet this requirement.
+15	ECP elective credits chosen from the following lists, depending on the student’s program:
+a)	General Program, and Computer Applications, Computer Games, Software Systems, and Web Services and Applications
+ 	Options:
+ 	15 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science (see Note).
+b)	Computation Arts Option:
+ 	15 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science and the Department of Design and Computation Arts (see Note).
+c)	Information Systems Option:
+ 	15 elective credits chosen from outside the John Molson School of Business and the Department of Computer Science and Software Engineering (see Note).
+d)	Mathematics and Statistics Option:
+ 	15 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science and the Department of Mathematics and Statistics (see Note).
+e)	Computer Systems Option:
+ 	CHEM 2053
+ 	PHYS 2043, 2053
+ 	and 6 elective credits chosen from outside the Gina Cody School of Engineering and Computer Science (see Note).
+Note: ECP elective credits may be chosen as follows:
+   •   General Education Electives found in §71.110.
+   •   Basic and Natural Science Courses found in §71.70.9.
+   •   Courses not included in the above lists may be taken with prior approval of the undergraduate program director.",1, "71.70.3", "Extended Credit Program");
+
+
+-- id, first_core, first_paragraph, is_Active,  second_paragraph, section_id, section_title
+INSERT IGNORE INTO section71704 VALUES (1, "Course Requirements for Honours Programs", "Students should refer to §16.2.4 of the Calendar for academic regulations for the honours program. The following regulations are additional requirements for the Honours BCompSc program.
+
+Applications to enter an honours program must be submitted to the Office of the Associate Dean (Student Academic Services) at least three months before the start of the term in which the student wishes to enter an honours program.
+Students must complete at least 30 credits towards their degree before entering an honours program.
+Students who are required to withdraw from an honours program may continue in the regular program of their option or General Program provided they are in acceptable or conditional standing according to the academic regulations in §71.10.3.", 1, "Honours students must fulfill the requirements of their option. In addition, to receive an honours degree:
+
+The student must have a final graduation GPA of at least 3.30.
+Students must successfully complete the course COMP 490 as one of the Computer Science electives for their option.
+For students in the General Program, and the Computer Games, Computer Systems, and Web Services and Applications Options, at least six of the General Electives credits must be chosen from the list of Computer Science Electives with at least two of the following: COMP 339, COMP 465, and COMP or SOEN courses with a number between 6000 and 6951 not marked with (*).
+For students in the Software Systems Option, at least six of the General Electives credits must be chosen from the list of Computer Science Electives with at least one of the following: SOEN 331, and COMP or SOEN courses with a number between 6000 and 6951 not marked with (*).", "71.70.4", "Honours Program");
+
+
+-- id, first_Core, first_paragraph, is_Active,  section_id, section_title
+INSERT IGNORE INTO section71705 VALUES (1,"Minor in Computer Science","Students who require any of the above courses as part of their major should replace these courses with elective courses chosen from the list of Computer Science Electives.",1,"71.70.5"," Minor in Computer Science");
+
+-- id, first_paragraph, is_Active,  section_id, section_title
+INSERT IGNORE INTO section71706 VALUES (1, "Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61.
+The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).",1,"71.70.6","Programs Related to Computer Science");
+
+-- id, first_paragraph, is_Active, section_id, section_title
+INSERT IGNORE INTO section71707 VALUES (1, "Students employed full‑time in a computer science position during their non‑study terms may have this Industrial Experience listed on their official transcript and student record, provided they successfully complete the Reflective Learning course associated with this work term.
+Industrial Experience work terms will be coded as COMP 107 and 207, and the associated Reflective Learning courses will be coded as COMP 108 and 208 respectively.
+Students may only register for these courses with the permission of the Faculty.
+The Industrial Experience terms COMP 107 and 207 carry no credit value and are used to indicate that the student is on an Industrial Experience term.
+The COMP 108 and 208 Industrial Experience Reflective Learning courses are worth three credits and are marked on a pass/fail basis. They are above and beyond the credit requirements of the student’s program and are not transferable nor are they included in the full‑ or part‑time assessment status.
+Students studying for a co‑op work term or CIADI term should not register for these Industrial Experience and Reflective Learning courses.",1, "71.70.7", "Industrial Experience and Reflective Learning Courses");
+
+-- id, first_paragraph, is_Active, section_id, section_title
+INSERT IGNORE INTO section71708 VALUES (1, "The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics.
+The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.
+
+Extended Credit Program
+The requirements of the Extended Credit Program (ECP) are set out in Section 71.20.2.", 1, "71.70.8", "Curriculum for the Degree of BEng in Software Engineering");
+
+-- id, first_paragraph, is_Active,  section_id, section_title
+INSERT IGNORE INTO section717010 VALUES (1, "Students from outside the Gina Cody School of Engineering and Computer Science who are not registered in a Computer Science program may not take more than five COMP courses numbered higher than 212.
+Students from outside the Gina Cody School of Engineering and Computer Science who are registered for the Minor in Computer Science may not take more than 30 credits of COMP courses numbered higher than 212.
+Computer Science
+Software Engineering",1, "71.70.10", "Course Descriptions");

@@ -1,11 +1,10 @@
 package com.soen490.cms;
 
 import com.soen490.cms.Controllers.RequestPackageController;
-import com.soen490.cms.Models.Course;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.RequestRepository;
-import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.Section71709Repository;
 import com.soen490.cms.Services.RequestPackageService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +37,7 @@ public class RequestPackageTest {
     @Autowired
     private RequestPackageController requestPackageController;
     @Autowired
-    private Section70719Repository section70719Repository;
+    private Section71709Repository section71709Repository;
 
     @Before
     public void init(){
@@ -184,8 +183,8 @@ public class RequestPackageTest {
         String section70719ExtrasJSON = "{\"implications\":\"\",\"packageId\":1,\"prerequisites\":\"SOEN343; SOEN384; \",\"" +
                 "rationale\":\"\",\"userId\":1,\"requestId\":0}";
 
-        requestPackageController.saveSubSection70719(section70719JSON, section70719ExtrasJSON, null, null);
+        requestPackageController.saveSubSection71709(section70719JSON, section70719ExtrasJSON, null, null);
 
-        assertEquals("test", section70719Repository.findById(2).getFirstParagraph());
+        assertEquals("test", section71709Repository.findById(2).getFirstParagraph());
     }
 }

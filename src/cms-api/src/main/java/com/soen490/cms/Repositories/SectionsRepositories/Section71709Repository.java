@@ -21,18 +21,18 @@
 // SOFTWARE.
 package com.soen490.cms.Repositories.SectionsRepositories;
 
-import com.soen490.cms.Models.Sections.Section70719;
+import com.soen490.cms.Models.Sections.Section71709;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Section70719Repository extends JpaRepository<Section70719, Integer> {
+public interface Section71709Repository extends JpaRepository<Section71709, Integer> {
 
-    @Query(value = "SELECT * FROM section70719 WHERE id=? AND is_active=1", nativeQuery = true)
-    Section70719 findBySubSectionId(int id);
+    @Query(value = "SELECT * FROM section71709 WHERE id=? AND is_active=1", nativeQuery = true)
+    Section71709 findBySubSectionId(int id);
 
 
-    @Query(value = "SELECT * FROM section70719 WHERE id=?", nativeQuery = true)
-    Section70719 findById(int id);
+    @Query(value = "SELECT * FROM section71709 WHERE id=?", nativeQuery = true)
+    Section71709 findById(int id);
 }

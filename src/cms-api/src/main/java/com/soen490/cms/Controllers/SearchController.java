@@ -23,9 +23,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
-import com.soen490.cms.Models.Sections.Section70719;
-import com.soen490.cms.Models.Sections.Section71401;
-import com.soen490.cms.Models.Sections.Section71402;
+import com.soen490.cms.Models.Sections.*;
 import com.soen490.cms.Services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -103,16 +101,69 @@ public class SearchController {
     @GetMapping("/sections")
     public List<Object> getSections(){
         List<Object> sections = new ArrayList<>();
-         sections.add(searchService.findsection70719ById(1));
+         sections.add(searchService.findsection71709ById(1));
          sections.add(searchService.findSection71401ById(1));
          sections.add(searchService.findSection71402ById(1));
+         sections.add(searchService.findsection71709ById(1));
          return sections;
     }
 
-    // URL should be 8080/section70719
-    @GetMapping("/section70719")
-    public Section70719 getSection70719(){
-        return searchService.findsection70719ById(1);
+    // URL should be 8080/section71701
+    @GetMapping("/section71701")
+    public Section71701 getSection71701(){
+        return searchService.findsection71701ById(1);
+    }
+
+    // URL should be 8080/section71702
+    @GetMapping("/section71702")
+    public Section71702 getSection71702(){ return searchService.findsection71702ById(1); }
+
+    // URL should be 8080/section71703
+    @GetMapping("/section71703")
+    public Section71703 getSection71703(){
+        return searchService.findsection71703ById(1);
+    }
+
+    // URL should be 8080/section71704
+    @GetMapping("/section71704")
+    public Section71704 getSection71704(){
+        return searchService.findsection71704ById(1);
+    }
+
+    // URL should be 8080/section71705
+    @GetMapping("/section71705")
+    public Section71705 getSection71705(){
+        return searchService.findsection71705ById(1);
+    }
+
+    // URL should be 8080/section71706
+    @GetMapping("/section71706")
+    public Section71706 getSection71706(){
+        return searchService.findsection71706ById(1);
+    }
+
+    // URL should be 8080/section71707
+    @GetMapping("/section71707")
+    public Section71707 getSection71707(){
+        return searchService.findsection71707ById(1);
+    }
+
+    // URL should be 8080/section71708
+    @GetMapping("/section71708")
+    public Section71708 getSection71708(){
+        return searchService.findsection71708ById(1);
+    }
+
+    // URL should be 8080/section71709
+    @GetMapping("/section71709")
+    public Section71709 getSection71709(){
+        return searchService.findsection71709ById(1);
+    }
+
+    // URL should be 8080/section717010
+    @GetMapping("/section717010")
+    public Section717010 getSection717010(){
+        return searchService.findsection717010ById(1);
     }
 
     @GetMapping("/section71401")

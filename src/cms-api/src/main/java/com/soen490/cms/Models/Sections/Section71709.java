@@ -30,7 +30,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Section70719 {
+public class Section71709 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

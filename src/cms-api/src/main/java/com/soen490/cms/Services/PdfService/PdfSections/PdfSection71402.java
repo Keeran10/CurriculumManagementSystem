@@ -48,7 +48,7 @@ public class PdfSection71402 {
     @Autowired
     private DegreeRepository degreeRepository;
 
-    private final int INDU_ENG_DEGREE_ID = 6;
+    private final int INDU_ENG_DEGREE_ID = 7;
 
     public void addSectionPage(Document document, Request request) {
         Section71402 section71402 = null;

@@ -24,9 +24,9 @@ package com.soen490.cms.Services;
 
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
-import com.soen490.cms.Models.Sections.Section70719;
+import com.soen490.cms.Models.Sections.Section71709;
 import com.soen490.cms.Repositories.*;
-import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.*;
 import com.soen490.cms.Services.PdfService.PdfService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
@@ -66,7 +66,25 @@ public class RequestPackageService {
     @Autowired
     private PdfService pdfService;
     @Autowired
-    private Section70719Repository section70719Repository;
+    Section71701Repository section71701Repository;
+    @Autowired
+    Section71702Repository section71702Repository;
+    @Autowired
+    Section71703Repository section71703Repository;
+    @Autowired
+    Section71704Repository section71704Repository;
+    @Autowired
+    Section71705Repository section71705Repository;
+    @Autowired
+    Section71706Repository section71706Repository;
+    @Autowired
+    Section71707Repository section71707Repository;
+    @Autowired
+    Section71708Repository section71708Repository;
+    @Autowired
+    Section71709Repository section71709Repository;
+    @Autowired
+    Section717010Repository section717010Repository;
     @Autowired
     private DegreeRepository degreeRepository;
 
@@ -85,16 +103,112 @@ public class RequestPackageService {
     /**
      * Saves an edited course to the database.
      *
-     * @param subSections70719      Stringified subsection70719 JSON received from client
+     * @param subSections71701      Stringified subsection70711 JSON received from client
      * @param sectionExtras Stringified subsection JSON received from client
      * @param files            uploaded course outline
      * @param descriptions
-     * @return True if susection70719 has been successfully added to database.
+     * @return True if susection70711 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection70719(String subSections70719, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {
+    public int saveSection71701(String subSections71701, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
-        log.info("Json substring70719 received: " + subSections70719);
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections71702     Stringified subsection70712 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection70712 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection71702(String subSections71702, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections71703      Stringified subsection70713 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection70713 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection71703(String subSections71703, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections71704      Stringified subsection70714 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection70714 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection71704(String subSections71704, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections71705      Stringified subsection70715 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection70715 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection71705(String subSections71705, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections71706     Stringified subsection70716 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection70716 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection71706(String subSections71706, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections71707      Stringified subsection70717 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection70717 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection71707(String subSections71707, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections71708      Stringified subsection70718 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection70718 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection71708(String subSections71708, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+
+    /**
+         * Saves an edited course to the database.
+         *
+         * @param subSections71709      Stringified subsection70719 JSON received from client
+         * @param sectionExtras Stringified subsection JSON received from client
+         * @param files            uploaded course outline
+         * @param descriptions
+         * @return True if susection70719 has been successfully added to database.
+         * @throws JSONException
+         */
+    public int saveSection71709(String subSections71709, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {
+
+        log.info("Json substring70719 received: " + subSections71709);
         log.info("Json subsectionExtras received: " + sectionExtras);
 
         if(files != null) {
@@ -114,31 +228,31 @@ public class RequestPackageService {
 
         User user = userRepository.findById(user_id);
 
-        Section70719 section70719 = null;
+        Section71709 section71709 = null;
 
         if (request == null) {
             request = new Request();
-            section70719 = new Section70719();
+            section71709 = new Section71709();
         } else {
-            section70719 = section70719Repository.findById(request.getTargetId());
+            section71709 = section71709Repository.findById(request.getTargetId());
         }
 
-        JSONObject subSection70719JSON = new JSONObject(subSections70719);
+        JSONObject subSection71709JSON = new JSONObject(subSections71709);
 
-        section70719.setSecondCore((String) subSection70719JSON.get("secondCore"));
-        section70719.setFirstCore((String) subSection70719JSON.get("firstCore"));
-        section70719.setFirstParagraph((String) subSection70719JSON.get("firstParagraph"));
-        section70719.setSectionId((String) subSection70719JSON.get("sectionId"));
-        section70719.setSectionTitle((String) subSection70719JSON.get("sectionTitle"));
-        section70719.setIsActive(0);
+        section71709.setSecondCore((String) subSection71709JSON.get("secondCore"));
+        section71709.setFirstCore((String) subSection71709JSON.get("firstCore"));
+        section71709.setFirstParagraph((String) subSection71709JSON.get("firstParagraph"));
+        section71709.setSectionId((String) subSection71709JSON.get("sectionId"));
+        section71709.setSectionTitle((String) subSection71709JSON.get("sectionTitle"));
+        section71709.setIsActive(0);
 
-        section70719Repository.save(section70719);
+        section71709Repository.save(section71709);
 
         // Requests
         request.setRequestType(2); // update
         request.setTargetType(1); // calendar change
-        request.setTargetId(section70719.getId());
-        request.setOriginalId((Integer) subSection70719JSON.get("id"));
+        request.setTargetId(section71709.getId());
+        request.setOriginalId((Integer) subSection71709JSON.get("id"));
         request.setRationale((String) sectionExtrasJSON.get("rationale"));
         request.setResourceImplications((String) sectionExtrasJSON.get("implications"));
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -146,13 +260,13 @@ public class RequestPackageService {
         request.setRequestPackage(requestPackage);
 
         if(request.getId() == 0)
-            request.setTitle(section70719.getSectionId() + "_create");
+            request.setTitle(section71709.getSectionId() + "_create");
         else
-            request.setTitle(section70719.getSectionId() + "_update");
+            request.setTitle(section71709.getSectionId() + "_update");
 
         requestRepository.save(request);
 
-        log.info("section70719 saved: " + section70719);
+        log.info("section71709 saved: " + section71709);
         log.info("request saved: " + request);
 
         requestPackage.getRequests().add(request);
@@ -160,8 +274,20 @@ public class RequestPackageService {
         return request.getId();
     }
 
+    /**
+     * Saves an edited course to the database.
+     *
+     * @param subSections717010      Stringified subsection707110 JSON received from client
+     * @param sectionExtras Stringified subsection JSON received from client
+     * @param files            uploaded course outline
+     * @param descriptions
+     * @return True if susection707110 has been successfully added to database.
+     * @throws JSONException
+     */
+    public int saveSection717010(String subSections717010, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
 
-        /**
+
+    /**
          * Saves an edited course to the database.
          *
          * @param courseJSON       Stringified course JSON received from client
@@ -393,7 +519,7 @@ public class RequestPackageService {
 
         if(request.getTargetType() == 1){
             // TODO: change this to account for all sections
-            section70719Repository.deleteById(request.getTargetId());
+            section71709Repository.deleteById(request.getTargetId());
             requestRepository.delete(request);
             return true;
         }
@@ -707,8 +833,8 @@ public class RequestPackageService {
 
     private void finalizeSection70719Request(Request r) {
 
-        Section70719 original = section70719Repository.findById(r.getOriginalId());
-        Section70719 changed = section70719Repository.findById(r.getTargetId());
+        Section71709 original = section71709Repository.findById(r.getOriginalId());
+        Section71709 changed = section71709Repository.findById(r.getTargetId());
 
         original.setSectionId(changed.getSectionId());
         original.setSectionTitle(changed.getSectionTitle());
@@ -724,8 +850,8 @@ public class RequestPackageService {
             original.setSecondCore(changed.getSecondCore());
         }
 
-        section70719Repository.save(original);
-        section70719Repository.delete(changed);
+        section71709Repository.save(original);
+        section71709Repository.delete(changed);
     }
 
     private void overrideCore(String presentCore, String proposedCore) {
