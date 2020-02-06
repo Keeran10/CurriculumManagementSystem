@@ -23,9 +23,10 @@
 package com.soen490.cms.Repositories.SectionsRepositories;
 
 import com.soen490.cms.Models.Sections.Section71401;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface Section71401Repository {
+public interface Section71401Repository extends JpaRepository<Section71401, Integer> {
 
     @Query(value = "SELECT * FROM section71401 WHERE id=? AND is_active=1", nativeQuery = true)
     Section71401 findBySubSectionId(int id);

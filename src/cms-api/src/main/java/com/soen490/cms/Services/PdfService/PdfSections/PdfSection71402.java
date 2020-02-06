@@ -27,42 +27,43 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.soen490.cms.Models.Degree;
 import com.soen490.cms.Models.Request;
-import com.soen490.cms.Models.Sections.Section71401;
+import com.soen490.cms.Models.Sections.Section71402;
 import com.soen490.cms.Repositories.DegreeRepository;
-import com.soen490.cms.Repositories.SectionsRepositories.Section71401Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.Section71402Repository;
 import com.soen490.cms.Services.PdfService.PdfUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.soen490.cms.Services.PdfService.PdfUtil.*;
+import static com.soen490.cms.Services.PdfService.PdfUtil.arial_10;
 
 @Service
 @Log4j2
-public class PdfSection71401 {
+public class PdfSection71402 {
 
     @Autowired
-    private Section71401Repository section71401Repository;
+    private Section71402Repository section71402Repository;
 
     @Autowired
     private DegreeRepository degreeRepository;
 
-    private final int MECH_ENG_DEGREE_ID = 5;
+    private final int INDU_ENG_DEGREE_ID = 6;
 
     public void addSectionPage(Document document, Request request) {
-        Section71401 section71401 = null;
-        Section71401 proposedSection71401 = null;
+        Section71402 section71402 = null;
+        Section71402 proposedSection71402 = null;
 
         if(request.getRequestType() == 2) {
-            section71401 = section71401Repository.findById(request.getOriginalId());
-            proposedSection71401 = section71401Repository.findById(request.getTargetId());
+            section71402 = section71402Repository.findById(request.getOriginalId());
+            proposedSection71402 = section71402Repository.findById(request.getTargetId());
         }
 
-        document = addSectionPreface(document, request, proposedSection71401);
-        addSectionDiffTable(document, request, section71401, proposedSection71401);
+        document = addSectionPreface(document, request, proposedSection71402);
+        addSectionDiffTable(document, request, section71402, proposedSection71402);
     }
 
-    public Document addSectionPreface(Document doc, Request request, Section71401 section71401){
+    public Document addSectionPreface(Document doc, Request request, Section71402 section71402){
 
         // preface paragraph
         Paragraph preface1 = new Paragraph();
@@ -77,7 +78,7 @@ public class PdfSection71401 {
 
         Phrase requestTypePhrase = new Phrase();
         requestTypePhrase.add(new Chunk("CALENDAR CHANGE: ", times_10_bold));
-        requestTypePhrase.add(new Chunk(section71401.getSectionTitle(), times_10));
+        requestTypePhrase.add(new Chunk(section71402.getSectionTitle(), times_10));
 
 
         preface1.add(requestTypePhrase);
@@ -88,7 +89,7 @@ public class PdfSection71401 {
         Phrase proposed = new Phrase();
         proposed.add(new Chunk("Proposed: ", times_10_bold));
 
-        Degree degree = degreeRepository.findById(MECH_ENG_DEGREE_ID);
+        Degree degree = degreeRepository.findById(INDU_ENG_DEGREE_ID);
 
         if(degree.getLevel() < 2)
             proposed.add(new Chunk("Undergraduate Curriculum Changes", times_10));
@@ -155,7 +156,7 @@ public class PdfSection71401 {
 
         calendar.add(Chunk.TABBING);
 
-        calendar.add(new Chunk("§" + section71401.getSectionId(), times_10));
+        calendar.add(new Chunk("§" + section71402.getSectionId(), times_10));
 
         preface3.add(calendar);
         preface3.add(Chunk.NEWLINE);
@@ -174,47 +175,32 @@ public class PdfSection71401 {
         return doc;
     }
 
-    private void addSectionDiffTable(Document document, Request request, Section71401 section71401, Section71401 proposedSection71401) {
+    private void addSectionDiffTable(Document document, Request request, Section71402 section71402, Section71402 proposedSection71402) {
 
         PdfPTable table = new PdfPTable(2);
         Paragraph present = new Paragraph();
         Paragraph proposed = new Paragraph();
-        // header
+        // header - section title (Section 71.40.2)
         Phrase headerPresent = new Phrase();
         Phrase headerProposed = new Phrase();
         // intro paragraph
         Phrase introParagraphPresent = new Phrase();
         Phrase introParagraphProposed = new Phrase();
         // engineering core
-        Phrase engCorePresent = new Phrase();
-        Phrase engCoreProposed = new Phrase();
-        // mech eng core
-        Phrase mechCorePresent = new Phrase();
-        Phrase mechCoreProposed = new Phrase();
+        Phrase firstCorePresent = new Phrase();
+        Phrase firstCoreProposed = new Phrase();
+        // indu eng core
+        Phrase secondCorePresent = new Phrase();
+        Phrase secondCoreProposed = new Phrase();
+        // science core
+        Phrase scienceCorePresent = new Phrase();
+        Phrase scienceCoreProposed = new Phrase();
         // electives header
         Phrase electivesHeaderPresent = new Phrase();
         Phrase electivesHeaderProposed = new Phrase();
         // electives paraghraph
         Phrase electivesDescriptionPresent = new Phrase();
         Phrase electivesDescriptionProposed = new Phrase();
-        // aerospace option
-        Phrase firstOptionPresent = new Phrase();
-        Phrase firstOptionProposed = new Phrase();
-        // design and manufacturing option
-        Phrase secondOptionPresent = new Phrase();
-        Phrase secondOptionProposed = new Phrase();
-        // systems and mechatronics
-        Phrase thirdOptionPresent = new Phrase();
-        Phrase thirdOptionProposed = new Phrase();
-        // thermo-fluids and propulsion
-        Phrase fourthOptionPresent = new Phrase();
-        Phrase fourthOptionProposed = new Phrase();
-        // vehicle systems
-        Phrase fifthOptionPresent = new Phrase();
-        Phrase fifthOptionProposed = new Phrase();
-        // stress analysis
-        Phrase sixthOptionPresent = new Phrase();
-        Phrase sixthOptionProposed = new Phrase();
 
         float cellPadding = 7f;
         float lineSpacing = 17f;
@@ -226,41 +212,26 @@ public class PdfSection71401 {
         // process differences
         // header
         PdfUtil.processDifferences(headerPresent, headerProposed,
-                section71401.getSectionId() + "\t" + section71401.getSectionTitle(),
-                proposedSection71401.getSectionId() + "\t" + proposedSection71401.getSectionTitle(), 1);
+                section71402.getSectionId() + "\t" + section71402.getSectionTitle(),
+                proposedSection71402.getSectionId() + "\t" + proposedSection71402.getSectionTitle(), 1);
         // intro paragraph
         PdfUtil.processDifferences(introParagraphPresent, introParagraphProposed,
-                section71401.getIntroParagraph(), proposedSection71401.getIntroParagraph(), 6);
+                section71402.getIntroParagraph(), proposedSection71402.getIntroParagraph(), 6);
         // engineering core
-        PdfUtil.processDifferences(engCorePresent, engCoreProposed,
-                section71401.getFirstCore(), proposedSection71401.getFirstCore(), 1);
-        // mech engineering core
-        PdfUtil.processDifferences(mechCorePresent, mechCoreProposed,
-                section71401.getSecondCore(), proposedSection71401.getSecondCore(), 1);
+        PdfUtil.processDifferences(firstCorePresent, firstCoreProposed,
+                section71402.getFirstCore(), proposedSection71402.getFirstCore(), 1);
+        // indu engineering core
+        PdfUtil.processDifferences(secondCorePresent, secondCoreProposed,
+                section71402.getSecondCore(), proposedSection71402.getSecondCore(), 1);
+        // science core
+        PdfUtil.processDifferences(scienceCorePresent, scienceCoreProposed,
+                section71402.getScienceCore(), proposedSection71402.getScienceCore(), 1);
         // electives header
         PdfUtil.processDifferences(electivesHeaderPresent, electivesHeaderProposed,
-                section71401.getElectivesHeader(), proposedSection71401.getElectivesHeader(), 1);
+                section71402.getElectivesHeader(), proposedSection71402.getElectivesHeader(), 1);
         // electives/options description intro
         PdfUtil.processDifferences(electivesDescriptionPresent, electivesDescriptionProposed,
-                section71401.getElectivesDescription(), proposedSection71401.getElectivesDescription(), 6);
-        // first option
-        PdfUtil.processDifferences(firstOptionPresent, firstOptionProposed,
-                section71401.getFirstOption(), proposedSection71401.getFirstOption(), 1);
-        // second option
-        PdfUtil.processDifferences(secondOptionPresent, secondOptionProposed,
-                section71401.getSecondOption(), proposedSection71401.getSecondOption(), 1);
-        // third option
-        PdfUtil.processDifferences(thirdOptionPresent, thirdOptionProposed,
-                section71401.getThirdOption(), proposedSection71401.getThirdOption(), 1);
-        // fourth option
-        PdfUtil.processDifferences(fourthOptionPresent, fourthOptionProposed,
-                section71401.getFourthOption(), proposedSection71401.getFourthOption(), 1);
-        // fifth option
-        PdfUtil.processDifferences(fifthOptionPresent, fifthOptionProposed,
-                section71401.getFifthOption(), proposedSection71401.getFifthOption(), 1);
-        // sixth option
-        PdfUtil.processDifferences(sixthOptionPresent, sixthOptionProposed,
-                section71401.getSixthOption(), proposedSection71401.getSixthOption(), 1);
+                section71402.getElectivesDescription(), proposedSection71402.getElectivesDescription(), 6);
 
         // add sections
         // header
@@ -277,23 +248,30 @@ public class PdfSection71401 {
         Chunk engSection = new Chunk("§71.20.5", arial_10)
                 .setGenericTag("http://pages.itextpdf.com/ebook-stackoverflow-questions.html");
 
-        present.add(engCorePresent);
+        present.add(firstCorePresent);
         present.add(Chunk.NEWLINE);
         present.add(see);
         present.add(engSection);
         present.add(Chunk.NEWLINE);
         present.add(Chunk.NEWLINE);
-        proposed.add(engCoreProposed);
+        proposed.add(firstCoreProposed);
         proposed.add(Chunk.NEWLINE);
         proposed.add(see);
         proposed.add(engSection);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
-        // mech core
-        present.add(mechCorePresent);
+        // indu core
+        present.add(secondCorePresent);
         present.add(Chunk.NEWLINE);
         present.add(Chunk.NEWLINE);
-        proposed.add(mechCoreProposed);
+        proposed.add(secondCoreProposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        // science core
+        present.add(scienceCorePresent);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(scienceCoreProposed);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
         // electives header
@@ -310,44 +288,6 @@ public class PdfSection71401 {
         proposed.add(electivesDescriptionProposed);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
-        // first option
-        present.add(firstOptionPresent);
-        present.add(Chunk.NEWLINE);
-        present.add(Chunk.NEWLINE);
-        proposed.add(firstOptionProposed);
-        proposed.add(Chunk.NEWLINE);
-        proposed.add(Chunk.NEWLINE);
-        // second option
-        present.add(secondOptionPresent);
-        present.add(Chunk.NEWLINE);
-        present.add(Chunk.NEWLINE);
-        proposed.add(secondOptionProposed);
-        proposed.add(Chunk.NEWLINE);
-        proposed.add(Chunk.NEWLINE);
-        // third option
-        present.add(thirdOptionPresent);
-        present.add(Chunk.NEWLINE);
-        present.add(Chunk.NEWLINE);
-        proposed.add(thirdOptionProposed);
-        proposed.add(Chunk.NEWLINE);
-        proposed.add(Chunk.NEWLINE);
-        // fourth option
-        present.add(fourthOptionPresent);
-        present.add(Chunk.NEWLINE);
-        present.add(Chunk.NEWLINE);
-        proposed.add(fourthOptionProposed);
-        proposed.add(Chunk.NEWLINE);
-        proposed.add(Chunk.NEWLINE);
-        // fifth option
-        present.add(fifthOptionPresent);
-        present.add(Chunk.NEWLINE);
-        present.add(Chunk.NEWLINE);
-        proposed.add(fifthOptionProposed);
-        proposed.add(Chunk.NEWLINE);
-        proposed.add(Chunk.NEWLINE);
-        // sixth option
-        present.add(sixthOptionPresent);
-        proposed.add(sixthOptionProposed);
 
         // add proposed changes row to pdf table
         table.addCell(new PdfPCell(present)).setPadding(cellPadding);

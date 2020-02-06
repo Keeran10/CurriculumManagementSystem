@@ -45,9 +45,9 @@ public class Section71401 {
 
     private int isActive = 1;
 
-    private String engCore;
+    private String firstCore;
 
-    private String mechCore;
+    private String secondCore;
 
     private String electivesHeader;
 
@@ -66,10 +66,10 @@ public class Section71401 {
     private String sixthOption; // stress analysis
 
     @Transient
-    List<Course> engCoreCourses = new ArrayList<>();
+    List<Course> firstCoreCourses = new ArrayList<>();
 
     @Transient
-    List<Course> mechCoreCourses = new ArrayList<>();
+    List<Course> secondCoreCourses = new ArrayList<>();
 
     @Transient
     List<Course> firstOptionCourses = new ArrayList<>();

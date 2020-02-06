@@ -19,40 +19,51 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-package com.soen490.cms.Services.PdfService.PdfSections;
 
+package com.soen490.cms.Models.Sections;
 
-import com.itextpdf.text.Document;
-import com.soen490.cms.Models.Request;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.soen490.cms.Models.Course;
+import lombok.Data;
 
-@Service
-@Log4j2
-public class PdfSection {
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-    @Autowired
-    private PdfSection70719 pdfSection70719;
+@Entity
+@Data
+public class Section71402 {
 
-    @Autowired
-    private PdfSection71401 pdfSection71401;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Autowired
-    private PdfSection71402 pdfSection71402;
+    private int isActive = 1;
 
-    public void addSectionPage(Document doc, Request request){
+    private String sectionId;
 
-        // replace with valid section identifier
-        if(true){
+    private String sectionTitle; // Section 71.40.2
 
-            pdfSection70719.addSectionPage(doc, request);
-        }
-        if(true) {
-            pdfSection71401.addSectionPage(doc, request);
-        }
-        if(true) {
-            pdfSection71402.addSectionPage(doc, request);
-        }
-    }
+    private String introParagraph;
+
+    private String firstCore;
+
+    private String secondCore;
+
+    private String scienceCore;
+
+    private String electivesHeader;
+
+    private String electivesDescription;
+
+    @Transient
+    List<Course> firstCoreCourses = new ArrayList<>();
+
+    @Transient
+    List<Course> secondCoreCourses = new ArrayList<>();
+
+    @Transient
+    List<Course> scienceCoreCourses = new ArrayList<>();
+
+    @Transient
+    List<Course> electiveCourses = new ArrayList<>();
 }
