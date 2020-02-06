@@ -104,6 +104,8 @@ public class SearchController {
     public List<Object> getSections(){
         List<Object> sections = new ArrayList<>();
          sections.add(searchService.findsection70719ById(1));
+         sections.add(searchService.findSection71401ById(1));
+         sections.add(searchService.findSection71402ById(1));
          return sections;
     }
 
