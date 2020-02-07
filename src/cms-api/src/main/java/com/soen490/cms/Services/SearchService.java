@@ -165,9 +165,9 @@ public class SearchService {
         section71702.setThirdCoreCourses(retrieveSectionCourseLists(section71702.getFourthCore()));
         section71702.setFourthCoreCourses(retrieveSectionCourseLists(section71702.getEightCore()));
         section71702.setFifthCoreCourses(retrieveSectionCourseLists(section71702.getTenthCore()));
-        /*section71702.setSixthCoreCourses(retrieveSectionCourseLists(section71702.getTwelfthCore()));
+        section71702.setSixthCoreCourses(retrieveSectionCourseLists(section71702.getTwelfthCore()));
         section71702.setSeventhCoreCourses(retrieveSectionCourseLists(section71702.getFourteenthCore()));
-        section71702.setEightCoreCourses(retrieveSectionCourseLists(section71702.getSixteenthCore()));*/
+        section71702.setEightCoreCourses(retrieveSectionCourseLists(section71702.getSixteenthCore()));
         return section71702;
     }
 

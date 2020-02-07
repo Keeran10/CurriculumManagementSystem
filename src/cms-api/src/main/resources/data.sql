@@ -237,7 +237,40 @@ INSERT IGNORE INTO course VALUES (80, 4.00, '',
 1, 2, 3, 1, 'SOEN', '', 423, 'Distributed Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (81, 4.00, '',
 1, 2, 3, 1, 'SOEN', '', 487, 'Web Services and Applications', 1, 2);
-
+INSERT IGNORE INTO course VALUES (81, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 326, '', 1, 2);
+INSERT IGNORE INTO course VALUES (82, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 426, '', 1, 2);
+INSERT IGNORE INTO course VALUES (83, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 428, '', 1, 2);
+INSERT IGNORE INTO course VALUES (84, 4.00, '',
+1, 2, 3, 1, 'SOEN', '', 422, '', 1, 2);
+INSERT IGNORE INTO course VALUES (85, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 465, '', 1, 2);
+INSERT IGNORE INTO course VALUES (86, 3.00, '',
+1, 2, 3, 1, 'ACCO', 'Financial and Managerial Accounting', 220, '', 1, 2);
+INSERT IGNORE INTO course VALUES (87, 3.00, '',
+1, 2, 3, 1, 'BSTA', 'Statistical Software for Data Management and Analysis', 445, '', 1, 2);
+INSERT IGNORE INTO course VALUES (88, 3.00, '',
+1, 2, 3, 1, 'BTM', 'E-Business', 387, '', 1, 2);
+INSERT IGNORE INTO course VALUES (89, 3.00, '',
+1, 2, 3, 1, 'BTM', 'Enterprise Resource Planning and Information Technology Integration', 430, '', 1, 2);
+INSERT IGNORE INTO course VALUES (90, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Contemporary Business Thinking', 210, '', 1, 2);
+INSERT IGNORE INTO course VALUES (91, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Organizational Behaviour and Theory', 222, '', 1, 2);
+INSERT IGNORE INTO course VALUES (92, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Marketing Management I', 223, '', 1, 2);
+INSERT IGNORE INTO course VALUES (93, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Production and Operations Management', 225, '', 1, 2);
+INSERT IGNORE INTO course VALUES (94, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Introduction to Finance', 308, '', 1, 2);
+INSERT IGNORE INTO course VALUES (95, 3.00, '',
+1, 2, 3, 1, 'ECON', 'Introduction to Microeconomics', 201, '', 1, 2);
+INSERT IGNORE INTO course VALUES (96, 3.00, '',
+1, 2, 3, 1, 'SCOM', 'Management Science Models for Operations Management', 361, '', 1, 2);
+INSERT IGNORE INTO course VALUES (97, 3.00, '',
+1, 2, 3, 1, 'SCOM', 'Supply Chain Planning and Control', 372, '', 1, 2);
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -403,7 +436,32 @@ INSERT IGNORE INTO degree_requirement VALUES (80, "Web Services and Applications
 INSERT IGNORE INTO degree_requirement VALUES (81, "Web Services and Applications Electives", 79, 6);
 INSERT IGNORE INTO degree_requirement VALUES (82, "Web Services and Applications Electives", 80, 6);
 INSERT IGNORE INTO degree_requirement VALUES (83, "Web Services and Applications Electives", 81, 6);
-
+INSERT IGNORE INTO degree_requirement VALUES (84, "Computer Systems Electives", 81, 6);
+INSERT IGNORE INTO degree_requirement VALUES (85, "Computer Systems Electives", 69, 6);
+INSERT IGNORE INTO degree_requirement VALUES (86, "Computer Systems Electives", 82, 6);
+INSERT IGNORE INTO degree_requirement VALUES (87, "Computer Systems Electives", 83, 6);
+INSERT IGNORE INTO degree_requirement VALUES (88, "Computer Systems Electives", 76, 6);
+INSERT IGNORE INTO degree_requirement VALUES (89, "Computer Systems Electives", 84, 6);
+INSERT IGNORE INTO degree_requirement VALUES (90, "Computer Systems Electives", 80, 6);
+INSERT IGNORE INTO degree_requirement VALUES (91, "Software Systems Core", 81, 6);
+INSERT IGNORE INTO degree_requirement VALUES (92, "Software Systems Core", 53, 6);
+INSERT IGNORE INTO degree_requirement VALUES (93, "Software Systems Core", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (94, "Software Systems Core", 54, 6);
+INSERT IGNORE INTO degree_requirement VALUES (95, "Software Systems Core", 76, 6);
+INSERT IGNORE INTO degree_requirement VALUES (96, "Software Systems Core", 85, 6);
+INSERT IGNORE INTO degree_requirement VALUES (97, "Information Systems Electives", 86, 6);
+INSERT IGNORE INTO degree_requirement VALUES (98, "Information Systems Electives", 87, 6);
+INSERT IGNORE INTO degree_requirement VALUES (99, "Information Systems Electives", 88, 6);
+INSERT IGNORE INTO degree_requirement VALUES (100, "Information Systems Electives", 89 6);
+INSERT IGNORE INTO degree_requirement VALUES (101, "Information Systems Electives", 90, 6);
+INSERT IGNORE INTO degree_requirement VALUES (102, "Information Systems Electives", 91, 6);
+INSERT IGNORE INTO degree_requirement VALUES (103, "Information Systems Electives", 92, 6);
+INSERT IGNORE INTO degree_requirement VALUES (104, "Information Systems Electives", 93, 6);
+INSERT IGNORE INTO degree_requirement VALUES (105, "Information Systems Electives", 94, 6);
+INSERT IGNORE INTO degree_requirement VALUES (106, "Information Systems Electives", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (107, "Information Systems Electives", 95, 6);
+INSERT IGNORE INTO degree_requirement VALUES (108, "Information Systems Electives", 96, 6);
+INSERT IGNORE INTO degree_requirement VALUES (109, "Information Systems Electives", 97, 6);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
