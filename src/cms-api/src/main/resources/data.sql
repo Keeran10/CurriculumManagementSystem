@@ -271,6 +271,24 @@ INSERT IGNORE INTO course VALUES (96, 3.00, '',
 1, 2, 3, 1, 'SCOM', 'Management Science Models for Operations Management', 361, '', 1, 2);
 INSERT IGNORE INTO course VALUES (97, 3.00, '',
 1, 2, 3, 1, 'SCOM', 'Supply Chain Planning and Control', 372, '', 1, 2);
+INSERT IGNORE INTO course VALUES (98, 3.00, '',
+1, 2, 3, 1, 'BIOL', 'Elementary Genetics', 206, '', 1, 2);
+INSERT IGNORE INTO course VALUES (99, 3.00, '',
+1, 2, 3, 1, 'BIOL', 'Molecular and General Genetics', 261, '', 1, 2);
+INSERT IGNORE INTO course VALUES (100, 3.00, '',
+1, 2, 3, 1, 'CHEM', 'Introductory Analytical Chemistry I', 217, '', 1, 2);
+INSERT IGNORE INTO course VALUES (101, 3.00, '',
+1, 2, 3, 1, 'CHEM', 'Introductory Organic Chemistry IS', 221, '', 1, 2);
+INSERT IGNORE INTO course VALUES (102, 3.00, '',
+1, 2, 3, 1, 'CIVI', 'Geology for Civil Engineers', 231, '', 1, 2);
+INSERT IGNORE INTO course VALUES (103, 3.50, '',
+1, 2, 3, 1, 'ELEC', 'Introduction to Semiconductor Materials and Devices', 321, '', 1, 2);
+INSERT IGNORE INTO course VALUES (104, 3.00, '',
+1, 2, 3, 1, 'PHYS', 'Optics', 252, '', 1, 2);
+INSERT IGNORE INTO course VALUES (105, 3.00, '',
+1, 2, 3, 1, 'PHYS', 'Introduction to Astronomy', 284, '', 1, 2);
+INSERT IGNORE INTO course VALUES (106, 3.00, '',
+1, 2, 3, 1, 'PHYS', 'Astrophysics', 385, '', 1, 2);
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -474,6 +492,32 @@ INSERT IGNORE INTO degree_requirement VALUES (118, "Computer Science Group", 46,
 INSERT IGNORE INTO degree_requirement VALUES (119, "Computer Science Group", 47, 1);
 INSERT IGNORE INTO degree_requirement VALUES (120, "Computer Science Group", 48, 1);
 INSERT IGNORE INTO degree_requirement VALUES (121, "Computer Science Group", 49, 1);
+INSERT IGNORE INTO degree_requirement VALUES (122, "Basic and Natural Science Courses", 98, 1);
+INSERT IGNORE INTO degree_requirement VALUES (123, "Basic and Natural Science Courses", 99, 1);
+INSERT IGNORE INTO degree_requirement VALUES (124, "Basic and Natural Science Courses", 100, 1);
+INSERT IGNORE INTO degree_requirement VALUES (125, "Basic and Natural Science Courses", 101, 1);
+INSERT IGNORE INTO degree_requirement VALUES (126, "Basic and Natural Science Courses", 102, 1);
+INSERT IGNORE INTO degree_requirement VALUES (127, "Basic and Natural Science Courses", 103, 1);
+INSERT IGNORE INTO degree_requirement VALUES (128, "Basic and Natural Science Courses", 16, 1);
+INSERT IGNORE INTO degree_requirement VALUES (129, "Basic and Natural Science Courses", 17, 1);
+INSERT IGNORE INTO degree_requirement VALUES (130, "Basic and Natural Science Courses", 19, 1);
+INSERT IGNORE INTO degree_requirement VALUES (131, "Basic and Natural Science Courses", 21, 1);
+INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 24, 1);
+INSERT IGNORE INTO degree_requirement VALUES (133, "Basic and Natural Science Courses", 104, 1);
+INSERT IGNORE INTO degree_requirement VALUES (134, "Basic and Natural Science Courses", 105, 1);
+INSERT IGNORE INTO degree_requirement VALUES (135, "Basic and Natural Science Courses", 106, 1);
+INSERT IGNORE INTO degree_requirement VALUES (136, "Computer Games (CG) Option", 69, 1);
+INSERT IGNORE INTO degree_requirement VALUES (137, "Computer Games (CG) Option", 71, 1);
+INSERT IGNORE INTO degree_requirement VALUES (138, "Computer Games (CG) Option", 72, 1);
+INSERT IGNORE INTO degree_requirement VALUES (139, "Computer Games (CG) Option", 73, 1);
+INSERT IGNORE INTO degree_requirement VALUES (140, "Computer Games (CG) Option", 74, 1);
+INSERT IGNORE INTO degree_requirement VALUES (141, "Computer Games (CG) Option", 75, 1);
+INSERT IGNORE INTO degree_requirement VALUES (142, "Web Services and Applications (WSA) Option", 70, 1);
+INSERT IGNORE INTO degree_requirement VALUES (143, "Web Services and Applications (WSA) Option", 76, 1);
+INSERT IGNORE INTO degree_requirement VALUES (144, "Web Services and Applications (WSA) Option", 77, 1);
+INSERT IGNORE INTO degree_requirement VALUES (145, "Web Services and Applications (WSA) Option", 79, 1);
+INSERT IGNORE INTO degree_requirement VALUES (146, "Web Services and Applications (WSA) Option", 81, 1);
+
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
