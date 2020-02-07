@@ -24,6 +24,8 @@ package com.soen490.cms.Services;
 
 import com.itextpdf.text.DocumentException;
 import com.soen490.cms.Models.*;
+import com.soen490.cms.Models.Sections.Section71701;
+import com.soen490.cms.Models.Sections.Section71702;
 import com.soen490.cms.Models.Sections.Section71709;
 import com.soen490.cms.Repositories.*;
 import com.soen490.cms.Repositories.SectionsRepositories.*;
@@ -110,7 +112,72 @@ public class RequestPackageService {
      * @return True if susection70711 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection71701(String subSections71701, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71701(String subSections71701, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {
+
+        log.info("Json substring70719 received: " + subSections71701);
+        log.info("Json subsectionExtras received: " + sectionExtras);
+
+        if(files != null) {
+            for (MultipartFile file : files)
+                log.info("File received received: " + file.getOriginalFilename());
+        }
+
+        JSONObject sectionExtrasJSON = new JSONObject(sectionExtras);
+
+        int user_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("userId")));
+        int package_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("requestId")));
+
+        RequestPackage requestPackage = requestPackageRepository.findById(package_id);
+
+        Request request = requestRepository.findByRequestId(request_id);
+
+        User user = userRepository.findById(user_id);
+
+
+        Section71701 section71701 = null;
+
+        if (request == null) {
+            request = new Request();
+            section71701 = new Section71701();
+        } else {
+            section71701 = section71701Repository.findById(request.getTargetId());
+        }
+
+        JSONObject subSection71701JSON = new JSONObject(subSections71701);
+
+       section71701.setFirstParagraph((String) subSection71701JSON.get("firstParagraph"));
+        section71701.setSectionId((String) subSection71701JSON.get("sectionId"));
+        section71701.setSectionTitle((String) subSection71701JSON.get("sectionTitle"));
+        section71701.setIsActive(0);
+
+        section71701Repository.save(section71701);
+
+        // Requests
+        request.setRequestType(2); // update
+        request.setTargetType(1); // calendar change
+        request.setTargetId(section71701.getId());
+        request.setOriginalId((Integer) subSection71701JSON.get("id"));
+        request.setRationale((String) sectionExtrasJSON.get("rationale"));
+        request.setResourceImplications((String) sectionExtrasJSON.get("implications"));
+        request.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        request.setUser(user);
+        request.setRequestPackage(requestPackage);
+
+        if(request.getId() == 0)
+            request.setTitle(section71701.getSectionId() + "_create");
+        else
+            request.setTitle(section71701.getSectionId() + "_update");
+
+        requestRepository.save(request);
+
+        log.info("section71701 saved: " + section71701);
+        log.info("request saved: " + request);
+
+        requestPackage.getRequests().add(request);
+
+        return request.getId();
+    }
 
     /**
      * Saves an edited course to the database.
@@ -122,7 +189,106 @@ public class RequestPackageService {
      * @return True if susection70712 has been successfully added to database.
      * @throws JSONException
      */
-    public int saveSection71702(String subSections71702, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {return 0;}
+    public int saveSection71702(String subSections71702, String sectionExtras, MultipartFile[] files, String descriptions) throws JSONException {
+
+        log.info("Json substring70719 received: " + subSections71702);
+        log.info("Json subsectionExtras received: " + sectionExtras);
+
+        if(files != null) {
+            for (MultipartFile file : files)
+                log.info("File received received: " + file.getOriginalFilename());
+        }
+
+        JSONObject sectionExtrasJSON = new JSONObject(sectionExtras);
+
+        int user_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("userId")));
+        int package_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("packageId")));
+        int request_id = Integer.parseInt(String.valueOf(sectionExtrasJSON.get("requestId")));
+
+        RequestPackage requestPackage = requestPackageRepository.findById(package_id);
+
+        Request request = requestRepository.findByRequestId(request_id);
+
+        User user = userRepository.findById(user_id);
+
+        Section71702 section71702 = null;
+
+        if (request == null) {
+            request = new Request();
+            section71702 = new Section71702();
+        } else {
+            section71702 = section71702Repository.findById(request.getTargetId());
+        }
+
+        JSONObject subSection71702JSON = new JSONObject(subSections71702);
+
+        section71702.setSecondCore((String) subSection71702JSON.get("secondCore"));
+        section71702.setFirstCore((String) subSection71702JSON.get("firstCore"));
+        section71702.setFirstParagraph((String) subSection71702JSON.get("firstParagraph"));
+        section71702.setSectionId((String) subSection71702JSON.get("sectionId"));
+        section71702.setSectionTitle((String) subSection71702JSON.get("sectionTitle"));
+        section71702.setThirdCore((String) subSection71702JSON.get("thirdCore"));
+        section71702.setSecondParagraph((String) subSection71702JSON.get("secondParagraph"));
+        section71702.setFourthCore((String) subSection71702JSON.get("fourthCore"));
+        section71702.setThirdParagraph((String) subSection71702JSON.get("thirdParagraph"));
+        section71702.setFifthCore((String) subSection71702JSON.get("fifthCore"));
+        section71702.setFourthParagraph((String) subSection71702JSON.get("fourthParagraph"));
+        section71702.setSixthCore((String) subSection71702JSON.get("sixthCore"));
+        section71702.setFifthParagraph((String) subSection71702JSON.get("fifthParagraph"));
+        section71702.setSeventhCore((String) subSection71702JSON.get("seventhCore"));
+        section71702.setSixthParagraph((String) subSection71702JSON.get("sixthParagraph"));
+        section71702.setEightCore((String) subSection71702JSON.get("eightCore"));
+        section71702.setSeventhParagraph((String) subSection71702JSON.get("seventhParagraph"));
+        section71702.setNinthCore((String) subSection71702JSON.get("ninthCore"));
+        section71702.setEightParagraph((String) subSection71702JSON.get("eightParagraph"));
+        section71702.setTenthCore((String) subSection71702JSON.get("tenthCore"));
+        section71702.setNinthParagraph((String) subSection71702JSON.get("ninthParagraph"));
+        section71702.setEleventhCore((String) subSection71702JSON.get("eleventhCore"));
+        section71702.setTenthParagraph((String) subSection71702JSON.get("tenthParagraph"));
+        section71702.setTwelfthCore((String) subSection71702JSON.get("twelfthCore"));
+        section71702.setEleventhParagraph((String) subSection71702JSON.get("eleventhParagraph"));
+        section71702.setThirteenthCore((String) subSection71702JSON.get("thirteenthCore"));
+        section71702.setTwelfthParagraph((String) subSection71702JSON.get("twelfthParagraph"));
+        section71702.setFourteenthCore((String) subSection71702JSON.get("fourteenthCore"));
+        section71702.setFifteenthCore((String) subSection71702JSON.get("fifteenthCore"));
+        section71702.setThirteenthParagraph((String) subSection71702JSON.get("thirteenthParagraph"));
+        section71702.setSixteenthCore((String) subSection71702JSON.get("sixteenthCore"));
+        section71702.setFourteenthParagraph((String) subSection71702JSON.get("fourteenthParagraph"));
+        section71702.setSeventeenthCore((String) subSection71702JSON.get("seventeenthCore"));
+        section71702.setFifteenthParagraph((String) subSection71702JSON.get("fifteenthParagraph"));
+        section71702.setEighteenthCore((String) subSection71702JSON.get("eighteenthCore"));
+        section71702.setSixteenthParagraph((String) subSection71702JSON.get("sixteenthParagraph"));
+        section71702.setNineteenthCore((String) subSection71702JSON.get("nineteenthCore"));
+        section71702.setSeventeenthParagraph((String) subSection71702JSON.get("seventeenthParagraph"));
+        section71702.setIsActive(0);
+
+        section71702Repository.save(section71702);
+
+        // Requests
+        request.setRequestType(2); // update
+        request.setTargetType(1); // calendar change
+        request.setTargetId(section71702.getId());
+        request.setOriginalId((Integer) subSection71702JSON.get("id"));
+        request.setRationale((String) sectionExtrasJSON.get("rationale"));
+        request.setResourceImplications((String) sectionExtrasJSON.get("implications"));
+        request.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        request.setUser(user);
+        request.setRequestPackage(requestPackage);
+
+        if(request.getId() == 0)
+            request.setTitle(section71702.getSectionId() + "_create");
+        else
+            request.setTitle(section71702.getSectionId() + "_update");
+
+        requestRepository.save(request);
+
+        log.info("section71702 saved: " + section71702);
+        log.info("request saved: " + request);
+
+        requestPackage.getRequests().add(request);
+
+        return request.getId();
+    }
 
     /**
      * Saves an edited course to the database.
