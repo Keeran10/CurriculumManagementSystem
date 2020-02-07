@@ -790,7 +790,6 @@ public class RequestPackageService {
 
         JSONObject subSection71709JSON = new JSONObject(subSections71709);
 
-        section71709.setSecondCore((String) subSection71709JSON.get("secondCore"));
         section71709.setFirstCore((String) subSection71709JSON.get("firstCore"));
         section71709.setSecondCore((String) subSection71709JSON.get("secondCore"));
         section71709.setThirdCore((String) subSection71709JSON.get("thirdCore"));
