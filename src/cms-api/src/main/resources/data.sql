@@ -297,7 +297,7 @@ INSERT IGNORE INTO course VALUES (107, 3.00, 'Prerequisite: ENGR 371. Importance
 1, 0, 3, 1, 'INDU', '', 372, 'Quality Control and Reliability', 0, 4);
 INSERT IGNORE INTO course VALUES (108, 3.00, 'Prerequisite: MECH 311. Engineering design for the control of workplace hazards. Occupational injuries and diseases. Codes and standards. Workplace Hazardous Materials Information Systems (WHMIS). Hazard evaluation and control. Design criteria. Risk assessment. Safety in the manufacturing environment. Applications in ventilation, air cleaning, noise and vibration. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 410, 'Safety Engineering', 0, 4);
-INSERT IGNORE INTO coruse VALUES (109, 3.50, 'Prerequisite: MECH 311. Concepts and benefits of computer integrated manufacturing (CIM). Design for manufacturing. Computer-aided design, process planning, manufacturing (computer numerical control parts programming), and inspection. Robots in CIM. Production planning and scheduling in CIM. System integration. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
+INSERT IGNORE INTO course VALUES (109, 3.50, 'Prerequisite: MECH 311. Concepts and benefits of computer integrated manufacturing (CIM). Design for manufacturing. Computer-aided design, process planning, manufacturing (computer numerical control parts programming), and inspection. Robots in CIM. Production planning and scheduling in CIM. System integration. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', '', 411, 'Computer Integrated Manufacturing', 0, 4);
 INSERT IGNORE INTO course VALUES (110, 3.50, 'Prerequisite: ENGR 371. Elements of anatomy, physiology, and psychology; engineering anthropometry; human capacities and limitations; manual material handling; design of workplaces; human-machines system design; design of controls and displays; shift work. Applications to a manufacturing environment. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', '', 412, 'Human Factors Engineering', 0, 4);
@@ -330,7 +330,7 @@ INSERT IGNORE INTO course VALUES (123, 3.00, '',
 INSERT IGNORE INTO course VALUES (124, 3.00, '',
 1, 0, 3, 1, 'CHEM', '', 217, 'Introductory Analytical Chemistry I', 1, 1);
 INSERT IGNORE INTO course VALUES (125, 3.00, '',
-1, 0, 3, 1, 'CHEM', '', 221, 'Introductory Organic Chemistry I', 1, 1,);
+1, 0, 3, 1, 'CHEM', '', 221, 'Introductory Organic Chemistry I', 1, 1);
 INSERT IGNORE INTO course VALUES (126, 3.00, '',
 1, 0, 3, 1, 'GEOL', '', 206, 'Earthquakes, Volcanoes, and Plate Tectonics', 1, 1);
 INSERT IGNORE INTO course VALUES (127, 3.00, '',
@@ -352,10 +352,10 @@ INSERT IGNORE INTO course VALUES (134, 3.00, '',
 1, 0, 3, 1, 'BTM', '', 430, 'Enterprise Resource Planning and Information Technology Integration', 1, 1);
 INSERT IGNORE INTO course VALUES (135, 3.00, '',
 1, 0, 3, 1, 'BTM', '', 480, 'Project Management', 1, 1);
-INSERT IGNORE INTO course VALUES (136, 1.00, 'Prerequisite: ENCS 282; permission of the Department. Students must submit a report on a topic related to the students’ discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project, or a current engineering practice.'.
-1, 0, 0, 1, 'ENGR', 'NOTE: Students who have received credit for ENGR 410 may not take this course for credit.', 411, 0, 3);
+INSERT IGNORE INTO course VALUES (136, 1.00, 'Prerequisite: ENCS 282; permission of the Department. Students must submit a report on a topic related to the students’ discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project, or a current engineering practice.',
+1, 0, 0, 1, 'ENGR', 'NOTE: Students who have received credit for ENGR 410 may not take this course for credit.', 411, 'Special Technical Report', 0, 3);
 INSERT IGNORE INTO course VALUES (137, 3.00, 'Prerequisite: ENCS 282; minimum 75 credits in the BEng program with a cumulative GPA of 3.00 or better; permission of the Department. Students work on a research project in their area of concentration, selected in consultation with and conducted under the supervision of a faculty member of the Department. The student’s work must culminate in a final report, as well as an oral presentation. Students planning to register for this course should consult with the Department prior to term of planned registration. Intended for students with potential interest in graduate programs.',
-1, 0, 0, 1, 'ENGR', 'NOTE: Must be approved by the Department prior to registration.', 412, 0, 3);
+1, 0, 0, 1, 'ENGR', 'NOTE: Must be approved by the Department prior to registration.', 412, 'Honours Research Project', 0, 3);
 INSERT IGNORE INTO course VALUES (138, 3.00, '',
 1, 0, 3, 1, 'MANA', '', 300, 'Entrepreneurship: Launching Your Business', 1, 1);
 
@@ -746,6 +746,59 @@ INSERT IGNORE INTO section VALUES (78, '71.60', 38, "course");
 INSERT IGNORE INTO section VALUES (79, '71.60', 39, "course");
 INSERT IGNORE INTO section VALUES (80, '71.60', 40, "course");
 INSERT IGNORE INTO section VALUES (81, '71.70.9', 1, "degree");
+
+INSERT IGNORE INTO section VALUES (82, '71.40.2', 7, "degree");
+INSERT IGNORE INTO section VALUES (83, '71.40.2', 120, "course");
+INSERT IGNORE INTO section VALUES (84, '71.40.2', 19, "course");
+INSERT IGNORE INTO section VALUES (85, '71.40.2', 20, "course");
+INSERT IGNORE INTO section VALUES (86, '71.40.2', 98, "course");
+INSERT IGNORE INTO section VALUES (87, '71.40.2', 99, "course");
+INSERT IGNORE INTO section VALUES (88, '71.40.2', 100, "course");
+INSERT IGNORE INTO section VALUES (89, '71.40.2', 101, "course");
+INSERT IGNORE INTO section VALUES (90, '71.40.2', 102, "course");
+INSERT IGNORE INTO section VALUES (91, '71.40.2', 103, "course");
+INSERT IGNORE INTO section VALUES (92, '71.40.2', 104, "course");
+INSERT IGNORE INTO section VALUES (93, '71.40.2', 105, "course");
+INSERT IGNORE INTO section VALUES (94, '71.40.2', 105, "course");
+INSERT IGNORE INTO section VALUES (95, '71.40.2', 106, "course");
+INSERT IGNORE INTO section VALUES (96, '71.40.2', 107, "course");
+INSERT IGNORE INTO section VALUES (97, '71.40.2', 109, "course");
+INSERT IGNORE INTO section VALUES (98, '71.40.2', 110, "course");
+INSERT IGNORE INTO section VALUES (99, '71.40.2', 112, "course");
+INSERT IGNORE INTO section VALUES (100, '71.40.2', 118, "course");
+INSERT IGNORE INTO section VALUES (101, '71.40.2', 22, "course");
+INSERT IGNORE INTO section VALUES (102, '71.40.2', 23, "course");
+INSERT IGNORE INTO section VALUES (103, '71.40.2', 24, "course");
+INSERT IGNORE INTO section VALUES (104, '71.40.2', 25, "course");
+INSERT IGNORE INTO section VALUES (105, '71.40.2', 26, "course");
+INSERT IGNORE INTO section VALUES (106, '71.40.2', 122, "course");
+INSERT IGNORE INTO section VALUES (107, '71.40.2', 123, "course");
+INSERT IGNORE INTO section VALUES (108, '71.40.2', 124, "course");
+INSERT IGNORE INTO section VALUES (109, '71.40.2', 125, "course");
+INSERT IGNORE INTO section VALUES (110, '71.40.2', 126, "course");
+INSERT IGNORE INTO section VALUES (111, '71.40.2', 127, "course");
+INSERT IGNORE INTO section VALUES (112, '71.40.2', 128, "course");
+INSERT IGNORE INTO section VALUES (113, '71.40.2', 129, "course");
+INSERT IGNORE INTO section VALUES (114, '71.40.2', 130, "course");
+INSERT IGNORE INTO section VALUES (115, '71.40.2', 131, "course");
+INSERT IGNORE INTO section VALUES (116, '71.40.2', 132, "course");
+INSERT IGNORE INTO section VALUES (117, '71.40.2', 133, "course");
+INSERT IGNORE INTO section VALUES (118, '71.40.2', 134, "course");
+INSERT IGNORE INTO section VALUES (119, '71.40.2', 135, "course");
+INSERT IGNORE INTO section VALUES (120, '71.40.2', 136, "course");
+INSERT IGNORE INTO section VALUES (121, '71.40.2', 137, "course");
+INSERT IGNORE INTO section VALUES (122, '71.40.2', 108, "course");
+INSERT IGNORE INTO section VALUES (123, '71.40.2', 111, "course");
+INSERT IGNORE INTO section VALUES (124, '71.40.2', 113, "course");
+INSERT IGNORE INTO section VALUES (125, '71.40.2', 114, "course");
+INSERT IGNORE INTO section VALUES (126, '71.40.2', 115, "course");
+INSERT IGNORE INTO section VALUES (127, '71.40.2', 116, "course");
+INSERT IGNORE INTO section VALUES (128, '71.40.2', 117, "course");
+INSERT IGNORE INTO section VALUES (129, '71.40.2', 119, "course");
+INSERT IGNORE INTO section VALUES (130, '71.40.2', 27, "course");
+INSERT IGNORE INTO section VALUES (131, '71.40.2', 34, "course");
+INSERT IGNORE INTO section VALUES (132, '71.40.2', 35, "course");
+
 
 -- id, pdf_file, rejection_rationale, user_id, department_id
 INSERT IGNORE INTO request_package VALUES (1, NULL, NULL, 1, 4); -- creating a package for department of CS & SE
