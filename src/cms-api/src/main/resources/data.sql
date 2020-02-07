@@ -452,7 +452,7 @@ INSERT IGNORE INTO degree_requirement VALUES (96, "Software Systems Core", 85, 6
 INSERT IGNORE INTO degree_requirement VALUES (97, "Information Systems Electives", 86, 6);
 INSERT IGNORE INTO degree_requirement VALUES (98, "Information Systems Electives", 87, 6);
 INSERT IGNORE INTO degree_requirement VALUES (99, "Information Systems Electives", 88, 6);
-INSERT IGNORE INTO degree_requirement VALUES (100, "Information Systems Electives", 89 6);
+INSERT IGNORE INTO degree_requirement VALUES (100, "Information Systems Electives", 89, 6);
 INSERT IGNORE INTO degree_requirement VALUES (101, "Information Systems Electives", 90, 6);
 INSERT IGNORE INTO degree_requirement VALUES (102, "Information Systems Electives", 91, 6);
 INSERT IGNORE INTO degree_requirement VALUES (103, "Information Systems Electives", 92, 6);
@@ -462,6 +462,18 @@ INSERT IGNORE INTO degree_requirement VALUES (106, "Information Systems Elective
 INSERT IGNORE INTO degree_requirement VALUES (107, "Information Systems Electives", 95, 6);
 INSERT IGNORE INTO degree_requirement VALUES (108, "Information Systems Electives", 96, 6);
 INSERT IGNORE INTO degree_requirement VALUES (109, "Information Systems Electives", 97, 6);
+INSERT IGNORE INTO degree_requirement VALUES (110, "Minor in Computer Science", 41, 6);
+INSERT IGNORE INTO degree_requirement VALUES (111, "Minor in Computer Science", 42, 6);
+INSERT IGNORE INTO degree_requirement VALUES (112, "Minor in Computer Science", 44, 6);
+INSERT IGNORE INTO degree_requirement VALUES (113, "Minor in Computer Science", 45, 6);
+INSERT IGNORE INTO degree_requirement VALUES (114, "Minor in Computer Science", 49, 6);
+INSERT IGNORE INTO degree_requirement VALUES (115, "Computer Science Group", 42, 1);
+INSERT IGNORE INTO degree_requirement VALUES (116, "Computer Science Group", 44, 1);
+INSERT IGNORE INTO degree_requirement VALUES (117, "Computer Science Group", 45, 1);
+INSERT IGNORE INTO degree_requirement VALUES (118, "Computer Science Group", 46, 1);
+INSERT IGNORE INTO degree_requirement VALUES (119, "Computer Science Group", 47, 1);
+INSERT IGNORE INTO degree_requirement VALUES (120, "Computer Science Group", 48, 1);
+INSERT IGNORE INTO degree_requirement VALUES (121, "Computer Science Group", 49, 1);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
@@ -572,8 +584,18 @@ INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department C
 INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department Curriculum Committee", NULL);
 
 -- id, first_core, first_paragraph, is_active, second_core, section_id, section_title
-INSERT IGNORE INTO section71709 VALUES (1, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.", 1, "Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
-INSERT IGNORE INTO section71709 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
+INSERT IGNORE INTO section71709 VALUES (1, "Real-Time, Embedded, and Avionics Software (REA) Option",
+"General Program","Engineering Core" ,
+"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.",
+ "Basic and Natural Science Courses",1,
+"Electives", "Software Engineering Core", "Two Basic and Natural Science courses must be selected from the following, including at least one course marked *:",
+ "71.70.9", "Degree Requirements for the BEng in Software Engineering",
+ "Web Services and Applications (WSA) Option", "Computer Games (CG) Option",
+ "Computer Science Group","Students must complete at least 16 credits chosen from the electives list.
+
+Options
+Students must complete at least 16 credits with a minimum of 15 credits from one of the options listed below, including all the courses marked *, and at least one course marked **, and the remainder chosen from the electives list.");
+--INSERT IGNORE INTO section71709 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
 
 -- id, first_paragraph, is_Active, section_id, section_title
 INSERT IGNORE INTO section71701 VALUES (1,"The Computer Science program emphasizes fundamentals and techniques that remain relevant and useful for many years after graduation. The program consists of a combination of core courses in computer science, elective courses in computer science and mathematics, and some free electives. The Computer Science Core provides a basic and broad study of theory, mathematical basics, programming methodology, computer architecture, data structures, operating systems, and software engineering. The option courses are designed to provide an integrated yet specialized training in particular application areas of the discipline. Students may choose either the General Program or one of eight options. Each option involves the study of selected advanced elective courses in computer science to provide further depth in computer science and the particular application area.
