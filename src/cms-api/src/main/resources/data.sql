@@ -289,6 +289,40 @@ INSERT IGNORE INTO course VALUES (105, 3.00, '',
 1, 2, 3, 1, 'PHYS', 'Introduction to Astronomy', 284, '', 1, 2);
 INSERT IGNORE INTO course VALUES (106, 3.00, '',
 1, 2, 3, 1, 'PHYS', 'Astrophysics', 385, '', 1, 2);
+INSERT IGNORE INTO course VALUES (107, 3.50, '',
+1, 2, 3, 1, 'AERO', 'Flight Control Systems', 480, '', 1, 2);
+INSERT IGNORE INTO course VALUES (108, 3.00, '',
+1, 2, 3, 1, 'AERO', 'Avionic Navigation Systems', 482, '', 1, 2);
+INSERT IGNORE INTO course VALUES (109, 3.00, '',
+1, 2, 3, 1, 'COEN', 'Introduction to Real‑Time Systems', 320, '', 1, 2);
+INSERT IGNORE INTO course VALUES (110, 4.00, '',
+1, 2, 3, 1, 'COMP', 'System Software Design', 444, '', 1, 2);
+INSERT IGNORE INTO course VALUES (111, 4.00, '',
+1, 2, 3, 1, 'SOEN', 'Distributed Systems', 423, '', 1, 2);
+INSERT IGNORE INTO course VALUES (112, 4.00, '',
+1, 2, 3, 1, 'COMP', 'Computer Vision', 425, '', 1, 2);
+INSERT IGNORE INTO course VALUES (113, 4.00, '',
+1, 2, 3, 1, 'COMP', 'Compiler Design', 442, '', 1, 2);
+INSERT IGNORE INTO course VALUES (114, 4.00, '',
+1, 2, 3, 1, 'COMP', 'Database Design', 451, '', 1, 2);
+INSERT IGNORE INTO course VALUES (115, 4.00, '',
+1, 2, 3, 1, 'COMP', 'Pattern Recognition', 473, '', 1, 2);
+INSERT IGNORE INTO course VALUES (116, 4.00, '',
+1, 2, 3, 1, 'COMP', 'Intelligent Systems', 474, '', 1, 2);
+INSERT IGNORE INTO course VALUES (117, 4.00, '',
+1, 2, 3, 1, 'COMP', 'Image Processing', 478, '', 1, 2);
+INSERT IGNORE INTO course VALUES (118, 1.00, '',
+1, 2, 3, 1, 'SOEN', 'System Hardware Lab', 298, '', 1, 2);
+INSERT IGNORE INTO course VALUES (119, 3.00, '',
+1, 2, 3, 1, 'SOEN', 'Management of Evolving Systems', 448, '', 1, 2);
+INSERT IGNORE INTO course VALUES (120, 1.00, '',
+1, 2, 3, 1, 'SOEN', 'Software Engineering Project', 491, '', 1, 2);
+INSERT IGNORE INTO course VALUES (121, 3.00, '',
+1, 2, 3, 1, 'SOEN', 'Topics in Software Engineering', 498, '', 1, 2);
+INSERT IGNORE INTO course VALUES (122, 4.00, '',
+1, 2, 3, 1, 'SOEN', 'Topics in Software Engineering', 499, '', 1, 2);
+INSERT IGNORE INTO course VALUES (123, 1.00, '',
+1, 2, 3, 1, 'ENGR', 'Special Technical Report', 411, '', 1, 2);
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -517,6 +551,37 @@ INSERT IGNORE INTO degree_requirement VALUES (143, "Web Services and Application
 INSERT IGNORE INTO degree_requirement VALUES (144, "Web Services and Applications (WSA) Option", 77, 1);
 INSERT IGNORE INTO degree_requirement VALUES (145, "Web Services and Applications (WSA) Option", 79, 1);
 INSERT IGNORE INTO degree_requirement VALUES (146, "Web Services and Applications (WSA) Option", 81, 1);
+INSERT IGNORE INTO degree_requirement VALUES (147, "Real-Time, Embedded, and Avionics Software (REA) Option", 107, 1);
+INSERT IGNORE INTO degree_requirement VALUES (148, "Real-Time, Embedded, and Avionics Software (REA) Option", 108, 1);
+INSERT IGNORE INTO degree_requirement VALUES (149, "Real-Time, Embedded, and Avionics Software (REA) Option", 109, 1);
+INSERT IGNORE INTO degree_requirement VALUES (150, "Real-Time, Embedded, and Avionics Software (REA) Option", 69, 1);
+INSERT IGNORE INTO degree_requirement VALUES (151, "Real-Time, Embedded, and Avionics Software (REA) Option", 110, 1);
+INSERT IGNORE INTO degree_requirement VALUES (152, "Real-Time, Embedded, and Avionics Software (REA) Option", 84, 1);
+INSERT IGNORE INTO degree_requirement VALUES (153, "Real-Time, Embedded, and Avionics Software (REA) Option", 111, 1);
+INSERT IGNORE INTO degree_requirement VALUES (154, "Electives", 69, 1);
+INSERT IGNORE INTO degree_requirement VALUES (155, "Electives", 70, 1);
+INSERT IGNORE INTO degree_requirement VALUES (156, "Electives", 71, 1);
+INSERT IGNORE INTO degree_requirement VALUES (157, "Electives", 112, 1);
+INSERT IGNORE INTO degree_requirement VALUES (158, "Electives", 82, 1);
+INSERT IGNORE INTO degree_requirement VALUES (159, "Electives", 83, 1);
+INSERT IGNORE INTO degree_requirement VALUES (160, "Electives", 113, 1);
+INSERT IGNORE INTO degree_requirement VALUES (161, "Electives", 76, 1);
+INSERT IGNORE INTO degree_requirement VALUES (162, "Electives", 114, 1);
+INSERT IGNORE INTO degree_requirement VALUES (163, "Electives", 85, 1);
+INSERT IGNORE INTO degree_requirement VALUES (164, "Electives", 73, 1);
+INSERT IGNORE INTO degree_requirement VALUES (165, "Electives", 115, 1);
+INSERT IGNORE INTO degree_requirement VALUES (166, "Electives", 116, 1);
+INSERT IGNORE INTO degree_requirement VALUES (167, "Electives", 117, 1);
+INSERT IGNORE INTO degree_requirement VALUES (168, "Electives", 77, 1);
+INSERT IGNORE INTO degree_requirement VALUES (169, "Electives", 118, 1);
+INSERT IGNORE INTO degree_requirement VALUES (170, "Electives", 84, 1);
+INSERT IGNORE INTO degree_requirement VALUES (171, "Electives", 80, 1);
+INSERT IGNORE INTO degree_requirement VALUES (172, "Electives", 119, 1);
+INSERT IGNORE INTO degree_requirement VALUES (173, "Electives", 120, 1);
+INSERT IGNORE INTO degree_requirement VALUES (174, "Electives", 121, 1);
+INSERT IGNORE INTO degree_requirement VALUES (175, "Electives", 122, 1);
+INSERT IGNORE INTO degree_requirement VALUES (176, "Electives", 123, 1);
+
 
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
