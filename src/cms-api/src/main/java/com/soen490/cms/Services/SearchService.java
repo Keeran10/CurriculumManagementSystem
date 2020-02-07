@@ -167,11 +167,11 @@ public class SearchService {
         section71702.setFirstCoreCourses(retrieveSectionCourseLists(section71702.getFirstCore()));
         section71702.setSecondCoreCourses(retrieveSectionCourseLists(section71702.getSecondCore()));
         section71702.setThirdCoreCourses(retrieveSectionCourseLists(section71702.getFourthCore()));
-        /*section71702.setFourthCoreCourses(retrieveSectionCourseLists(section71702.getEightCore()));
+        section71702.setFourthCoreCourses(retrieveSectionCourseLists(section71702.getEightCore()));
         section71702.setFifthCoreCourses(retrieveSectionCourseLists(section71702.getTenthCore()));
         section71702.setSixthCoreCourses(retrieveSectionCourseLists(section71702.getTwelfthCore()));
         section71702.setSeventhCoreCourses(retrieveSectionCourseLists(section71702.getFourteenthCore()));
-        section71702.setEightCoreCourses(retrieveSectionCourseLists(section71702.getSixteenthCore()));*/
+        section71702.setEightCoreCourses(retrieveSectionCourseLists(section71702.getSixteenthCore()));
         return section71702;
     }
 
@@ -193,6 +193,7 @@ public class SearchService {
         log.info("find Section71705 " + section_id);
 
         Section71705 section71705 = section71705Repository.findBySubSectionId(section_id);
+        section71705.setFirstCoreCourses(retrieveSectionCourseLists(section71705.getFirstCore()));
         return section71705;
     }
 
@@ -226,6 +227,12 @@ public class SearchService {
         // can add as many core here for the entire section of 70.71.9
         section71709.setFirstCoreCourses(retrieveSectionCourseLists(section71709.getFirstCore()));
         section71709.setSecondCoreCourses(retrieveSectionCourseLists(section71709.getSecondCore()));
+        section71709.setThirdCoreCourses(retrieveSectionCourseLists(section71709.getThirdCore()));
+        /*section71709.setFourthCoreCourses(retrieveSectionCourseLists(section71709.getFourthCore()));
+        section71709.setFifthCoreCourses(retrieveSectionCourseLists(section71709.getSixthCore()));
+        section71709.setSixthCoreCourses(retrieveSectionCourseLists(section71709.getSeventhCore()));
+        section71709.setSeventhCoreCourses(retrieveSectionCourseLists(section71709.getEighthCore()));
+        section71709.setEightCoreCourses(retrieveSectionCourseLists(section71709.getNinthCore()));*/
 
         return section71709;
     }

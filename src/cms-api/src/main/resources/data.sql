@@ -214,7 +214,66 @@ INSERT IGNORE INTO course VALUES (67, 3.00, '',
 1, 2, 3, 1, 'MATH ', '', 339, 'Combinatorics', 1, 2);
 INSERT IGNORE INTO course VALUES (68, 3.00, '',
 1, 2, 3, 1, 'MATH ', '', 392, 'Elementary Number Theory', 1, 2);
-
+INSERT IGNORE INTO course VALUES (69, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 345, 'Advanced Program Design with C++', 1, 2);
+INSERT IGNORE INTO course VALUES (70, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 353, 'Databases', 1, 2);
+INSERT IGNORE INTO course VALUES (71, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 371, 'Computer Graphics', 1, 2);
+INSERT IGNORE INTO course VALUES (72, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 376, 'Introduction to Game Development', 1, 2);
+INSERT IGNORE INTO course VALUES (73, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 472, 'Artificial Intelligence', 1, 2);
+INSERT IGNORE INTO course VALUES (74, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 476, 'Advanced Game Development', 1, 2);
+INSERT IGNORE INTO course VALUES (75, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 477, 'Animation for Computer Games', 1, 2);
+INSERT IGNORE INTO course VALUES (76, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 445, 'Data Communication and Computer Networks', 1, 2);
+INSERT IGNORE INTO course VALUES (77, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 479, 'Information Retrieval and Web Search', 1, 2);
+INSERT IGNORE INTO course VALUES (78, 3.00, '',
+1, 2, 3, 1, 'SOEN', '', 287, 'Web Programming', 1, 2);
+INSERT IGNORE INTO course VALUES (79, 3.00, '',
+1, 2, 3, 1, 'SOEN', '', 387, 'Web Based Enterprise Application Design', 1, 2);
+INSERT IGNORE INTO course VALUES (80, 4.00, '',
+1, 2, 3, 1, 'SOEN', '', 423, 'Distributed Systems', 1, 2);
+INSERT IGNORE INTO course VALUES (81, 4.00, '',
+1, 2, 3, 1, 'SOEN', '', 487, 'Web Services and Applications', 1, 2);
+INSERT IGNORE INTO course VALUES (81, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 326, '', 1, 2);
+INSERT IGNORE INTO course VALUES (82, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 426, '', 1, 2);
+INSERT IGNORE INTO course VALUES (83, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 428, '', 1, 2);
+INSERT IGNORE INTO course VALUES (84, 4.00, '',
+1, 2, 3, 1, 'SOEN', '', 422, '', 1, 2);
+INSERT IGNORE INTO course VALUES (85, 3.00, '',
+1, 2, 3, 1, 'COMP', '', 465, '', 1, 2);
+INSERT IGNORE INTO course VALUES (86, 3.00, '',
+1, 2, 3, 1, 'ACCO', 'Financial and Managerial Accounting', 220, '', 1, 2);
+INSERT IGNORE INTO course VALUES (87, 3.00, '',
+1, 2, 3, 1, 'BSTA', 'Statistical Software for Data Management and Analysis', 445, '', 1, 2);
+INSERT IGNORE INTO course VALUES (88, 3.00, '',
+1, 2, 3, 1, 'BTM', 'E-Business', 387, '', 1, 2);
+INSERT IGNORE INTO course VALUES (89, 3.00, '',
+1, 2, 3, 1, 'BTM', 'Enterprise Resource Planning and Information Technology Integration', 430, '', 1, 2);
+INSERT IGNORE INTO course VALUES (90, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Contemporary Business Thinking', 210, '', 1, 2);
+INSERT IGNORE INTO course VALUES (91, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Organizational Behaviour and Theory', 222, '', 1, 2);
+INSERT IGNORE INTO course VALUES (92, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Marketing Management I', 223, '', 1, 2);
+INSERT IGNORE INTO course VALUES (93, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Production and Operations Management', 225, '', 1, 2);
+INSERT IGNORE INTO course VALUES (94, 3.00, '',
+1, 2, 3, 1, 'COMM', 'Introduction to Finance', 308, '', 1, 2);
+INSERT IGNORE INTO course VALUES (95, 3.00, '',
+1, 2, 3, 1, 'ECON', 'Introduction to Microeconomics', 201, '', 1, 2);
+INSERT IGNORE INTO course VALUES (96, 3.00, '',
+1, 2, 3, 1, 'SCOM', 'Management Science Models for Operations Management', 361, '', 1, 2);
+INSERT IGNORE INTO course VALUES (97, 3.00, '',
+1, 2, 3, 1, 'SCOM', 'Supply Chain Planning and Control', 372, '', 1, 2);
 
 -- id, is_active, name, number, type, course_id
 INSERT IGNORE INTO requisite VALUES (1, 1, "SOEN", 341, "prerequisite", 6);-- soen 342 needs 341
@@ -366,6 +425,58 @@ INSERT IGNORE INTO degree_requirement VALUES (66, "Mathematics Electives", 65, 6
 INSERT IGNORE INTO degree_requirement VALUES (67, "Mathematics Electives", 66, 6);
 INSERT IGNORE INTO degree_requirement VALUES (68, "Mathematics Electives", 67, 6);
 INSERT IGNORE INTO degree_requirement VALUES (69, "Mathematics Electives", 68, 6);
+INSERT IGNORE INTO degree_requirement VALUES (70, "Computer Games Electives", 69, 6);
+INSERT IGNORE INTO degree_requirement VALUES (71, "Computer Games Electives", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (72, "Computer Games Electives", 71, 6);
+INSERT IGNORE INTO degree_requirement VALUES (73, "Computer Games Electives", 72, 6);
+INSERT IGNORE INTO degree_requirement VALUES (74, "Computer Games Electives", 73, 6);
+INSERT IGNORE INTO degree_requirement VALUES (75, "Computer Games Electives", 74, 6);
+INSERT IGNORE INTO degree_requirement VALUES (76, "Computer Games Electives", 75, 6);
+INSERT IGNORE INTO degree_requirement VALUES (77, "Computer Games Electives", 76, 6);
+INSERT IGNORE INTO degree_requirement VALUES (78, "Web Services and Applications Electives", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (79, "Web Services and Applications Electives", 77, 6);
+INSERT IGNORE INTO degree_requirement VALUES (80, "Web Services and Applications Electives", 78, 6);
+INSERT IGNORE INTO degree_requirement VALUES (81, "Web Services and Applications Electives", 79, 6);
+INSERT IGNORE INTO degree_requirement VALUES (82, "Web Services and Applications Electives", 80, 6);
+INSERT IGNORE INTO degree_requirement VALUES (83, "Web Services and Applications Electives", 81, 6);
+INSERT IGNORE INTO degree_requirement VALUES (84, "Computer Systems Electives", 81, 6);
+INSERT IGNORE INTO degree_requirement VALUES (85, "Computer Systems Electives", 69, 6);
+INSERT IGNORE INTO degree_requirement VALUES (86, "Computer Systems Electives", 82, 6);
+INSERT IGNORE INTO degree_requirement VALUES (87, "Computer Systems Electives", 83, 6);
+INSERT IGNORE INTO degree_requirement VALUES (88, "Computer Systems Electives", 76, 6);
+INSERT IGNORE INTO degree_requirement VALUES (89, "Computer Systems Electives", 84, 6);
+INSERT IGNORE INTO degree_requirement VALUES (90, "Computer Systems Electives", 80, 6);
+INSERT IGNORE INTO degree_requirement VALUES (91, "Software Systems Core", 81, 6);
+INSERT IGNORE INTO degree_requirement VALUES (92, "Software Systems Core", 53, 6);
+INSERT IGNORE INTO degree_requirement VALUES (93, "Software Systems Core", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (94, "Software Systems Core", 54, 6);
+INSERT IGNORE INTO degree_requirement VALUES (95, "Software Systems Core", 76, 6);
+INSERT IGNORE INTO degree_requirement VALUES (96, "Software Systems Core", 85, 6);
+INSERT IGNORE INTO degree_requirement VALUES (97, "Information Systems Electives", 86, 6);
+INSERT IGNORE INTO degree_requirement VALUES (98, "Information Systems Electives", 87, 6);
+INSERT IGNORE INTO degree_requirement VALUES (99, "Information Systems Electives", 88, 6);
+INSERT IGNORE INTO degree_requirement VALUES (100, "Information Systems Electives", 89, 6);
+INSERT IGNORE INTO degree_requirement VALUES (101, "Information Systems Electives", 90, 6);
+INSERT IGNORE INTO degree_requirement VALUES (102, "Information Systems Electives", 91, 6);
+INSERT IGNORE INTO degree_requirement VALUES (103, "Information Systems Electives", 92, 6);
+INSERT IGNORE INTO degree_requirement VALUES (104, "Information Systems Electives", 93, 6);
+INSERT IGNORE INTO degree_requirement VALUES (105, "Information Systems Electives", 94, 6);
+INSERT IGNORE INTO degree_requirement VALUES (106, "Information Systems Electives", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (107, "Information Systems Electives", 95, 6);
+INSERT IGNORE INTO degree_requirement VALUES (108, "Information Systems Electives", 96, 6);
+INSERT IGNORE INTO degree_requirement VALUES (109, "Information Systems Electives", 97, 6);
+INSERT IGNORE INTO degree_requirement VALUES (110, "Minor in Computer Science", 41, 6);
+INSERT IGNORE INTO degree_requirement VALUES (111, "Minor in Computer Science", 42, 6);
+INSERT IGNORE INTO degree_requirement VALUES (112, "Minor in Computer Science", 44, 6);
+INSERT IGNORE INTO degree_requirement VALUES (113, "Minor in Computer Science", 45, 6);
+INSERT IGNORE INTO degree_requirement VALUES (114, "Minor in Computer Science", 49, 6);
+INSERT IGNORE INTO degree_requirement VALUES (115, "Computer Science Group", 42, 1);
+INSERT IGNORE INTO degree_requirement VALUES (116, "Computer Science Group", 44, 1);
+INSERT IGNORE INTO degree_requirement VALUES (117, "Computer Science Group", 45, 1);
+INSERT IGNORE INTO degree_requirement VALUES (118, "Computer Science Group", 46, 1);
+INSERT IGNORE INTO degree_requirement VALUES (119, "Computer Science Group", 47, 1);
+INSERT IGNORE INTO degree_requirement VALUES (120, "Computer Science Group", 48, 1);
+INSERT IGNORE INTO degree_requirement VALUES (121, "Computer Science Group", 49, 1);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
@@ -476,8 +587,18 @@ INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 1, "Department C
 INSERT IGNORE INTO approval_pipeline_request_package VALUES (1, 3, "Department Curriculum Committee", NULL);
 
 -- id, first_core, first_paragraph, is_active, second_core, section_id, section_title
-INSERT IGNORE INTO section71709 VALUES (1, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.", 1, "Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
-INSERT IGNORE INTO section71709 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
+INSERT IGNORE INTO section71709 VALUES (1, "Real-Time, Embedded, and Avionics Software (REA) Option",
+"General Program","Engineering Core" ,
+"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study. Students may choose either the general program or one of three options: Computer Games; Web Services and Applications; and Real‑Time, Embedded, and Avionics Software. The program consists of the Engineering Core, Software Engineering Core, general program or an option, and electives.",
+ "Basic and Natural Science Courses",1,
+"Electives", "Software Engineering Core", "Two Basic and Natural Science courses must be selected from the following, including at least one course marked *:",
+ "71.70.9", "Degree Requirements for the BEng in Software Engineering",
+ "Web Services and Applications (WSA) Option", "Computer Games (CG) Option",
+ "Computer Science Group","Students must complete at least 16 credits chosen from the electives list.
+
+Options
+Students must complete at least 16 credits with a minimum of 15 credits from one of the options listed below, including all the courses marked *, and at least one course marked **, and the remainder chosen from the electives list.");
+--INSERT IGNORE INTO section71709 VALUES (2, "Engineering Core" ,"Students registered in the Software Engineering program must complete a minimum of 120 credits during four years of full‑time study.", 0,"Software Engineering Core", "70.71.9", "Degree Requirements for the BEng in Software Engineering");
 
 -- id, first_paragraph, is_Active, section_id, section_title
 INSERT IGNORE INTO section71701 VALUES (1,"The Computer Science program emphasizes fundamentals and techniques that remain relevant and useful for many years after graduation. The program consists of a combination of core courses in computer science, elective courses in computer science and mathematics, and some free electives. The Computer Science Core provides a basic and broad study of theory, mathematical basics, programming methodology, computer architecture, data structures, operating systems, and software engineering. The option courses are designed to provide an integrated yet specialized training in particular application areas of the discipline. Students may choose either the General Program or one of eight options. Each option involves the study of selected advanced elective courses in computer science to provide further depth in computer science and the particular application area.
