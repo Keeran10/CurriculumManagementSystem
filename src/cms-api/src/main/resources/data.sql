@@ -275,88 +275,88 @@ INSERT IGNORE INTO course VALUES (96, 3.00, '',
 INSERT IGNORE INTO course VALUES (97, 3.00, '',
 1, 2, 3, 1, 'SCOM', 'Supply Chain Planning and Control', 372, '', 1, 2);
 
-INSERT IGNORE INTO course VALUES (98, 3.00, 'History of industrial engineering. Role of industrial engineers. Types of manufacturing and production systems. Material flow systems. Job design and work measurement. Introduction to solution methodologies for problems which relate to the design and operation of integrated production systems of humans, machines, information, and materials. Lectures: three hours per week. Tutorial: one hour per week.',
+INSERT IGNORE INTO course VALUES (124, 3.00, 'History of industrial engineering. Role of industrial engineers. Types of manufacturing and production systems. Material flow systems. Job design and work measurement. Introduction to solution methodologies for problems which relate to the design and operation of integrated production systems of humans, machines, information, and materials. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'INDU', '', 211, 'Introduction to Production and Manufacturing Systems', 1, 4);
-INSERT IGNORE INTO course VALUES (99, 3.50, 'Prerequisite: ENGR 371. Modelling techniques in simulation; application of discrete simulation techniques to model industrial systems; random number generation and testing; design of simulation experiments using different simulation languages; output data analysis. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks. Tutorial: one hour per week.',
+INSERT IGNORE INTO course VALUES (125, 3.50, 'Prerequisite: ENGR 371. Modelling techniques in simulation; application of discrete simulation techniques to model industrial systems; random number generation and testing; design of simulation experiments using different simulation languages; output data analysis. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks. Tutorial: one hour per week.',
 1, 2, 3, 1, 'INDU', '', 311, 'Simulation of Industrial Systems', 1, 4);
-INSERT IGNORE INTO course VALUES (100, 3.00, 'Prerequisite: INDU 323 The systems approach to production. Interrelationships among the component blocks of the system: forecasting, aggregate planning, production, material and capacity planning, operations scheduling. An overview of integrated production planning and control including MRP II, Just in Time manufacturing (JIT). Lectures: three hours per week. Tutorial: one hour per week.',
+INSERT IGNORE INTO course VALUES (126, 3.00, 'Prerequisite: INDU 323 The systems approach to production. Interrelationships among the component blocks of the system: forecasting, aggregate planning, production, material and capacity planning, operations scheduling. An overview of integrated production planning and control including MRP II, Just in Time manufacturing (JIT). Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'INDU', '', 320, 'Production Engineering', 1, 4);
-INSERT IGNORE INTO course VALUES (101, 3.00, 'Prerequisite: INDU 320. Lean fundamentals; lean manufacturing; lean engineering; lean principles, tools and techniques, practices, and implementation; five S’s, process analysis/spaghetti charts, value engineering; value stream mapping; standardized work/standard times; set-up reduction/line balancing; unit manufacturing; cell layout/cellular manufacturing; total productive maintenance; kanban; lean supply chain management; transition-to-lean roadmap; people/organizational issues in the lean enterprise; Six Sigma; TOM; agile manufacturing. Lectures: three hours per week. Tutorial: one hour per week.',
+INSERT IGNORE INTO course VALUES (127, 3.00, 'Prerequisite: INDU 320. Lean fundamentals; lean manufacturing; lean engineering; lean principles, tools and techniques, practices, and implementation; five S’s, process analysis/spaghetti charts, value engineering; value stream mapping; standardized work/standard times; set-up reduction/line balancing; unit manufacturing; cell layout/cellular manufacturing; total productive maintenance; kanban; lean supply chain management; transition-to-lean roadmap; people/organizational issues in the lean enterprise; Six Sigma; TOM; agile manufacturing. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'INDU', 'NOTE: Students who have received credit for INDU 420 may not take this course for credit.', 321, 'Lean Manufacturing', 1, 4);
-INSERT IGNORE INTO course VALUES (102, 3.50, 'Prerequisite: ENGR 213, 233; INDU 211. An introduction to deterministic mathematical models with emphasis on linear programming. Applications to production, logistics, and service systems. Computer solution of optimization problems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
+INSERT IGNORE INTO course VALUES (128, 3.50, 'Prerequisite: ENGR 213, 233; INDU 211. An introduction to deterministic mathematical models with emphasis on linear programming. Applications to production, logistics, and service systems. Computer solution of optimization problems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', '', 323, 'Operations Research I', 1, 4);
-INSERT IGNORE INTO course VALUES (103, 3.50, 'Prerequisite: INDU 323. Integer programming (IP), including modelling and enumerative algorithms for solving IP problems; post-optimality analysis. Network flows, dynamic programming and non-linear programming. Applications in the design and operation of industrial systems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
+INSERT IGNORE INTO course VALUES (129, 3.50, 'Prerequisite: INDU 323. Integer programming (IP), including modelling and enumerative algorithms for solving IP problems; post-optimality analysis. Network flows, dynamic programming and non-linear programming. Applications in the design and operation of industrial systems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', 'NOTE: Students who have received credit for INDU 430 may not take this course for credit.', 324, 'Operations Research II', 1, 4);
-INSERT IGNORE INTO course VALUES (104, 3.00, 'Prerequisite: ENCS 282; ENGR 301 previously or concurrently. Organizational structures, their growth and change. Motivation, leadership, and group behaviour. Design of alternatives for improving organizational performance and effectiveness. Planning, organization and management of engineering projects. Management for total quality. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (130, 3.00, 'Prerequisite: ENCS 282; ENGR 301 previously or concurrently. Organizational structures, their growth and change. Motivation, leadership, and group behaviour. Design of alternatives for improving organizational performance and effectiveness. Planning, organization and management of engineering projects. Management for total quality. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 330, 'Engineering Management', 0, 4);
-INSERT IGNORE INTO course VALUES (105, 3.00, 'Prerequisite: INDU 324. Overview of transportation systems; airlines, railways, ocean liners, cargo, energy transportation and pipelines. Supply chain characterization. Site location. Distribution planning. Vehicle routing. Fleet scheduling. Crew scheduling. Demand management. Replenishment management. Revenue management. Geographic information systems. Real-time network control issues. Project. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (131, 3.00, 'Prerequisite: INDU 324. Overview of transportation systems; airlines, railways, ocean liners, cargo, energy transportation and pipelines. Supply chain characterization. Site location. Distribution planning. Vehicle routing. Fleet scheduling. Crew scheduling. Demand management. Replenishment management. Revenue management. Geographic information systems. Real-time network control issues. Project. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', 'NOTE: Students who have received credit for INDU 442 may not take this course for credit.', 342, 'Logistics Network Models', 0, 4);
-INSERT IGNORE INTO course VALUES (106, 3.00, 'Prerequisite: ENGR 371. Overview of probability theory; probability distributions; exponential model and Poisson process; discrete-time and continuous-time Markov chains; classification of states; birth and death processes; queuing theory. Application to industrial engineering problems. Lectures: three hours per week. Tutorial: one hour per week.',
+INSERT IGNORE INTO course VALUES (132, 3.00, 'Prerequisite: ENGR 371. Overview of probability theory; probability distributions; exponential model and Poisson process; discrete-time and continuous-time Markov chains; classification of states; birth and death processes; queuing theory. Application to industrial engineering problems. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'INDU', '', 371, 'Stochastic Models in Industrial Engineering', 1, 4);
-INSERT IGNORE INTO course VALUES (107, 3.00, 'Prerequisite: ENGR 371. Importance of quality; total quality management; statistical concepts relevant to process control; control charts for variables and attributes; sampling plans. Introduction to reliability models and acceptance testing; issues of standardization. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (133, 3.00, 'Prerequisite: ENGR 371. Importance of quality; total quality management; statistical concepts relevant to process control; control charts for variables and attributes; sampling plans. Introduction to reliability models and acceptance testing; issues of standardization. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 372, 'Quality Control and Reliability', 0, 4);
-INSERT IGNORE INTO course VALUES (108, 3.00, 'Prerequisite: MECH 311. Engineering design for the control of workplace hazards. Occupational injuries and diseases. Codes and standards. Workplace Hazardous Materials Information Systems (WHMIS). Hazard evaluation and control. Design criteria. Risk assessment. Safety in the manufacturing environment. Applications in ventilation, air cleaning, noise and vibration. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (134, 3.00, 'Prerequisite: MECH 311. Engineering design for the control of workplace hazards. Occupational injuries and diseases. Codes and standards. Workplace Hazardous Materials Information Systems (WHMIS). Hazard evaluation and control. Design criteria. Risk assessment. Safety in the manufacturing environment. Applications in ventilation, air cleaning, noise and vibration. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 410, 'Safety Engineering', 0, 4);
-INSERT IGNORE INTO course VALUES (109, 3.50, 'Prerequisite: MECH 311. Concepts and benefits of computer integrated manufacturing (CIM). Design for manufacturing. Computer-aided design, process planning, manufacturing (computer numerical control parts programming), and inspection. Robots in CIM. Production planning and scheduling in CIM. System integration. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
+INSERT IGNORE INTO course VALUES (135, 3.50, 'Prerequisite: MECH 311. Concepts and benefits of computer integrated manufacturing (CIM). Design for manufacturing. Computer-aided design, process planning, manufacturing (computer numerical control parts programming), and inspection. Robots in CIM. Production planning and scheduling in CIM. System integration. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', '', 411, 'Computer Integrated Manufacturing', 0, 4);
-INSERT IGNORE INTO course VALUES (110, 3.50, 'Prerequisite: ENGR 371. Elements of anatomy, physiology, and psychology; engineering anthropometry; human capacities and limitations; manual material handling; design of workplaces; human-machines system design; design of controls and displays; shift work. Applications to a manufacturing environment. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
+INSERT IGNORE INTO course VALUES (136, 3.50, 'Prerequisite: ENGR 371. Elements of anatomy, physiology, and psychology; engineering anthropometry; human capacities and limitations; manual material handling; design of workplaces; human-machines system design; design of controls and displays; shift work. Applications to a manufacturing environment. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', '', 412, 'Human Factors Engineering', 0, 4);
-INSERT IGNORE INTO course VALUES (111, 3.5, 'Prerequisite: INDU 311 previously or concurrently; INDU 320. An introduction to planning and design of production and manufacturing. Facility layout and location. Material handling systems and equipment specifications. Computer-aided facilities planning. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
+INSERT IGNORE INTO course VALUES (137, 3.5, 'Prerequisite: INDU 311 previously or concurrently; INDU 320. An introduction to planning and design of production and manufacturing. Facility layout and location. Material handling systems and equipment specifications. Computer-aided facilities planning. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', '', 421, 'Facilities Design and Material Handling Systems', 1, 4);
-INSERT IGNORE INTO course VALUES (112, 3.5, 'Prerequisite: INDU 320. Inventory analysis and control systems; the role of forecasting in controlling inventories; the role of inventories in physical distribution; supply chain management; work in process inventories; inventory in just-in-time manufacturing systems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
+INSERT IGNORE INTO course VALUES (138, 3.5, 'Prerequisite: INDU 320. Inventory analysis and control systems; the role of forecasting in controlling inventories; the role of inventories in physical distribution; supply chain management; work in process inventories; inventory in just-in-time manufacturing systems. Lectures: three hours per week. Tutorial: one hour per week. Laboratory: two hours per week, alternate weeks.',
 1, 2, 3, 1, 'INDU', '', 423, 'Inventory Control', 1, 4);
-INSERT IGNORE INTO course VALUES (113, 3.0, 'Prerequisite: MECH 311. Development processes and organizations, product planning, identifying customer needs, product specifications, concept generation, concept selection, concept testing, product architecture, industrial design, design for manufacturing, prototyping robust design, patents and intellectual property. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (139, 3.0, 'Prerequisite: MECH 311. Development processes and organizations, product planning, identifying customer needs, product specifications, concept generation, concept selection, concept testing, product architecture, industrial design, design for manufacturing, prototyping robust design, patents and intellectual property. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', 'NOTE: Students who have received credit for AERO 444 may not take this course for credit.', 440, 'Product Design and Development', 0, 4);
-INSERT IGNORE INTO course VALUES (114, 3.0, 'Prerequisite: INDU 372. Overview of the Six Sigma concepts and tools. Six Sigma deployment practices: Define, Measure, Analyze, Improve and Control phases (DMAIC). Project development, and the DMAIC problem-solving approach. Project. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (140, 3.0, 'Prerequisite: INDU 372. Overview of the Six Sigma concepts and tools. Six Sigma deployment practices: Define, Measure, Analyze, Improve and Control phases (DMAIC). Project development, and the DMAIC problem-solving approach. Project. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 441, 'Introduction to Six Sigma', 0, 4);
-INSERT IGNORE INTO course VALUES (115, 3.0, 'Prerequisite: ENGR 371; INDU 320. Introduction to service strategy and operations. Service demand forecasting and development of new services. Service facility location and layout planning. Applications of decision models in service operations and service quality control. Cost analysis, queuing models, risk management and resource allocation models for service decisions. Service outsourcing and supply chain issues. Efficiency and effectiveness issues in different service sectors such as emergency force deployment, municipal resource allocation and health care. Case studies using operations research, operations management, and statistical techniques. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (141, 3.0, 'Prerequisite: ENGR 371; INDU 320. Introduction to service strategy and operations. Service demand forecasting and development of new services. Service facility location and layout planning. Applications of decision models in service operations and service quality control. Cost analysis, queuing models, risk management and resource allocation models for service decisions. Service outsourcing and supply chain issues. Efficiency and effectiveness issues in different service sectors such as emergency force deployment, municipal resource allocation and health care. Case studies using operations research, operations management, and statistical techniques. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 466, 'Decision Models in Service Sector', 0, 4);
-INSERT IGNORE INTO course VALUES (116, 3.5, 'Prerequisite: INDU 372. Statistical experimental design issues such as randomized blocks, factorial designs at two levels, applications on factorial designs, building models, Taguchi methods. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (142, 3.5, 'Prerequisite: INDU 372. Statistical experimental design issues such as randomized blocks, factorial designs at two levels, applications on factorial designs, building models, Taguchi methods. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 475, 'Advanced Concepts in Quality Improvement', 0, 4);
-INSERT IGNORE INTO course VALUES (117, 3.0, 'Prerequisite: INDU 311, 324. This course uses the case teaching method to train industrial engineering students to analyze real-world situations using the tools of operations research. Students assume the roles of engineering consultants working together to solve a problem posed by the client in each case. As a consequence, students obtain experience dealing with all steps involved in solving a real problem, from identification of stakeholders, problem formulation and identification of data requirements, to model implementation and analysis of results. Students are required to participate in class discussions of the case and to present their solutions in either report or presentation form. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (143, 3.0, 'Prerequisite: INDU 311, 324. This course uses the case teaching method to train industrial engineering students to analyze real-world situations using the tools of operations research. Students assume the roles of engineering consultants working together to solve a problem posed by the client in each case. As a consequence, students obtain experience dealing with all steps involved in solving a real problem, from identification of stakeholders, problem formulation and identification of data requirements, to model implementation and analysis of results. Students are required to participate in class discussions of the case and to present their solutions in either report or presentation form. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 480, 'Cases in Industrial Engineering', 0, 4);
-INSERT IGNORE INTO course VALUES (118, 4.0, 'Prerequisite: 75 credits in the program; ENCS 282; ENGR 301; INDU 421 previously or concurrently. A supervised design, simulation or experimental capstone design project including a preliminary project proposal with complete project plan and a technical report at the end of the fall term; a final report by the group and individual oral presentation at the end of the winter term. Lectures: one hour per week, one term. Equivalent laboratory time: three hours per week, two terms.',
+INSERT IGNORE INTO course VALUES (144, 4.0, 'Prerequisite: 75 credits in the program; ENCS 282; ENGR 301; INDU 421 previously or concurrently. A supervised design, simulation or experimental capstone design project including a preliminary project proposal with complete project plan and a technical report at the end of the fall term; a final report by the group and individual oral presentation at the end of the winter term. Lectures: one hour per week, one term. Equivalent laboratory time: three hours per week, two terms.',
 1, 3, 1, 1, 'INDU', 'NOTE: Students will work in groups under direct supervision of a faculty member.', 490, 'Capstone Industrial Engineering Design Project', 0, 4);
-INSERT IGNORE INTO course VALUES (119, 3.0, 'Prerequisite: Permission of the Department Chair. This course may be offered in a given year upon the authorization of the Mechanical, Industrial and Aerospace Engineering Department. The course content may vary from offering to offering and will be chosen to complement the elective courses available in the Industrial Engineering program. Lectures: three hours per week.',
+INSERT IGNORE INTO course VALUES (145, 3.0, 'Prerequisite: Permission of the Department Chair. This course may be offered in a given year upon the authorization of the Mechanical, Industrial and Aerospace Engineering Department. The course content may vary from offering to offering and will be chosen to complement the elective courses available in the Industrial Engineering program. Lectures: three hours per week.',
 1, 0, 3, 1, 'INDU', '', 498, 'Topics in Industrial Engineering', 0, 4);
 
-INSERT IGNORE INTO course VALUES (120, 3, 'Prerequisite: PHYS 204; ENGR 213 previously or concurrently. Forces in a plane and in space, moments of forces, Varignon’s theorem, rigid bodies in equilibrium, free-body diagram. Centroids, centres of gravity. Distributed forces, moments of inertia. Principle of virtual work. Kinematics of particles and rigid bodies. Forces and accelerations; work and energy; impulse and momentum. Kinetics of particles and rigid bodies. Lectures: three hours per week. Tutorial: one hour per week.',
+INSERT IGNORE INTO course VALUES (146, 3, 'Prerequisite: PHYS 204; ENGR 213 previously or concurrently. Forces in a plane and in space, moments of forces, Varignon’s theorem, rigid bodies in equilibrium, free-body diagram. Centroids, centres of gravity. Distributed forces, moments of inertia. Principle of virtual work. Kinematics of particles and rigid bodies. Forces and accelerations; work and energy; impulse and momentum. Kinetics of particles and rigid bodies. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'ENGR', '', 245, 'Mechanical Analysis', 1, 3);
 
-INSERT IGNORE INTO course VALUES (122, 3.00, '',
+INSERT IGNORE INTO course VALUES (147, 3.00, '',
 1, 0, 3, 1, 'BIOL', '', 206, 'Elementary Genetics', 1, 1);
-INSERT IGNORE INTO course VALUES (123, 3.00, '',
+INSERT IGNORE INTO course VALUES (148, 3.00, '',
 1, 0, 3, 1, 'BIOL', '', 261, 'Molecular and General Genetics', 1, 1);
-INSERT IGNORE INTO course VALUES (124, 3.00, '',
+INSERT IGNORE INTO course VALUES (149, 3.00, '',
 1, 0, 3, 1, 'CHEM', '', 217, 'Introductory Analytical Chemistry I', 1, 1);
-INSERT IGNORE INTO course VALUES (125, 3.00, '',
+INSERT IGNORE INTO course VALUES (150, 3.00, '',
 1, 0, 3, 1, 'CHEM', '', 221, 'Introductory Organic Chemistry I', 1, 1);
-INSERT IGNORE INTO course VALUES (126, 3.00, '',
+INSERT IGNORE INTO course VALUES (151, 3.00, '',
 1, 0, 3, 1, 'GEOL', '', 206, 'Earthquakes, Volcanoes, and Plate Tectonics', 1, 1);
-INSERT IGNORE INTO course VALUES (127, 3.00, '',
+INSERT IGNORE INTO course VALUES (152, 3.00, '',
 1, 0, 3, 1, 'GEOL', '', 208, 'The Earth, Moon and the Planets', 1, 1);
-INSERT IGNORE INTO course VALUES (128, 3.00, '',
+INSERT IGNORE INTO course VALUES (153, 3.00, '',
 1, 0, 3, 1, 'PHYS', '', 252, 'Optics', 1, 1);
-INSERT IGNORE INTO course VALUES (129, 3.00, '',
+INSERT IGNORE INTO course VALUES (154, 3.00, '',
 1, 0, 3, 1, 'PHYS', '', 260, 'Introductory Biophysics', 1, 1);
-INSERT IGNORE INTO course VALUES (130, 3.00, '',
+INSERT IGNORE INTO course VALUES (155, 3.00, '',
 1, 0, 3, 1, 'PHYS', '', 270, 'Introduction to Energy and Environment', 1, 1);
-INSERT IGNORE INTO course VALUES (131, 3.00, '',
+INSERT IGNORE INTO course VALUES (156, 3.00, '',
 1, 0, 3, 1, 'PHYS', '', 284, 'Introduction to Astronomy', 1, 1);
-INSERT IGNORE INTO course VALUES (132, 3.00, '',
+INSERT IGNORE INTO course VALUES (157, 3.00, '',
 1, 0, 3, 1, 'PHYS', '', 385, 'Astrophysics', 1,1);
 
-INSERT IGNORE INTO course VALUES (133, 3.00, '',
+INSERT IGNORE INTO course VALUES (158, 3.00, '',
 1, 0, 3, 1, 'BSTA', '', 478, 'Data Mining Techniques', 1,1);
-INSERT IGNORE INTO course VALUES (134, 3.00, '',
+INSERT IGNORE INTO course VALUES (159, 3.00, '',
 1, 0, 3, 1, 'BTM', '', 430, 'Enterprise Resource Planning and Information Technology Integration', 1, 1);
-INSERT IGNORE INTO course VALUES (135, 3.00, '',
+INSERT IGNORE INTO course VALUES (160, 3.00, '',
 1, 0, 3, 1, 'BTM', '', 480, 'Project Management', 1, 1);
-INSERT IGNORE INTO course VALUES (136, 1.00, 'Prerequisite: ENCS 282; permission of the Department. Students must submit a report on a topic related to the students’ discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project, or a current engineering practice.',
+INSERT IGNORE INTO course VALUES (161, 1.00, 'Prerequisite: ENCS 282; permission of the Department. Students must submit a report on a topic related to the students’ discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project, or a current engineering practice.',
 1, 0, 0, 1, 'ENGR', 'NOTE: Students who have received credit for ENGR 410 may not take this course for credit.', 411, 'Special Technical Report', 0, 3);
-INSERT IGNORE INTO course VALUES (137, 3.00, 'Prerequisite: ENCS 282; minimum 75 credits in the BEng program with a cumulative GPA of 3.00 or better; permission of the Department. Students work on a research project in their area of concentration, selected in consultation with and conducted under the supervision of a faculty member of the Department. The student’s work must culminate in a final report, as well as an oral presentation. Students planning to register for this course should consult with the Department prior to term of planned registration. Intended for students with potential interest in graduate programs.',
+INSERT IGNORE INTO course VALUES (162, 3.00, 'Prerequisite: ENCS 282; minimum 75 credits in the BEng program with a cumulative GPA of 3.00 or better; permission of the Department. Students work on a research project in their area of concentration, selected in consultation with and conducted under the supervision of a faculty member of the Department. The student’s work must culminate in a final report, as well as an oral presentation. Students planning to register for this course should consult with the Department prior to term of planned registration. Intended for students with potential interest in graduate programs.',
 1, 0, 0, 1, 'ENGR', 'NOTE: Must be approved by the Department prior to registration.', 412, 'Honours Research Project', 0, 3);
-INSERT IGNORE INTO course VALUES (138, 3.00, '',
+INSERT IGNORE INTO course VALUES (163, 3.00, '',
 1, 0, 3, 1, 'MANA', '', 300, 'Entrepreneurship: Launching Your Business', 1, 1);
 
 
@@ -441,47 +441,49 @@ INSERT IGNORE INTO requisite VALUES (65, 1, "MECH", 344, "prerequisite", 38);
 INSERT IGNORE INTO requisite VALUES (66, 1, "MECH", 390, "corequisite", 38);
 INSERT IGNORE INTO requisite VALUES (67, 1, "75 credits in the program", 000, "prerequisite", 38);
 
-INSERT IGNORE INTO requisite VALUES (76, 1, "ENGR", 371, "prerequisite", 99);
-INSERT IGNORE INTO requisite VALUES (77, 1, "INDU", 323, "prerequisite", 100);
-INSERT IGNORE INTO requisite VALUES (78, 1, "INDU", 320, "prerequisite", 101);
-INSERT IGNORE INTO requisite VALUES (79, 1, "INDU", 420, "antirequisite", 101);
-INSERT IGNORE INTO requisite VALUES (80, 1, "INDU", 211, "prerequisite", 102);
-INSERT IGNORE INTO requisite VALUES (81, 1, "ENGR", 213, "prerequisite", 102);
-INSERT IGNORE INTO requisite VALUES (82, 1, "ENGR", 233, "prerequisite", 102);
-INSERT IGNORE INTO requisite VALUES (83, 1, "INDU", 323, "prerequisite", 103);
-INSERT IGNORE INTO requisite VALUES (84, 1, "INDU", 430, "antirequisite", 103);
-INSERT IGNORE INTO requisite VALUES (85, 1, "ENCS", 282, "prerequisite", 104);
-INSERT IGNORE INTO requisite VALUES (86, 1, "ENGR", 301, "corequisite", 104);
-INSERT IGNORE INTO requisite VALUES (87, 1, "INDU", 324, "prerequisite", 105);
-INSERT IGNORE INTO requisite VALUES (88, 1, "INDU", 442, "antirequisite", 105);
-INSERT IGNORE INTO requisite VALUES (89, 1, "ENGR", 371, "prerequisite", 106);
-INSERT IGNORE INTO requisite VALUES (90, 1, "ENGR", 371, "prerequisite", 107);
-INSERT IGNORE INTO requisite VALUES (91, 1, "MECH", 311, "prerequisite", 108);
-INSERT IGNORE INTO requisite VALUES (92, 1, "MECH", 311, "prerequisite", 109);
-INSERT IGNORE INTO requisite VALUES (93, 1, "ENGR", 371, "prerequisite", 110);
-INSERT IGNORE INTO requisite VALUES (94, 1, "INDU", 311, "corequisite", 111);
-INSERT IGNORE INTO requisite VALUES (95, 1, "INDU", 320, "prerequisite", 111);
-INSERT IGNORE INTO requisite VALUES (96, 1, "INDU", 320, "prerequisite", 112);
-INSERT IGNORE INTO requisite VALUES (97, 1, "MECH", 311, "prerequisite", 113);
-INSERT IGNORE INTO requisite VALUES (98, 1, "AERO", 444, "antirequisite", 113);
-INSERT IGNORE INTO requisite VALUES (99, 1, "INDU", 472, "prerequisite", 114);
-INSERT IGNORE INTO requisite VALUES (100, 1, "ENGR", 371, "prerequisite", 115);
-INSERT IGNORE INTO requisite VALUES (101, 1, "INDU", 320, "prerequisite", 115);
-INSERT IGNORE INTO requisite VALUES (102, 1, "INDU", 372, "prerequisite", 116);
-INSERT IGNORE INTO requisite VALUES (103, 1, "INDU", 311, "prerequisite", 117);
-INSERT IGNORE INTO requisite VALUES (104, 1, "INDU", 324, "prerequisite", 117);
-INSERT IGNORE INTO requisite VALUES (105, 1, "75 credits in the program", 000, "prerequisite", 118);
-INSERT IGNORE INTO requisite VALUES (106, 1, "Permission of the Department Chair", 000, "prerequisite", 119);
 
-INSERT IGNORE INTO requisite VALUES (107, 1, "PHYS", 204, "prerequisite", 120);
-INSERT IGNORE INTO requisite VALUES (108, 1, "ENGR", 213, "corequisite", 120);
-INSERT IGNORE INTO requisite VALUES (109, 1, "ENCS", 282, "prerequisite", 133);
-INSERT IGNORE INTO requisite VALUES (110, 1, "Permission of the Department", 000, "prerequisite", 133);
-INSERT IGNORE INTO requisite VALUES (111, 1, "ENGR", 410, "antirequisite", 133);
-INSERT IGNORE INTO requisite VALUES (112, 1, "ENCS", 282, "prerequisite", 134);
-INSERT IGNORE INTO requisite VALUES (113, 1, "75 credits in the program", 000, "prerequisite", 134);
-INSERT IGNORE INTO requisite VALUES (114, 1, "GPA of 3.0 or better", 000, "prerequisite", 134);
-INSERT IGNORE INTO requisite VALUES (115, 1, "Permission of the Department", 000, "prerequisite", 134);
+INSERT IGNORE INTO requisite VALUES (177, 1, "INDU", 323, "prerequisite", 126);
+INSERT IGNORE INTO requisite VALUES (178, 1, "INDU", 320, "prerequisite", 127);
+INSERT IGNORE INTO requisite VALUES (179, 1, "INDU", 420, "antirequisite", 127);
+INSERT IGNORE INTO requisite VALUES (180, 1, "INDU", 211, "prerequisite", 128);
+INSERT IGNORE INTO requisite VALUES (181, 1, "ENGR", 213, "prerequisite", 128);
+INSERT IGNORE INTO requisite VALUES (182, 1, "ENGR", 233, "prerequisite", 128);
+INSERT IGNORE INTO requisite VALUES (183, 1, "INDU", 323, "prerequisite", 129);
+INSERT IGNORE INTO requisite VALUES (184, 1, "INDU", 430, "antirequisite", 129);
+INSERT IGNORE INTO requisite VALUES (185, 1, "ENCS", 282, "prerequisite", 130);
+INSERT IGNORE INTO requisite VALUES (186, 1, "ENGR", 301, "corequisite", 130);
+INSERT IGNORE INTO requisite VALUES (187, 1, "INDU", 324, "prerequisite", 131);
+INSERT IGNORE INTO requisite VALUES (188, 1, "INDU", 442, "antirequisite", 131);
+INSERT IGNORE INTO requisite VALUES (189, 1, "ENGR", 371, "prerequisite", 132);
+INSERT IGNORE INTO requisite VALUES (190, 1, "ENGR", 371, "prerequisite", 133);
+INSERT IGNORE INTO requisite VALUES (191, 1, "MECH", 311, "prerequisite", 134);
+INSERT IGNORE INTO requisite VALUES (192, 1, "MECH", 311, "prerequisite", 135);
+INSERT IGNORE INTO requisite VALUES (193, 1, "ENGR", 371, "prerequisite", 136);
+INSERT IGNORE INTO requisite VALUES (194, 1, "INDU", 311, "corequisite", 137);
+INSERT IGNORE INTO requisite VALUES (195, 1, "INDU", 320, "prerequisite", 137);
+INSERT IGNORE INTO requisite VALUES (196, 1, "INDU", 320, "prerequisite", 138);
+INSERT IGNORE INTO requisite VALUES (197, 1, "MECH", 311, "prerequisite", 139);
+INSERT IGNORE INTO requisite VALUES (198, 1, "AERO", 444, "antirequisite", 139);
+INSERT IGNORE INTO requisite VALUES (199, 1, "INDU", 472, "prerequisite", 140);
+INSERT IGNORE INTO requisite VALUES (200, 1, "ENGR", 371, "prerequisite", 141);
+INSERT IGNORE INTO requisite VALUES (201, 1, "INDU", 320, "prerequisite", 142);
+INSERT IGNORE INTO requisite VALUES (202, 1, "INDU", 372, "prerequisite", 142);
+INSERT IGNORE INTO requisite VALUES (203, 1, "INDU", 311, "prerequisite", 143);
+INSERT IGNORE INTO requisite VALUES (204, 1, "INDU", 324, "prerequisite", 143);
+INSERT IGNORE INTO requisite VALUES (205, 1, "75 credits in the program", 000, "prerequisite", 144);
+INSERT IGNORE INTO requisite VALUES (206, 1, "Permission of the Department Chair", 000, "prerequisite", 145);
+
+INSERT IGNORE INTO requisite VALUES (207, 1, "PHYS", 204, "prerequisite", 146);
+INSERT IGNORE INTO requisite VALUES (208, 1, "ENGR", 213, "corequisite", 146);
+INSERT IGNORE INTO requisite VALUES (209, 1, "ENCS", 282, "prerequisite", 158);
+INSERT IGNORE INTO requisite VALUES (210, 1, "Permission of the Department", 000, "prerequisite", 163);
+INSERT IGNORE INTO requisite VALUES (211, 1, "ENGR", 410, "antirequisite", 163);
+INSERT IGNORE INTO requisite VALUES (212, 1, "ENCS", 282, "prerequisite", 162);
+INSERT IGNORE INTO requisite VALUES (213, 1, "75 credits in the program", 000, "prerequisite", 162);
+INSERT IGNORE INTO requisite VALUES (214, 1, "GPA of 3.0 or better", 000, "prerequisite", 162);
+INSERT IGNORE INTO requisite VALUES (215, 1, "Permission of the Department", 000, "prerequisite", 162);
+
+INSERT IGNORE INTO requisite VALUES (216, 1, "ENGR", 371, "prerequisite", 125);
 
 -- id, core, course_id, degree_id
 INSERT IGNORE INTO degree_requirement VALUES (1, "Software Engineering Core", 1, 1);
@@ -605,58 +607,57 @@ INSERT IGNORE INTO degree_requirement VALUES (119, "Computer Science Group", 47,
 INSERT IGNORE INTO degree_requirement VALUES (120, "Computer Science Group", 48, 1);
 INSERT IGNORE INTO degree_requirement VALUES (121, "Computer Science Group", 49, 1);
 
-INSERT IGNORE INTO degree_requirement VALUES (122, "Industrial Engineering Core", 120, 7);
-INSERT IGNORE INTO degree_requirement VALUES (123, "Industrial Engineering Core", 19, 7);
-INSERT IGNORE INTO degree_requirement VALUES (124, "Industrial Engineering Core", 20, 7);
-INSERT IGNORE INTO degree_requirement VALUES (125, "Industrial Engineering Core", 98, 7);
-INSERT IGNORE INTO degree_requirement VALUES (126, "Industrial Engineering Core", 99, 7);
-INSERT IGNORE INTO degree_requirement VALUES (127, "Industrial Engineering Core", 100, 7);
-INSERT IGNORE INTO degree_requirement VALUES (128, "Industrial Engineering Core", 101, 7);
-INSERT IGNORE INTO degree_requirement VALUES (129, "Industrial Engineering Core", 102, 7);
-INSERT IGNORE INTO degree_requirement VALUES (130, "Industrial Engineering Core", 103, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 104, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 105, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 106, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 107, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 109, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 110, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 111, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 112, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 104, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 118, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 22, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 23, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 24, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 25, 7);
-INSERT IGNORE INTO degree_requirement VALUES (131, "Industrial Engineering Core", 26, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 122, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 123, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 124, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 125, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 126, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 127, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 128, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 129, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 130, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 131, 7);
-INSERT IGNORE INTO degree_requirement VALUES (132, "Basic and Natural Science Courses", 132, 7);
-INSERT IGNORE INTO degree_requirement VALUES (133, "Indu Electives", 133, 7);
-INSERT IGNORE INTO degree_requirement VALUES (134, "Indu Electives", 134, 7);
-INSERT IGNORE INTO degree_requirement VALUES (135, "Indu Electives", 135, 7);
-INSERT IGNORE INTO degree_requirement VALUES (136, "Indu Electives", 21, 7);
-INSERT IGNORE INTO degree_requirement VALUES (137, "Indu Electives", 136, 7);
-INSERT IGNORE INTO degree_requirement VALUES (138, "Indu Electives", 137, 7);
-INSERT IGNORE INTO degree_requirement VALUES (139, "Indu Electives", 108, 7);
-INSERT IGNORE INTO degree_requirement VALUES (140, "Indu Electives", 113, 7);
-INSERT IGNORE INTO degree_requirement VALUES (141, "Indu Electives", 114, 7);
-INSERT IGNORE INTO degree_requirement VALUES (142, "Indu Electives", 115, 7);
-INSERT IGNORE INTO degree_requirement VALUES (143, "Indu Electives", 116, 7);
-INSERT IGNORE INTO degree_requirement VALUES (144, "Indu Electives", 117, 7);
-INSERT IGNORE INTO degree_requirement VALUES (145, "Indu Electives", 119, 7);
-INSERT IGNORE INTO degree_requirement VALUES (145, "Indu Electives", 138, 7);
-INSERT IGNORE INTO degree_requirement VALUES (145, "Indu Electives", 27, 7);
-INSERT IGNORE INTO degree_requirement VALUES (145, "Indu Electives", 34, 7);
-INSERT IGNORE INTO degree_requirement VALUES (145, "Indu Electives", 35, 7);
+INSERT IGNORE INTO degree_requirement VALUES (177, "Industrial Engineering Core", 120, 7);
+INSERT IGNORE INTO degree_requirement VALUES (178, "Industrial Engineering Core", 19, 7);
+INSERT IGNORE INTO degree_requirement VALUES (179, "Industrial Engineering Core", 20, 7);
+INSERT IGNORE INTO degree_requirement VALUES (180, "Industrial Engineering Core", 124, 7);
+INSERT IGNORE INTO degree_requirement VALUES (181, "Industrial Engineering Core", 125, 7);
+INSERT IGNORE INTO degree_requirement VALUES (182, "Industrial Engineering Core", 126, 7);
+INSERT IGNORE INTO degree_requirement VALUES (183, "Industrial Engineering Core", 127, 7);
+INSERT IGNORE INTO degree_requirement VALUES (184, "Industrial Engineering Core", 128, 7);
+INSERT IGNORE INTO degree_requirement VALUES (185, "Industrial Engineering Core", 129, 7);
+INSERT IGNORE INTO degree_requirement VALUES (186, "Industrial Engineering Core", 130, 7);
+INSERT IGNORE INTO degree_requirement VALUES (187, "Industrial Engineering Core", 131, 7);
+INSERT IGNORE INTO degree_requirement VALUES (188, "Industrial Engineering Core", 132, 7);
+INSERT IGNORE INTO degree_requirement VALUES (189, "Industrial Engineering Core", 133, 7);
+INSERT IGNORE INTO degree_requirement VALUES (190, "Industrial Engineering Core", 135, 7);
+INSERT IGNORE INTO degree_requirement VALUES (191, "Industrial Engineering Core", 136, 7);
+INSERT IGNORE INTO degree_requirement VALUES (192, "Industrial Engineering Core", 137, 7);
+INSERT IGNORE INTO degree_requirement VALUES (193, "Industrial Engineering Core", 138, 7);
+INSERT IGNORE INTO degree_requirement VALUES (194, "Industrial Engineering Core", 144, 7);
+INSERT IGNORE INTO degree_requirement VALUES (195, "Industrial Engineering Core", 22, 7);
+INSERT IGNORE INTO degree_requirement VALUES (196, "Industrial Engineering Core", 23, 7);
+INSERT IGNORE INTO degree_requirement VALUES (197, "Industrial Engineering Core", 24, 7);
+INSERT IGNORE INTO degree_requirement VALUES (198, "Industrial Engineering Core", 25, 7);
+INSERT IGNORE INTO degree_requirement VALUES (199, "Industrial Engineering Core", 26, 7);
+INSERT IGNORE INTO degree_requirement VALUES (200, "Basic and Natural Science Courses", 147, 7);
+INSERT IGNORE INTO degree_requirement VALUES (201, "Basic and Natural Science Courses", 148, 7);
+INSERT IGNORE INTO degree_requirement VALUES (202, "Basic and Natural Science Courses", 149, 7);
+INSERT IGNORE INTO degree_requirement VALUES (203, "Basic and Natural Science Courses", 150, 7);
+INSERT IGNORE INTO degree_requirement VALUES (204, "Basic and Natural Science Courses", 151, 7);
+INSERT IGNORE INTO degree_requirement VALUES (205, "Basic and Natural Science Courses", 152, 7);
+INSERT IGNORE INTO degree_requirement VALUES (206, "Basic and Natural Science Courses", 153, 7);
+INSERT IGNORE INTO degree_requirement VALUES (207, "Basic and Natural Science Courses", 154, 7);
+INSERT IGNORE INTO degree_requirement VALUES (208, "Basic and Natural Science Courses", 155, 7);
+INSERT IGNORE INTO degree_requirement VALUES (209, "Basic and Natural Science Courses", 156, 7);
+INSERT IGNORE INTO degree_requirement VALUES (210, "Basic and Natural Science Courses", 157, 7);
+INSERT IGNORE INTO degree_requirement VALUES (211, "Indu Electives", 158, 7);
+INSERT IGNORE INTO degree_requirement VALUES (212, "Indu Electives", 159, 7);
+INSERT IGNORE INTO degree_requirement VALUES (213, "Indu Electives", 160, 7);
+INSERT IGNORE INTO degree_requirement VALUES (214, "Indu Electives", 21, 7);
+INSERT IGNORE INTO degree_requirement VALUES (215, "Indu Electives", 136, 7);
+INSERT IGNORE INTO degree_requirement VALUES (216, "Indu Electives", 137, 7);
+INSERT IGNORE INTO degree_requirement VALUES (217, "Indu Electives", 134, 7);
+INSERT IGNORE INTO degree_requirement VALUES (218, "Indu Electives", 139, 7);
+INSERT IGNORE INTO degree_requirement VALUES (219, "Indu Electives", 140, 7);
+INSERT IGNORE INTO degree_requirement VALUES (220, "Indu Electives", 141, 7);
+INSERT IGNORE INTO degree_requirement VALUES (221, "Indu Electives", 142, 7);
+INSERT IGNORE INTO degree_requirement VALUES (222, "Indu Electives", 143, 7);
+INSERT IGNORE INTO degree_requirement VALUES (223, "Indu Electives", 145, 7);
+INSERT IGNORE INTO degree_requirement VALUES (224, "Indu Electives", 163, 7);
+INSERT IGNORE INTO degree_requirement VALUES (225, "Indu Electives", 27, 7);
+INSERT IGNORE INTO degree_requirement VALUES (226, "Indu Electives", 34, 7);
+INSERT IGNORE INTO degree_requirement VALUES (227, "Indu Electives", 35, 7);
 
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
