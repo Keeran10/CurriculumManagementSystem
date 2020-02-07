@@ -792,7 +792,17 @@ public class RequestPackageService {
 
         section71709.setSecondCore((String) subSection71709JSON.get("secondCore"));
         section71709.setFirstCore((String) subSection71709JSON.get("firstCore"));
+        section71709.setSecondCore((String) subSection71709JSON.get("secondCore"));
+        section71709.setThirdCore((String) subSection71709JSON.get("thirdCore"));
+        section71709.setFourthCore((String) subSection71709JSON.get("fourthCore"));
+        section71709.setFifthCore((String) subSection71709JSON.get("fifthCore"));
+        section71709.setSixthCore((String) subSection71709JSON.get("sixthCore"));
+        section71709.setSeventhCore((String) subSection71709JSON.get("seventhCore"));
+        section71709.setEighthCore((String) subSection71709JSON.get("eighthCore"));
+        section71709.setNinthCore((String) subSection71709JSON.get("ninthCore"));
         section71709.setFirstParagraph((String) subSection71709JSON.get("firstParagraph"));
+        section71709.setSecondParagraph((String) subSection71709JSON.get("secondParagraph"));
+        section71709.setThirdParagraph((String) subSection71709JSON.get("thirdParagraph"));
         section71709.setSectionId((String) subSection71709JSON.get("sectionId"));
         section71709.setSectionTitle((String) subSection71709JSON.get("sectionTitle"));
         section71709.setIsActive(0);
