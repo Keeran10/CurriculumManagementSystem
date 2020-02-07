@@ -211,6 +211,32 @@ INSERT IGNORE INTO course VALUES (67, 3.00, '',
 1, 2, 3, 1, 'MATH ', '', 339, 'Combinatorics', 1, 2);
 INSERT IGNORE INTO course VALUES (68, 3.00, '',
 1, 2, 3, 1, 'MATH ', '', 392, 'Elementary Number Theory', 1, 2);
+INSERT IGNORE INTO course VALUES (69, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 345, 'Advanced Program Design with C++', 1, 2);
+INSERT IGNORE INTO course VALUES (70, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 353, 'Databases', 1, 2);
+INSERT IGNORE INTO course VALUES (71, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 371, 'Computer Graphics', 1, 2);
+INSERT IGNORE INTO course VALUES (72, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 376, 'Introduction to Game Development', 1, 2);
+INSERT IGNORE INTO course VALUES (73, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 472, 'Artificial Intelligence', 1, 2);
+INSERT IGNORE INTO course VALUES (74, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 476, 'Advanced Game Development', 1, 2);
+INSERT IGNORE INTO course VALUES (75, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 477, 'Animation for Computer Games', 1, 2);
+INSERT IGNORE INTO course VALUES (76, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 445, 'Data Communication and Computer Networks', 1, 2);
+INSERT IGNORE INTO course VALUES (77, 4.00, '',
+1, 2, 3, 1, 'COMP', '', 479, 'Information Retrieval and Web Search', 1, 2);
+INSERT IGNORE INTO course VALUES (78, 3.00, '',
+1, 2, 3, 1, 'SOEN', '', 287, 'Web Programming', 1, 2);
+INSERT IGNORE INTO course VALUES (79, 3.00, '',
+1, 2, 3, 1, 'SOEN', '', 387, 'Web Based Enterprise Application Design', 1, 2);
+INSERT IGNORE INTO course VALUES (80, 4.00, '',
+1, 2, 3, 1, 'SOEN', '', 423, 'Distributed Systems', 1, 2);
+INSERT IGNORE INTO course VALUES (81, 4.00, '',
+1, 2, 3, 1, 'SOEN', '', 487, 'Web Services and Applications', 1, 2);
 
 
 -- id, is_active, name, number, type, course_id
@@ -363,6 +389,21 @@ INSERT IGNORE INTO degree_requirement VALUES (66, "Mathematics Electives", 65, 6
 INSERT IGNORE INTO degree_requirement VALUES (67, "Mathematics Electives", 66, 6);
 INSERT IGNORE INTO degree_requirement VALUES (68, "Mathematics Electives", 67, 6);
 INSERT IGNORE INTO degree_requirement VALUES (69, "Mathematics Electives", 68, 6);
+INSERT IGNORE INTO degree_requirement VALUES (70, "Computer Games Electives", 69, 6);
+INSERT IGNORE INTO degree_requirement VALUES (71, "Computer Games Electives", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (72, "Computer Games Electives", 71, 6);
+INSERT IGNORE INTO degree_requirement VALUES (73, "Computer Games Electives", 72, 6);
+INSERT IGNORE INTO degree_requirement VALUES (74, "Computer Games Electives", 73, 6);
+INSERT IGNORE INTO degree_requirement VALUES (75, "Computer Games Electives", 74, 6);
+INSERT IGNORE INTO degree_requirement VALUES (76, "Computer Games Electives", 75, 6);
+INSERT IGNORE INTO degree_requirement VALUES (77, "Computer Games Electives", 76, 6);
+INSERT IGNORE INTO degree_requirement VALUES (78, "Web Services and Applications Electives", 70, 6);
+INSERT IGNORE INTO degree_requirement VALUES (79, "Web Services and Applications Electives", 77, 6);
+INSERT IGNORE INTO degree_requirement VALUES (80, "Web Services and Applications Electives", 78, 6);
+INSERT IGNORE INTO degree_requirement VALUES (81, "Web Services and Applications Electives", 79, 6);
+INSERT IGNORE INTO degree_requirement VALUES (82, "Web Services and Applications Electives", 80, 6);
+INSERT IGNORE INTO degree_requirement VALUES (83, "Web Services and Applications Electives", 81, 6);
+
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
