@@ -108,6 +108,47 @@ public class SearchController {
          return sections;
     }
 
+    @GetMapping("/fetch_all_sections")
+    public List<Object> getSectionsByDepartment(@RequestParam int department_id) {
+        if (department_id == 1) { // Building, Civil and Environmental Engineering
+            return null; // not yet added to DB
+        } else if (department_id == 2) { // Centre for Engineering in Society
+            return null; // not yet added to DB
+        } else if (department_id == 3) { // Chemical and Materials Engineering
+            return null; // not yet added to DB
+        } else if (department_id == 4) { // Computer Science and Software Engineering
+            List<Object> soenCompSciSections = new ArrayList<>();
+
+            soenCompSciSections.add(searchService.findsection71701ById(1));
+            soenCompSciSections.add(searchService.findsection71702ById(1));
+            soenCompSciSections.add(searchService.findsection71703ById(1));
+            soenCompSciSections.add(searchService.findsection71704ById(1));
+            soenCompSciSections.add(searchService.findsection71705ById(1));
+            soenCompSciSections.add(searchService.findsection71706ById(1));
+            soenCompSciSections.add(searchService.findsection71707ById(1));
+            soenCompSciSections.add(searchService.findsection71708ById(1));
+            soenCompSciSections.add(searchService.findsection71709ById(1));
+            soenCompSciSections.add(searchService.findsection717010ById(1));
+
+            return soenCompSciSections;
+        } else if (department_id == 5) { // Concordia Institude for Information Systems Security
+            return null; // not yet added to DB
+        } else if (department_id == 6) { // Concordia Institude for Aerospace Design and Innovation
+            return null; // not yet added to DB
+        } else if (department_id == 7) { // Electrical and Computer Engineering
+            return null; // not yet added to DB
+        } else if (department_id == 8) { // Mechanical, Industrial and Aerospace Engineering
+            List<Object> mechInduSections = new ArrayList<>(); // AERO not added to DB
+
+            mechInduSections.add(searchService.findSection71401ById(1));
+            mechInduSections.add(searchService.findSection71402ById(1));
+
+            return mechInduSections;
+        } else { // invalid department ID
+            return null;
+        }
+    }
+
     // URL should be 8080/section71701
     @GetMapping("/section71701")
     public Section71701 getSection71701(){
