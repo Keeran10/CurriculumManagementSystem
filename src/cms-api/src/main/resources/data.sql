@@ -375,14 +375,6 @@ INSERT IGNORE INTO course VALUES (145, 3.0, 'Prerequisite: Permission of the Dep
 INSERT IGNORE INTO course VALUES (146, 3, 'Prerequisite: PHYS 204; ENGR 213 previously or concurrently. Forces in a plane and in space, moments of forces, Varignon’s theorem, rigid bodies in equilibrium, free-body diagram. Centroids, centres of gravity. Distributed forces, moments of inertia. Principle of virtual work. Kinematics of particles and rigid bodies. Forces and accelerations; work and energy; impulse and momentum. Kinetics of particles and rigid bodies. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'ENGR', '', 245, 'Mechanical Analysis', 1, 3);
 
-INSERT IGNORE INTO course VALUES (147, 3.00, '',
-1, 0, 3, 1, 'BIOL', '', 206, 'Elementary Genetics', 1, 1);
-INSERT IGNORE INTO course VALUES (148, 3.00, '',
-1, 0, 3, 1, 'BIOL', '', 261, 'Molecular and General Genetics', 1, 1);
-INSERT IGNORE INTO course VALUES (149, 3.00, '',
-1, 0, 3, 1, 'CHEM', '', 217, 'Introductory Analytical Chemistry I', 1, 1);
-INSERT IGNORE INTO course VALUES (150, 3.00, '',
-1, 0, 3, 1, 'CHEM', '', 221, 'Introductory Organic Chemistry I', 1, 1);
 INSERT IGNORE INTO course VALUES (151, 3.00, '',
 1, 0, 3, 1, 'GEOL', '', 206, 'Earthquakes, Volcanoes, and Plate Tectonics', 1, 1);
 INSERT IGNORE INTO course VALUES (152, 3.00, '',
@@ -393,10 +385,6 @@ INSERT IGNORE INTO course VALUES (154, 3.00, '',
 1, 0, 3, 1, 'PHYS', '', 260, 'Introductory Biophysics', 1, 1);
 INSERT IGNORE INTO course VALUES (155, 3.00, '',
 1, 0, 3, 1, 'PHYS', '', 270, 'Introduction to Energy and Environment', 1, 1);
-INSERT IGNORE INTO course VALUES (156, 3.00, '',
-1, 0, 3, 1, 'PHYS', '', 284, 'Introduction to Astronomy', 1, 1);
-INSERT IGNORE INTO course VALUES (157, 3.00, '',
-1, 0, 3, 1, 'PHYS', '', 385, 'Astrophysics', 1,1);
 
 INSERT IGNORE INTO course VALUES (158, 3.00, '',
 1, 0, 3, 1, 'BSTA', '', 478, 'Data Mining Techniques', 1,1);
@@ -905,17 +893,17 @@ INSERT IGNORE INTO degree_requirement VALUES (196, "Industrial Engineering Core"
 INSERT IGNORE INTO degree_requirement VALUES (197, "Industrial Engineering Core", 24, 7);
 INSERT IGNORE INTO degree_requirement VALUES (198, "Industrial Engineering Core", 25, 7);
 INSERT IGNORE INTO degree_requirement VALUES (199, "Industrial Engineering Core", 26, 7);
-INSERT IGNORE INTO degree_requirement VALUES (200, "Basic and Natural Science Courses", 147, 7);
-INSERT IGNORE INTO degree_requirement VALUES (201, "Basic and Natural Science Courses", 148, 7);
-INSERT IGNORE INTO degree_requirement VALUES (202, "Basic and Natural Science Courses", 149, 7);
-INSERT IGNORE INTO degree_requirement VALUES (203, "Basic and Natural Science Courses", 150, 7);
+INSERT IGNORE INTO degree_requirement VALUES (200, "Basic and Natural Science Courses", 98, 7);
+INSERT IGNORE INTO degree_requirement VALUES (201, "Basic and Natural Science Courses", 99, 7);
+INSERT IGNORE INTO degree_requirement VALUES (202, "Basic and Natural Science Courses", 100, 7);
+INSERT IGNORE INTO degree_requirement VALUES (203, "Basic and Natural Science Courses", 101, 7);
 INSERT IGNORE INTO degree_requirement VALUES (204, "Basic and Natural Science Courses", 151, 7);
 INSERT IGNORE INTO degree_requirement VALUES (205, "Basic and Natural Science Courses", 152, 7);
-INSERT IGNORE INTO degree_requirement VALUES (206, "Basic and Natural Science Courses", 153, 7);
+INSERT IGNORE INTO degree_requirement VALUES (206, "Basic and Natural Science Courses", 104, 7);
 INSERT IGNORE INTO degree_requirement VALUES (207, "Basic and Natural Science Courses", 154, 7);
 INSERT IGNORE INTO degree_requirement VALUES (208, "Basic and Natural Science Courses", 155, 7);
-INSERT IGNORE INTO degree_requirement VALUES (209, "Basic and Natural Science Courses", 156, 7);
-INSERT IGNORE INTO degree_requirement VALUES (210, "Basic and Natural Science Courses", 157, 7);
+INSERT IGNORE INTO degree_requirement VALUES (209, "Basic and Natural Science Courses", 105, 7);
+INSERT IGNORE INTO degree_requirement VALUES (210, "Basic and Natural Science Courses", 106, 7);
 INSERT IGNORE INTO degree_requirement VALUES (211, "Indu Electives", 158, 7);
 INSERT IGNORE INTO degree_requirement VALUES (212, "Indu Electives", 159, 7);
 INSERT IGNORE INTO degree_requirement VALUES (213, "Indu Electives", 160, 7);
