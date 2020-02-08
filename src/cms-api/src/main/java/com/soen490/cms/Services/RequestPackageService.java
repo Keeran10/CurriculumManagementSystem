@@ -848,4 +848,134 @@ public class RequestPackageService {
         supportingDocumentsRepository.deleteById(file_id);
         return true;
     }
+
+    public void processCoreRequests(JSONArray core_additions, JSONArray core_removals,
+                                    String add_to_core, String remove_from_core, int dossier_id, int user_id) throws JSONException {
+
+        for(int i=0; i < core_additions.length(); i++)
+            saveCourseCoreAdditionRequest(add_to_core, (int) core_additions.get(i), dossier_id, user_id);
+
+        for(int i=0; i < core_removals.length(); i++)
+            saveCourseCoreRemovalRequest(remove_from_core, (int) core_removals.get(i), dossier_id, user_id);
+
+    }
+
+
+    private void saveCourseCoreAdditionRequest(String add_to_core, int course_id, int dossier_id, int user_id) {
+
+        Course o = courseRepository.findById(course_id);
+        Course c = new Course();
+
+        c.setName(o.getName());
+        c.setNumber(o.getNumber());
+        c.setTitle(o.getTitle());
+        c.setCredits(o.getCredits());
+        c.setDescription(o.getDescription());
+        c.setLevel(o.getLevel());
+        c.setNote(o.getNote());
+        c.setLabHours(o.getLabHours());
+        c.setTutorialHours(o.getTutorialHours());
+        c.setLectureHours(o.getLectureHours());
+        c.setIsActive(0);
+
+        courseRepository.save(c);
+
+        for(Requisite requisite : o.getRequisites()){
+            Requisite r = new Requisite();
+            r.setCourse(c);
+            r.setType(requisite.getType());
+            r.setNumber(requisite.getNumber());
+            r.setName(requisite.getName());
+            r.setIsActive(0);
+            requisiteRepository.save(r);
+            c.getRequisites().add(r);
+        }
+        for(DegreeRequirement degreeRequirement : o.getDegreeRequirements()){
+            DegreeRequirement dr = new DegreeRequirement();
+            dr.setCourse(c);
+            dr.setDegree(degreeRequirement.getDegree());
+            dr.setCore(degreeRequirement.getCore());
+            degreeRequirementRepository.save(dr);
+            c.getDegreeRequirements().add(dr);
+        }
+
+        // Add new core to course
+        DegreeRequirement dr = new DegreeRequirement();
+        dr.setCore(add_to_core);
+        int degree_id = degreeRequirementRepository.findDegreeByCore(add_to_core).get(0);
+        dr.setDegree(degreeRepository.findById(degree_id));
+        dr.setCourse(c);
+        degreeRequirementRepository.save(dr);
+        c.getDegreeRequirements().add(dr);
+
+        courseRepository.save(c);
+
+        Request request = new Request();
+        request.setRequestType(2);
+        request.setTargetType(2);
+        request.setTargetId(c.getId());
+        request.setOriginalId(o.getId());
+        request.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        request.setUser(userRepository.findById(user_id));
+        request.setRequestPackage(requestPackageRepository.findById(dossier_id));
+
+        requestRepository.save(request);
+    }
+
+
+    private void saveCourseCoreRemovalRequest(String remove_from_core, int course_id, int dossier_id, int user_id) {
+
+        Course o = courseRepository.findById(course_id);
+        Course c = new Course();
+
+        c.setName(o.getName());
+        c.setNumber(o.getNumber());
+        c.setTitle(o.getTitle());
+        c.setCredits(o.getCredits());
+        c.setDescription(o.getDescription());
+        c.setLevel(o.getLevel());
+        c.setNote(o.getNote());
+        c.setLabHours(o.getLabHours());
+        c.setTutorialHours(o.getTutorialHours());
+        c.setLectureHours(o.getLectureHours());
+        c.setIsActive(0);
+
+        courseRepository.save(c);
+
+        for(Requisite requisite : o.getRequisites()){
+            Requisite r = new Requisite();
+            r.setCourse(c);
+            r.setType(requisite.getType());
+            r.setNumber(requisite.getNumber());
+            r.setName(requisite.getName());
+            r.setIsActive(0);
+            requisiteRepository.save(r);
+            c.getRequisites().add(r);
+        }
+        for(DegreeRequirement degreeRequirement : o.getDegreeRequirements()){
+
+            if(degreeRequirement.getCore().equals(remove_from_core))
+                continue;
+
+            DegreeRequirement dr = new DegreeRequirement();
+            dr.setCourse(c);
+            dr.setDegree(degreeRequirement.getDegree());
+            dr.setCore(degreeRequirement.getCore());
+            degreeRequirementRepository.save(dr);
+            c.getDegreeRequirements().add(dr);
+        }
+
+        courseRepository.save(c);
+
+        Request request = new Request();
+        request.setRequestType(2);
+        request.setTargetType(2);
+        request.setTargetId(c.getId());
+        request.setOriginalId(o.getId());
+        request.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        request.setUser(userRepository.findById(user_id));
+        request.setRequestPackage(requestPackageRepository.findById(dossier_id));
+
+        requestRepository.save(request);
+    }
 }
