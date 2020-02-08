@@ -419,8 +419,6 @@ INSERT IGNORE INTO course VALUES (165, 3.50, 'Prerequisite: MECH 313. Introducti
 1, 2, 3, 1, 'MECH', '', 412, 'Computer-Aided Mechanical Design', 1, 5);
 INSERT IGNORE INTO course VALUES (166, 3.00, 'Prerequisite: MECH 215. Class definitions. Designing classes and member functions. Constructors and destructors. Class libraries and their uses. Input and output. Data abstrac­tion and encapsulation. Introduction to software engineering. Computer graphics and visualization. Numerical methods. Advanced mechanical and industrial engineering applications. This course includes a substantial project. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'MECH', '', 415, 'Advanced Programming for Mechanical and Industrial Engineers', 1, 5);
-INSERT IGNORE INTO course VALUES (166, 3.50, 'Prerequisite: MECH 221. Metal forming: extrusion, forging, rolling, drawing, pressing, compacting; shear line theory, sheet forming limits. Metal cutting, machinability, tooling. Plastics shaping: extrusion, moulding, vacuum forming. Consideration of the mechanical parameters critical for process control and computer applications. Interaction of materials characteristics with processing to define product properties: cold working, annealing, hot working, super plasticity, thermomechanical treatment. Energy conservation, safety, product quality, and liability. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
-1, 2, 3, 1, 'MECH', '', 421, 'Mechanical Shaping of Metals and Plastics', 1, 5);
 INSERT IGNORE INTO course VALUES (167, 3.00, 'Prerequisite: ENGR 233, 244; MECH 221. General applications of polymer composite materials in aircraft, aerospace, automobile, marine, recreational, and chemical processing industries. Mechanics of a unidirectional lamina. Transformation of stress, strain, modulus, and compliance. Off-axis engineering constants, shear and normal coupling coefficients. In-plane and flexural stiffness and compliance with different laminates, including cross-ply, angle-ply, quasiisotropic, and general bidirectional laminates. Hygrothermal effects. Strength of laminates and failure criteria. Micromechanics. Lectures: three hours per week.',
 1, 0, 3, 1, 'MECH', '', 422, 'Mechanical Behaviour of Polymer Composite Materials', 0, 5);
 INSERT IGNORE INTO course VALUES (168, 3.50, 'Prerequisite: MECH 221. Comparative analysis of the various techniques of casting, welding, powder fabrication, finishing, and non-destructive testing. Consideration of the control parameters that are essential to define both automation and robot application. Materials behaviour which determines product micro-structure and properties. Technology and theory of solidification, normalizing, quenching, surface hardening, tempering, aging, and thermomechanical processing for steels, cast irons and Al, Cu, Ni and Ti alloys. Energy conservation, worker safety, quality control, and product liability. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
@@ -463,6 +461,10 @@ INSERT IGNORE INTO course VALUES (186, 3.00, 'Prerequisite: MECH 313; AERO 390 o
 1, 0, 3, 1, 'MECH', '', 476, 'Generative Design and Manufacturing in Engineering', 0, 5);
 INSERT IGNORE INTO course VALUES (187, 3.00, 'Prerequisite: Permission of the Department Chair. This course may be offered in a given year upon the authorization of the Mechanical, Industrial and Aerospace Engineering Department. The course content may vary from offering to offering and will be chosen to complement the elective courses available in a given option or options. Lectures: three hours per week.',
 1, 0, 3, 1, 'MECH', '', 498, 'Topics in Mechanical Engineering', 0, 5);
+INSERT IGNORE INTO course VALUES (199, 3.50, "Prerequisite: MECH 311, 412. Computer aided design and manufacturing (CAD/CAM) hardware and software. Essentials of Computer Numerical Control (CNC) machine tools and systems. Process planning and tooling systems for CNC machining. Theory of CNC programming of sculptured parts. Multi-axis CNC tool path generation. Project using CAD/CAM software; CATIA for complex mechanical parts design and a CNC machine tool to manufacture parts. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.",
+1, 2, 3, 1, 'MECH', '', 414, 'Computer Numerically Controller Machining', 0, 5);
+INSERT IGNORE INTO course VALUES (200, 3.50, 'Prerequisite: MECH 221. Metal forming: extrusion, forging, rolling, drawing, pressing, compacting; shear line theory, sheet forming limits. Metal cutting, machinability, tooling. Plastics shaping: extrusion, moulding, vacuum forming. Consideration of the mechanical parameters critical for process control and computer applications. Interaction of materials characteristics with processing to define product properties: cold working, annealing, hot working, super plasticity, thermomechanical treatment. Energy conservation, safety, product quality, and liability. Lectures: three hours per week. Laboratory: two hours per week, alternate weeks.',
+1, 2, 3, 1, 'MECH', '', 421, 'Mechanical Shaping of Metals and Plastics', 1, 5);
 
 INSERT IGNORE INTO course VALUES (188, 3.00, 'Prerequisite: ENGR 201. Overview of DoT and other international aviation standards (e.g. FAA), regulations and certification procedures; regulatory areas, namely, pilot training/testing, air traffic procedures, aircraft systems design and airworthiness; development process for new regulations and criteria for certification. Lectures: three hours per week.',
 1, 0, 3, 1, 'AERO', 'NOTE: Students who have received credit for ENGR 417 or for this topic under an ENGR 498 number may not take this course for credit.', 417, 'Standards, Regulations and Certification', 0, 8);
@@ -611,6 +613,97 @@ INSERT IGNORE INTO requisite VALUES (214, 1, "GPA of 3.0 or better", 000, "prere
 INSERT IGNORE INTO requisite VALUES (215, 1, "Permission of the Department", 000, "prerequisite", 162);
 
 INSERT IGNORE INTO requisite VALUES (216, 1, "ENGR", 371, "prerequisite", 125);
+
+INSERT IGNORE INTO requisite VALUES (217, 1, "MATH", 204, "prerequisite", 23);
+INSERT IGNORE INTO requisite VALUES (218, 1, "CHEM", 205, "prerequisite", 24);
+INSERT IGNORE INTO requisite VALUES (219, 1, "MECH", 313, "prerequisite", 25);
+INSERT IGNORE INTO requisite VALUES (220, 1, "MECH", 211, "prerequisite", 26);
+INSERT IGNORE INTO requisite VALUES (221, 1, "MECH", 221, "prerequisite", 27);
+INSERT IGNORE INTO requisite VALUES (222, 1, "ENGR", 213, "prerequisite", 28);
+INSERT IGNORE INTO requisite VALUES (223, 1, "ENGR", 233, "prerequisite", 28);
+INSERT IGNORE INTO requisite VALUES (224, 1, "ENGR", 243, "prerequisite", 28);
+INSERT IGNORE INTO requisite VALUES (225, 1, "ENGR", 244, "prerequisite", 29);
+INSERT IGNORE INTO requisite VALUES (226, 1, "MECH", 313, "prerequisite", 29);
+INSERT IGNORE INTO requisite VALUES (227, 1, "MECH", 321, "prerequisite", 29);
+INSERT IGNORE INTO requisite VALUES (228, 1, "MECH", 343, "corequisite", 29);
+INSERT IGNORE INTO requisite VALUES (229, 1, "MECH", 441, "antirequisite", 29);
+INSERT IGNORE INTO requisite VALUES (230, 1, "ENGR", 251, "prerequisite", 30);
+INSERT IGNORE INTO requisite VALUES (231, 1, "ENGR", 311, "prerequisite", 31);
+INSERT IGNORE INTO requisite VALUES (232, 1, "ENGR", 361, "prerequisite", 31);
+INSERT IGNORE INTO requisite VALUES (233, 1, "ENGR", 361, "prerequisite", 32);
+INSERT IGNORE INTO requisite VALUES (234, 1, "PHYS", 205, "prerequisite", 33);
+INSERT IGNORE INTO requisite VALUES (235, 1, "ENGR", 311, "corequisite", 33);
+INSERT IGNORE INTO requisite VALUES (236, 1, "MECH", 470, "antirequisite", 33);
+INSERT IGNORE INTO requisite VALUES (237, 1, "Electrical Engineering and Computer Engineering students", 000, "antirequisite", 33);
+INSERT IGNORE INTO requisite VALUES (238, 1, "PHYS", 205, "prerequisite", 34);
+INSERT IGNORE INTO requisite VALUES (239, 1, "ENGR", 213, "prerequisite", 34);
+INSERT IGNORE INTO requisite VALUES (240, 1, "ENGR", 311, "corequisite", 34);
+INSERT IGNORE INTO requisite VALUES (241, 1, "ENGR", 245, "equivalent", 34);
+INSERT IGNORE INTO requisite VALUES (242, 1, "ENGR", 243, "equivalent", 34);
+INSERT IGNORE INTO requisite VALUES (243, 1, "ELEC", 370, "antirequisite", 34);
+INSERT IGNORE INTO requisite VALUES (244, 1, "ENGR", 311, "prerequisite", 35);
+INSERT IGNORE INTO requisite VALUES (245, 1, "MECH", 370, "prerequisite", 35);
+INSERT IGNORE INTO requisite VALUES (246, 1, "ELEC", 372, "antirequisite", 35);
+INSERT IGNORE INTO requisite VALUES (247, 1, "AERO", 371, "equivalent", 36);
+INSERT IGNORE INTO requisite VALUES (248, 1, "MECH", 370, "equivalent", 36);
+INSERT IGNORE INTO requisite VALUES (249, 1, "MECH", 443, "antirequisite", 36);
+INSERT IGNORE INTO requisite VALUES (250, 1, "ENCS", 282, "prerequisite", 37);
+INSERT IGNORE INTO requisite VALUES (251, 1, "MECH", 311, "prerequisite", 37);
+INSERT IGNORE INTO requisite VALUES (252, 1, "MECH", 343, "prerequisite", 37);
+INSERT IGNORE INTO requisite VALUES (253, 1, "MECH", 344, "corequisite", 37);
+INSERT IGNORE INTO requisite VALUES (254, 1, "75 credits in the program", 000, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (255, 1, "ENCS", 282, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (256, 1, "ENGR", 301, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (257, 1, "MECH", 344, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (258, 1, "MECH", 390, "prerequisite", 38);
+INSERT IGNORE INTO requisite VALUES (259, 1, "Permission from the Department Chair", 000, "prerequisite", 187);
+INSERT IGNORE INTO requisite VALUES (260, 1, "ENGR", 311, "prerequisite", 164);
+INSERT IGNORE INTO requisite VALUES (261, 1, "AERO", 371, "equivalent", 164);
+INSERT IGNORE INTO requisite VALUES (262, 1, "MECH", 370, "equivalent", 164);
+INSERT IGNORE INTO requisite VALUES (263, 1, "MECH", 373, "antirequisite", 164);
+INSERT IGNORE INTO requisite VALUES (264, 1, "MECH", 313, "prerequisite", 165);
+INSERT IGNORE INTO requisite VALUES (265, 1, "MECH", 311, "prerequisite", 199);
+INSERT IGNORE INTO requisite VALUES (266, 1, "MECH", 412, "prerequisite", 199);
+INSERT IGNORE INTO requisite VALUES (267, 1, "MECH", 215, "prerequisite", 166);
+INSERT IGNORE INTO requisite VALUES (268, 1, "MECH", 221, "prerequisite", 200);
+INSERT IGNORE INTO requisite VALUES (269, 1, "ENGR", 233, "prerequisite", 167);
+INSERT IGNORE INTO requisite VALUES (270, 1, "ENGR", 244, "prerequisite", 167);
+INSERT IGNORE INTO requisite VALUES (271, 1, "MECH", 221, "prerequisite", 167);
+INSERT IGNORE INTO requisite VALUES (272, 1, "MECH", 221, "prerequisite", 168);
+INSERT IGNORE INTO requisite VALUES (273, 1, "MECH", 311, "prerequisite", 169);
+INSERT IGNORE INTO requisite VALUES (274, 1, "MECH", 343, "prerequisite", 169);
+INSERT IGNORE INTO requisite VALUES (275, 1, "MECH", 311, "prerequisite", 170);
+INSERT IGNORE INTO requisite VALUES (276, 1, "ENGR", 233, "prerequisite", 171);
+INSERT IGNORE INTO requisite VALUES (277, 1, "ENGR", 244, "prerequisite", 171);
+INSERT IGNORE INTO requisite VALUES (278, 1, "MECH", 321, "prerequisite", 171);
+INSERT IGNORE INTO requisite VALUES (279, 1, "MECH", 375, "prerequisite", 172);
+INSERT IGNORE INTO requisite VALUES (280, 1, "MECH", 343, "prerequisite", 173);
+INSERT IGNORE INTO requisite VALUES (281, 1, "MECH", 447, "prerequisite", 174);
+INSERT IGNORE INTO requisite VALUES (282, 1, "MECH", 351, "prerequisite", 175);
+INSERT IGNORE INTO requisite VALUES (283, 1, "MECH", 352, "prerequisite", 175);
+INSERT IGNORE INTO requisite VALUES (284, 1, "MECH", 361, "prerequisite", 175);
+INSERT IGNORE INTO requisite VALUES (285, 1, "MECH", 352, "prerequisite", 176);
+INSERT IGNORE INTO requisite VALUES (286, 1, "MECH", 351, "prerequisite", 177);
+INSERT IGNORE INTO requisite VALUES (287, 1, "MECH", 361, "prerequisite", 177);
+INSERT IGNORE INTO requisite VALUES (288, 1, "ENGR", 244, "prerequisite", 178);
+INSERT IGNORE INTO requisite VALUES (289, 1, "ENGR", 391, "prerequisite", 178);
+INSERT IGNORE INTO requisite VALUES (290, 1, "MECH", 361, "prerequisite", 179);
+INSERT IGNORE INTO requisite VALUES (291, 1, "MECH", 343, "prerequisite", 180);
+INSERT IGNORE INTO requisite VALUES (292, 1, "MECH", 361, "prerequisite", 180);
+INSERT IGNORE INTO requisite VALUES (293, 1, "MECH", 344, "corequisite", 180);
+INSERT IGNORE INTO requisite VALUES (294, 1, "MECH", 371, "corequisite", 180);
+INSERT IGNORE INTO requisite VALUES (295, 1, "ENGR", 361, "prerequisite", 181);
+INSERT IGNORE INTO requisite VALUES (296, 1, "MECH", 371, "equivalent", 181);
+INSERT IGNORE INTO requisite VALUES (297, 1, "ELEC", 372, "equivalent", 181);
+INSERT IGNORE INTO requisite VALUES (298, 1, "ENGR", 311, "prerequisite", 182);
+INSERT IGNORE INTO requisite VALUES (299, 1, "MECH", 368, "prerequisite", 182);
+INSERT IGNORE INTO requisite VALUES (300, 1, "MECH", 215, "prerequisite", 183);
+INSERT IGNORE INTO requisite VALUES (301, 1, "MECH", 371, "corequisite", 183);
+INSERT IGNORE INTO requisite VALUES (302, 1, "ELEC", 372, "equivalent", 184);
+INSERT IGNORE INTO requisite VALUES (303, 1, "MECH", 371, "equivalent", 185);
+INSERT IGNORE INTO requisite VALUES (304, 1, "MECH", 313, "prerequisite", 186);
+INSERT IGNORE INTO requisite VALUES (305, 1, "AERO", 390, "corequisite", 186);
+INSERT IGNORE INTO requisite VALUES (306, 1, "MECH", 390, "corequisite", 186);
 
 -- id, core, course_id, degree_id
 INSERT IGNORE INTO degree_requirement VALUES (1, "Software Engineering Core", 1, 1);
