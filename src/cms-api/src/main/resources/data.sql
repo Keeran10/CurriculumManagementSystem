@@ -326,8 +326,6 @@ INSERT IGNORE INTO course VALUES (121, 3.00, '',
 1, 2, 3, 1, 'SOEN', 'Topics in Software Engineering', 498, '', 1, 2);
 INSERT IGNORE INTO course VALUES (122, 4.00, '',
 1, 2, 3, 1, 'SOEN', 'Topics in Software Engineering', 499, '', 1, 2);
-INSERT IGNORE INTO course VALUES (123, 1.00, '',
-1, 2, 3, 1, 'ENGR', 'Special Technical Report', 411, '', 1, 2);
 
 INSERT IGNORE INTO course VALUES (124, 3.00, 'History of industrial engineering. Role of industrial engineers. Types of manufacturing and production systems. Material flow systems. Job design and work measurement. Introduction to solution methodologies for problems which relate to the design and operation of integrated production systems of humans, machines, information, and materials. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'INDU', '', 211, 'Introduction to Production and Manufacturing Systems', 1, 4);
@@ -880,7 +878,7 @@ INSERT IGNORE INTO degree_requirement VALUES (172, "Electives", 119, 1);
 INSERT IGNORE INTO degree_requirement VALUES (173, "Electives", 120, 1);
 INSERT IGNORE INTO degree_requirement VALUES (174, "Electives", 121, 1);
 INSERT IGNORE INTO degree_requirement VALUES (175, "Electives", 122, 1);
-INSERT IGNORE INTO degree_requirement VALUES (176, "Electives", 123, 1);
+INSERT IGNORE INTO degree_requirement VALUES (176, "Electives", 161, 1);
 
 
 
@@ -935,7 +933,84 @@ INSERT IGNORE INTO degree_requirement VALUES (224, "Indu Electives", 163, 7);
 INSERT IGNORE INTO degree_requirement VALUES (225, "Indu Electives", 27, 7);
 INSERT IGNORE INTO degree_requirement VALUES (226, "Indu Electives", 34, 7);
 INSERT IGNORE INTO degree_requirement VALUES (227, "Indu Electives", 35, 7);
-
+INSERT IGNORE INTO degree_requirement VALUES (228, "Indu Electives", 165, 7);
+INSERT IGNORE INTO degree_requirement VALUES (229, "Indu Electives", 166, 7);
+INSERT IGNORE INTO degree_requirement VALUES (230, "Indu Electives", 200, 7);
+INSERT IGNORE INTO degree_requirement VALUES (231, "Indu Electives", 168, 7);
+INSERT IGNORE INTO degree_requirement VALUES (232, "Indu Electives", 170, 7);
+INSERT IGNORE INTO degree_requirement VALUES (233, "Aerospace", 188, 5);
+INSERT IGNORE INTO degree_requirement VALUES (234, "Aerospace", 190, 5);
+INSERT IGNORE INTO degree_requirement VALUES (235, "Aerospace", 191, 5);
+INSERT IGNORE INTO degree_requirement VALUES (236, "Aerospace", 192, 5);
+INSERT IGNORE INTO degree_requirement VALUES (237, "Aerospace", 193, 5);
+INSERT IGNORE INTO degree_requirement VALUES (238, "Aerospace", 194, 5);
+INSERT IGNORE INTO degree_requirement VALUES (239, "Aerospace", 195, 5);
+INSERT IGNORE INTO degree_requirement VALUES (240, "Aerospace", 196, 5);
+INSERT IGNORE INTO degree_requirement VALUES (241, "Aerospace", 197, 5);
+INSERT IGNORE INTO degree_requirement VALUES (242, "Aerospace", 198, 5);
+INSERT IGNORE INTO degree_requirement VALUES (243, "Aerospace", 161, 5);
+INSERT IGNORE INTO degree_requirement VALUES (244, "Aerospace", 162, 5);
+INSERT IGNORE INTO degree_requirement VALUES (245, "Design and Manufacturing", 161, 5);
+INSERT IGNORE INTO degree_requirement VALUES (246, "Design and Manufacturing", 162, 5);
+INSERT IGNORE INTO degree_requirement VALUES (247, "Design and Manufacturing", 133, 5);
+INSERT IGNORE INTO degree_requirement VALUES (248, "Design and Manufacturing", 134, 5);
+INSERT IGNORE INTO degree_requirement VALUES (249, "Design and Manufacturing", 135, 5);
+INSERT IGNORE INTO degree_requirement VALUES (250, "Design and Manufacturing", 139, 5);
+INSERT IGNORE INTO degree_requirement VALUES (251, "Design and Manufacturing", 165, 5);
+INSERT IGNORE INTO degree_requirement VALUES (252, "Design and Manufacturing", 199, 5);
+INSERT IGNORE INTO degree_requirement VALUES (253, "Design and Manufacturing", 200, 5);
+INSERT IGNORE INTO degree_requirement VALUES (254, "Design and Manufacturing", 167, 5);
+INSERT IGNORE INTO degree_requirement VALUES (255, "Design and Manufacturing", 168, 5);
+INSERT IGNORE INTO degree_requirement VALUES (256, "Design and Manufacturing", 169, 5);
+INSERT IGNORE INTO degree_requirement VALUES (257, "Design and Manufacturing", 170, 5);
+INSERT IGNORE INTO degree_requirement VALUES (258, "Design and Manufacturing", 180, 5);
+INSERT IGNORE INTO degree_requirement VALUES (259, "Design and Manufacturing", 186, 5);
+INSERT IGNORE INTO degree_requirement VALUES (260, "Design and Manufacturing", 187, 5);
+INSERT IGNORE INTO degree_requirement VALUES (261, "Systems and Mechatronics", 194, 5);
+INSERT IGNORE INTO degree_requirement VALUES (262, "Systems and Mechatronics", 195, 5);
+INSERT IGNORE INTO degree_requirement VALUES (263, "Systems and Mechatronics", 161, 5);
+INSERT IGNORE INTO degree_requirement VALUES (264, "Systems and Mechatronics", 162, 5);
+INSERT IGNORE INTO degree_requirement VALUES (265, "Systems and Mechatronics", 164, 5);
+INSERT IGNORE INTO degree_requirement VALUES (266, "Systems and Mechatronics", 166, 5);
+INSERT IGNORE INTO degree_requirement VALUES (267, "Systems and Mechatronics", 175, 5);
+INSERT IGNORE INTO degree_requirement VALUES (268, "Systems and Mechatronics", 179, 5);
+INSERT IGNORE INTO degree_requirement VALUES (269, "Systems and Mechatronics", 180, 5);
+INSERT IGNORE INTO degree_requirement VALUES (270, "Systems and Mechatronics", 181, 5);
+INSERT IGNORE INTO degree_requirement VALUES (271, "Systems and Mechatronics", 187, 5);
+INSERT IGNORE INTO degree_requirement VALUES (272, "Thermo-Fluids and Propulsion", 190, 5);
+INSERT IGNORE INTO degree_requirement VALUES (273, "Thermo-Fluids and Propulsion", 191, 5);
+INSERT IGNORE INTO degree_requirement VALUES (274, "Thermo-Fluids and Propulsion", 193, 5);
+INSERT IGNORE INTO degree_requirement VALUES (275, "Thermo-Fluids and Propulsion", 161, 5);
+INSERT IGNORE INTO degree_requirement VALUES (276, "Thermo-Fluids and Propulsion", 162, 5);
+INSERT IGNORE INTO degree_requirement VALUES (277, "Thermo-Fluids and Propulsion", 164, 5);
+INSERT IGNORE INTO degree_requirement VALUES (278, "Thermo-Fluids and Propulsion", 166, 5);
+INSERT IGNORE INTO degree_requirement VALUES (279, "Thermo-Fluids and Propulsion", 175, 5);
+INSERT IGNORE INTO degree_requirement VALUES (280, "Thermo-Fluids and Propulsion", 176, 5);
+INSERT IGNORE INTO degree_requirement VALUES (281, "Thermo-Fluids and Propulsion", 179, 5);
+INSERT IGNORE INTO degree_requirement VALUES (282, "Thermo-Fluids and Propulsion", 180, 5);
+INSERT IGNORE INTO degree_requirement VALUES (283, "Thermo-Fluids and Propulsion", 181, 5);
+INSERT IGNORE INTO degree_requirement VALUES (284, "Thermo-Fluids and Propulsion", 187, 5);
+INSERT IGNORE INTO degree_requirement VALUES (285, "Vehicle Systems", 161, 5);
+INSERT IGNORE INTO degree_requirement VALUES (286, "Vehicle Systems", 162, 5);
+INSERT IGNORE INTO degree_requirement VALUES (287, "Vehicle Systems", 164, 5);
+INSERT IGNORE INTO degree_requirement VALUES (288, "Vehicle Systems", 166, 5);
+INSERT IGNORE INTO degree_requirement VALUES (289, "Vehicle Systems", 172, 5);
+INSERT IGNORE INTO degree_requirement VALUES (290, "Vehicle Systems", 173, 5);
+INSERT IGNORE INTO degree_requirement VALUES (291, "Vehicle Systems", 174, 5);
+INSERT IGNORE INTO degree_requirement VALUES (292, "Vehicle Systems", 177, 5);
+INSERT IGNORE INTO degree_requirement VALUES (293, "Vehicle Systems", 184, 5);
+INSERT IGNORE INTO degree_requirement VALUES (294, "Vehicle Systems", 187, 5);
+INSERT IGNORE INTO degree_requirement VALUES (295, "Stress Analysis", 189, 5);
+INSERT IGNORE INTO degree_requirement VALUES (296, "Stress Analysis", 197, 5);
+INSERT IGNORE INTO degree_requirement VALUES (297, "Stress Analysis", 161, 5);
+INSERT IGNORE INTO degree_requirement VALUES (298, "Stress Analysis", 162, 5);
+INSERT IGNORE INTO degree_requirement VALUES (299, "Stress Analysis", 164, 5);
+INSERT IGNORE INTO degree_requirement VALUES (300, "Stress Analysis", 165, 5);
+INSERT IGNORE INTO degree_requirement VALUES (301, "Stress Analysis", 166, 5);
+INSERT IGNORE INTO degree_requirement VALUES (302, "Stress Analysis", 167, 5);
+INSERT IGNORE INTO degree_requirement VALUES (303, "Stress Analysis", 171, 5);
+INSERT IGNORE INTO degree_requirement VALUES (304, "Stress Analysis", 178, 5);
+INSERT IGNORE INTO degree_requirement VALUES (305, "Stress Analysis", 187, 5);
 
 -- id, body, section_id, section_title, section_type, department_id, faculty_id
 INSERT IGNORE INTO calendar VALUES (1, 'Both major and minor programs in Management Information Systems can be found in the John Molson School of Business Section of the Undergraduate Calendar, §61. The Faculty of Fine Arts and the Department of Computer Science and Software Engineering offer complementary major programs. Students who take the Computer Applications Option (see §71.70.2 above) can also take the Major in Computation Arts and Computer Science (see §71.80, and the Fine Arts Section, §81) or the Joint Major in Mathematics and Statistics and Computer Applications (see §71.85, and the Mathematics and Statistics Section, §31.200).', '71.70.6', 'Programs Related to Computer Science', 'general',  1);
@@ -1050,7 +1125,7 @@ INSERT IGNORE INTO section VALUES (103, '71.40.2', 24, "course");
 INSERT IGNORE INTO section VALUES (104, '71.40.2', 25, "course");
 INSERT IGNORE INTO section VALUES (105, '71.40.2', 26, "course");
 INSERT IGNORE INTO section VALUES (106, '71.40.2', 122, "course");
-INSERT IGNORE INTO section VALUES (107, '71.40.2', 123, "course");
+INSERT IGNORE INTO section VALUES (107, '71.40.2', 161, "course");
 INSERT IGNORE INTO section VALUES (108, '71.40.2', 124, "course");
 INSERT IGNORE INTO section VALUES (109, '71.40.2', 125, "course");
 INSERT IGNORE INTO section VALUES (110, '71.40.2', 126, "course");
