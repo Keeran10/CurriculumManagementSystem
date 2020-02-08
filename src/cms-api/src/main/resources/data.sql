@@ -64,7 +64,7 @@ INSERT IGNORE INTO program VALUES (3, 'The program in Mechanical Engineering con
 1, 'Mechanical Engineering', 8);
 INSERT IGNORE INTO program VALUES (4, 'The program in Industrial Engineering consists of the Engineering Core, the Industrial Engineering Core, and elective credits as shown below. Students must select one course from the list of Basic and Natural Science courses as part of the Industrial Engineering Core courses. The minimum length of the program is 120 credits.',
 1, 'Industrial Engineering', 8);
-INSERT IGNORE INTO program VALUES (5, '', 1, 'Aerospace Engineering' 8);
+INSERT IGNORE INTO program VALUES (5, '', 1, 'Aerospace Engineering', 8);
 
 
 -- id, credits, level, name, program_id
