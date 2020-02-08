@@ -52,14 +52,14 @@ body {
 }
 
 .status {
-    font-size: 60%;
+    font-size: 80%;
     padding-left: 5%;
     padding-top: 1%;
 }
 
 .view {
     border:none;
-    font-size: 60%;
+    font-size: 80%;
     padding: 0%;
     color: blue;
     text-decoration: underline;
