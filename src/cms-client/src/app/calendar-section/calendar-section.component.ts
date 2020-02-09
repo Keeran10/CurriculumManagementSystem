@@ -221,8 +221,8 @@ export class CalendarSectionComponent implements OnInit {
   public submitForm() {
     // bug hotfix for original_id = 0
     this.sectionEditable.id = 1;
-    this.editedExtraModel.addedCourses = this.addedPrintedCourses;
-    this.editedExtraModel.removedCourses = this.removedPrintedCourses;
+    this.editedExtraModel.core_additions = this.addedPrintedCourses;
+    this.editedExtraModel.core_removals = this.removedPrintedCourses;
 
     this.api.submitCalendarSectionForm(this.supportDocumentComponent.documents,
       this.supportDocumentComponent.descriptions, this.sectionEditable, this.editedExtraModel)

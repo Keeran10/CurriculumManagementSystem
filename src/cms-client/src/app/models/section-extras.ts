@@ -28,8 +28,8 @@ export class SectionExtras {
   rationale: string;
   userId: number;
   requestId: number;
-  addedCourses: Number[];
-  removedCourses: Number[];
+  core_removals: Number[];
+  core_additions: Number[];
   constructor() {
     this.implications = '';
     this.packageId = 1;
