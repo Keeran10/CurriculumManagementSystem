@@ -144,4 +144,9 @@ export class PackageComponent implements OnInit {
     window.location.reload();
   }
 
+  public getSectionsByDepartmentId(department_id) {
+    this.api.getSectionsByDepartment(department_id)
+      .subscribe(data => this.router.navigate(['calendar']));
+  }
+
 }

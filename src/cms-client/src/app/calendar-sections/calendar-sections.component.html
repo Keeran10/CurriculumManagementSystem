@@ -30,8 +30,18 @@
 
         <br>
         <span>70.71.8    Curriculum for the Degree of BEng in Software Engineering</span><br>
-        <span class="link" (click)="getCalendarData()">70.71.9    Degree Requirements for the BEng in Software Engineering</span><br>
+        <span class="link" (click)="getCalendarData()">71.70.9    Degree Requirements for the BEng in Software Engineering</span><br>
         <span>70.71.10    Course Descriptions</span><br>
+
+      <div class="links">
+        <div *ngFor="let c of printedSections; let i = index">
+          <br class="sectionsLinks">
+          <span class="link" (click)="goToCalendarSection(extractSectionId(c.sectionId))">
+                    <td class="courseNumberLeft">{{ c.sectionId }} &nbsp;</td>
+                    <td class="courseTitle"> {{c.sectionTitle}}</td>
+          </span>
+        </div>
+      </div>
 
     </div>
 </main>

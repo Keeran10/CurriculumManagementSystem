@@ -77,18 +77,18 @@ export class ApiService {
     return this.http.get<Section[]>(this.url + 'sections');
   }
 
+  public getSectionsByDepartment(department_id: any) {
+    return this.http.get<Section>(this.url + 'fetch_all_sections', {
+      params: new HttpParams().set('department_id', department_id)
+    });
+  }
+
   public getCourse(id: string) {
     return this.http.get<Course>(this.url + 'course_edit', {
       params: new HttpParams().set('id', id)
     });
   }
 
-  public getSection(id: string) {
-    // this returns this one section
-    return this.http.get<Section>(this.url + 'section70719', {
-      params: new HttpParams().set('id', id)
-    });
-  }
 
   public saveCourse(course: Course) {
     return this.http.post<Course>(this.url + 'courses', course);
@@ -149,8 +149,18 @@ export class ApiService {
   }
 
   public getCalendar() {
-    return this.http.get<any>(this.url + 'section70719');
+    return this.http.get<any>(this.url + 'section71709');
   }
+
+  public getSectionData(id: string) {
+    // this returns this one section
+    return this.http.get<Section>(this.url + 'section' + id);
+  }
+
+/*  public getSection(id: string) {
+    // this returns this one section
+    return this.http.get<Section>(this.url + 'section71709');
+  }*/
 
   public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {

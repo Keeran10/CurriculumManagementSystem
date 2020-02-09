@@ -50,3 +50,10 @@ h1 {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.sectionsLinks {
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 24%;
+}
