@@ -63,6 +63,8 @@ public class PdfProgram {
      */
     public ArrayList<ByteArrayOutputStream> addProgramPage(RequestPackage requestPackage){
 
+        log.info("Process dossier " + requestPackage.getId() + " for program change.");
+
         List<String> affected_cores = new ArrayList<>();
         boolean exists;
 
@@ -115,7 +117,7 @@ public class PdfProgram {
                     }
                 }
                 else{
-                    //TODO: bug nullexception
+
                     if (!originals.isEmpty() && !changes.isEmpty() &&
                             originals.get(0).getDegree().getId() != changes.get(0).getDegree().getId() &&
                             originals.get(0).getCore().equals(changes.get(0).getCore())) {

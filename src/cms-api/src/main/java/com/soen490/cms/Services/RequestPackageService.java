@@ -850,18 +850,21 @@ public class RequestPackageService {
     }
 
     public void processCoreRequests(JSONArray core_additions, JSONArray core_removals,
-                                    String add_to_core, String remove_from_core, int dossier_id, int user_id) throws JSONException {
+                                    String add_to_core, String remove_from_core, int user_id, int dossier_id) throws JSONException {
+
+        RequestPackage requestPackage = requestPackageRepository.findById(dossier_id);
+        User user = userRepository.findById(user_id);
 
         for(int i=0; i < core_additions.length(); i++)
-            saveCourseCoreAdditionRequest(add_to_core, (int) core_additions.get(i), dossier_id, user_id);
+            saveCourseCoreAdditionRequest(add_to_core, (int) core_additions.get(i), user, requestPackage);
 
         for(int i=0; i < core_removals.length(); i++)
-            saveCourseCoreRemovalRequest(remove_from_core, (int) core_removals.get(i), dossier_id, user_id);
+            saveCourseCoreRemovalRequest(remove_from_core, (int) core_removals.get(i), user, requestPackage);
 
     }
 
 
-    private void saveCourseCoreAdditionRequest(String add_to_core, int course_id, int dossier_id, int user_id) {
+    private void saveCourseCoreAdditionRequest(String add_to_core, int course_id, User user, RequestPackage requestPackage) {
 
         Course o = courseRepository.findById(course_id);
         Course c = new Course();
@@ -916,14 +919,15 @@ public class RequestPackageService {
         request.setTargetId(c.getId());
         request.setOriginalId(o.getId());
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
-        request.setRequestPackage(requestPackageRepository.findById(dossier_id));
-
+        request.setUser(user);
+        request.setRequestPackage(requestPackage);
+        request.setTitle(o.getName().toUpperCase() + o.getNumber() + "_add_to_" + add_to_core);
         requestRepository.save(request);
+        requestPackage.getRequests().add(request);
     }
 
 
-    private void saveCourseCoreRemovalRequest(String remove_from_core, int course_id, int dossier_id, int user_id) {
+    private void saveCourseCoreRemovalRequest(String remove_from_core, int course_id, User user, RequestPackage requestPackage) {
 
         Course o = courseRepository.findById(course_id);
         Course c = new Course();
@@ -973,9 +977,10 @@ public class RequestPackageService {
         request.setTargetId(c.getId());
         request.setOriginalId(o.getId());
         request.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        request.setUser(userRepository.findById(user_id));
-        request.setRequestPackage(requestPackageRepository.findById(dossier_id));
-
+        request.setUser(user);
+        request.setRequestPackage(requestPackage);
+        request.setTitle(o.getName().toUpperCase() + o.getNumber() + "_remove_from_" + remove_from_core);
         requestRepository.save(request);
+        requestPackage.getRequests().add(request);
     }
 }
