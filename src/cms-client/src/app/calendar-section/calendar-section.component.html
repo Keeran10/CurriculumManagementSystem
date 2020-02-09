@@ -13,7 +13,7 @@
             <h1 class="title">Edit Section Page</h1>
           </mat-card-header><br>
           <form class="edit-form">
-            <mat-form-field class="row1">
+            <mat-form-field class="row1" *ngIf="sectionEditable.sectionId !== null">
               <input matInput placeholder="Section Id" spellcheck="true" [(ngModel)]="sectionEditable.sectionId"
                 name="sectionId">
             </mat-form-field>
@@ -25,14 +25,17 @@
               <textarea matInput placeholder="First Paragraph" [(ngModel)]="sectionEditable.firstParagraph"
                 spellcheck="true" name="firstParagraph"></textarea>
             </mat-form-field>
+
             <mat-form-field class="row4">
               <textarea matInput placeholder="First Core" [(ngModel)]="sectionEditable.firstCore" spellcheck="true"
                 name="firstCore"></textarea>
             </mat-form-field>
+
             <mat-form-field class="row5">
               <textarea matInput placeholder="Second Core" [(ngModel)]="sectionEditable.secondCore" spellcheck="true"
                 name="secondCore"></textarea>
             </mat-form-field>
+
             <mat-form-field class="row6">
               <textarea matInput placeholder="Rationale" spellcheck="true" [(ngModel)]="editedExtraModel.rationale"
                 name="rationale"></textarea>
@@ -107,17 +110,16 @@
                 </span>
               </b>
                       <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
-
-
                    </tr>
-
-
               <div class="right-side" *ngIf="isDoneLoading"><br>
 
         <div *ngFor="let c of printedCourses; let i = index">
             <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
 
-              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td> <td class="courseTitle">{{c.title}}</td><td class="courseCredits">{{c.credits.toFixed(2)}}</td></span>
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
             </div>
 
             <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">

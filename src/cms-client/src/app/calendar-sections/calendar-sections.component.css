@@ -39,7 +39,7 @@ body{
   background-color: #F3E7E9;
 }
 h1 {
-  margin: 3% 10% 0% 20%;
+  margin: 3% 10% 3% 0%;
   color: black;
 }
 .list{
@@ -49,4 +49,11 @@ h1 {
   color: dodgerblue;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.sectionsLinks {
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 24%;
 }

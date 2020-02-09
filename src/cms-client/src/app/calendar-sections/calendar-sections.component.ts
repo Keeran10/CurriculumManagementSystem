@@ -22,6 +22,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
 import { Router } from '@angular/router';
+import {Section} from '../models/section';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-calendar-sections',
@@ -30,14 +32,45 @@ import { Router } from '@angular/router';
 })
 export class CalendarSectionsComponent implements OnInit {
 
-  constructor(private api: ApiService,
+  printedSections: Section;
+  department_id: string;
+  sectionId: string;
+
+  constructor(private cookieService: CookieService,
+              private api: ApiService,
               private router: Router) { }
 
   ngOnInit() {
+    this.department_id = this.cookieService.get('department');
+    this.api.getSectionsByDepartment(this.department_id).subscribe(data => {
+      this.printedSections = data;
+      console.log(data);
+    });
   }
 
   public getCalendarData() {
-    this.api.getCalendar().subscribe(data => console.log(data));
+    this.api.getSectionData(this.sectionId).subscribe(data => console.log(data));
     this.router.navigate(['section/1']);
   }
+
+  goToCalendarSection(sectionId) {
+    this.api.getSectionData(sectionId).subscribe( data => console.log(data));
+    this.cookieService.set('sectionId', this.sectionId);
+    this.router.navigate(['section/1']);
+  }
+
+  extractSectionId(unformattedSectionId: string): string {
+    let formattedSectionId = '';
+
+    for (let i = 0; i < unformattedSectionId.length; i++) {
+      if (unformattedSectionId.charAt(i) !== '.') {
+        formattedSectionId += unformattedSectionId.charAt(i);
+      }
+    }
+    console.log('formatted section id is ' + formattedSectionId);
+    this.sectionId = formattedSectionId;
+    return this.sectionId;
+  }
+
+
 }

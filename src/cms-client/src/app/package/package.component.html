@@ -40,7 +40,7 @@
                 </mat-expansion-panel-header>
 
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <a class="request" (click)="getCalendar(package.id)">{{ packages[0].department.name}} Calendar</a>
+                  <a class="request" (click)="getSectionsByDepartmentId(packages[0].department.id)">{{ packages[0].department.name}} Calendar</a>
                 </div>
 
                 <a class="viewRevisions" (click)="viewAllRevisions(package.id, 'revisions')">

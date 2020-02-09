@@ -35,6 +35,7 @@ export class CalendarCourseListComponent implements OnInit {
   originalCourses = [];
   editedCourses: Course[] = [];
   printedCourses: Course[] = [];
+  sectionId;
 
   courseIds = [];
 
@@ -45,8 +46,9 @@ export class CalendarCourseListComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.cookieService.get('sectionId');
     const packageNumber = this.cookieService.get('package');
-    this.api.getCalendar().subscribe(data => {
+    this.api.getSectionData(this.sectionId).subscribe(data => {
       this.originalCourses = data.secondCoreCourses;
 
       this.api.getPackage(packageNumber, '4').subscribe(data => {

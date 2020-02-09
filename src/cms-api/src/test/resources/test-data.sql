@@ -76,6 +76,6 @@ INSERT INTO approval_pipeline (id, apc, department_council, department_curriculu
 INSERT INTO approval_pipeline_request_package (pipeline_id, package_id, position) VALUES (1, 1, 'Department Curriculum Committee');
 
 -- id, first_core, first_paragraph, is_active, second_core, section_id, section_title
-INSERT INTO section70719 (id, first_core, first_paragraph, is_active, second_core, section_id, section_title) VALUES
+INSERT INTO section71709 (id, first_core, first_paragraph, is_active, second_core, section_id, section_title) VALUES
 (1, 'Engineering Core', 'Students registered in the Software Engineering program must complete a minimum of 120 credits.',
 1, 'Software Engineering Core', '70.71.9', 'Degree Requirements for the BEng in Software Engineering');
