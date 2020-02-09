@@ -30,7 +30,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Section70719 {
+public class Section71709 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +43,23 @@ public class Section70719 {
     @Lob
     private String firstParagraph;
 
-    private String firstCore; // Engineering Core
 
+    private String firstCore; // Engineering Core
     private String secondCore; // Software Engineering Core
+    private String thirdCore; // Computer Science Group
+    private String fourthCore; // Basic and Natural Science Courses
+
+    @Lob
+    private String secondParagraph;
+
+    private String fifthCore; // General Program
+
+    @Lob
+    private String thirdParagraph;
+    private String sixthCore; // Computer Games (CG) Option
+    private String seventhCore; // Web Services and Applications (WSA) Option
+    private String eighthCore; // Real-Time, Embedded, and Avionics Software (REA) Option
+    private String ninthCore; // Electives
 
     private int isActive;
 
@@ -54,5 +68,23 @@ public class Section70719 {
 
     @Transient
     List<Course> secondCoreCourses = new ArrayList<>(); // retrieve from database before sending
+
+    @Transient
+    List<Course> thirdCoreCourses = new ArrayList<>(); // retrieve from database before sending
+
+    @Transient
+    List<Course> fourthCoreCourses = new ArrayList<>(); // retrieve from database before sending
+
+    @Transient
+    List<Course> fifthCoreCourses = new ArrayList<>(); // retrieve from database before sending
+
+    @Transient
+    List<Course> sixthCoreCourses = new ArrayList<>(); // retrieve from database before sending
+
+    @Transient
+    List<Course> seventhCoreCourses = new ArrayList<>(); // retrieve from database before sending
+
+    @Transient
+    List<Course> eightCoreCourses = new ArrayList<>(); // retrieve from database before sending
 
 }

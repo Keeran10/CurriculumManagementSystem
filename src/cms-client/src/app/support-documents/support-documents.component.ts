@@ -64,6 +64,7 @@ export class SupportDocumentComponent {
       this.type = "section";
     }
 
+    console.log("support doc id=" + id);
     if (this.target_type == 1 && id == 0 || this.target_type == 2 && id == 0) {
       console.log("undefined id for " + this.type);
       return;
@@ -104,6 +105,11 @@ export class SupportDocumentComponent {
 
   storeDescription(newValue, fileName) {
     this.descriptions.set(fileName, newValue);
+    console.log(this.descriptions);
+  }
+
+  storeFCDocumentNumber(newValue, fileName) {
+    this.descriptions.set(fileName, "Faculty Council covering report: " + newValue)
     console.log(this.descriptions);
   }
 

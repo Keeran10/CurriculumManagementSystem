@@ -61,9 +61,7 @@ public class ImpactAssessmentService {
         log.info("Json received: " + requestForm);
 
         JSONObject json = new JSONObject(requestForm);
-
         JSONArray array = json.getJSONObject("params").getJSONArray("updates");
-
         JSONObject course = new JSONObject((String) array.getJSONObject(0).get("value"));
         JSONObject courseExtras = new JSONObject((String) array.getJSONObject(1).get("value"));
 
@@ -74,11 +72,10 @@ public class ImpactAssessmentService {
         if (original_id != 0)
             original = courseRepository.findById(original_id);
 
-        int request_id = Integer.parseInt(String.valueOf(courseExtras.get("requestId")));
-        Request request = requestRepository.findByRequestId(request_id);
+        if(original == null)
+            return null;
 
         Course c = new Course();
-
         c.setName((String) course.get("name"));
         c.setNumber(Integer.valueOf((String.valueOf(course.get("number")))));
         c.setTitle((String) course.get("title"));
@@ -93,20 +90,6 @@ public class ImpactAssessmentService {
 
         courseRepository.save(c);
 
-
-        if(original != null)
-            request.setTitle(original.getName().toUpperCase() + original.getNumber() + "_update");
-        else
-            request.setTitle(c.getName().toUpperCase() + c.getNumber() + "_create");
-
-        // Requisites
-        String pre = (String) courseExtras.get("prerequisites");
-        String co = (String) courseExtras.get("corequisites");
-        String anti = (String) courseExtras.get("antirequisites");
-        String eq = (String) courseExtras.get("equivalents");
-
-        courseRepository.save(c);
-
         // Set degree requirements
         ArrayList<DegreeRequirement> list = new ArrayList<>();
         int size = course.getJSONArray("degreeRequirements").length();
@@ -115,10 +98,11 @@ public class ImpactAssessmentService {
         for(int i = 0; i < size; i++){
 
             JSONObject degreeRequirements = (JSONObject) course.getJSONArray("degreeRequirements").get(i);
-            int degreeReq_id = (Integer) degreeRequirements.get("id");
 
             JSONObject degreeJSON = (JSONObject) degreeRequirements.get("degree");
             int degree_id = (Integer) degreeJSON.get("id");
+
+
             Degree degree = degreeRepository.findById(degree_id);
             String core = (String) degreeRequirements.get("core");
 
@@ -128,14 +112,9 @@ public class ImpactAssessmentService {
                 ctr++;
             }
 
-            DegreeRequirement cdr = null;
+            DegreeRequirement cdr = new DegreeRequirement();
 
-            if(degreeReq_id == 0)
-                cdr = new DegreeRequirement();
-            else
-                cdr = degreeRequirementRepository.findById(degreeReq_id);
-
-            if(core == null || degree == null || cdr == null)
+            if(core == null || degree == null)
                 continue;
 
             cdr.setCore(core);

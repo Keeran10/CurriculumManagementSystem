@@ -19,40 +19,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-package com.soen490.cms.Services.PdfService.PdfSections;
+package com.soen490.cms.Repositories.SectionsRepositories;
+
+import com.soen490.cms.Models.Sections.Section71709;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface Section71709Repository extends JpaRepository<Section71709, Integer> {
+
+    @Query(value = "SELECT * FROM section71709 WHERE id=? AND is_active=1", nativeQuery = true)
+    Section71709 findBySubSectionId(int id);
 
 
-import com.itextpdf.text.Document;
-import com.soen490.cms.Models.Request;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service
-@Log4j2
-public class PdfSection {
-
-    @Autowired
-    private PdfSection70719 pdfSection70719;
-
-    @Autowired
-    private PdfSection71401 pdfSection71401;
-
-    @Autowired
-    private PdfSection71402 pdfSection71402;
-
-    public void addSectionPage(Document doc, Request request){
-
-        // replace with valid section identifier
-        if(true){
-
-            pdfSection70719.addSectionPage(doc, request);
-        }
-        if(true) {
-            pdfSection71401.addSectionPage(doc, request);
-        }
-        if(true) {
-            pdfSection71402.addSectionPage(doc, request);
-        }
-    }
+    @Query(value = "SELECT * FROM section71709 WHERE id=?", nativeQuery = true)
+    Section71709 findById(int id);
 }

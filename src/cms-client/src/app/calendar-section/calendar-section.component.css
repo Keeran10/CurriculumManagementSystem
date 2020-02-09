@@ -192,11 +192,23 @@ td, th {
 }
 
 .courseNumber{
-  width: 30%;
+  width: 10%;
+}
+
+.courseNumberLeft{
+  width: 20%;
 }
 
 .courseCredits{
   width: 100%;
+}
+
+.deleteCourse{
+  width: 5%;
+}
+
+.mat-form-field{
+  width: 85%;
 }
 
 tr:nth-child(even) {
