@@ -28,6 +28,7 @@ import com.soen490.cms.Models.SupportingDocument;
 import com.soen490.cms.Services.PdfService.PdfService;
 import com.soen490.cms.Services.RequestPackageService;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +170,13 @@ public class RequestPackageController {
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
             int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files, descriptions);
+
+            JSONArray core_removals = new JSONArray(sectionExtrasJson.getJSONArray("core_removals"));
+            JSONArray core_additions = new JSONArray(sectionExtrasJson.getJSONArray("core_additions"));
+
+            requestPackageService.processCoreRequests(core_additions, core_removals,
+                    (String) sectionExtrasJson.get("add_to_core"), (String) sectionExtrasJson.get("remove_from_core"),
+                    user_id, package_id);
 
             if(request_id != 0)
                 requestPackageService.generatePdf(package_id, user_id);
@@ -363,5 +371,4 @@ public class RequestPackageController {
         log.info("Removing supporting doc " + file_id);
         return requestPackageService.removeSupportingDocument(file_id);
     }
-
 }
