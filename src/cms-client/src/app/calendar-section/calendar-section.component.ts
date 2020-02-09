@@ -42,6 +42,9 @@ export class CalendarSectionComponent implements OnInit {
   originalCourses = [];
   editedCourses: Course[] = [];
   printedCourses: Course[] = [];
+  
+  removedPrintedCourses: Number[] = [];
+  addedPrintedCourses: Course[] = [];
 
   courseIds = [];
 
@@ -181,6 +184,11 @@ export class CalendarSectionComponent implements OnInit {
     delElements.forEach((e) => {
       e.style.background = '#ffbbbb';
     });
+  }
+
+  public removeCourseFromCore(courseId){
+    this.removedPrintedCourses.push(courseId);
+    this.printedCourses = this.printedCourses.filter(element => element.id != courseId);
   }
 
   public submitForm() {

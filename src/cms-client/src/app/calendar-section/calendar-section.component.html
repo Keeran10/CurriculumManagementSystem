@@ -50,10 +50,18 @@
               <div class="row8" *ngIf="isDoneLoading">
                 <div *ngFor="let c of printedCourses; let i = index">
                   <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                    <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                    <td class="courseTitle"> {{c.title}}</td>
-                    <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  <span>
+                    <td>
+                      <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td>
+                      </span>
+                    </td>
+                    <td class="deleteCourse" (click)="removeCourseFromCore(c.id)">
+                      <font color="red" style="cursor: pointer;">[x]</font>
+                    </td>
+                  </span>
                 </div>
               </div>
             </tr>
