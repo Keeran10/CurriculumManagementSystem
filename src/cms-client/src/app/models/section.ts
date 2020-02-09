@@ -39,20 +39,23 @@ export class Section {
   seventhCore: string;
   sixthParagraph: string;
   eightCore: string;
-  SeventhParagraph: string;
+  seventhParagraph: string;
   ninthCore: string;
   eightParagraph: string;
   tenthCore: string;
   ninthParagraph: string;
   eleventhCore: string;
+  tenthParagraph: string;
   twelfthCore: string;
   eleventhParagraph: string;
   thirteenthCore: string;
   twelfthParagraph: string;
   fourteenthCore: string;
+  fifteenthCore: string;
   thirteenthParagraph: string;
   sixteenthCore: string;
-  seventeethCore: string;
+  fourteenthParagraph: string;
+  seventeenthCore: string;
   fifteenthParagraph: string;
   eighteenthCore: string;
   sixteenthParagraph: string;
@@ -66,7 +69,7 @@ export class Section {
   fifthCoreCourses: object[];
   sixthCoreCourses: object[];
   seventhCoreCourses: object[];
-  eigthCoreCourses: object[];
+  eightCoreCourses: object[];
 
   // mech
   introParagraph: string;
