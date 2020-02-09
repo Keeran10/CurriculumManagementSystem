@@ -223,6 +223,8 @@ export class CalendarSectionComponent implements OnInit {
     this.sectionEditable.id = 1;
     this.editedExtraModel.core_additions = this.addedPrintedCourses;
     this.editedExtraModel.core_removals = this.removedPrintedCourses;
+    this.editedExtraModel.remove_from_core = this.sectionEditable.secondCore;
+    this.editedExtraModel.add_to_core = this.sectionEditable.secondCore;
 
     this.api.submitCalendarSectionForm(this.supportDocumentComponent.documents,
       this.supportDocumentComponent.descriptions, this.sectionEditable, this.editedExtraModel)

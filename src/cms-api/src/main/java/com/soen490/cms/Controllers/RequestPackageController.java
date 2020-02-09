@@ -174,11 +174,11 @@ public class RequestPackageController {
             JSONArray core_removals = sectionExtrasJson.getJSONArray("core_removals");
             JSONArray core_additions = sectionExtrasJson.getJSONArray("core_additions");
 
-            //String add_to_core = (String) sectionExtrasJson.get("add_to_core");
-            //String remove_from_core = (String) sectionExtrasJson.get("remove_from_core");
+            String add_to_core = (String) sectionExtrasJson.get("add_to_core");
+            String remove_from_core = (String) sectionExtrasJson.get("remove_from_core");
 
             requestPackageService.processCoreRequests(core_additions, core_removals,
-                    "Software Engineering Core", "Software Engineering Core",
+                    add_to_core, remove_from_core,
                     user_id, package_id);
 
             if(request_id != 0)

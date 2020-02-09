@@ -30,6 +30,8 @@ export class SectionExtras {
   requestId: number;
   core_removals: Number[];
   core_additions: Number[];
+  add_to_core: string;
+  remove_from_core: string;
   constructor() {
     this.implications = '';
     this.packageId = 1;
