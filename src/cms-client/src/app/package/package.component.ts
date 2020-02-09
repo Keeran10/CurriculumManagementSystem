@@ -55,8 +55,8 @@ export class PackageComponent implements OnInit {
   }
 
   ngOnInit() {
-    // let departmentId = this.cookieService.get('department'); // replace 4 with department id
-    this.api.getAllPackages('4').subscribe(data => {
+    let departmentId = this.cookieService.get('department'); // replace 4 with department id
+    this.api.getAllPackages(departmentId).subscribe(data => {
       console.log(data);
       this.packages = data;
       this.packages.forEach(() => this.isPdfAvailable.push(false));

@@ -110,6 +110,15 @@ public class PdfService {
 
                 log.info("Generating pdf page for " + request.getTitle());
 
+                if(request.getTargetType() == 2) {
+
+                    // course requests
+                    Course original_course = courseRepository.findById(request.getOriginalId());
+                    Course changed_course = courseRepository.findById(request.getTargetId());
+
+                    if (isCoreRequest(original_course, changed_course)) continue;
+                }
+
                 Document doc = new Document();
                 // course page specifications
                 doc.setPageSize(PageSize.A4.rotate());
@@ -129,7 +138,6 @@ public class PdfService {
                     pdfCourse.addCoursePage(doc, request, original_course, changed_course);
 
                     // append course supporting documents
-
                     List<SupportingDocument> course_files = null;
 
                     if(changed_course != null){
@@ -199,6 +207,33 @@ public class PdfService {
         requestPackageRepository.save(requestPackage);
 
         return true;
+    }
+
+
+    // Verifies if there is legitimate reasons to add a course diff page
+    private boolean isCoreRequest(Course original_course, Course changed_course) {
+
+        if(original_course == null || changed_course == null)
+            return false;
+
+        if(original_course.getRequisites().size() != changed_course.getRequisites().size())
+            return false;
+
+        for(int i = 0; i < original_course.getRequisites().size(); i++){
+
+            Requisite r1 = original_course.getRequisites().get(i);
+            Requisite r2 = changed_course.getRequisites().get(i);
+
+            if(!r1.getName().equals(r2.getName()) || r1.getNumber() != r2.getNumber() || !r1.getType().equals(r2.getType()))
+                return false;
+        }
+
+        return
+                original_course.getName().equals(changed_course.getName()) &&
+                original_course.getNumber() == changed_course.getNumber() &&
+                original_course.getTitle().equals(changed_course.getTitle()) &&
+                original_course.getDescription().equals(changed_course.getDescription()) &&
+                original_course.getCredits() == changed_course.getCredits();
     }
 
 

@@ -36,8 +36,20 @@
             {{ item.name }}
           </td>
           <td>
+            <!--
             <input type="text" id="description" #input class="form-control" placeholder="description {press enter}"
               (change)="storeDescription(input.value, item.name); input.value=''">
+            -->
+            <select id="description" #input (change)="storeDescription(input.value, item.name);">
+              <option value="" selected></option>
+              <option value="Department covering document">Department covering document</option>
+              <option value="Faculty covering document">Faculty covering document</option>
+              <option value="Faculty Council covering report">Faculty Council covering report</option>
+              <option value="supporting document">supporting document</option>
+            </select>
+            <span *ngIf="input.value == 'Faculty Council covering report'">
+              <input type="text" id="fc-document-number" #input2 class="form-control" placeholder="FC document number"
+                (change)="storeFCDocumentNumber(input2.value, item.name); input2.value=''"></span>
           </td>
           <td>
             <span> {{ descriptions.get(item.name) }} </span>
@@ -52,14 +64,14 @@
       <tr *ngIf="supportingDocs.length == 0">
         No files found for this {{type}}.
       <tr *ngFor="let doc of supportingDocs; let i=index">
+        <td (click)="removeSupportingDoc(doc.id)">
+          <font color="red" style="cursor: pointer;">[x]</font>
+        </td>
         <td class="fake-link" (click)="showPDF(doc.id)">
           {{ doc.fileName }}
         </td>
         <td>
           {{ doc.fileDescription}}
-        </td>
-        <td (click)="removeSupportingDoc(doc.id)">
-          <font color="red" style="cursor: pointer;">[x]</font>
         </td>
       </tr>
     </table>

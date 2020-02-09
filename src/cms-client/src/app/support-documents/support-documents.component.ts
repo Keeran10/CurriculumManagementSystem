@@ -108,6 +108,11 @@ export class SupportDocumentComponent {
     console.log(this.descriptions);
   }
 
+  storeFCDocumentNumber(newValue, fileName) {
+    this.descriptions.set(fileName, "Faculty Council covering report: " + newValue)
+    console.log(this.descriptions);
+  }
+
   public showPDF(file_id: any) {
     this.api.getSupportingDocumentPdf(file_id).subscribe(
       data => {
