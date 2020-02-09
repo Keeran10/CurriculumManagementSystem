@@ -49,7 +49,7 @@ export class CalendarSectionsComponent implements OnInit {
   }
 
   public getCalendarData() {
-    this.api.getCalendar().subscribe(data => console.log(data));
+    this.api.getSectionData(this.sectionId).subscribe(data => console.log(data));
     this.router.navigate(['section/1']);
   }
 

@@ -147,20 +147,15 @@ export class ApiService {
       responseType: 'arraybuffer' as 'json'
     });
   }
-
+/*
   public getCalendar() {
     return this.http.get<any>(this.url + 'section71709');
-  }
+  }*/
 
   public getSectionData(id: string) {
     // this returns this one section
     return this.http.get<Section>(this.url + 'section' + id);
   }
-
-/*  public getSection(id: string) {
-    // this returns this one section
-    return this.http.get<Section>(this.url + 'section71709');
-  }*/
 
   public generatePdf(packageId: string, userId: string) {
     return this.http.get<boolean>(this.url + 'generate_pdf', {
