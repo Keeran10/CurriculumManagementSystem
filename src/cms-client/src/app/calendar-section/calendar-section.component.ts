@@ -28,6 +28,7 @@ import { Section } from '../models/section';
 import { SectionExtras } from '../models/section-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 import { Course } from '../models/course';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-calendar-section',
@@ -44,7 +45,7 @@ export class CalendarSectionComponent implements OnInit {
   printedCourses: Course[] = [];
   
   removedPrintedCourses: Number[] = [];
-  addedPrintedCourses: Course[] = [];
+  addedPrintedCourses: Number[] = [];
 
   courseIds = [];
 
@@ -56,6 +57,9 @@ export class CalendarSectionComponent implements OnInit {
 
   extrasModel = new SectionExtras();
   editedExtraModel = new SectionExtras();
+
+  allCourses: Course[] = [];
+  myControl = new FormControl();
 
   selectedFiles: FileList;
   currentFile: File;
@@ -143,6 +147,10 @@ export class CalendarSectionComponent implements OnInit {
         }
       });
     });
+
+    this.api.getAllCourses().subscribe(data => {
+      this.allCourses = data;
+    });
   }
 
   public getPrintedCourses() {
@@ -186,14 +194,34 @@ export class CalendarSectionComponent implements OnInit {
     });
   }
 
-  public removeCourseFromCore(courseId){
-    this.removedPrintedCourses.push(courseId);
-    this.printedCourses = this.printedCourses.filter(element => element.id != courseId);
+  public removeCourseFromCore(course){
+    if (confirm('Are you sure you want to delete ' + course.title + ' from this core?')) {
+      this.removedPrintedCourses.push(course.id);
+      this.printedCourses = this.printedCourses.filter(element => element.id != course.id);
+    }
+  }
+
+  public addCourseToCore(){
+    let addedCourse = this.allCourses.find(course => course.title === this.myControl.value);
+    this.addedPrintedCourses.push(addedCourse.id);
+    this.printedCourses.push(addedCourse);
+    this.printedCourses = this.printedCourses.sort(function(a,b){
+      if(a.number<b.number){
+        return -1;
+      }
+      if(a.number>b.number){
+        return 1;
+      }
+      return 0;
+    })
   }
 
   public submitForm() {
     // bug hotfix for original_id = 0
     this.sectionEditable.id = 1;
+    this.editedExtraModel.addedCourses = this.addedPrintedCourses;
+    this.editedExtraModel.removedCourses = this.removedPrintedCourses;
+
     this.api.submitCalendarSectionForm(this.supportDocumentComponent.documents,
       this.supportDocumentComponent.descriptions, this.sectionEditable, this.editedExtraModel)
       .subscribe(() => this.router.navigate(['/package']));

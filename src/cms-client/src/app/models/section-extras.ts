@@ -1,3 +1,5 @@
+import { Course } from './course';
+
 // MIT License
 
 // Copyright (c) 2019 teamCMS
@@ -26,6 +28,8 @@ export class SectionExtras {
   rationale: string;
   userId: number;
   requestId: number;
+  addedCourses: Number[];
+  removedCourses: Number[];
   constructor() {
     this.implications = '';
     this.packageId = 1;

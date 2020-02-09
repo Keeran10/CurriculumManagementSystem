@@ -58,12 +58,26 @@
                       <td class="courseCredits">{{c.credits.toFixed(2)}} </td>
                       </span>
                     </td>
-                    <td class="deleteCourse" (click)="removeCourseFromCore(c.id)">
+                    <td class="deleteCourse" (click)="removeCourseFromCore(c)">
                       <font color="red" style="cursor: pointer;">[x]</font>
                     </td>
                   </span>
                 </div>
               </div>
+              <span>
+                <mat-form-field>
+                  <input type="text" placeholder="Add a course to core" matInput 
+                  [formControl]="myControl" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let course of allCourses" [value]="course.title">
+                    {{course.name}} {{course.number}} {{course.title}}
+                  </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <button class="mat-search" mat-raised-button color="primary" (click)="addCourseToCore()">
+                  Add
+                </button>
+              </span>
             </tr>
             </tbody>
           </table>
