@@ -207,6 +207,10 @@ td, th {
   width: 5%;
 }
 
+.mat-form-field{
+  width: 85%;
+}
+
 tr:nth-child(even) {
   background-color: #dddddd;
 }

@@ -203,17 +203,19 @@ export class CalendarSectionComponent implements OnInit {
 
   public addCourseToCore(){
     let addedCourse = this.allCourses.find(course => course.title === this.myControl.value);
-    this.addedPrintedCourses.push(addedCourse.id);
-    this.printedCourses.push(addedCourse);
-    this.printedCourses = this.printedCourses.sort(function(a,b){
-      if(a.number<b.number){
-        return -1;
-      }
-      if(a.number>b.number){
-        return 1;
-      }
-      return 0;
-    })
+    if(this.printedCourses.find(c => c.title===addedCourse.title) === undefined){
+      this.addedPrintedCourses.push(addedCourse.id);
+      this.printedCourses.push(addedCourse);
+      this.printedCourses = this.printedCourses.sort(function(a,b){
+        if(a.number<b.number){
+          return -1;
+        }
+        if(a.number>b.number){
+          return 1;
+        }
+        return 0;
+      })
+    }
   }
 
   public submitForm() {
