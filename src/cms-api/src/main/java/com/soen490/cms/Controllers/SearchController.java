@@ -23,7 +23,7 @@
 package com.soen490.cms.Controllers;
 
 import com.soen490.cms.Models.*;
-import com.soen490.cms.Models.Sections.Section70719;
+import com.soen490.cms.Models.Sections.*;
 import com.soen490.cms.Services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -101,16 +101,121 @@ public class SearchController {
     @GetMapping("/sections")
     public List<Object> getSections(){
         List<Object> sections = new ArrayList<>();
-         sections.add(searchService.findsection70719ById(1));
+         sections.add(searchService.findsection71709ById(1));
+         sections.add(searchService.findSection71401ById(1));
+         sections.add(searchService.findSection71402ById(1));
+         sections.add(searchService.findsection71709ById(1));
          return sections;
     }
 
-    // URL should be 8080/section70719
-    @GetMapping("/section70719")
-    public Section70719 getSection70719(){
-        return searchService.findsection70719ById(1);
+    @GetMapping("/fetch_all_sections")
+    public List<Object> getSectionsByDepartment(@RequestParam int department_id) {
+        if (department_id == 1) { // Building, Civil and Environmental Engineering
+            return null; // not yet added to DB
+        } else if (department_id == 2) { // Centre for Engineering in Society
+            return null; // not yet added to DB
+        } else if (department_id == 3) { // Chemical and Materials Engineering
+            return null; // not yet added to DB
+        } else if (department_id == 4) { // Computer Science and Software Engineering
+            List<Object> soenCompSciSections = new ArrayList<>();
+
+            soenCompSciSections.add(searchService.findsection71701ById(1));
+            soenCompSciSections.add(searchService.findsection71702ById(1));
+            soenCompSciSections.add(searchService.findsection71703ById(1));
+            soenCompSciSections.add(searchService.findsection71704ById(1));
+            soenCompSciSections.add(searchService.findsection71705ById(1));
+            soenCompSciSections.add(searchService.findsection71706ById(1));
+            soenCompSciSections.add(searchService.findsection71707ById(1));
+            soenCompSciSections.add(searchService.findsection71708ById(1));
+            soenCompSciSections.add(searchService.findsection71709ById(1));
+            soenCompSciSections.add(searchService.findsection717010ById(1));
+
+            return soenCompSciSections;
+        } else if (department_id == 5) { // Concordia Institude for Information Systems Security
+            return null; // not yet added to DB
+        } else if (department_id == 6) { // Concordia Institude for Aerospace Design and Innovation
+            return null; // not yet added to DB
+        } else if (department_id == 7) { // Electrical and Computer Engineering
+            return null; // not yet added to DB
+        } else if (department_id == 8) { // Mechanical, Industrial and Aerospace Engineering
+            List<Object> mechInduSections = new ArrayList<>(); // AERO not added to DB
+
+            mechInduSections.add(searchService.findSection71401ById(1));
+            mechInduSections.add(searchService.findSection71402ById(1));
+
+            return mechInduSections;
+        } else { // invalid department ID
+            return null;
+        }
     }
 
+    // URL should be 8080/section71701
+    @GetMapping("/section71701")
+    public Section71701 getSection71701(){
+        return searchService.findsection71701ById(1);
+    }
+
+    // URL should be 8080/section71702
+    @GetMapping("/section71702")
+    public Section71702 getSection71702(){ return searchService.findsection71702ById(1); }
+
+    // URL should be 8080/section71703
+    @GetMapping("/section71703")
+    public Section71703 getSection71703(){
+        return searchService.findsection71703ById(1);
+    }
+
+    // URL should be 8080/section71704
+    @GetMapping("/section71704")
+    public Section71704 getSection71704(){
+        return searchService.findsection71704ById(1);
+    }
+
+    // URL should be 8080/section71705
+    @GetMapping("/section71705")
+    public Section71705 getSection71705(){
+        return searchService.findsection71705ById(1);
+    }
+
+    // URL should be 8080/section71706
+    @GetMapping("/section71706")
+    public Section71706 getSection71706(){
+        return searchService.findsection71706ById(1);
+    }
+
+    // URL should be 8080/section71707
+    @GetMapping("/section71707")
+    public Section71707 getSection71707(){
+        return searchService.findsection71707ById(1);
+    }
+
+    // URL should be 8080/section71708
+    @GetMapping("/section71708")
+    public Section71708 getSection71708(){
+        return searchService.findsection71708ById(1);
+    }
+
+    // URL should be 8080/section71709
+    @GetMapping("/section71709")
+    public Section71709 getSection71709(){
+        return searchService.findsection71709ById(1);
+    }
+
+    // URL should be 8080/section717010
+    @GetMapping("/section717010")
+    public Section717010 getSection717010(){
+        return searchService.findsection717010ById(1);
+    }
+
+    @GetMapping("/section71401")
+    public Section71401 getSection71401(){
+        return searchService.findSection71401ById(1);
+    }
+
+    @GetMapping("/section71402")
+    public Section71402 getSection71402(){
+        return searchService.findSection71402ById(1);
+    }
 
     @GetMapping("/get_degrees_by_department")
     public List<Degree> getDegreesFromDepartment(@RequestParam int department_id){

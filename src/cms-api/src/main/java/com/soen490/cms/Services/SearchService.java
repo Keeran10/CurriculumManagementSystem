@@ -23,9 +23,9 @@
 package com.soen490.cms.Services;
 
 import com.soen490.cms.Models.*;
-import com.soen490.cms.Models.Sections.Section70719;
+import com.soen490.cms.Models.Sections.*;
 import com.soen490.cms.Repositories.*;
-import com.soen490.cms.Repositories.SectionsRepositories.Section70719Repository;
+import com.soen490.cms.Repositories.SectionsRepositories.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +54,29 @@ public class SearchService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    Section70719Repository section70719Repository;
+    Section71701Repository section71701Repository;
+    @Autowired
+    Section71702Repository section71702Repository;
+    @Autowired
+    Section71703Repository section71703Repository;
+    @Autowired
+    Section71704Repository section71704Repository;
+    @Autowired
+    Section71705Repository section71705Repository;
+    @Autowired
+    Section71706Repository section71706Repository;
+    @Autowired
+    Section71707Repository section71707Repository;
+    @Autowired
+    Section71708Repository section71708Repository;
+    @Autowired
+    Section71709Repository section71709Repository;
+    @Autowired
+    Section717010Repository section717010Repository;
+    @Autowired
+    Section71401Repository section71401Repository;
+    @Autowired
+    Section71402Repository section71402Repository;
     @Autowired
     DegreeRequirementRepository degreeRequirementRepository;
 
@@ -131,17 +153,125 @@ public class SearchService {
         return facultyRepository.findByName(name);
     }
 
-    public Section70719 findsection70719ById(int section_id){
+    public Section71701 findsection71701ById(int section_id){
+        log.info("find Section71701 " + section_id);
 
-        log.info("find Section70719 " + section_id);
+        Section71701 section71701 = section71701Repository.findBySubSectionId(section_id);
+        return section71701;
+    }
 
-        Section70719 section70719 = section70719Repository.findBySubSectionId(section_id);
+    public Section71702 findsection71702ById(int section_id){
+        log.info("find Section71702 " + section_id);
+
+        Section71702 section71702 = section71702Repository.findBySubSectionId(section_id);
+        section71702.setFirstCoreCourses(retrieveSectionCourseLists(section71702.getFirstCore()));
+        section71702.setSecondCoreCourses(retrieveSectionCourseLists(section71702.getSecondCore()));
+        section71702.setThirdCoreCourses(retrieveSectionCourseLists(section71702.getFourthCore()));
+        section71702.setFourthCoreCourses(retrieveSectionCourseLists(section71702.getEightCore()));
+        section71702.setFifthCoreCourses(retrieveSectionCourseLists(section71702.getTenthCore()));
+        section71702.setSixthCoreCourses(retrieveSectionCourseLists(section71702.getTwelfthCore()));
+        section71702.setSeventhCoreCourses(retrieveSectionCourseLists(section71702.getFourteenthCore()));
+        section71702.setEightCoreCourses(retrieveSectionCourseLists(section71702.getSixteenthCore()));
+        return section71702;
+    }
+
+    public Section71703 findsection71703ById(int section_id){
+        log.info("find Section71703 " + section_id);
+
+        Section71703 section71703 = section71703Repository.findBySubSectionId(section_id);
+        return section71703;
+    }
+
+    public Section71704 findsection71704ById(int section_id){
+        log.info("find Section71704 " + section_id);
+
+        Section71704 section71704 = section71704Repository.findBySubSectionId(section_id);
+        return section71704;
+    }
+
+    public Section71705 findsection71705ById(int section_id){
+        log.info("find Section71705 " + section_id);
+
+        Section71705 section71705 = section71705Repository.findBySubSectionId(section_id);
+        section71705.setFirstCoreCourses(retrieveSectionCourseLists(section71705.getFirstCore()));
+        return section71705;
+    }
+
+        public Section71706 findsection71706ById(int section_id){
+            log.info("find Section71706 " + section_id);
+
+            Section71706 section71706 = section71706Repository.findBySubSectionId(section_id);
+            return section71706;
+    }
+
+    public Section71707 findsection71707ById(int section_id){
+        log.info("find Section71707 " + section_id);
+
+        Section71707 section71707 = section71707Repository.findBySubSectionId(section_id);
+        return section71707;
+    }
+
+    public Section71708 findsection71708ById(int section_id){
+        log.info("find Section71706 " + section_id);
+
+        Section71708 section71708 = section71708Repository.findBySubSectionId(section_id);
+        return section71708;
+    }
+
+    public Section71709 findsection71709ById(int section_id){
+
+        log.info("find Section71709 " + section_id);
+
+        Section71709 section71709 = section71709Repository.findBySubSectionId(section_id);
 
         // can add as many core here for the entire section of 70.71.9
-        section70719.setFirstCoreCourses(retrieveSectionCourseLists(section70719.getFirstCore()));
-        section70719.setSecondCoreCourses(retrieveSectionCourseLists(section70719.getSecondCore()));
+        section71709.setFirstCoreCourses(retrieveSectionCourseLists(section71709.getFirstCore()));
+        section71709.setSecondCoreCourses(retrieveSectionCourseLists(section71709.getSecondCore()));
+        section71709.setThirdCoreCourses(retrieveSectionCourseLists(section71709.getThirdCore()));
+        section71709.setFourthCoreCourses(retrieveSectionCourseLists(section71709.getFourthCore()));
+        section71709.setFifthCoreCourses(retrieveSectionCourseLists(section71709.getSixthCore()));
+        section71709.setSixthCoreCourses(retrieveSectionCourseLists(section71709.getSeventhCore()));
+        section71709.setSeventhCoreCourses(retrieveSectionCourseLists(section71709.getEighthCore()));
+        section71709.setEightCoreCourses(retrieveSectionCourseLists(section71709.getNinthCore()));
 
-        return section70719;
+        return section71709;
+    }
+
+    public Section717010 findsection717010ById(int section_id){
+        log.info("find Section71706 " + section_id);
+
+        Section717010 section717010 = section717010Repository.findBySubSectionId(section_id);
+        return section717010;
+    }
+
+    public Section71401 findSection71401ById(int sectionId) { // BEng Mech Eng
+        log.info("search for Section 71.40.1 " + sectionId);
+
+        Section71401 section71401 = section71401Repository.findBySubSectionId(sectionId);
+
+        section71401.setFirstCoreCourses(retrieveSectionCourseLists(section71401.getFirstCore()));
+        section71401.setSecondCoreCourses(retrieveSectionCourseLists(section71401.getSecondCore()));
+        section71401.setFirstOptionCourses(retrieveSectionCourseLists(section71401.getFirstOption()));
+        section71401.setSectionOptionCourses(retrieveSectionCourseLists(section71401.getSecondOption()));
+        section71401.setThirdOptionCourses(retrieveSectionCourseLists(section71401.getThirdOption()));
+        section71401.setFourthOptionCourses(retrieveSectionCourseLists(section71401.getFourthOption()));
+        section71401.setFifthOptionCourses(retrieveSectionCourseLists(section71401.getFifthOption()));
+        section71401.setSixthOptionCourses(retrieveSectionCourseLists(section71401.getSixthOption()));
+
+        return section71401;
+    }
+
+    public Section71402 findSection71402ById(int sectionId) { // BEng Indu Eng
+        log.info("search for Section 71.40.2 " + sectionId);
+
+        Section71402 section71402 = section71402Repository.findBySubSectionId(sectionId);
+
+        section71402.setFirstCoreCourses(retrieveSectionCourseLists(section71402.getFirstCore()));
+        section71402.setSecondCoreCourses(retrieveSectionCourseLists(section71402.getSecondCore()));
+        section71402.setScienceCoreCourses(retrieveSectionCourseLists(section71402.getScienceCore()));
+        section71402.setElectiveCourses(retrieveSectionCourseLists("Indu Electives"));
+
+        return section71402;
     }
 
     private List<Course> retrieveSectionCourseLists(String core) {

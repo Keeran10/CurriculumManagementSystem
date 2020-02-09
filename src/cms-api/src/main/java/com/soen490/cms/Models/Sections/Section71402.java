@@ -19,20 +19,51 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-package com.soen490.cms.Repositories.SectionsRepositories;
 
-import com.soen490.cms.Models.Sections.Section70719;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+package com.soen490.cms.Models.Sections;
 
-@Repository
-public interface Section70719Repository extends JpaRepository<Section70719, Integer> {
+import com.soen490.cms.Models.Course;
+import lombok.Data;
 
-    @Query(value = "SELECT * FROM section70719 WHERE id=? AND is_active=1", nativeQuery = true)
-    Section70719 findBySubSectionId(int id);
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Data
+public class Section71402 {
 
-    @Query(value = "SELECT * FROM section70719 WHERE id=?", nativeQuery = true)
-    Section70719 findById(int id);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private int isActive = 1;
+
+    private String sectionId;
+
+    private String sectionTitle; // Section 71.40.2
+
+    private String introParagraph;
+
+    private String firstCore;
+
+    private String secondCore;
+
+    private String scienceCore;
+
+    private String electivesHeader;
+
+    private String electivesDescription;
+
+    @Transient
+    List<Course> firstCoreCourses = new ArrayList<>();
+
+    @Transient
+    List<Course> secondCoreCourses = new ArrayList<>();
+
+    @Transient
+    List<Course> scienceCoreCourses = new ArrayList<>();
+
+    @Transient
+    List<Course> electiveCourses = new ArrayList<>();
 }

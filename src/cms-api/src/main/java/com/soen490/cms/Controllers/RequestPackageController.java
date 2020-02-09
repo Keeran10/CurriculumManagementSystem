@@ -155,21 +155,81 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection70719 stringified JSON received from front-end.
+     * @param subSection71701 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
-     * @return True if section70719 was successfully added to database.
+     * @return True if section70711 was successfully added to database.
      */
-    @PostMapping(value="/save_section70719")
-    public int saveSubSection70719 (@RequestParam String subSection70719, @RequestParam String sectionExtras,
+    @PostMapping(value= "/save_section71701")
+    public int saveSubSection70711 (@RequestParam String subSection71701, @RequestParam String sectionExtras,
                                     @RequestParam(required = false) MultipartFile[] files,
                                     @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection70719);
+        log.info("Saving Section: " + subSection71701);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection70719(subSection70719, sectionExtras, files, descriptions);
+            int request_id = requestPackageService.saveSection71701(subSection71701, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71702 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70712 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71702")
+    public int saveSubSection71702(@RequestParam String subSection71702, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71702);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71702(subSection71702, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71703 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70713 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71703")
+    public int saveSubSection71703(@RequestParam String subSection71703, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71703);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71703(subSection71703, sectionExtras, files, descriptions);
 
             JSONArray core_removals = sectionExtrasJson.getJSONArray("core_removals");
             JSONArray core_additions = sectionExtrasJson.getJSONArray("core_additions");
@@ -193,6 +253,215 @@ public class RequestPackageController {
         return 0;
     }
 
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71704 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70714 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71704")
+    public int saveSubSection71704(@RequestParam String subSection71704, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71704);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71704(subSection71704, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71705 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70715 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71705")
+    public int saveSubSection71705(@RequestParam String subSection71705, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71705);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71705(subSection71705, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71706 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70716 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71706")
+    public int saveSubSection71706(@RequestParam String subSection71706, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71706);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71706(subSection71706, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71707 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70717 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71707")
+    public int saveSubSection70717 (@RequestParam String subSection71707, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71707);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71707(subSection71707, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71708 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70718 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71708")
+    public int saveSubSection70718 (@RequestParam String subSection71708, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71708);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71708(subSection71708, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection71709 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section70719 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section71709")
+    public int saveSubSection71709(@RequestParam String subSection71709, @RequestParam String sectionExtras,
+                                   @RequestParam(required = false) MultipartFile[] files,
+                                   @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection71709);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection71709(subSection71709, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Receives data from client and populates the database for course and its dependencies.
+     * @param subSection717010 stringified JSON received from front-end.
+     * @param sectionExtras stringified JSON received from front-end.
+     * @param files supporting docs
+     * @return True if section707110 was successfully added to database.
+     */
+    @PostMapping(value= "/save_section717010")
+    public int saveSubSection717010(@RequestParam String subSection717010, @RequestParam String sectionExtras,
+                                    @RequestParam(required = false) MultipartFile[] files,
+                                    @RequestParam(required = false) String descriptions) {
+        log.info("Saving Section: " + subSection717010);
+        try {
+            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
+            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
+            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
+            int request_id = requestPackageService.saveSection717010(subSection717010, sectionExtras, files, descriptions);
+
+            if(request_id != 0)
+                requestPackageService.generatePdf(package_id, user_id);
+
+            return request_id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
