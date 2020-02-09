@@ -50,12 +50,34 @@
               <div class="row8" *ngIf="isDoneLoading">
                 <div *ngFor="let c of printedCourses; let i = index">
                   <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                    <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                    <td class="courseTitle"> {{c.title}}</td>
-                    <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  <span>
+                    <td>
+                      <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td>
+                      </span>
+                    </td>
+                    <td class="deleteCourse" (click)="removeCourseFromCore(c)">
+                      <font color="red" style="cursor: pointer;">[x]</font>
+                    </td>
+                  </span>
                 </div>
               </div>
+              <span class="row9">
+                <mat-form-field>
+                  <input class="full-width" type="text" placeholder="Add a course to core" matInput 
+                  [formControl]="myControl" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let course of allCourses" [value]="course.title">
+                    {{course.name}} {{course.number}} {{course.title}}
+                  </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <button class="mat-search" mat-raised-button color="primary" (click)="addCourseToCore()">
+                  Add
+                </button>
+              </span>
             </tr>
             </tbody>
           </table>
