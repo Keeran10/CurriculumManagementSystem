@@ -22,8 +22,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
 import { Router } from '@angular/router';
-import {Section} from '../models/section';
 import {CookieService} from 'ngx-cookie-service';
+import {Section71701} from '../models/section71701';
+import {Section} from '../models/section';
 
 @Component({
   selector: 'app-calendar-sections',
@@ -35,6 +36,7 @@ export class CalendarSectionsComponent implements OnInit {
   printedSections: Section;
   department_id: string;
   sectionId: string;
+  length: number;
 
   constructor(private cookieService: CookieService,
               private api: ApiService,
@@ -44,6 +46,7 @@ export class CalendarSectionsComponent implements OnInit {
     this.department_id = this.cookieService.get('department');
     this.api.getSectionsByDepartment(this.department_id).subscribe(data => {
       this.printedSections = data;
+      length = this.getObjectSize(data);
       console.log(data);
     });
   }
@@ -59,7 +62,7 @@ export class CalendarSectionsComponent implements OnInit {
     this.router.navigate(['section/1']);
   }
 
-  extractSectionId(unformattedSectionId: string): string {
+  extractSectionId(unformattedSectionId: any): string {
     let formattedSectionId = '';
 
     for (let i = 0; i < unformattedSectionId.length; i++) {
@@ -72,5 +75,13 @@ export class CalendarSectionsComponent implements OnInit {
     return this.sectionId;
   }
 
-
+  getObjectSize(obj: object): number {
+    let size = 0; let key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          size++;
+        }
+      }
+    return size;
+    }
 }

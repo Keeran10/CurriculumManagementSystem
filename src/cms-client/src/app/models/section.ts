@@ -25,8 +25,47 @@ export class Section {
   sectionId: number;
   sectionTitle: string;
   firstParagraph: string;
+
   firstCore: string;
   secondCore: string;
+  thirdCore: string;
+  secondParagraph: string;
+  fourthCore: string;
+  thirdParagraph: string;
+  fifthCore: string;
+  fourthParagraph: string;
+  sixthCore: string;
+  fifthParagraph: string;
+  seventhCore: string;
+  sixthParagraph: string;
+  eightCore: string;
+  SeventhParagraph: string;
+  ninthCore: string;
+  eightParagraph: string;
+  tenthCore: string;
+  ninthParagraph: string;
+  eleventhCore: string;
+  twelfthCore: string;
+  eleventhParagraph: string;
+  thirteenthCore: string;
+  twelfthParagraph: string;
+  fourteenthCore: string;
+  thirteenthParagraph: string;
+  sixteenthCore: string;
+  seventeethCore: string;
+  fifteenthParagraph: string;
+  eighteenthCore: string;
+  sixteenthParagraph: string;
+  nineteenthCore: string;
+  seventeenthParagraph: string;
+
   firstCoreCourses: object[];
   secondCoreCourses: object[];
+  thirdCoreCourses: object[];
+  fourthCoreCourses: object[];
+  fifthCoreCourses: object[];
+  sixthCoreCourses: object[];
+  seventhCoreCourses: object[];
+  eigthCoreCourses: object[];
+
 }
