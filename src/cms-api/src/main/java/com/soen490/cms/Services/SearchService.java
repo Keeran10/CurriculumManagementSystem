@@ -278,12 +278,6 @@ public class SearchService {
 
         List<Integer> courses_id = degreeRequirementRepository.findCoursesByCore(core);
 
-        System.out.println("\n\n\nCOURSES: core = " + core);
-        for(Integer course_id : courses_id){
-            System.out.println("ID: " + course_id);
-        }
-        System.out.println("\n\n\nEND_COURSES");
-
         List<Course> second_core_courses = new ArrayList<>();
 
         for(int id : courses_id){
