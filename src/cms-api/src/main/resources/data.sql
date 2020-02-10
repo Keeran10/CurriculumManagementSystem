@@ -893,17 +893,17 @@ INSERT IGNORE INTO degree_requirement VALUES (196, "Industrial Engineering Core"
 INSERT IGNORE INTO degree_requirement VALUES (197, "Industrial Engineering Core", 24, 7);
 INSERT IGNORE INTO degree_requirement VALUES (198, "Industrial Engineering Core", 25, 7);
 INSERT IGNORE INTO degree_requirement VALUES (199, "Industrial Engineering Core", 26, 7);
-INSERT IGNORE INTO degree_requirement VALUES (200, "Basic and Natural Science Courses", 98, 7);
-INSERT IGNORE INTO degree_requirement VALUES (201, "Basic and Natural Science Courses", 99, 7);
-INSERT IGNORE INTO degree_requirement VALUES (202, "Basic and Natural Science Courses", 100, 7);
-INSERT IGNORE INTO degree_requirement VALUES (203, "Basic and Natural Science Courses", 101, 7);
-INSERT IGNORE INTO degree_requirement VALUES (204, "Basic and Natural Science Courses", 151, 7);
-INSERT IGNORE INTO degree_requirement VALUES (205, "Basic and Natural Science Courses", 152, 7);
-INSERT IGNORE INTO degree_requirement VALUES (206, "Basic and Natural Science Courses", 104, 7);
-INSERT IGNORE INTO degree_requirement VALUES (207, "Basic and Natural Science Courses", 154, 7);
-INSERT IGNORE INTO degree_requirement VALUES (208, "Basic and Natural Science Courses", 155, 7);
-INSERT IGNORE INTO degree_requirement VALUES (209, "Basic and Natural Science Courses", 105, 7);
-INSERT IGNORE INTO degree_requirement VALUES (210, "Basic and Natural Science Courses", 106, 7);
+INSERT IGNORE INTO degree_requirement VALUES (200, "Indu Science Core", 98, 7);
+INSERT IGNORE INTO degree_requirement VALUES (201, "Indu Science Core", 99, 7);
+INSERT IGNORE INTO degree_requirement VALUES (202, "Indu Science Core", 100, 7);
+INSERT IGNORE INTO degree_requirement VALUES (203, "Indu Science Core", 101, 7);
+INSERT IGNORE INTO degree_requirement VALUES (204, "Indu Science Core", 151, 7);
+INSERT IGNORE INTO degree_requirement VALUES (205, "Indu Science Core", 152, 7);
+INSERT IGNORE INTO degree_requirement VALUES (206, "Indu Science Core", 104, 7);
+INSERT IGNORE INTO degree_requirement VALUES (207, "Indu Science Core", 154, 7);
+INSERT IGNORE INTO degree_requirement VALUES (208, "Indu Science Core", 155, 7);
+INSERT IGNORE INTO degree_requirement VALUES (209, "Indu Science Core", 105, 7);
+INSERT IGNORE INTO degree_requirement VALUES (210, "Indu Science Core", 106, 7);
 INSERT IGNORE INTO degree_requirement VALUES (211, "Indu Electives", 158, 7);
 INSERT IGNORE INTO degree_requirement VALUES (212, "Indu Electives", 159, 7);
 INSERT IGNORE INTO degree_requirement VALUES (213, "Indu Electives", 160, 7);
@@ -1408,6 +1408,6 @@ Software Engineering",1, "71.70.10", "Course Descriptions");
 -- id, electives_description, electives_header, fifth_option, first_core, first_option, fourth_option, intro_paragraph, is_active, second_core, second_option, section_id, section_title, sixth_option, third_option
 INSERT IGNORE INTO section71401 VALUES (1, "Students in the Mechanical Engineering program must complete at least 15.25 elective credits from the list of courses below. Courses are listed in groups to facilitate the selection of courses in a particular area of the field.", "Electives", "Vehicle Systems", "Engineering Core", "Aerospace", "Thermo-Fluids and Propulsion", "The program in Mechanical Engineering consists of the Engineering Core, the Mechanical Engineering Core, and elective credits as shown below. The minimum length of the program is 120 credits.", 1, "Mechanical Engineering Core", "Design and Manufacturing", "71.40.1", "Course Requirements (BEng in Mechanical Engineering)", "Stress Analysis", "Systems and Mechatronics");
 
--- id, electives_description, electives_header, first_core, intro_paragraph, is_active, science_core, second_core, section_id, section_title
-INSERT IGNORE INTO section71402 VALUES (1, "Students must complete a minimum of 14.25 credits from the following courses, including at least three INDU courses and with no more than one of the courses marked *. With permission of the Department, students may take one technical elective course from another program or Faculty.", "Electives", "Engineering Core", "The program in Industrial Engineering consists of the Engineering Core, the Industrial Engineering Core, and elective credits as shown below. Students must select one course from the list of Basic and Natural Science courses as part of the Industrial Engineering Core courses. The minimum length of the program is 120 credits.", 1, "Basic and Natural Science Courses
-Students must complete one course from the following list:", "Industrial Engineering Core", "71.40.2", "Course Requirements (BEng in Industrial Engineering)");
+-- id, electives_description, electives_header, first_core, intro_paragraph, is_active, science_core_header, science_description, science_header, second_core, section_id, section_title
+INSERT IGNORE INTO section71402 VALUES (1, "Students must complete a minimum of 14.25 credits from the following courses, including at least three INDU courses and with no more than one of the courses marked *. With permission of the Department, students may take one technical elective course from another program or Faculty.", "Electives", "Engineering Core", "The program in Industrial Engineering consists of the Engineering Core, the Industrial Engineering Core, and elective credits as shown below. Students must select one course from the list of Basic and Natural Science courses as part of the Industrial Engineering Core courses. The minimum length of the program is 120 credits.", 1, "Indu Science Core", "Students must complete one course from the following list:", "Basic and Natural Science Courses",
+"Industrial Engineering Core", "71.40.2", "Course Requirements (BEng in Industrial Engineering)");

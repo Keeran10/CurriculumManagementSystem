@@ -268,7 +268,7 @@ public class SearchService {
 
         section71402.setFirstCoreCourses(retrieveSectionCourseLists(section71402.getFirstCore()));
         section71402.setSecondCoreCourses(retrieveSectionCourseLists(section71402.getSecondCore()));
-        section71402.setScienceCoreCourses(retrieveSectionCourseLists(section71402.getScienceCore()));
+        section71402.setScienceCoreCourses(retrieveSectionCourseLists(section71402.getScienceCoreHeader()));
         section71402.setElectiveCourses(retrieveSectionCourseLists("Indu Electives"));
 
         return section71402;
@@ -277,6 +277,13 @@ public class SearchService {
     private List<Course> retrieveSectionCourseLists(String core) {
 
         List<Integer> courses_id = degreeRequirementRepository.findCoursesByCore(core);
+
+        System.out.println("\n\n\nCOURSES: core = " + core);
+        for(Integer course_id : courses_id){
+            System.out.println("ID: " + course_id);
+        }
+        System.out.println("\n\n\nEND_COURSES");
+
         List<Course> second_core_courses = new ArrayList<>();
 
         for(int id : courses_id){

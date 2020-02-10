@@ -149,6 +149,11 @@ public class SearchController {
         }
     }
 
+    @GetMapping("/lol")
+    public void lol() {
+        searchService.findSection71402ById(1);
+    }
+
     // URL should be 8080/section71701
     @GetMapping("/section71701")
     public Section71701 getSection71701(){

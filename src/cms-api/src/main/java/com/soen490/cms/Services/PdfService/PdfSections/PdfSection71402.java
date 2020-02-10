@@ -193,8 +193,11 @@ public class PdfSection71402 {
         Phrase secondCorePresent = new Phrase();
         Phrase secondCoreProposed = new Phrase();
         // science core
-        Phrase scienceCorePresent = new Phrase();
-        Phrase scienceCoreProposed = new Phrase();
+        Phrase scienceHeaderPresent = new Phrase();
+        Phrase scienceHeaderProposed = new Phrase();
+        // science core body
+        Phrase scienceDescriptionPresent = new Phrase();
+        Phrase scienceDescriptionProposed = new Phrase();
         // electives header
         Phrase electivesHeaderPresent = new Phrase();
         Phrase electivesHeaderProposed = new Phrase();
@@ -223,9 +226,12 @@ public class PdfSection71402 {
         // indu engineering core
         PdfUtil.processDifferences(secondCorePresent, secondCoreProposed,
                 section71402.getSecondCore(), proposedSection71402.getSecondCore(), 1);
-        // science core
-        PdfUtil.processDifferences(scienceCorePresent, scienceCoreProposed,
-                section71402.getScienceCore(), proposedSection71402.getScienceCore(), 1);
+        // science core header
+        PdfUtil.processDifferences(scienceHeaderPresent, scienceHeaderProposed,
+                section71402.getScienceHeader(), proposedSection71402.getScienceHeader(), 1);
+        // science core description
+        PdfUtil.processDifferences(scienceDescriptionPresent, scienceDescriptionProposed,
+                section71402.getScienceDescription(), proposedSection71402.getScienceDescription(), 1);
         // electives header
         PdfUtil.processDifferences(electivesHeaderPresent, electivesHeaderProposed,
                 section71402.getElectivesHeader(), proposedSection71402.getElectivesHeader(), 1);
@@ -267,11 +273,18 @@ public class PdfSection71402 {
         proposed.add(secondCoreProposed);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
-        // science core
-        present.add(scienceCorePresent);
+        // science core header
+        present.add(scienceHeaderPresent);
         present.add(Chunk.NEWLINE);
         present.add(Chunk.NEWLINE);
-        proposed.add(scienceCoreProposed);
+        proposed.add(scienceHeaderProposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        // science core description
+        present.add(scienceDescriptionPresent);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(scienceDescriptionProposed);
         proposed.add(Chunk.NEWLINE);
         proposed.add(Chunk.NEWLINE);
         // electives header
