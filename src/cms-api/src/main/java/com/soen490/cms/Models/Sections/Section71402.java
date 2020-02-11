@@ -49,7 +49,11 @@ public class Section71402 {
 
     private String secondCore;
 
-    private String scienceCore;
+    private String scienceHeader;
+
+    private String scienceDescription;
+
+    private String scienceCoreHeader;
 
     private String electivesHeader;
 
