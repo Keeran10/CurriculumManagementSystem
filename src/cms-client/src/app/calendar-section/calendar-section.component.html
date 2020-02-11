@@ -90,7 +90,9 @@
 <!-- ELECTIVES -->
           <mat-card-content *ngIf="sectionEditable.electivesHeader !== undefined" class="row8">
             <h2>{{ sectionEditable.electivesHeader}}</h2><br/>
-            {{ sectionEditable.electivesDescription }}
+            <div>Electives Description:</div>
+            <textarea matInput placeholder="Electives Description" [(ngModel)]="sectionEditable.electivesDescription" spellcheck="true"
+                name="electivesDescription"></textarea>
           </mat-card-content>
 <!-- FIRST OPTION (MECH) -->
           <table *ngIf="sectionEditable.firstOption !== undefined" class="leftTable">
@@ -213,7 +215,9 @@
 <!-- NATURAL SCIENCE COURSES (INDU) -->
             <table *ngIf="sectionEditable.scienceHeader !== undefined" class="row8">
               <h4>{{ sectionEditable.scienceHeader }}</h4><br />
-              {{ sectionEditable.scienceDescription }} <br />
+              <div>Natural Science Description:</div>
+            <textarea matInput placeholder="Natural Science Description" [(ngModel)]="sectionEditable.scienceDescription" spellcheck="true"
+                name="scienceDescription"></textarea>
               <tbody>
               <tr>
                 <div class="row8" *ngIf="isDoneLoading">
@@ -295,6 +299,7 @@
         </div><br />
 <!-- ELECTIVES -->
         <h4 *ngIf="sectionEditable.electivesHeader !== undefined">{{ sectionEditable.electivesHeader }}</h4>
+        <div *ngIf="sectionEditable.electivesDescription!==undefined"> {{sectionEditable.electivesDescription}}</div>
 <!-- first option: AERO -->
         <div *ngIf="sectionEditable.firstOption !== undefined"><strong>{{ sectionEditable.firstOption }}</strong>
         <div *ngFor="let c of sectionEditable.firstOptionCourses; let i = index">
@@ -416,6 +421,7 @@
 
     <!-- basic science (INDU) -->
     <div *ngIf="sectionEditable.scienceHeader !== undefined"><strong>{{ sectionEditable.scienceHeader }}</strong>
+      <br/>{{ sectionEditable.scienceDescription }}
       <div *ngFor="let c of sectionEditable.scienceCoreCourses; let i = index">
         <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
 
