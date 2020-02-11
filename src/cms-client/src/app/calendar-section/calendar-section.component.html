@@ -205,7 +205,9 @@
 
           </form>
 
-          <table *ngIf="sectionEditable.firstCore !== undefined" class="leftTable">
+          <!-- FIRST CORE LEFT -->
+
+          <table *ngIf="sectionEditable.firstCore !== undefined && sectionEditable.firstCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.firstCore }}</strong>
             <tr>
@@ -222,8 +224,10 @@
             </tbody><br />
           </table>
 
+          <!-- SECOND CORE LEFT -->
 
-          <table *ngIf="sectionEditable.secondCore !== undefined" class="leftTable">
+
+          <table *ngIf="sectionEditable.secondCore !== undefined && sectionEditable.secondCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.secondCore }}</strong>
             <tr>
@@ -240,8 +244,9 @@
             </tbody><br />
           </table>
 
+          <!-- THIRD CORE LEFT -->
 
-          <table *ngIf="sectionEditable.thirdCore !== undefined" class="leftTable">
+          <table *ngIf="sectionEditable.thirdCore !== undefined && sectionEditable.thirdCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.thirdCore }}</strong>
             <tr>
@@ -258,8 +263,9 @@
             </tbody><br />
           </table>
 
+          <!-- FOURTH CORE LEFT -->
 
-          <table *ngIf="sectionEditable.fourthCore !== undefined" class="leftTable">
+          <table *ngIf="sectionEditable.fourthCore !== undefined && sectionEditable.fourthCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.fourthCore }}</strong>
             <tr>
@@ -276,8 +282,10 @@
             </tbody><br />
           </table>
 
+          <!-- FIFTH CORE LEFT -->
 
-          <table *ngIf="sectionEditable.fifthCore !== undefined" class="leftTable">
+
+          <table *ngIf="sectionEditable.fifthCore !== undefined && sectionEditable.fifthCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.fifthCore }}</strong>
             <tr>
@@ -294,8 +302,9 @@
             </tbody><br />
           </table>
 
+          <!-- SIXTH CORE LEFT -->
 
-          <table *ngIf="sectionEditable.sixthCore !== undefined" class="leftTable">
+          <table *ngIf="sectionEditable.sixthCore !== undefined && sectionEditable.sixthCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.sixthCore }}</strong>
             <tr>
@@ -312,8 +321,9 @@
             </tbody><br />
           </table>
 
+          <!-- SEVENTH CORE LEFT -->
 
-          <table *ngIf="sectionEditable.seventhCore !== undefined" class="leftTable">
+          <table *ngIf="sectionEditable.seventhCore !== undefined && sectionEditable.seventhCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.seventhCore }}</strong>
             <tr>
@@ -330,8 +340,9 @@
             </tbody><br />
           </table>
 
+          <!-- EIGHT CORE LEFT -->
 
-          <table *ngIf="sectionEditable.eightCore !== undefined" class="leftTable">
+          <table *ngIf="sectionEditable.eightCore !== undefined && sectionEditable.eightCoreCourses !== undefined" class="leftTable">
             <tbody>
             <strong>{{ sectionEditable.eightCore }}</strong>
             <tr>
@@ -502,106 +513,128 @@
             <br>
 
             <!-- FIRST PARAGRAPH -->
-            <span>
+
+            <div *ngIf="sectionOriginal.firstParagraph !== undefined || sectionOriginal.introParagraph !== undefined" >
+
               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstParagraph"
                 [right]="sectionEditable.firstParagraph"></span>
                 <span style="display: inline-block" semanticDiff [left]="sectionOriginal.introParagraph"
                 [right]="sectionEditable.introParagraph"></span><br><br>
+            </div>
 
               <!-- SECOND PARAGRAPH -->
+            <div *ngIf="sectionOriginal.secondParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondParagraph"
-                     [right]="sectionEditable.secondParagraph"></span><br><br>
+                     [right]="sectionEditable.secondParagraph"></span><br><br> </div>
 
               <!-- THIRD PARAGRAPH -->
 
+            <div *ngIf="sectionOriginal.thirdParagraph !== undefined" >
+
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.thirdParagraph"
-                     [right]="sectionEditable.thirdParagraph"></span><br><br>
+                     [right]="sectionEditable.thirdParagraph"></span><br><br></div>
 
               <!-- FOURTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fourthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fourthParagraph"
-                     [right]="sectionEditable.fourthParagraph"></span><br><br>
+                     [right]="sectionEditable.fourthParagraph"></span><br><br></div>
 
               <!-- FIFTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fifthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fifthParagraph"
-                     [right]="sectionEditable.fifthParagraph"></span><br><br>
+                     [right]="sectionEditable.fifthParagraph"></span><br><br></div>
 
               <!-- SIXTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.sixthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sixthParagraph"
-                     [right]="sectionEditable.sixthParagraph"></span><br><br>
+                     [right]="sectionEditable.sixthParagraph"></span><br><br></div>
 
               <!-- SEVENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.seventhParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.seventhParagraph"
-                     [right]="sectionEditable.seventhParagraph"></span><br><br>
+                     [right]="sectionEditable.seventhParagraph"></span><br><br></div>
 
               <!-- EIGHT PARAGRAPH -->
+            <div *ngIf="sectionOriginal.eightParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.eightParagraph"
-                     [right]="sectionEditable.eightParagraph"></span><br><br>
+                     [right]="sectionEditable.eightParagraph"></span><br><br></div>
 
               <!-- NINTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.ninthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.ninthParagraph"
-                     [right]="sectionEditable.ninthParagraph"></span><br><br>
+                     [right]="sectionEditable.ninthParagraph"></span><br><br></div>
 
               <!-- TENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.tenthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.tenthParagraph"
-                     [right]="sectionEditable.tenthParagraph"></span><br><br>
+                     [right]="sectionEditable.tenthParagraph"></span><br><br></div>
 
               <!-- ELEVENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.eleventhParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.eleventhParagraph"
-                     [right]="sectionEditable.eleventhParagraph"></span><br><br>
+                     [right]="sectionEditable.eleventhParagraph"></span><br><br></div>
 
               <!-- TWELFTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.twelfthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.twelfthParagraph"
-                     [right]="sectionEditable.twelfthParagraph"></span><br><br>
+                     [right]="sectionEditable.twelfthParagraph"></span><br><br></div>
 
               <!-- THIRTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.thirteenthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.thirteenthParagraph"
-                     [right]="sectionEditable.thirteenthParagraph"></span><br><br>
+                     [right]="sectionEditable.thirteenthParagraph"></span><br><br></div>
 
               <!-- FOURTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fourteenthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fourteenthParagraph"
-                     [right]="sectionEditable.secondParagraph"></span><br><br>
+                     [right]="sectionEditable.secondParagraph"></span><br><br></div>
 
               <!-- FIFTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fifteenthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fifteenthParagraph"
-                     [right]="sectionEditable.fifteenthParagraph"></span><br><br>
+                     [right]="sectionEditable.fifteenthParagraph"></span><br><br></div>
 
               <!-- SIXTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.sixteenthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sixteenthParagraph"
-                     [right]="sectionEditable.sixteenthParagraph"></span><br><br>
+                     [right]="sectionEditable.sixteenthParagraph"></span><br><br></div>
 
               <!-- SEVENTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.seventeenthParagraph !== undefined" >
 
                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.seventeenthParagraph"
-                     [right]="sectionEditable.seventeenthParagraph"></span><br><br>
+                     [right]="sectionEditable.seventeenthParagraph"></span><br><br></div>
 
               <!-- FIRST CORE -->
 
-              <b *ngIf="sectionEditable.firstCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.firstCore !== undefined">
+              <div *ngIf="sectionEditable.firstCore !== undefined && sectionEditable.firstCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
                     [right]="sectionEditable.firstCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.firstCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.firstCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -633,20 +666,24 @@
                   </tbody>
                 </table><br><br>
 
+              </div>
+
               <!-- SECOND CORE -->
 
-              <b *ngIf="sectionEditable.secondCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.secondCore !== undefined">
+               <div *ngIf="sectionEditable.secondCore !== undefined && sectionEditable.secondCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
                         [right]="sectionEditable.secondCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.secondCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.secondCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -677,21 +714,25 @@
               </div>
                   </tbody>
                 </table><br><br>
+               </div>
+
 
               <!-- THIRD CORE -->
 
-              <b *ngIf="sectionEditable.thirdCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.thirdCore !== undefined">
+               <div *ngIf="sectionEditable.thirdCore !== undefined && sectionEditable.thirdCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.thirdCore"
                         [right]="sectionEditable.thirdCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.thirdCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.thirdCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -722,21 +763,24 @@
               </div>
                   </tbody>
                 </table><br><br>
+               </div>
 
               <!-- FOURTH CORE -->
 
-              <b *ngIf="sectionEditable.fourthCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.fourthCore !== undefined">
+               <div *ngIf="sectionEditable.fourthCore !== undefined && sectionEditable.fourthCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
                         [right]="sectionEditable.fourthCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.fourthCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.fourthCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -767,21 +811,25 @@
               </div>
                   </tbody>
                 </table><br><br>
+               </div>
+
 
               <!-- FIFTH CORE -->
 
-              <b *ngIf="sectionEditable.fifthCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.fifthCore !== undefined">
+               <div *ngIf="sectionEditable.fifthCore !== undefined && sectionEditable.fifthCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fifthCore"
                         [right]="sectionEditable.fifthCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.fifthCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.fifthCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -812,21 +860,24 @@
               </div>
                   </tbody>
                 </table><br><br>
+               </div>
 
               <!-- SIXTH CORE -->
 
-              <b *ngIf="sectionEditable.sixthCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.sixthCore !== undefined">
+               <div *ngIf="sectionEditable.sixthCore !== undefined && sectionEditable.sixthCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sixthCore"
                         [right]="sectionEditable.sixthCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.sixthCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.sixthCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -857,21 +908,24 @@
               </div>
                   </tbody>
                 </table><br><br>
+               </div>
 
               <!-- SEVENTH CORE -->
 
-              <b *ngIf="sectionEditable.seventhCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.seventhCore !== undefined">
+               <div *ngIf="sectionEditable.seventhCore !== undefined && sectionEditable.seventhCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.seventhCore"
                         [right]="sectionEditable.seventhCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.seventhCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.seventhCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -902,21 +956,24 @@
               </div>
                   </tbody>
                 </table><br><br>
+               </div>
 
               <!-- EIGHT CORE -->
 
-              <b *ngIf="sectionEditable.eightCore !== undefined">
-                <span style="display: inline-block" *ngIf="sectionEditable.eightCore !== undefined">
+               <div *ngIf="sectionEditable.eightCore !== undefined && sectionEditable.eightCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
                   <span style="display: inline-block" semanticDiff [left]="sectionOriginal.eightCore"
                         [right]="sectionEditable.eightCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              <span *ngIf="sectionEditable.eightCore !== undefined">
+              <span>
                 See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
-                <table *ngIf="sectionEditable.eightCore !== undefined">
+                <table>
                   <tbody>
                    <tr>
                       <th width="100%"> <b>
@@ -947,13 +1004,12 @@
               </div>
                   </tbody>
                 </table><br><br>
+               </div>
 
 
 
               <!-- HIGHLIGHT CHANGES -->
 
-
-            </span>
             <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
             <br>
             <br>
