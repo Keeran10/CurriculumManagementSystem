@@ -55,8 +55,8 @@ export class PackageComponent implements OnInit {
   }
 
   ngOnInit() {
-    // let departmentId = this.cookieService.get('department'); // replace 4 with department id
-    this.api.getAllPackages('4').subscribe(data => {
+    let departmentId = this.cookieService.get('department'); // replace 4 with department id
+    this.api.getAllPackages(departmentId).subscribe(data => {
       console.log(data);
       this.packages = data;
       this.packages.forEach(() => this.isPdfAvailable.push(false));
@@ -129,11 +129,6 @@ export class PackageComponent implements OnInit {
     this.api.releaseEditKey(packageId).subscribe(data => console.log('Release edit key of package ' + packageId + ' ' + data));
   }
 
-  public getCalendar(packageId) {
-    this.cookieService.set('package', packageId);
-    this.api.getCalendar().subscribe(data => this.router.navigate(['calendar']));
-  }
-
   public removeRequest(requestId: any) {
     console.log('remove request ' + requestId);
     this.api.removeRequest(requestId).subscribe(
@@ -142,6 +137,12 @@ export class PackageComponent implements OnInit {
       }
     );
     window.location.reload();
+  }
+
+  public getSectionsByDepartmentId(package_id, department_id) {
+    this.cookieService.set('package', package_id);
+    this.api.getSectionsByDepartment(department_id)
+      .subscribe(data => this.router.navigate(['calendar']));
   }
 
 }

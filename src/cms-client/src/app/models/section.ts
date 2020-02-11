@@ -29,4 +29,24 @@ export class Section {
   secondCore: string;
   firstCoreCourses: object[];
   secondCoreCourses: object[];
+  // mech
+  introParagraph: string;
+  electivesHeader: string;
+  electivesDescription: string;
+  firstOption: string;
+  secondOption: string;
+  thirdOption: string;
+  fourthOption: string;
+  fifthOption: string;
+  sixthOption: string;
+  firstOptionCourses: object[];
+  sectionOptionCourses: object[];
+  thirdOptionCourses: object[];
+  fourthOptionCourses: object[];
+  fifthOptionCourses: object[];
+  sixthOptionCourses: object[];
+  // indu
+  scienceCore: string;
+  scienceCoreCourses: object[];
+  electiveCourses: object[];
 }
