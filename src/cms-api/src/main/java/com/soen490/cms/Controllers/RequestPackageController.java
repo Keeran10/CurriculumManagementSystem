@@ -231,11 +231,14 @@ public class RequestPackageController {
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
             int request_id = requestPackageService.saveSection71703(subSection71703, sectionExtras, files, descriptions);
 
-            JSONArray core_removals = new JSONArray(sectionExtrasJson.getJSONArray("core_removals"));
-            JSONArray core_additions = new JSONArray(sectionExtrasJson.getJSONArray("core_additions"));
+            JSONArray core_removals = sectionExtrasJson.getJSONArray("core_removals");
+            JSONArray core_additions = sectionExtrasJson.getJSONArray("core_additions");
+
+            String add_to_core = (String) sectionExtrasJson.get("add_to_core");
+            String remove_from_core = (String) sectionExtrasJson.get("remove_from_core");
 
             requestPackageService.processCoreRequests(core_additions, core_removals,
-                    (String) sectionExtrasJson.get("add_to_core"), (String) sectionExtrasJson.get("remove_from_core"),
+                    add_to_core, remove_from_core,
                     user_id, package_id);
 
             if(request_id != 0)
