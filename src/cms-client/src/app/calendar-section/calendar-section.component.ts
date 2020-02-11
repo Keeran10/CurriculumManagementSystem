@@ -121,7 +121,6 @@ export class CalendarSectionComponent implements OnInit {
       this.originalCourses = data.secondCoreCourses;
 
       // tslint:disable-next-line:no-shadowed-variable
-      console.log("hello"+this.cookieService.get('package'));
       this.api.getPackage(packageNumber, this.cookieService.get('department')).subscribe(data => {
         const requests = data.requests;
         let i = 0;
