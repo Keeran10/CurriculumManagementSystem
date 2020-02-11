@@ -243,89 +243,89 @@ INSERT IGNORE INTO course VALUES (80, 4.00, '',
 INSERT IGNORE INTO course VALUES (81, 4.00, '',
 1, 2, 3, 1, 'SOEN', '', 487, 'Web Services and Applications', 1, 2);
 INSERT IGNORE INTO course VALUES (81, 3.00, '',
-1, 2, 3, 1, 'COMP', '', 326, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 326, 'Computer Architecture', 1, 2);
 INSERT IGNORE INTO course VALUES (82, 4.00, '',
-1, 2, 3, 1, 'COMP', '', 426, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 426, 'Multicore Programming', 1, 2);
 INSERT IGNORE INTO course VALUES (83, 4.00, '',
-1, 2, 3, 1, 'COMP', '', 428, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 428, 'Parallel Programming', 1, 2);
 INSERT IGNORE INTO course VALUES (84, 4.00, '',
-1, 2, 3, 1, 'SOEN', '', 422, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 422, 'Embedded Systems and Software', 1, 2);
 INSERT IGNORE INTO course VALUES (85, 3.00, '',
-1, 2, 3, 1, 'COMP', '', 465, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 465, 'Design and Analysis of Algorithms', 1, 2);
 INSERT IGNORE INTO course VALUES (86, 3.00, '',
-1, 2, 3, 1, 'ACCO', 'Financial and Managerial Accounting', 220, '', 1, 2);
+1, 2, 3, 1, 'ACCO', '', 220, 'Financial and Managerial Accounting', 1, 2);
 INSERT IGNORE INTO course VALUES (87, 3.00, '',
-1, 2, 3, 1, 'BSTA', 'Statistical Software for Data Management and Analysis', 445, '', 1, 2);
+1, 2, 3, 1, 'BSTA', '', 445, 'Statistical Software for Data Management and Analysis', 1, 2);
 INSERT IGNORE INTO course VALUES (88, 3.00, '',
-1, 2, 3, 1, 'BTM', 'E-Business', 387, '', 1, 2);
+1, 2, 3, 1, 'BTM', '', 387, 'E-Business', 1, 2);
 INSERT IGNORE INTO course VALUES (89, 3.00, '',
-1, 2, 3, 1, 'BTM', 'Enterprise Resource Planning and Information Technology Integration', 430, '', 1, 2);
+1, 2, 3, 1, 'BTM', '', 430, 'Enterprise Resource Planning and Information Technology Integration', 1, 2);
 INSERT IGNORE INTO course VALUES (90, 3.00, '',
-1, 2, 3, 1, 'COMM', 'Contemporary Business Thinking', 210, '', 1, 2);
+1, 2, 3, 1, 'COMM', '', 210, 'Contemporary Business Thinking', 1, 2);
 INSERT IGNORE INTO course VALUES (91, 3.00, '',
-1, 2, 3, 1, 'COMM', 'Organizational Behaviour and Theory', 222, '', 1, 2);
+1, 2, 3, 1, 'COMM', '', 222, 'Organizational Behaviour and Theory', 1, 2);
 INSERT IGNORE INTO course VALUES (92, 3.00, '',
-1, 2, 3, 1, 'COMM', 'Marketing Management I', 223, '', 1, 2);
+1, 2, 3, 1, 'COMM', '', 223, 'Marketing Management I', 1, 2);
 INSERT IGNORE INTO course VALUES (93, 3.00, '',
-1, 2, 3, 1, 'COMM', 'Production and Operations Management', 225, '', 1, 2);
+1, 2, 3, 1, 'COMM', '', 225, 'Production and Operations Management', 1, 2);
 INSERT IGNORE INTO course VALUES (94, 3.00, '',
-1, 2, 3, 1, 'COMM', 'Introduction to Finance', 308, '', 1, 2);
+1, 2, 3, 1, 'COMM', '', 308, 'Introduction to Finance', 1, 2);
 INSERT IGNORE INTO course VALUES (95, 3.00, '',
-1, 2, 3, 1, 'ECON', 'Introduction to Microeconomics', 201, '', 1, 2);
+1, 2, 3, 1, 'ECON', '', 201, 'Introduction to Microeconomics', 1, 2);
 INSERT IGNORE INTO course VALUES (96, 3.00, '',
-1, 2, 3, 1, 'SCOM', 'Management Science Models for Operations Management', 361, '', 1, 2);
+1, 2, 3, 1, 'SCOM', '', 361, 'Management Science Models for Operations Management', 1, 2);
 INSERT IGNORE INTO course VALUES (97, 3.00, '',
-1, 2, 3, 1, 'SCOM', 'Supply Chain Planning and Control', 372, '', 1, 2);
+1, 2, 3, 1, 'SCOM', '', 372, 'Supply Chain Planning and Control', 1, 2);
 INSERT IGNORE INTO course VALUES (98, 3.00, '',
-1, 2, 3, 1, 'BIOL', 'Elementary Genetics', 206, '', 1, 2);
+1, 2, 3, 1, 'BIOL', '', 206, 'Elementary Genetics', 1, 2);
 INSERT IGNORE INTO course VALUES (99, 3.00, '',
-1, 2, 3, 1, 'BIOL', 'Molecular and General Genetics', 261, '', 1, 2);
+1, 2, 3, 1, 'BIOL', '', 261, 'Molecular and General Genetics', 1, 2);
 INSERT IGNORE INTO course VALUES (100, 3.00, '',
-1, 2, 3, 1, 'CHEM', 'Introductory Analytical Chemistry I', 217, '', 1, 2);
+1, 2, 3, 1, 'CHEM', '', 217, 'Introductory Analytical Chemistry I', 1, 2);
 INSERT IGNORE INTO course VALUES (101, 3.00, '',
-1, 2, 3, 1, 'CHEM', 'Introductory Organic Chemistry IS', 221, '', 1, 2);
+1, 2, 3, 1, 'CHEM', '', 221, 'Introductory Organic Chemistry IS', 1, 2);
 INSERT IGNORE INTO course VALUES (102, 3.00, '',
-1, 2, 3, 1, 'CIVI', 'Geology for Civil Engineers', 231, '', 1, 2);
+1, 2, 3, 1, 'CIVI', '', 231, 'Geology for Civil Engineers', 1, 2);
 INSERT IGNORE INTO course VALUES (103, 3.50, '',
-1, 2, 3, 1, 'ELEC', 'Introduction to Semiconductor Materials and Devices', 321, '', 1, 2);
+1, 2, 3, 1, 'ELEC', '', 321, 'Introduction to Semiconductor Materials and Devices', 1, 2);
 INSERT IGNORE INTO course VALUES (104, 3.00, '',
-1, 2, 3, 1, 'PHYS', 'Optics', 252, '', 1, 2);
+1, 2, 3, 1, 'PHYS', '', 252, 'Optics', 1, 2);
 INSERT IGNORE INTO course VALUES (105, 3.00, '',
-1, 2, 3, 1, 'PHYS', 'Introduction to Astronomy', 284, '', 1, 2);
+1, 2, 3, 1, 'PHYS', '', 284, 'Introduction to Astronomy', 1, 2);
 INSERT IGNORE INTO course VALUES (106, 3.00, '',
-1, 2, 3, 1, 'PHYS', 'Astrophysics', 385, '', 1, 2);
+1, 2, 3, 1, 'PHYS', '', 385, 'Astrophysics', 1, 2);
 INSERT IGNORE INTO course VALUES (107, 3.50, '',
-1, 2, 3, 1, 'AERO', 'Flight Control Systems', 480, '', 1, 2);
+1, 2, 3, 1, 'AERO', '', 480, 'Flight Control Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (108, 3.00, '',
-1, 2, 3, 1, 'AERO', 'Avionic Navigation Systems', 482, '', 1, 2);
+1, 2, 3, 1, 'AERO', '', 482, 'Avionic Navigation Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (109, 3.00, '',
-1, 2, 3, 1, 'COEN', 'Introduction to Real‑Time Systems', 320, '', 1, 2);
+1, 2, 3, 1, 'COEN', '', 320, 'Introduction to Real‑Time Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (110, 4.00, '',
-1, 2, 3, 1, 'COMP', 'System Software Design', 444, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 444, 'System Software Design', 1, 2);
 INSERT IGNORE INTO course VALUES (111, 4.00, '',
-1, 2, 3, 1, 'SOEN', 'Distributed Systems', 423, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 423, 'Distributed Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (112, 4.00, '',
-1, 2, 3, 1, 'COMP', 'Computer Vision', 425, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 425, 'Computer Vision', 1, 2);
 INSERT IGNORE INTO course VALUES (113, 4.00, '',
-1, 2, 3, 1, 'COMP', 'Compiler Design', 442, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 442, 'Compiler Design', 1, 2);
 INSERT IGNORE INTO course VALUES (114, 4.00, '',
-1, 2, 3, 1, 'COMP', 'Database Design', 451, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 451, 'Database Design', 1, 2);
 INSERT IGNORE INTO course VALUES (115, 4.00, '',
-1, 2, 3, 1, 'COMP', 'Pattern Recognition', 473, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 473, 'Pattern Recognition', 1, 2);
 INSERT IGNORE INTO course VALUES (116, 4.00, '',
-1, 2, 3, 1, 'COMP', 'Intelligent Systems', 474, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 474, 'Intelligent Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (117, 4.00, '',
-1, 2, 3, 1, 'COMP', 'Image Processing', 478, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 478, 'Image Processing', 1, 2);
 INSERT IGNORE INTO course VALUES (118, 1.00, '',
-1, 2, 3, 1, 'SOEN', 'System Hardware Lab', 298, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 298, 'System Hardware Lab', 1, 2);
 INSERT IGNORE INTO course VALUES (119, 3.00, '',
-1, 2, 3, 1, 'SOEN', 'Management of Evolving Systems', 448, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 448, 'Management of Evolving Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (120, 1.00, '',
-1, 2, 3, 1, 'SOEN', 'Software Engineering Project', 491, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 491, 'Software Engineering Project', 1, 2);
 INSERT IGNORE INTO course VALUES (121, 3.00, '',
-1, 2, 3, 1, 'SOEN', 'Topics in Software Engineering', 498, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 498, 'Topics in Software Engineering', 1, 2);
 INSERT IGNORE INTO course VALUES (122, 4.00, '',
-1, 2, 3, 1, 'SOEN', 'Topics in Software Engineering', 499, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 499, 'Topics in Software Engineering', 1, 2);
 
 INSERT IGNORE INTO course VALUES (124, 3.00, 'History of industrial engineering. Role of industrial engineers. Types of manufacturing and production systems. Material flow systems. Job design and work measurement. Introduction to solution methodologies for problems which relate to the design and operation of integrated production systems of humans, machines, information, and materials. Lectures: three hours per week. Tutorial: one hour per week.',
 1, 0, 3, 1, 'INDU', '', 211, 'Introduction to Production and Manufacturing Systems', 1, 4);
