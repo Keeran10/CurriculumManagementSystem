@@ -24,6 +24,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ApiService } from '../backend-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CookieService } from 'ngx-cookie-service';
 
 import { CalendarSectionsComponent } from './calendar-sections.component';
 
@@ -36,7 +37,8 @@ describe('CalendarSectionsComponent', () => {
       ],
       declarations: [CalendarSectionsComponent],
       providers: [
-        ApiService
+        ApiService,
+        CookieService
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
