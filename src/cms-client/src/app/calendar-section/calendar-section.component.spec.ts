@@ -27,6 +27,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarSectionComponent } from './calendar-section.component';
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CalendarSectionComponent', () => {
   let component: CalendarSectionComponent;
@@ -36,7 +38,11 @@ describe('CalendarSectionComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatAutocompleteModule, 
+        MatFormFieldModule,
+        MatInputModule,
+        NoopAnimationsModule
       ],
       declarations: [ CalendarSectionComponent ],
       providers: [
