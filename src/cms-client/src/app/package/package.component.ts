@@ -139,7 +139,8 @@ export class PackageComponent implements OnInit {
     window.location.reload();
   }
 
-  public getSectionsByDepartmentId(department_id) {
+  public getSectionsByDepartmentId(package_id, department_id) {
+    this.cookieService.set('package', package_id);
     this.api.getSectionsByDepartment(department_id)
       .subscribe(data => this.router.navigate(['calendar']));
   }
