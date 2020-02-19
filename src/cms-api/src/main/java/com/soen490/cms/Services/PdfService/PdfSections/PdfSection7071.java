@@ -1395,6 +1395,583 @@ public class PdfSection7071{
     }
     private void addSection2DiffTable(Document doc, Request request, Section71702 section71702_present, Section71702 section71702_proposed) {
 
+        // Creates a table with 2 column.
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        float CELL_PADDING = 7f;
+        float LINE_SPACING = 17f;
+
+        // static headers
+        table.addCell(new PdfPCell(new Phrase("Present Text", times_10_bold))).setPadding(3f);
+        table.addCell(new PdfPCell(new Phrase("Proposed Text", times_10_bold))).setPadding(3f);
+        table.completeRow();
+
+        Paragraph present = new Paragraph();
+        Paragraph proposed = new Paragraph();
+
+        Phrase header_present = new Phrase();
+        Phrase header_proposed = new Phrase();
+
+        PdfUtil.processDifferences(header_present, header_proposed,
+                section71702_present.getSectionId() + "\t" + section71702_present.getSectionTitle(),
+                section71702_proposed.getSectionId() + "\t" + section71702_proposed.getSectionTitle(),
+                1);
+
+
+        Phrase first_paragraph_present = new Phrase();
+        Phrase first_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(first_paragraph_present, first_paragraph_proposed,
+                section71702_present.getFirstParagraph(), section71702_proposed.getFirstParagraph(),
+                6);
+
+        Phrase first_core_present = new Phrase();
+        Phrase first_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(first_core_present, first_core_proposed,
+                section71702_present.getFirstCore(), section71702_proposed.getFirstCore(),
+                1);
+
+        Phrase second_core_present = new Phrase();
+        Phrase second_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(second_core_present, second_core_proposed,
+                section71702_present.getSecondCore(), section71702_proposed.getSecondCore(),
+                1);
+
+        Phrase third_core_present = new Phrase();
+        Phrase third_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(third_core_present, third_core_proposed,
+                section71702_present.getThirdCore(), section71702_proposed.getThirdCore(),
+                1);
+
+        Phrase second_paragraph_present = new Phrase();
+        Phrase second_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(second_paragraph_present, second_paragraph_proposed,
+                section71702_present.getSecondParagraph(), section71702_proposed.getSecondParagraph(),
+                6);
+
+        Phrase fourth_core_present = new Phrase();
+        Phrase fourth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fourth_core_present, fourth_core_proposed,
+                section71702_present.getFourthCore(), section71702_proposed.getFourthCore(),
+                1);
+
+        Phrase third_paragraph_present = new Phrase();
+        Phrase third_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(third_paragraph_present, third_paragraph_proposed,
+                section71702_present.getThirdParagraph(), section71702_proposed.getThirdParagraph(),
+                6);
+
+        Phrase fifth_core_present = new Phrase();
+        Phrase fifth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fifth_core_present, fifth_core_proposed,
+                section71702_present.getFifthCore(), section71702_proposed.getFifthCore(),
+                1);
+
+        Phrase fourth_paragraph_present = new Phrase();
+        Phrase fourth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fourth_paragraph_present, fourth_paragraph_proposed,
+                section71702_present.getFourthParagraph(), section71702_proposed.getFourthParagraph(),
+                6);
+
+        Phrase sixth_core_present = new Phrase();
+        Phrase sixth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(sixth_core_present, sixth_core_proposed,
+                section71702_present.getSixthCore(), section71702_proposed.getSixthCore(),
+                1);
+
+        Phrase fifth_paragraph_present = new Phrase();
+        Phrase fifth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fifth_paragraph_present, fifth_paragraph_proposed,
+                section71702_present.getFifthParagraph(), section71702_proposed.getFifthParagraph(),
+                6);
+
+        Phrase seventh_core_present = new Phrase();
+        Phrase seventh_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(seventh_core_present, seventh_core_proposed,
+                section71702_present.getSeventhCore(), section71702_proposed.getSeventhCore(),
+                1);
+
+        Phrase sixth_paragraph_present = new Phrase();
+        Phrase sixth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(sixth_paragraph_present, sixth_paragraph_proposed,
+                section71702_present.getSixthParagraph(), section71702_proposed.getSixthParagraph(),
+                6);
+
+        Phrase eight_core_present = new Phrase();
+        Phrase eight_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(eight_core_present, eight_core_proposed,
+                section71702_present.getEightCore(), section71702_proposed.getEightCore(),
+                1);
+
+        Phrase seventh_paragraph_present = new Phrase();
+        Phrase seventh_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(seventh_paragraph_present, seventh_paragraph_proposed,
+                section71702_present.getSeventhParagraph(), section71702_proposed.getSeventhParagraph(),
+                6);
+
+        Phrase ninth_core_present = new Phrase();
+        Phrase ninth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(ninth_core_present, ninth_core_proposed,
+                section71702_present.getNinthCore(), section71702_proposed.getNinthCore(),
+                1);
+
+        Phrase eight_paragraph_present = new Phrase();
+        Phrase eight_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(eight_paragraph_present, eight_paragraph_proposed,
+                section71702_present.getEightParagraph(), section71702_proposed.getEightParagraph(),
+                6);
+
+        Phrase tenth_core_present = new Phrase();
+        Phrase tenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(tenth_core_present, tenth_core_proposed,
+                section71702_present.getTenthCore(), section71702_proposed.getTenthCore(),
+                1);
+
+        Phrase ninth_paragraph_present = new Phrase();
+        Phrase ninth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(ninth_paragraph_present, ninth_paragraph_proposed,
+                section71702_present.getNinthParagraph(), section71702_proposed.getNinthParagraph(),
+                6);
+
+        Phrase eleventh_core_present = new Phrase();
+        Phrase eleventh_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(eleventh_core_present, eleventh_core_proposed,
+                section71702_present.getEleventhCore(), section71702_proposed.getEleventhCore(),
+                1);
+
+        Phrase tenth_paragraph_present = new Phrase();
+        Phrase tenth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(tenth_paragraph_present, tenth_paragraph_proposed,
+                section71702_present.getTenthParagraph(), section71702_proposed.getTenthParagraph(),
+                6);
+
+        Phrase twelfth_core_present = new Phrase();
+        Phrase twelfth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(twelfth_core_present, twelfth_core_proposed,
+                section71702_present.getTwelfthCore(), section71702_proposed.getTwelfthCore(),
+                1);
+
+        Phrase eleventh_paragraph_present = new Phrase();
+        Phrase eleventh_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(eleventh_paragraph_present, eleventh_paragraph_proposed,
+                section71702_present.getEleventhParagraph(), section71702_proposed.getEleventhParagraph(),
+                6);
+
+        Phrase thirteenth_core_present = new Phrase();
+        Phrase thirteenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(thirteenth_core_present, thirteenth_core_proposed,
+                section71702_present.getThirteenthCore(), section71702_proposed.getThirteenthCore(),
+                1);
+
+        Phrase twelfth_paragraph_present = new Phrase();
+        Phrase twelfth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(twelfth_paragraph_present, twelfth_paragraph_proposed,
+                section71702_present.getTwelfthParagraph(), section71702_proposed.getTwelfthParagraph(),
+                6);
+
+        Phrase fourteenth_core_present = new Phrase();
+        Phrase fourteenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fourteenth_core_present, fourteenth_core_proposed,
+                section71702_present.getFourteenthCore(), section71702_proposed.getFourteenthCore(),
+                1);
+
+        Phrase fifteenth_core_present = new Phrase();
+        Phrase fifteenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fifteenth_core_present, fifteenth_core_proposed,
+                section71702_present.getFifteenthCore(), section71702_proposed.getFifteenthCore(),
+                1);
+
+        Phrase thirteenth_paragraph_present = new Phrase();
+        Phrase thirteenth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(thirteenth_paragraph_present, thirteenth_paragraph_proposed,
+                section71702_present.getThirteenthParagraph(), section71702_proposed.getThirteenthParagraph(),
+                6);
+
+        Phrase sixteenth_core_present = new Phrase();
+        Phrase sixteenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(sixteenth_core_present, sixteenth_core_proposed,
+                section71702_present.getSixteenthCore(), section71702_proposed.getSixteenthCore(),
+                1);
+
+        Phrase fourteenth_paragraph_present = new Phrase();
+        Phrase fourteenth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fourteenth_paragraph_present, fourteenth_paragraph_proposed,
+                section71702_present.getFourteenthParagraph(), section71702_proposed.getFourteenthParagraph(),
+                6);
+
+        Phrase seventeenth_core_present = new Phrase();
+        Phrase seventeenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(seventeenth_core_present, seventeenth_core_proposed,
+                section71702_present.getSeventeenthCore(), section71702_proposed.getSeventeenthCore(),
+                1);
+
+        Phrase fifteenth_paragraph_present = new Phrase();
+        Phrase fifteenth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(fifteenth_paragraph_present, fifteenth_paragraph_proposed,
+                section71702_present.getFifteenthParagraph(), section71702_proposed.getFifteenthParagraph(),
+                6);
+
+        Phrase eighteenth_core_present = new Phrase();
+        Phrase eighteenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(eighteenth_core_present, eighteenth_core_proposed,
+                section71702_present.getEighteenthCore(), section71702_proposed.getEighteenthCore(),
+                1);
+
+        Phrase sixteenth_paragraph_present = new Phrase();
+        Phrase sixteenth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(sixteenth_paragraph_present, sixteenth_paragraph_proposed,
+                section71702_present.getSixteenthParagraph(), section71702_proposed.getSixteenthParagraph(),
+                6);
+
+        Phrase nineteenth_core_present = new Phrase();
+        Phrase nineteenth_core_proposed = new Phrase();
+
+        PdfUtil.processDifferences(nineteenth_core_present, nineteenth_core_proposed,
+                section71702_present.getNineteenthCore(), section71702_proposed.getNineteenthCore(),
+                1);
+
+        Phrase seventeenth_paragraph_present = new Phrase();
+        Phrase seventeenth_paragraph_proposed = new Phrase();
+
+        PdfUtil.processDifferences(seventeenth_paragraph_present, seventeenth_paragraph_proposed,
+                section71702_present.getSeventeenthParagraph(), section71702_proposed.getSeventeenthParagraph(),
+                6);
+
+        present.add(header_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(header_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(first_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(first_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(first_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(first_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(second_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(second_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(third_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(third_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(second_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(second_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fourth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fourth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(third_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(third_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fifth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fifth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fourth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fourth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(sixth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(sixth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fifth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fifth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(seventh_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(seventh_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(sixth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(sixth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(eight_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(eight_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(seventh_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(seventh_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(ninth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(ninth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(eight_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(eight_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(tenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(tenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(ninth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(ninth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(eleventh_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(eleventh_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(tenth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(tenth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(twelfth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(twelfth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(eleventh_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(eleventh_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(thirteenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(thirteenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(twelfth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(twelfth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fourteenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fourteenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fifteenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fifteenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(thirteenth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(thirteenth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(sixteenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(sixteenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fourteenth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fourteenth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(seventeenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(seventeenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(fifteenth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(fifteenth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(eighteenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(eighteenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(sixteenth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(sixteenth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(nineteenth_core_present);
+        present.add(Chunk.NEWLINE);
+        proposed.add(nineteenth_core_proposed);
+        proposed.add(Chunk.NEWLINE);
+
+        present.add(seventeenth_paragraph_present);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        present.add(Chunk.NEWLINE);
+        proposed.add(seventeenth_paragraph_proposed);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+        proposed.add(Chunk.NEWLINE);
+
+
+        // once all program details are done
+        table.addCell(new PdfPCell(present)).setPadding(CELL_PADDING);
+        table.addCell(new PdfPCell(proposed)).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        // add rationale cell which spans 2 columns
+        String rationale = request.getRationale();
+        Phrase rationale_phrase = new Phrase();
+
+        rationale_phrase.add(new Chunk("Rationale:", column_font).setUnderline(0.1f, -1f));
+        rationale_phrase.add(Chunk.NEWLINE);
+
+        if(rationale != null && !rationale.equals(""))
+            rationale_phrase.add(new Chunk(rationale, arial_10));
+        else
+            rationale_phrase.add(new Chunk("None.", arial_10));
+
+        PdfPCell rationale_cell = new PdfPCell(rationale_phrase);
+        rationale_cell.setColspan(2);
+        table.addCell(rationale_cell).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        // add resource implications cell which spans 2 columns
+        String resource_implications = request.getResourceImplications();
+        Phrase resource_phrase = new Phrase();
+
+        resource_phrase.add(new Chunk("Resource Implications:", column_font).setUnderline(0.1f, -1f));
+        resource_phrase.add(Chunk.NEWLINE);
+
+        if(resource_implications != null && !resource_implications.equals(""))
+            resource_phrase.add(new Chunk(resource_implications, arial_10));
+        else
+            resource_phrase.add(new Chunk("None.", arial_10));
+
+        PdfPCell resource_cell = new PdfPCell(resource_phrase);
+        resource_cell.setColspan(2);
+        table.addCell(resource_cell).setPadding(CELL_PADDING);
+        table.completeRow();
+
+        try {
+            doc.add(table);
+        }catch(DocumentException e){
+            e.printStackTrace();
+        }
     }
     private void addSection3DiffTable(Document doc, Request request, Section71703 section71703_present, Section71703 section71703_proposed) {
 
