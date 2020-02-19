@@ -238,7 +238,7 @@ export class ApiService {
   }
 
   public submitCourseRequestForm(files: File[], descriptions: Map<string, string>,
-                                 course: Course, courseExtras: CourseExtras) {
+    course: Course, courseExtras: CourseExtras) {
 
     const formdata: FormData = this.fileCourseAndExtrasToFormData(files, descriptions, course, courseExtras);
 
@@ -251,11 +251,11 @@ export class ApiService {
   }
 
   public submitCalendarSectionForm(files: File[], descriptions: Map<string, string>,
-                                   section: Section, sectionExtras: SectionExtras) {
+    section: Section, sectionExtras: SectionExtras) {
 
     const formdata: FormData = this.submitSection(files, descriptions, section, sectionExtras);
 
-    const req = new HttpRequest('POST', this.url + 'save_section70719', formdata, {
+    const req = new HttpRequest('POST', this.url + 'save_section71709', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
@@ -302,7 +302,7 @@ export class ApiService {
   private submitSection(files: File[], descriptions: Map<string, string>, section: Section, sectionExtras: SectionExtras) {
     const formdata: FormData = new FormData();
     formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
-    formdata.append('subSection70719', JSON.stringify(section));
+    formdata.append('subSection71709', JSON.stringify(section));
     formdata.append('sectionExtras', JSON.stringify(sectionExtras));
     for (const file of files) {
       formdata.append('files', file);
