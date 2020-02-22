@@ -33,25 +33,23 @@ import org.springframework.stereotype.Service;
 public class PdfSection {
 
     @Autowired
-    private PdfSection70719 pdfSection70719;
-
+    private PdfSection7071 pdfSection7071;
     @Autowired
     private PdfSection71401 pdfSection71401;
-
     @Autowired
     private PdfSection71402 pdfSection71402;
 
     public void addSectionPage(Document doc, Request request){
 
-        // replace with valid section identifier
-        if(true){
+        String section_id = request.getTitle();
 
-            pdfSection70719.addSectionPage(doc, request);
+        if(section_id.contains("71.70")){
+            pdfSection7071.addSectionPage(doc, request, section_id);
         }
-        if(true) {
+        if(section_id.contains("71.40.1")) {
             pdfSection71401.addSectionPage(doc, request);
         }
-        if(true) {
+        if(section_id.contains("71.40.2")) {
             pdfSection71402.addSectionPage(doc, request);
         }
     }

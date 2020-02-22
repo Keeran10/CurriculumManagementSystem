@@ -44,8 +44,10 @@ export class CalendarSectionComponent implements OnInit {
   editedCourses: Course[] = [];
   printedCourses: Course[] = [];
   sectionId: string;
+  
   removedPrintedCourses: Number[] = [];
   addedPrintedCourses: Number[] = [];
+
   courseIds = [];
 
   isDoneLoading = false;

@@ -54,6 +54,7 @@ INSERT IGNORE INTO user VALUES (5, 'rhonda@soen.com', 'Rhonda', 'Philips','123',
 INSERT IGNORE INTO user VALUES (6, 'billy@soen.com', 'Billy', 'Bob','123', 'UGSC', 8);
 INSERT IGNORE INTO user VALUES (7, 'olga@soen.com', 'Olga', 'Hashtag','123', 'Senate', 8);
 INSERT IGNORE INTO user VALUES (8, 'admin@soen.com', 'Admin', 'Badminton','123', 'admin', 4);
+INSERT IGNORE INTO user VALUES (9, 'mech@soen.com', 'Mech', 'Badminton','123', 'Professor', 8);
 
 -- id, desc, active, name, department_id
 INSERT IGNORE INTO program VALUES (1, "The Software Engineering program is built on the fundamentals of computer science, an engineering core, and a discipline core in Software Engineering to cover the engineering approach to all phases of the software process and related topics. The curriculum builds on the traditional computer science core topics of computer mathematics, theory, programming methodology, and mainstream applications to provide the computing theory and practice which underlie the discipline. The engineering core covers basic science, professional topics, and introduces the engineering approach to problem solving. The program core in Software Engineering includes advanced programming techniques, software specification, design, architecture, as well as metrics, security, project management, and quality control. The options cover a broad range of advanced topics, from formal methods to distributed systems.",
@@ -243,15 +244,15 @@ INSERT IGNORE INTO course VALUES (80, 4.00, '',
 INSERT IGNORE INTO course VALUES (81, 4.00, '',
 1, 2, 3, 1, 'SOEN', '', 487, 'Web Services and Applications', 1, 2);
 INSERT IGNORE INTO course VALUES (81, 3.00, '',
-1, 2, 3, 1, 'COMP', '', 326, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 326, 'Computer Architecture', 1, 2);
 INSERT IGNORE INTO course VALUES (82, 4.00, '',
-1, 2, 3, 1, 'COMP', '', 426, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 426, 'Multicore Programming', 1, 2);
 INSERT IGNORE INTO course VALUES (83, 4.00, '',
-1, 2, 3, 1, 'COMP', '', 428, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 428, 'Parallel Programming', 1, 2);
 INSERT IGNORE INTO course VALUES (84, 4.00, '',
-1, 2, 3, 1, 'SOEN', '', 422, '', 1, 2);
+1, 2, 3, 1, 'SOEN', '', 422, 'Embedded Systems and Software', 1, 2);
 INSERT IGNORE INTO course VALUES (85, 3.00, '',
-1, 2, 3, 1, 'COMP', '', 465, '', 1, 2);
+1, 2, 3, 1, 'COMP', '', 465, 'Design and Analysis of Algorithms', 1, 2);
 INSERT IGNORE INTO course VALUES (86, 3.00, '',
 1, 2, 3, 1, 'ACCO', '', 220, 'Financial and Managerial Accounting', 1, 2);
 INSERT IGNORE INTO course VALUES (87, 3.00, '',
@@ -294,6 +295,10 @@ INSERT IGNORE INTO course VALUES (105, 3.00, '',
 1, 2, 3, 1, 'PHYS', '', 284, 'Introduction to Astronomy', 1, 2);
 INSERT IGNORE INTO course VALUES (106, 3.00, '',
 1, 2, 3, 1, 'PHYS', '', 385, 'Astrophysics', 1, 2);
+INSERT IGNORE INTO course VALUES (107, 3.50, '',
+1, 2, 3, 1, 'AERO', '', 480, 'Flight Control Systems', 1, 2);
+INSERT IGNORE INTO course VALUES (108, 3.00, '',
+1, 2, 3, 1, 'AERO', '', 482, 'Avionic Navigation Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (109, 3.00, '',
 1, 2, 3, 1, 'COEN', '', 320, 'Introduction to Real‑Time Systems', 1, 2);
 INSERT IGNORE INTO course VALUES (110, 4.00, '',
@@ -1204,11 +1209,10 @@ INSERT IGNORE INTO request_package VALUES (3, NULL, NULL, 1, 4); -- used to test
 
 
 -- id, original id, rationale, request type, resource, target id, target type, timestamp, title, package id, user id
-INSERT IGNORE INTO request VALUES (1, 8, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
-INSERT IGNORE INTO request VALUES (2, 1, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
-INSERT IGNORE INTO request VALUES (3, 0, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
-INSERT IGNORE INTO request VALUES (4, 30, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
-INSERT IGNORE INTO request VALUES (5, 1, 1, "None.", 2, "None.", 2, 1, NULL, "SECTION_70.71.9_update", 1, 1); -- thermodynamics II updated
+INSERT IGNORE INTO request VALUES (1, 8, "rationale", 2, "resource implications", 15, 2, NULL, "SOEN344_update", 1, 1); -- updating request for the course soen 343
+INSERT IGNORE INTO request VALUES (2, 1, "Course material already offered by a combination of COMP 228 and SOEN 298.", 3, "resource implications", 0, 2, NULL, "SOEN228_removal", 1, 1); -- removing request for the course soen 343
+INSERT IGNORE INTO request VALUES (3, 0, "The CEAB visitor and students noted that there was no data course in the core. This is especially problematic given the trend toward big data. This new course is designed to teach software engineering students about modern database systems.", 1, "resource implications", 40, 2, NULL, "SOEN363_new", 1, 1); -- creating request for the course soen 343
+INSERT IGNORE INTO request VALUES (4, 30, "The course description is over ten years old and has been updated to reflect modern software engineering.", 2, "None.", 39, 2, NULL, "MECH371_update", 2, 1); -- thermodynamics II updated
 
 -- id, apc, department_council, department_curriculum_committee, faculty_council, senate, undergraduate_studies_committee
 INSERT IGNORE INTO approval_pipeline VALUES (1, 4, 0, 1, 2, 5, 3); -- dcc -> fcc -> ugdc -> apc -> senate

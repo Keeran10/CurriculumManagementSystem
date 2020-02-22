@@ -83,6 +83,16 @@ export class ApiService {
     });
   }
 
+  /*
+  public getCalendar() {
+    return this.http.get<any>(this.url + 'section71709');
+  }*/
+
+  public getSectionData(id: string) {
+    // this returns this one section
+    return this.http.get<Section>(this.url + 'section' + id);
+  }
+
   public getCourse(id: string) {
     return this.http.get<Course>(this.url + 'course_edit', {
       params: new HttpParams().set('id', id)
@@ -146,15 +156,6 @@ export class ApiService {
       params: new HttpParams().set('package_id', packageId).set('approval_pipeline_id', approvalPipelineId),
       responseType: 'arraybuffer' as 'json'
     });
-  }
-/*
-  public getCalendar() {
-    return this.http.get<any>(this.url + 'section71709');
-  }*/
-
-  public getSectionData(id: string) {
-    // this returns this one section
-    return this.http.get<Section>(this.url + 'section' + id);
   }
 
   public generatePdf(packageId: string, userId: string) {
@@ -254,7 +255,7 @@ export class ApiService {
 
     const formdata: FormData = this.submitSection(files, descriptions, section, sectionExtras);
 
-    const req = new HttpRequest('POST', this.url + 'save_section70719', formdata, {
+    const req = new HttpRequest('POST', this.url + 'save_section71709', formdata, {
       reportProgress: true,
       responseType: 'text',
     });
@@ -301,7 +302,7 @@ export class ApiService {
   private submitSection(files: File[], descriptions: Map<string, string>, section: Section, sectionExtras: SectionExtras) {
     const formdata: FormData = new FormData();
     formdata.append('descriptions', JSON.stringify(Array.from(descriptions.entries())));
-    formdata.append('subSection70719', JSON.stringify(section));
+    formdata.append('subSection71709', JSON.stringify(section));
     formdata.append('sectionExtras', JSON.stringify(sectionExtras));
     for (const file of files) {
       formdata.append('files', file);
