@@ -66,33 +66,23 @@
           <div *ngIf="isResultShown === true && displayedList.length != 0">
             <mat-card class="searchResultsCard">
               <mat-card-content>
-            <div *ngFor="let listItem of displayedList ; let i = index">
+            <div *ngFor="let listItem of displayedList ; let i = index;">
               <div *ngIf="searchType === 'course'">
-                <pre><a href = "http://localhost:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
+                <a href = "http://localhost:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br>
+                <div *ngFor="let course of courses;">
+                  <div *ngIf="listItem.includes(course.title) && listItem.includes(course.number.toString())
+                                && listItem.includes(course.name)">
+                    <b>Description Summary: </b> {{course.description}}
+                  </div>
+
+                </div>
+
               </div>
 
               <div *ngIf="searchType === 'section'">
-                <pre><a href = "http://localhost:4200/section/{{getSectionId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
+                <pre><a href = "http://localhost:4200/section/{{getSectionId(listItem)}}">{{listItem}}</a><br><b>Description Summary:
+                </b>{{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}</pre>
               </div>
-             <!-- <div *ngIf="searchType === 'degree'">
-                <pre><a href = "http://localhost:4200/editForm/{{getDegreeId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-              </div>
-              <div *ngIf="searchType === 'department'">
-                <pre><a href = "http://localhost:4200/editForm/{{getDepartmentId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-              </div>
-              <div *ngIf="searchType === 'faculty'">
-                <pre><a href = "http://localhost:4200/editForm/{{getFacultyId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-              </div>
-              <div *ngIf="searchType === 'program'">
-                <pre><a href = "http://localhost:4200/editForm/{{getProgramId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-</pre>
-              </div>-->
-
             </div>
               </mat-card-content>
             </mat-card>

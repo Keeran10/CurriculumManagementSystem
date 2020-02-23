@@ -49,13 +49,11 @@ export class SearchPageComponent implements OnInit {
   filteredOptions: Observable<string[]>;
 
   displayedList: string[] = [];
-  descriptionList: string [] = [];
+  displayeddescriptionList: string[] = [];
+
+  storedCourseDescriptions: string[] = [];
 
   storedCourseNames: string[] = [];
-  storedDegreeNames: string[] = [];
-  storedDepartmentNames: string[] = [];
-  storedProgramNames: string[] = [];
-  storedFacultyNames: string[] = [];
   storedSectionNames: string[] = [];
 
   courses: Course[];
@@ -72,10 +70,6 @@ export class SearchPageComponent implements OnInit {
   searchType: string;
 
   searchCategories: SearchCategory[] = [
-   /* {value: 'faculty', viewValue: 'Faculty'},
-    {value: 'department', viewValue: 'Department'},
-    {value: 'program', viewValue: 'Program'},
-    {value: 'degree', viewValue: 'Degree'},*/
     {value: 'course', viewValue: 'Course'},
     {value: 'section', viewValue: 'Section'},
   ];
@@ -87,18 +81,7 @@ export class SearchPageComponent implements OnInit {
     this.apiService.getAllCourses().subscribe(data => {
       this.courses = data;
     });
-    /*this.apiService.getAllDegrees().subscribe(data => {
-      this.degrees = data;
-    });
-    this.apiService.getAllDepartments().subscribe(data => {
-      this.departments = data;
-    });
-    this.apiService.getAllFaculties().subscribe(data => {
-      this.faculties = data;
-    });
-    this.apiService.getAllPrograms().subscribe(data => {
-      this.programs = data;
-    });*/
+
     this.apiService.getAllSections().subscribe(data => {
       this.sections = data;
     });
@@ -115,16 +98,11 @@ export class SearchPageComponent implements OnInit {
   }
 
   private getStringValue() {
-    this.courses.forEach(value => this.storedCourseNames.
-    push(value.name + ' ' + value.number + ' ' + value.title));
-    /*this.degrees.forEach(value => this.storedDegreeNames.
-    push(value.name + ' '));
-    this.departments.forEach(value => this.storedDepartmentNames.
-    push(value.name + ' '));
-    this.faculties.forEach(value => this.storedFacultyNames.
-    push(value.name + ' '));
-    this.programs.forEach(value => this.storedProgramNames.
-    push(value.name + ' '));*/
+    this.courses.forEach(value => this.storedCourseNames
+      .push(value.name + ' ' + value.number + ' ' + value.title));
+    this.courses.forEach(value => this.storedCourseDescriptions
+      .push(value.description));
+
     this.sections.forEach(value => this.storedSectionNames.
     push(value.sectionId + ' ' + value.sectionTitle + ' '));
 
@@ -132,80 +110,38 @@ export class SearchPageComponent implements OnInit {
 
   private getDescription() {
     // test function
-    this.courses.forEach(value => this.descriptionList.push(value.description));
+   // this.courses.forEach(value => this.descriptionList.push(value.description));
     /*this.degrees.forEach(value => this.descriptionList.push(value.degreeRequirements.toString()));
     this.departments.forEach(value => this.descriptionList.push(value.programs.toString()));
     this.faculties.forEach(value => this.descriptionList.push(value.departments.toString()));
     this.programs.forEach(value => this.descriptionList.push(value.description));*/
-    this.sections.forEach(value => this.descriptionList.push(value.firstParagraph));
+   // this.sections.forEach(value => this.descriptionList.push(value.firstParagraph));
 
-    this.descriptionList = this.descriptionList.filter((el, i, a) => i === a.indexOf(el));
+   // this.descriptionList = this.descriptionList.filter((el, i, a) => i === a.indexOf(el));
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase().trim()
       .replace(/\s/g, '');
     let returnedList: string[] = [];
+    let returnedDescriptionList: string[] = [];
     this.getStringValue();
-    this.getDescription();
+    // this.getDescription();
 
     switch (this.selectedValue) {
-      /*case 'faculty': {
-        returnedList = returnedList.concat(this.storedFacultyNames.filter(c => c
-          .toLowerCase()
-          .trim()
-          .replace(/\s/g, '')
-          .includes(filterValue)));
-        const filteredList = returnedList;
-        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
-        this.isResultShown = false;
-        this.searchType = 'faculty';
-        break;
-      }
-      case 'department': {
-        returnedList = returnedList.concat(this.storedDepartmentNames.filter(c => c
-          .toLowerCase()
-          .trim()
-          .replace(/\s/g, '')
-          .includes(filterValue)));
-        const filteredList = returnedList;
-        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
-        this.isResultShown = false;
-        this.searchType = 'department';
-        break;
-      }
-      case 'program': {
-        returnedList = returnedList.concat(this.storedProgramNames.filter(c => c
-          .toLowerCase()
-          .trim()
-          .replace(/\s/g, '')
-          .includes(filterValue)));
-        const filteredList = returnedList;
-        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
-        this.isResultShown = false;
-        this.searchType = 'program';
-        break;
-      }
-      case 'degree': {
-        returnedList = returnedList.concat(this.storedDegreeNames.filter(c => c
-          .toLowerCase()
-          .trim()
-          .replace(/\s/g, '')
-          .includes(filterValue)));
-        const filteredList = returnedList;
-        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
-        this.isResultShown = false;
-        this.searchType = 'degree';
-        break;
-      }*/
+
       case 'course': {
         returnedList = returnedList.concat(this.storedCourseNames.filter(c => c
           .toLowerCase()
           .trim()
           .replace(/\s/g, '')
           .includes(filterValue)));
-        const filteredList = returnedList;
-        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.displayedList = returnedList.filter((el, i, a) => i === a.indexOf(el));
+
+        returnedDescriptionList = returnedDescriptionList.concat(this.storedCourseDescriptions);
+        this.displayeddescriptionList = returnedDescriptionList;
+        console.log(this.displayeddescriptionList);
+
         this.isResultShown = false;
         this.searchType = 'course';
         break;
@@ -216,8 +152,7 @@ export class SearchPageComponent implements OnInit {
           .trim()
           .replace(/\s/g, '')
           .includes(filterValue)));
-        const filteredList = returnedList;
-        this.displayedList = filteredList.filter((el, i, a) => i === a.indexOf(el));
+        this.displayedList = returnedList.filter((el, i, a) => i === a.indexOf(el));
         this.isResultShown = false;
         this.searchType = 'section';
         break;
@@ -244,22 +179,7 @@ export class SearchPageComponent implements OnInit {
 
   public selectSearchFormPlaceholder(): void {
     switch (this.selectedValue) {
-      /*case 'faculty': {
-        this.searchFormPlaceholder = 'Search faculties';
-        break;
-      }
-      case 'department': {
-        this.searchFormPlaceholder = 'Search departments';
-        break;
-      }
-      case 'program': {
-        this.searchFormPlaceholder = 'Search programs';
-        break;
-      }
-      case 'degree': {
-        this.searchFormPlaceholder = 'Search degrees';
-        break;
-      }*/
+
       case 'course': {
         this.searchFormPlaceholder = 'Search courses';
         break;
@@ -277,29 +197,10 @@ export class SearchPageComponent implements OnInit {
   }
 
   public getCourseId(listItem: string) {
-    const tmpCourse: Course = this.courses.find(c => listItem.includes(c.number.toString()));
+    const listItemNumber = listItem.toString();
+    const tmpCourse: Course = this.courses.find(c => listItemNumber.includes(c.number.toString()));
     return tmpCourse.id;
   }
-
-  /*public getDepartmentId(listItem: string) {
-    const tmpDepartment: Department = this.departments.find(c => listItem.includes(c.name.toString()));
-    return tmpDepartment.id;
-  }
-
-  public getDegreeId(listItem: string) {
-    const tmpDegree: Degree = this.degrees.find(c => listItem.includes(c.name));
-    return tmpDegree.id;
-  }
-
-  public getFacultyId(listItem: string) {
-    const tmpFaculty: Faculty = this.faculties.find(c => listItem.includes(c.name));
-    return tmpFaculty.id;
-  }
-
-  public getProgramId(listItem: string) {
-    const tmpProgram: Program = this.programs.find(c => listItem.includes(c.name));
-    return tmpProgram.id;
-  }*/
 
   public getSectionId(listItem: string) {
     const tmpSection: Section = this.sections.find(c => listItem.includes(c.sectionId.toString()));
