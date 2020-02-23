@@ -72,7 +72,8 @@
                 <div *ngFor="let course of courses;">
                   <div *ngIf="listItem.includes(course.title) && listItem.includes(course.number.toString())
                                 && listItem.includes(course.name)">
-                    <b>Description Summary: </b> {{course.description}}
+                    <b>Description Summary: </b>
+                    {{ (course.description.length>50)? (course.description | slice:0:100)+'...':(course.description) }}
                   </div>
 
                 </div>
