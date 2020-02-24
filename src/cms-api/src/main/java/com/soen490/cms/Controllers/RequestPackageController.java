@@ -419,10 +419,44 @@ public class RequestPackageController {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
             int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71709(subSection71709, sectionExtras, files, descriptions);
+            int request_id;
 
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
+            JSONObject sectionJson = new JSONObject(subSection71709);
+            String section_id = (String) sectionJson.get("sectionId");
+
+            if(section_id.contains("71.70.9")){
+                request_id = requestPackageService.saveSection71709(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.8")){
+                request_id = requestPackageService.saveSection71708(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.7")){
+                request_id = requestPackageService.saveSection71707(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.6")){
+                request_id = requestPackageService.saveSection71706(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.5")){
+                request_id = requestPackageService.saveSection71705(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.4")){
+                request_id = requestPackageService.saveSection71704(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.3")){
+                request_id = requestPackageService.saveSection71703(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.2")){
+                request_id = requestPackageService.saveSection71702(subSection71709, sectionExtras, files, descriptions);
+            }
+            else if(section_id.contains("71.70.1")){
+                request_id = requestPackageService.saveSection71701(subSection71709, sectionExtras, files, descriptions);
+            }
+            else{
+                System.out.println("No sections found ...");
+                return 0;
+            }
+
+            requestPackageService.generatePdf(package_id, user_id);
 
             return request_id;
 

@@ -25,8 +25,70 @@ export class Section {
   sectionId: number;
   sectionTitle: string;
   firstParagraph: string;
+
   firstCore: string;
   secondCore: string;
+  thirdCore: string;
+  secondParagraph: string;
+  fourthCore: string;
+  thirdParagraph: string;
+  fifthCore: string;
+  fourthParagraph: string;
+  sixthCore: string;
+  fifthParagraph: string;
+  seventhCore: string;
+  sixthParagraph: string;
+  eightCore: string;
+  seventhParagraph: string;
+  ninthCore: string;
+  eightParagraph: string;
+  tenthCore: string;
+  ninthParagraph: string;
+  eleventhCore: string;
+  tenthParagraph: string;
+  twelfthCore: string;
+  eleventhParagraph: string;
+  thirteenthCore: string;
+  twelfthParagraph: string;
+  fourteenthCore: string;
+  fifteenthCore: string;
+  thirteenthParagraph: string;
+  sixteenthCore: string;
+  fourteenthParagraph: string;
+  seventeenthCore: string;
+  fifteenthParagraph: string;
+  eighteenthCore: string;
+  sixteenthParagraph: string;
+  nineteenthCore: string;
+  seventeenthParagraph: string;
+
   firstCoreCourses: object[];
   secondCoreCourses: object[];
+  thirdCoreCourses: object[];
+  fourthCoreCourses: object[];
+  fifthCoreCourses: object[];
+  sixthCoreCourses: object[];
+  seventhCoreCourses: object[];
+  eightCoreCourses: object[];
+
+  // mech
+  introParagraph: string;
+  electivesHeader: string;
+  electivesDescription: string;
+  firstOption: string;
+  secondOption: string;
+  thirdOption: string;
+  fourthOption: string;
+  fifthOption: string;
+  sixthOption: string;
+  firstOptionCourses: object[];
+  sectionOptionCourses: object[];
+  thirdOptionCourses: object[];
+  fourthOptionCourses: object[];
+  fifthOptionCourses: object[];
+  sixthOptionCourses: object[];
+  // indu
+  scienceCore: string;
+  scienceCoreCourses: object[];
+  electiveCourses: object[];
 }

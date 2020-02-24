@@ -43,6 +43,7 @@ export class CalendarSectionComponent implements OnInit {
   originalCourses = [];
   editedCourses: Course[] = [];
   printedCourses: Course[] = [];
+  sectionId: string;
   
   removedPrintedCourses: Number[] = [];
   addedPrintedCourses: Number[] = [];
@@ -77,6 +78,8 @@ export class CalendarSectionComponent implements OnInit {
     this.selectedFiles = null;
     this.files = null;
 
+    this.sectionId = this.cookieService.get('sectionId');
+
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
 
@@ -103,7 +106,7 @@ export class CalendarSectionComponent implements OnInit {
       this.sectionOriginal.secondCore = null;
       this.isDeleteVisible = false;
     } else if (requestId === '0') {
-      this.api.getSection(this.id).subscribe(data => {
+      this.api.getSectionData(this.sectionId).subscribe(data => {
         this.sectionOriginal = data;
         this.sectionEditable = Object.assign({}, data);
         this.sectionEditable.sectionId = this.sectionOriginal.sectionId;
@@ -111,21 +114,21 @@ export class CalendarSectionComponent implements OnInit {
     } else {
       const originalId = this.cookieService.get('originalSection');
       const editedId = this.cookieService.get('editedSection');
-      this.api.getSection(originalId).subscribe(data => {
+      this.api.getSectionData(this.sectionId).subscribe(data => {
         this.sectionOriginal = data;
       });
-      this.api.getSection(editedId).subscribe(data => {
+      this.api.getSectionData(this.sectionId).subscribe(data => {
         this.sectionEditable = data;
         this.sectionEditable.id = Number(originalId);
       });
     }
 
     const packageNumber = this.cookieService.get('package');
-    this.api.getCalendar().subscribe(data => {
+    this.api.getSectionData(this.sectionId).subscribe(data => {
       this.originalCourses = data.secondCoreCourses;
 
       // tslint:disable-next-line:no-shadowed-variable
-      this.api.getPackage(packageNumber, '4').subscribe(data => {
+      this.api.getPackage(packageNumber, this.cookieService.get('department')).subscribe(data => {
         const requests = data.requests;
         let i = 0;
         requests.forEach(request => {

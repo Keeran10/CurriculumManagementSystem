@@ -4,69 +4,251 @@
   </header>
   <main class="hg__main">
     <mat-card class="matCardBackground">
-
-
       <div class="container">
 
-        <mat-card>
+        <mat-card class="leftSide">
           <mat-card-header>
-            <h1 class="title">Edit Section Page</h1>
+            <h2 class="title">Edit Section {{sectionEditable.sectionId}} Page</h2>
           </mat-card-header><br>
           <form class="edit-form">
-            <mat-form-field class="row1">
+            <mat-form-field class="row1" *ngIf="sectionEditable.sectionId !== undefined" >
               <input matInput placeholder="Section Id" spellcheck="true" [(ngModel)]="sectionEditable.sectionId"
                 name="sectionId">
             </mat-form-field>
-            <mat-form-field class="row2">
+            <mat-form-field class="row2" *ngIf="sectionEditable.sectionTitle !== undefined">
               <input matInput placeholder="Section title" spellcheck="true" [(ngModel)]="sectionEditable.sectionTitle"
                 name="sectionTitle">
             </mat-form-field>
-            <mat-form-field class="row3">
-              <textarea matInput placeholder="First Paragraph" [(ngModel)]="sectionEditable.firstParagraph"
+            <mat-form-field *ngIf="sectionEditable.firstParagraph !== undefined || sectionEditable.introParagraph !== undefined" class="row3">
+              <textarea *ngIf="sectionEditable.firstParagraph !== undefined" matInput placeholder="First Paragraph" [(ngModel)]="sectionEditable.firstParagraph"
                 spellcheck="true" name="firstParagraph"></textarea>
+                <textarea *ngIf="sectionEditable.introParagraph !== undefined" matInput placeholder="First Paragraph" [(ngModel)]="sectionEditable.introParagraph"
+                spellcheck="true" name="introParagraph"></textarea>
             </mat-form-field>
-            <mat-form-field class="row4">
+
+            <mat-form-field class="row4" *ngIf="sectionEditable.firstCore !== undefined">
               <textarea matInput placeholder="First Core" [(ngModel)]="sectionEditable.firstCore" spellcheck="true"
                 name="firstCore"></textarea>
             </mat-form-field>
-            <mat-form-field class="row5">
+
+            <mat-form-field class="row5" *ngIf="sectionEditable.secondCore !== undefined">
               <textarea matInput placeholder="Second Core" [(ngModel)]="sectionEditable.secondCore" spellcheck="true"
                 name="secondCore"></textarea>
             </mat-form-field>
-            <mat-form-field class="row6">
-              <textarea matInput placeholder="Rationale" spellcheck="true" [(ngModel)]="editedExtraModel.rationale"
-                name="rationale"></textarea>
+
+            <mat-form-field class="row6" *ngIf="sectionEditable.thirdCore !== undefined">
+              <textarea matInput placeholder="Third Core" [(ngModel)]="sectionEditable.thirdCore" spellcheck="true"
+                        name="thirdCore"></textarea>
             </mat-form-field>
-            <mat-form-field class="row7">
-              <textarea matInput placeholder="Resource Implications" spellcheck="true"
-                [(ngModel)]="editedExtraModel.implications" name="implications"></textarea>
+
+            <mat-form-field class="row7" *ngIf="sectionEditable.secondParagraph !== undefined">
+              <textarea matInput placeholder="Second Paragraph" [(ngModel)]="sectionEditable.secondParagraph" spellcheck="true"
+                        name="secondParagraph"></textarea>
             </mat-form-field>
+
+            <mat-form-field class="row8" *ngIf="sectionEditable.fourthCore !== undefined">
+              <textarea matInput placeholder="Fourth Core" [(ngModel)]="sectionEditable.fourthCore" spellcheck="true"
+                        name="fourthCore"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row9" *ngIf="sectionEditable.thirdParagraph !== undefined">
+              <textarea matInput placeholder="Third Paragraph" [(ngModel)]="sectionEditable.thirdParagraph" spellcheck="true"
+                        name="thirdParagraph"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row10" *ngIf="sectionEditable.fifthCore !== undefined">
+              <textarea matInput placeholder="Fifth Core" [(ngModel)]="sectionEditable.fifthCore" spellcheck="true"
+                        name="fifthCore"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row11" *ngIf="sectionEditable.fourthParagraph !== undefined">
+              <textarea matInput placeholder="Fourth Paragraph" [(ngModel)]="sectionEditable.fourthParagraph" spellcheck="true"
+                        name="fourthParagraph"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row12" *ngIf="sectionEditable.sixthCore !== undefined">
+              <textarea matInput placeholder="Sixth Core" [(ngModel)]="sectionEditable.sixthCore" spellcheck="true"
+                        name="sixthCore"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row13" *ngIf="sectionEditable.fifthParagraph !== undefined">
+              <textarea matInput placeholder="Fifth Paragraph" [(ngModel)]="sectionEditable.fifthParagraph" spellcheck="true"
+                        name="fifthParagraph"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row14" *ngIf="sectionEditable.seventhCore !== undefined">
+              <textarea matInput placeholder="Seventh Core" [(ngModel)]="sectionEditable.seventhCore" spellcheck="true"
+                        name="seventhCore"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row15" *ngIf="sectionEditable.sixthParagraph !== undefined">
+              <textarea matInput placeholder="Sixth Paragraph" [(ngModel)]="sectionEditable.sixthParagraph" spellcheck="true"
+                        name="sixthParagraph"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="row16" *ngIf="sectionEditable.eightCore !== undefined">
+              <textarea matInput placeholder="Eight Core" [(ngModel)]="sectionEditable.eightCore" spellcheck="true"
+                        name="eightCore"></textarea>
+            </mat-form-field>
+
+              <mat-form-field class="row17" *ngIf="sectionEditable.seventhParagraph !== undefined">
+              <textarea matInput placeholder="Seventh Paragraph" [(ngModel)]="sectionEditable.seventhParagraph" spellcheck="true"
+                        name="seventhParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row18" *ngIf="sectionEditable.ninthCore !== undefined">
+              <textarea matInput placeholder="Ninth Core" [(ngModel)]="sectionEditable.ninthCore" spellcheck="true"
+                        name="ninthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row19" *ngIf="sectionEditable.eightParagraph !== undefined">
+              <textarea matInput placeholder="Eight Paragraph" [(ngModel)]="sectionEditable.eightParagraph" spellcheck="true"
+                        name="eightParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row20" *ngIf="sectionEditable.tenthCore !== undefined">
+              <textarea matInput placeholder="Tenth Core" [(ngModel)]="sectionEditable.tenthCore" spellcheck="true"
+                        name="tenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row21" *ngIf="sectionEditable.ninthParagraph !== undefined">
+              <textarea matInput placeholder="Ninth Core" [(ngModel)]="sectionEditable.ninthParagraph" spellcheck="true"
+                        name="ninthParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row22" *ngIf="sectionEditable.eleventhCore !== undefined">
+              <textarea matInput placeholder="Eleventh Core" [(ngModel)]="sectionEditable.eleventhCore" spellcheck="true"
+                        name="eleventhCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row23" *ngIf="sectionEditable.tenthParagraph !== undefined">
+              <textarea matInput placeholder="Tenth Paragraph" [(ngModel)]="sectionEditable.tenthParagraph" spellcheck="true"
+                        name="tenthParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row24" *ngIf="sectionEditable.twelfthCore !== undefined">
+              <textarea matInput placeholder="Twelfth Core" [(ngModel)]="sectionEditable.twelfthCore" spellcheck="true"
+                        name="twelfthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row25" *ngIf="sectionEditable.eleventhParagraph !== undefined">
+              <textarea matInput placeholder="Eleventh Paragraph" [(ngModel)]="sectionEditable.eleventhParagraph" spellcheck="true"
+                        name="eleventhParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row26" *ngIf="sectionEditable.thirteenthCore !== undefined">
+              <textarea matInput placeholder="Thirteenth Core" [(ngModel)]="sectionEditable.thirteenthCore" spellcheck="true"
+                        name="thirteenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row27" *ngIf="sectionEditable.twelfthParagraph !== undefined">
+              <textarea matInput placeholder="Twelfth Paragraph" [(ngModel)]="sectionEditable.twelfthParagraph" spellcheck="true"
+                        name="twelfthParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row28" *ngIf="sectionEditable.fourteenthCore !== undefined">
+              <textarea matInput placeholder="Fourteenth Core" [(ngModel)]="sectionEditable.fourteenthCore" spellcheck="true"
+                        name="fourteenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row29" *ngIf="sectionEditable.fifteenthCore !== undefined">
+              <textarea matInput placeholder="Fifteenth Core" [(ngModel)]="sectionEditable.fifteenthCore" spellcheck="true"
+                        name="fifteenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row30" *ngIf="sectionEditable.thirteenthParagraph !== undefined">
+              <textarea matInput placeholder="Thirteenth Paragraph" [(ngModel)]="sectionEditable.thirteenthParagraph" spellcheck="true"
+                        name="thirteenthParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row31" *ngIf="sectionEditable.sixteenthCore !== undefined">
+              <textarea matInput placeholder="Sixteenth Core" [(ngModel)]="sectionEditable.sixteenthCore" spellcheck="true"
+                        name="sixteenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row32" *ngIf="sectionEditable.fourteenthParagraph !== undefined">
+              <textarea matInput placeholder="Fourteenth Paragraph" [(ngModel)]="sectionEditable.fourteenthParagraph" spellcheck="true"
+                        name="fourteenthParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row33" *ngIf="sectionEditable.seventeenthCore !== undefined">
+              <textarea matInput placeholder="Seventeenth Core" [(ngModel)]="sectionEditable.seventeenthCore" spellcheck="true"
+                        name="seventeenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row35" *ngIf="sectionEditable.fifteenthParagraph !== undefined">
+              <textarea matInput placeholder="Fifteenth Paragraph" [(ngModel)]="sectionEditable.fifteenthParagraph" spellcheck="true"
+                        name="fifteenthParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row36" *ngIf="sectionEditable.eighteenthCore !== undefined">
+              <textarea matInput placeholder="Eighteenth Core" [(ngModel)]="sectionEditable.eighteenthCore" spellcheck="true"
+                        name="eighteenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row37" *ngIf="sectionEditable.sixteenthParagraph !== undefined">
+              <textarea matInput placeholder="Sixteenth Paragraph" [(ngModel)]="sectionEditable.sixteenthParagraph" spellcheck="true"
+                        name="sixteenthParagraph"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row38" *ngIf="sectionEditable.nineteenthCore !== undefined">
+              <textarea matInput placeholder="Nineteenth Core" [(ngModel)]="sectionEditable.nineteenthCore" spellcheck="true"
+                        name="nineteenthCore"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="row39" *ngIf="sectionEditable.seventeenthParagraph !== undefined">
+              <textarea matInput placeholder="Seventeenth Paragraph" [(ngModel)]="sectionEditable.seventeenthParagraph" spellcheck="true"
+                        name="seventeenthParagraph"></textarea>
+              </mat-form-field>
+
           </form>
 
-          <table class="leftTable">
-            <tbody>
-            <tr>
+          <!-- FIRST CORE LEFT -->
 
-              <div class="row8" *ngIf="isDoneLoading">
-                <div *ngFor="let c of printedCourses; let i = index">
+          <table *ngIf="sectionEditable.firstCore !== undefined && sectionEditable.firstCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.firstCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.firstCoreCourses; let i = index">
                   <br class="courseLinks">
-                  <span>
-                    <td>
-                      <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody><br />
+          </table>
+
+          <!-- SECOND CORE LEFT -->
+
+
+          <table *ngIf="sectionEditable.secondCore !== undefined && sectionEditable.secondCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.secondCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.secondCoreCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
                       <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
                       <td class="courseTitle"> {{c.title}}</td>
                       <td class="courseCredits">{{c.credits.toFixed(2)}} </td>
-                      </span>
-                    </td>
                     <td class="deleteCourse" (click)="removeCourseFromCore(c)">
                       <font color="red" style="cursor: pointer;">[x]</font>
                     </td>
                   </span>
                 </div>
               </div>
-              <span class="row9">
+            </tr>
+            </tbody><br>
+
+
+          <span class="row40">
                 <mat-form-field>
-                  <input class="full-width" type="text" placeholder="Add a course to core" matInput 
+                  <input class="full-width" type="text" placeholder="Add a course to core" matInput
                   [formControl]="myControl" [matAutocomplete]="auto">
                   <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let course of allCourses" [value]="course.title">
@@ -78,11 +260,305 @@
                   Add
                 </button>
               </span>
-            </tr>
-            </tbody>
+
           </table>
 
+          <!-- THIRD CORE LEFT -->
+
+          <table *ngIf="sectionEditable.thirdCore !== undefined && sectionEditable.thirdCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.thirdCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.thirdCoreCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody><br>
+          </table>
+
+          <!-- FOURTH CORE LEFT -->
+
+          <table *ngIf="sectionEditable.fourthCore !== undefined && sectionEditable.fourthCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.fourthCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.fourthCoreCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody><br>
+          </table>
+
+          <!-- FIFTH CORE LEFT -->
+
+
+          <table *ngIf="sectionEditable.fifthCore !== undefined && sectionEditable.fifthCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.fifthCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.fifthCoreCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody><br>
+          </table>
+
+          <!-- SIXTH CORE LEFT -->
+
+          <table *ngIf="sectionEditable.sixthCore !== undefined && sectionEditable.sixthCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.sixthCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.sixthCoreCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody><br>
+          </table>
+
+          <!-- SEVENTH CORE LEFT -->
+
+          <table *ngIf="sectionEditable.seventhCore !== undefined && sectionEditable.seventhCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.seventhCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.seventhCoreCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody><br>
+          </table>
+
+          <!-- EIGHT CORE LEFT -->
+
+          <table *ngIf="sectionEditable.eightCore !== undefined && sectionEditable.eightCoreCourses !== undefined" class="leftTable">
+            <tbody>
+            <strong>{{ sectionEditable.eightCore }}</strong>
+            <tr>
+              <div class="row40" *ngIf="isDoneLoading">
+                <div *ngFor="let c of sectionEditable.eightCoreCourses; let i = index">
+                  <br class="courseLinks">
+                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                </div>
+              </div>
+            </tr>
+            </tbody><br>
+          </table>
+
+          <br>
+          <!-- RATIONALE & IMPLICATION -->
+          <form class ="edit-form">
+            <mat-form-field class="row41">
+              <textarea matInput placeholder="Rationale" spellcheck="true" [(ngModel)]="editedExtraModel.rationale"
+                        name="rationale"></textarea>
+            </mat-form-field>
+            <mat-form-field class="row42">
+              <textarea matInput placeholder="Resource Implications" spellcheck="true"
+                        [(ngModel)]="editedExtraModel.implications" name="implications"></textarea>
+            </mat-form-field>
+          </form>
+
+
+<!-- ELECTIVES -->
+          <mat-card-content *ngIf="sectionEditable.electivesHeader !== undefined" class="row8">
+            <h2>{{ sectionEditable.electivesHeader}}</h2><br/>
+            <div>Electives Description:</div>
+            <textarea matInput placeholder="Electives Description" [(ngModel)]="sectionEditable.electivesDescription" spellcheck="true"
+                name="electivesDescription"></textarea>
+          </mat-card-content>
+
+
+<!-- FIRST OPTION (MECH) -->
+          <table *ngIf="sectionEditable.firstOption !== undefined" class="leftTable">
+              <tbody>
+                <strong>{{ sectionEditable.firstOption }}</strong>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.firstOptionCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody> <br>
+            </table>
+
+
+<!-- SECOND OPTION (MECH) -->
+            <table *ngIf="sectionEditable.secondOption !== undefined" class="leftTable">
+              <tbody>
+                <strong>{{ sectionEditable.secondOption }}</strong>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.sectionOptionCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody><br>
+            </table>
+
+
+<!-- THIRD OPTION (MECH) -->
+            <table *ngIf="sectionEditable.thirdOption !== undefined" class="leftTable">
+              <tbody>
+              <strong>{{ sectionEditable.thirdOption }}</strong>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.thirdOptionCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody><br>
+            </table>
+
+
+<!-- FOURTH OPTION (MECH) -->
+            <table *ngIf="sectionEditable.fourthOption !== undefined" class="leftTable">
+              <tbody>
+              <strong>{{ sectionEditable.fourthOption }}</strong>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.fourthOptionCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody><br>
+            </table>
+
+
+<!-- FIFTH OPTION (MECH) -->
+            <table *ngIf="sectionEditable.fifthOption !== undefined" class="leftTable">
+              <tbody>
+              <strong>{{ sectionEditable.fifthOption }}</strong>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.fifthOptionCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody><br>
+            </table>
+
+
+<!-- SIXTH OPTION (MECH) -->
+            <table *ngIf="sectionEditable.sixthOption !== undefined" class="leftTable">
+              <tbody>
+              <strong>{{ sectionEditable.sixthOption }}</strong>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.sixthOptionCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody><br>
+            </table>
+
+
+<!-- ELECTIVE COURSES (INDU) -->
+            <table *ngIf="sectionEditable.electivesDescription !== undefined" class="leftTable">
+              <tbody>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.electiveCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody><br>
+            </table>
+
+
+<!-- NATURAL SCIENCE COURSES (INDU) -->
+            <table *ngIf="sectionEditable.scienceHeader !== undefined" class="row8">
+              <h4>{{ sectionEditable.scienceHeader }}</h4><br />
+              <div>Natural Science Description:</div>
+            <textarea matInput placeholder="Natural Science Description" [(ngModel)]="sectionEditable.scienceDescription" spellcheck="true"
+                name="scienceDescription"></textarea>
+              <tbody>
+              <tr>
+                <div class="row8" *ngIf="isDoneLoading">
+                  <div *ngFor="let c of sectionEditable.scienceCoreCourses; let i = index">
+                    <br class="courseLinks">
+                    <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
+                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                      <td class="courseTitle"> {{c.title}}</td>
+                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
+                  </div>
+                </div>
+              </tr>
+              </tbody><br>
+            </table>
+
+
         </mat-card>
+
+
+        <!-- EDITED VALUES - RIGHT SIDE -->
 
           <mat-card class="edited-tex">
             <!-- Section and title -->
@@ -98,12 +574,132 @@
             </span>
             <br>
 
-            <!-- paragraph description -->
-            <span>
-              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstParagraph"
-                [right]="sectionEditable.firstParagraph"></span><br><br>
+            <!-- FIRST PARAGRAPH -->
 
-              <!-- first core -->
+            <div *ngIf="sectionOriginal.firstParagraph !== undefined || sectionOriginal.introParagraph !== undefined" >
+
+              <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstParagraph"
+                [right]="sectionEditable.firstParagraph"></span>
+                <span style="display: inline-block" semanticDiff [left]="sectionOriginal.introParagraph"
+                [right]="sectionEditable.introParagraph"></span><br><br>
+            </div>
+
+              <!-- SECOND PARAGRAPH -->
+            <div *ngIf="sectionOriginal.secondParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondParagraph"
+                     [right]="sectionEditable.secondParagraph"></span><br><br>
+            </div>
+
+              <!-- THIRD PARAGRAPH -->
+
+            <div *ngIf="sectionOriginal.thirdParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.thirdParagraph"
+                     [right]="sectionEditable.thirdParagraph"></span><br><br>
+            </div>
+
+              <!-- FOURTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fourthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fourthParagraph"
+                     [right]="sectionEditable.fourthParagraph"></span><br><br>
+            </div>
+
+              <!-- FIFTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fifthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fifthParagraph"
+                     [right]="sectionEditable.fifthParagraph"></span><br><br>
+            </div>
+
+              <!-- SIXTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.sixthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sixthParagraph"
+                     [right]="sectionEditable.sixthParagraph"></span><br><br>
+            </div>
+
+              <!-- SEVENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.seventhParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.seventhParagraph"
+                     [right]="sectionEditable.seventhParagraph"></span><br><br>
+            </div>
+
+              <!-- EIGHT PARAGRAPH -->
+            <div *ngIf="sectionOriginal.eightParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.eightParagraph"
+                     [right]="sectionEditable.eightParagraph"></span><br><br>
+            </div>
+
+              <!-- NINTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.ninthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.ninthParagraph"
+                     [right]="sectionEditable.ninthParagraph"></span><br><br>
+            </div>
+
+              <!-- TENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.tenthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.tenthParagraph"
+                     [right]="sectionEditable.tenthParagraph"></span><br><br>
+            </div>
+
+              <!-- ELEVENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.eleventhParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.eleventhParagraph"
+                     [right]="sectionEditable.eleventhParagraph"></span><br><br>
+            </div>
+
+              <!-- TWELFTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.twelfthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.twelfthParagraph"
+                     [right]="sectionEditable.twelfthParagraph"></span><br><br>
+            </div>
+
+              <!-- THIRTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.thirteenthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.thirteenthParagraph"
+                     [right]="sectionEditable.thirteenthParagraph"></span><br><br>
+            </div>
+
+              <!-- FOURTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fourteenthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fourteenthParagraph"
+                     [right]="sectionEditable.secondParagraph"></span><br><br>
+            </div>
+
+              <!-- FIFTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.fifteenthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fifteenthParagraph"
+                     [right]="sectionEditable.fifteenthParagraph"></span><br><br>
+            </div>
+
+              <!-- SIXTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.sixteenthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sixteenthParagraph"
+                     [right]="sectionEditable.sixteenthParagraph"></span><br><br>
+            </div>
+
+              <!-- SEVENTEENTH PARAGRAPH -->
+            <div *ngIf="sectionOriginal.seventeenthParagraph !== undefined" >
+
+               <span style="display: inline-block" semanticDiff [left]="sectionOriginal.seventeenthParagraph"
+                     [right]="sectionEditable.seventeenthParagraph"></span><br><br>
+            </div>
+
+              <!-- FIRST CORE -->
+
+              <div *ngIf="sectionEditable.firstCore !== undefined && sectionEditable.firstCoreCourses !== undefined">
 
               <b>
                 <span style="display: inline-block">
@@ -111,10 +707,8 @@
                     [right]="sectionEditable.firstCore"></span>
                 </span> (30.5 Credits) </b>
               <br>
-              See&nbsp;<span class="fake-link">&#167;71.20.5</span><br><br>
-
-              <!-- second core -->
-
+              <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
 
               <!-- course list -->
 
@@ -123,36 +717,541 @@
                    <tr>
                       <th width="100%"> <b>
                 <span style="display: inline-block">
-                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
-                        [right]="sectionEditable.secondCore">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
+                        [right]="sectionEditable.firstCore">
                   </span>
                 </span>
               </b>
                       <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
-
-
                    </tr>
-
-
               <div class="right-side" *ngIf="isDoneLoading"><br>
 
         <div *ngFor="let c of printedCourses; let i = index">
             <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
 
-              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td> <td class="courseTitle">{{c.title}}</td><td class="courseCredits">{{c.credits.toFixed(2)}}</td></span>
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
             </div>
 
             <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
                 <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
                 <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                    </div>
+                 </div>
+              </div>
+                  </tbody>
+                </table><br><br>
+
+              </div>
+
+              <!-- SECOND CORE -->
+
+
+            <div *ngIf="sectionEditable.secondCore !== undefined && sectionEditable.secondCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
+                        [right]="sectionEditable.secondCore"></span>
+                </span> (30.5 Credits) </b>
+              <br>
+              <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
+
+              <!-- course list -->
+
+              <table>
+                <tbody>
+                <tr>
+                  <th width="100%"> <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
+                        [right]="sectionEditable.secondCore">
+                  </span>
+                </span>
+                  </b>
+                    <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                </tr>
+                <div class="right-side" *ngIf="isDoneLoading"><br>
+
+                  <div *ngFor="let c of printedCourses; let i = index">
+                    <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
+                    </div>
+
+                    <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                      <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                      <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                    </div>
+                  </div>
+                </div>
+                </tbody>
+              </table><br><br>
+
             </div>
-        </div>
-    </div></tbody></table>
+
+              <!-- THIRD CORE -->
 
 
+            <div *ngIf="sectionEditable.thirdCore !== undefined && sectionEditable.thirdCoreCourses !== undefined">
+
+              <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.thirdCore"
+                        [right]="sectionEditable.thirdCore"></span>
+                </span> (30.5 Credits) </b>
+              <br>
+              <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
+
+              <!-- course list -->
+
+              <table>
+                <tbody>
+                <tr>
+                  <th width="100%"> <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.thirdCore"
+                        [right]="sectionEditable.thirdCore">
+                  </span>
+                </span>
+                  </b>
+                    <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                </tr>
+                <div class="right-side" *ngIf="isDoneLoading"><br>
+
+                  <div *ngFor="let c of printedCourses; let i = index">
+                    <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
+                    </div>
+
+                    <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                      <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                      <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                    </div>
+                  </div>
+                </div>
+                </tbody>
+              </table><br><br>
+
+            </div>
+
+                <!-- FOURTH CORE -->
+
+                <div *ngIf="sectionEditable.fourthCore !== undefined && sectionEditable.fourthCoreCourses !== undefined">
+
+                  <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.firstCore"
+                        [right]="sectionEditable.fourthCore"></span>
+                </span> (30.5 Credits) </b>
+                  <br>
+                  <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
+
+                  <!-- course list -->
+
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th width="100%"> <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fourthCore"
+                        [right]="sectionEditable.fourthCore">
+                  </span>
+                </span>
+                      </b>
+                        <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                    </tr>
+                    <div class="right-side" *ngIf="isDoneLoading"><br>
+
+                      <div *ngFor="let c of printedCourses; let i = index">
+                        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
+                        </div>
+
+                        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                          <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                          <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    </tbody>
+                  </table><br><br>
+                </div>
+
+
+                <!-- FIFTH CORE -->
+
+                <div *ngIf="sectionEditable.fifthCore !== undefined && sectionEditable.fifthCoreCourses !== undefined">
+
+                  <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fifthCore"
+                        [right]="sectionEditable.fifthCore"></span>
+                </span> (30.5 Credits) </b>
+                  <br>
+                  <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
+
+                  <!-- course list -->
+
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th width="100%"> <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.fifthCore"
+                        [right]="sectionEditable.fifthCore">
+                  </span>
+                </span>
+                      </b>
+                        <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                    </tr>
+                    <div class="right-side" *ngIf="isDoneLoading"><br>
+
+                      <div *ngFor="let c of printedCourses; let i = index">
+                        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
+                        </div>
+
+                        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                          <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                          <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    </tbody>
+                  </table><br><br>
+                </div>
+
+                <!-- SIXTH CORE -->
+
+                <div *ngIf="sectionEditable.sixthCore !== undefined && sectionEditable.sixthCoreCourses !== undefined">
+
+                  <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sixthCore"
+                        [right]="sectionEditable.sixthCore"></span>
+                </span> (30.5 Credits) </b>
+                  <br>
+                  <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
+
+                  <!-- course list -->
+
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th width="100%"> <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.sixthCore"
+                        [right]="sectionEditable.sixthCore">
+                  </span>
+                </span>
+                      </b>
+                        <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                    </tr>
+                    <div class="right-side" *ngIf="isDoneLoading"><br>
+
+                      <div *ngFor="let c of printedCourses; let i = index">
+                        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
+                        </div>
+
+                        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                          <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                          <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    </tbody>
+                  </table><br><br>
+                </div>
+
+                <!-- SEVENTH CORE -->
+
+                <div *ngIf="sectionEditable.seventhCore !== undefined && sectionEditable.seventhCoreCourses !== undefined">
+
+                  <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.seventhCore"
+                        [right]="sectionEditable.seventhCore"></span>
+                </span> (30.5 Credits) </b>
+                  <br>
+                  <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
+
+                  <!-- course list -->
+
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th width="100%"> <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.seventhCore"
+                        [right]="sectionEditable.seventhCore">
+                  </span>
+                </span>
+                      </b>
+                        <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                    </tr>
+                    <div class="right-side" *ngIf="isDoneLoading"><br>
+
+                      <div *ngFor="let c of printedCourses; let i = index">
+                        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
+                        </div>
+
+                        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                          <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                          <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    </tbody>
+                  </table><br><br>
+                </div>
+
+                <!-- EIGHT CORE -->
+
+                <div *ngIf="sectionEditable.eightCore !== undefined && sectionEditable.eightCoreCourses !== undefined">
+
+                  <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.eightCore"
+                        [right]="sectionEditable.eightCore"></span>
+                </span> (30.5 Credits) </b>
+                  <br>
+                  <span>
+                See&nbsp;<span class="fake-link">&#167;71.20.5</span></span><br><br>
+
+                  <!-- course list -->
+
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th width="100%"> <b>
+                <span style="display: inline-block">
+                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.eightCore"
+                        [right]="sectionEditable.eightCore">
+                  </span>
+                </span>
+                      </b>
+                        <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                    </tr>
+                    <div class="right-side" *ngIf="isDoneLoading"><br>
+
+                      <div *ngFor="let c of printedCourses; let i = index">
+                        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                    <td class="courseTitle">{{c.title}}</td>
+                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+              </span>
+                        </div>
+
+                        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+                          <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+                          <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    </tbody>
+                  </table><br><br>
+                </div>
+
+                <!-- ELECTIVES -->
+        <h4 *ngIf="sectionEditable.electivesHeader !== undefined">{{ sectionEditable.electivesHeader }}</h4>
+        <div *ngIf="sectionEditable.electivesDescription!==undefined"> {{sectionEditable.electivesDescription}}</div>
+<!-- first option: AERO -->
+        <div *ngIf="sectionEditable.firstOption !== undefined"><strong>{{ sectionEditable.firstOption }}</strong>
+        <div *ngFor="let c of sectionEditable.firstOptionCourses; let i = index">
+          <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+            <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                  <td class="courseTitle">{{c.title}}</td>
+                  <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
             </span>
-            <br>
+          </div>
+
+          <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+              <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+              <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+          </div>
+      </div>
+        </div>
+
+    <!-- second option (MECH) -->
+    <div *ngIf="sectionEditable.firstOption !== undefined"><strong>{{ sectionEditable.secondOption }}</strong>
+      <div *ngFor="let c of sectionEditable.sectionOptionCourses; let i = index">
+        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+          <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                <td class="courseTitle">{{c.title}}</td>
+                <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+          </span>
+        </div>
+
+        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+            <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- third option (MECH) -->
+    <div *ngIf="sectionEditable.thirdOption !== undefined"><strong>{{ sectionEditable.thirdOption }}</strong>
+      <div *ngFor="let c of sectionEditable.thirdOptionCourses; let i = index">
+        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+          <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                <td class="courseTitle">{{c.title}}</td>
+                <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+          </span>
+        </div>
+
+        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+            <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- fourth option (MECH) -->
+    <div *ngIf="sectionEditable.fourthOption !== undefined"><strong>{{ sectionEditable.fourthOption }}</strong>
+      <div *ngFor="let c of sectionEditable.fourthOptionCourses; let i = index">
+        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+          <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                <td class="courseTitle">{{c.title}}</td>
+                <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+          </span>
+        </div>
+
+        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+            <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- fifth option (MECH) -->
+    <div *ngIf="sectionEditable.fifthOption !== undefined"><strong>{{ sectionEditable.fifthOption }}</strong>
+      <div *ngFor="let c of sectionEditable.fifthOptionCourses; let i = index">
+        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+          <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                <td class="courseTitle">{{c.title}}</td>
+                <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+          </span>
+        </div>
+
+        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+            <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- sixth option (MECH) -->
+    <div *ngIf="sectionEditable.sixthOption !== undefined"><strong>{{ sectionEditable.sixthOption }}</strong>
+      <div *ngFor="let c of sectionEditable.sixthOptionCourses; let i = index">
+        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+          <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                <td class="courseTitle">{{c.title}}</td>
+                <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+          </span>
+        </div>
+
+        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+            <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- electives (INDU) -->
+    <div *ngIf="sectionEditable.electivesHeader !== undefined">
+      <div *ngFor="let c of sectionEditable.electiveCourses; let i = index">
+        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+          <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                <td class="courseTitle">{{c.title}}</td>
+                <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+          </span>
+        </div>
+
+        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+            <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- basic science (INDU) -->
+    <div *ngIf="sectionEditable.scienceHeader !== undefined"><strong>{{ sectionEditable.scienceHeader }}</strong>
+      <br/>{{ sectionEditable.scienceDescription }}
+      <div *ngFor="let c of sectionEditable.scienceCoreCourses; let i = index">
+        <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
+
+          <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                <td class="courseTitle">{{c.title}}</td>
+                <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+          </span>
+        </div>
+
+        <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
+            <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
+            <span style="color:red">
+              {{ originalCourses[i].name }}
+              {{originalCourses[i].number}}
+              {{originalCourses[i].title}}
+              {{originalCourses[i].credits.toFixed(2)}}</span>
+        </div>
+    </div>
+    </div>
+
+
+
+          </mat-card>
+
+      </div>
+
+
+               <br><br>
+
+              <!-- HIGHLIGHT CHANGES -->
+
             <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
+            <br>
             <br>
             <span><b>Rationale:</b></span>
             <br>
@@ -167,13 +1266,10 @@
             <div *ngIf="editedExtraModel.implications == '' ">
               No implication is available for this section.
             </div>
-          </mat-card>
-      </div>
+
 
       <app-support-documents [sectionId]="id" [target_type]="3"></app-support-documents>
       <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
-
-
 
     </mat-card>
   </main>
