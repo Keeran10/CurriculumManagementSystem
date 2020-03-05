@@ -173,7 +173,11 @@ SOFTWARE.
 			<artifactId>jaxb-core</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-	
+		<dependency>
+			<groupId>com.github.KwabenBerko</groupId>
+			<artifactId>News-API-Java</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
