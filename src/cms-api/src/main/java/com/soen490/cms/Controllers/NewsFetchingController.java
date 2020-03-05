@@ -45,6 +45,7 @@ public class NewsFetchingController {
         newsApiClient.getTopHeadlines(
                 new TopHeadlinesRequest.Builder()
                         .q(keyword)
+                        .category("technology")
                         .language("en")
                         .build(),
                 new NewsApiClient.ArticlesResponseCallback() {
