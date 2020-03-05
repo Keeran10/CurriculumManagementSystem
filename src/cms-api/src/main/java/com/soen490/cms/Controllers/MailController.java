@@ -21,6 +21,9 @@
 // SOFTWARE.
 package com.soen490.cms.Controllers;
 
+import com.kwabenaberko.newsapilib.NewsApiClient;
+import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
+import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 import com.soen490.cms.Services.MailService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,34 @@ public class MailController {
     public boolean sendPackageByMail(@RequestParam int packageId,@RequestParam int userId){
         log.info("Sending Package", packageId);
         mailService.sendMailFromController(packageId, userId);
+        return true;
+    }
+
+    @GetMapping(value = "/testing")
+    public boolean getNews(){
+        log.info("Getting News");
+        NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
+        newsApiClient.getTopHeadlines(
+                new TopHeadlinesRequest.Builder()
+                        .language("en")
+                        .build(),
+                new NewsApiClient.ArticlesResponseCallback() {
+                    @Override
+                    public void onSuccess(ArticleResponse response) {
+                        System.err.println("Fetching the first news from Top Headlines");
+                        System.err.println(response.getTotalResults());
+                        System.err.println(response.getArticles());
+                        System.err.println("URL: "+response.getArticles().get(0).getUrl());
+                        System.err.println("Title: "+response.getArticles().get(0).getTitle());
+                        System.err.println("Description: "+response.getArticles().get(0).getDescription());
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println(throwable.getMessage());
+                    }
+                }
+        );
         return true;
     }
 }
