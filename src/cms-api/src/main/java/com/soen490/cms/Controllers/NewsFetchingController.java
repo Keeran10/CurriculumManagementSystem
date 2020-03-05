@@ -52,8 +52,7 @@ public class NewsFetchingController {
     @GetMapping(value = "/TopNews")
     public Article getNews(@RequestParam String keyword){
         log.info("Fetching News");
-        //final Article articleFound = null;
-        //Article articleFound;
+        articleFound = null;
         NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
         newsApiClient.getTopHeadlines(
                 new TopHeadlinesRequest.Builder()
