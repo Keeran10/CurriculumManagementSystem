@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 
 @Log4j2
 @RestController
@@ -66,9 +68,9 @@ public class NewsFetchingController {
                         System.err.println(response.getTotalResults());
                         System.err.println(response.getArticles());
                         articleFound = response.getArticles().get(0);
-                        System.err.println("URL: "+response.getArticles().get(0).getUrl());
-                        System.err.println("Title: "+response.getArticles().get(0).getTitle());
-                        System.err.println("Description: "+response.getArticles().get(0).getDescription());
+                        System.err.println("URL: "+articleFound.getUrl());
+                        System.err.println("Title: "+articleFound.getTitle());
+                        System.err.println("Description: "+articleFound.getDescription());
 
                     }
 
@@ -79,6 +81,11 @@ public class NewsFetchingController {
                 }
         );
 
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return articleFound;
     }
 }
