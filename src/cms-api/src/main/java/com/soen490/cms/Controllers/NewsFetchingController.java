@@ -39,11 +39,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class NewsFetchingController {
 
     @GetMapping(value = "/TopNews")
-    public boolean getNews(){
+    public boolean getNews(@RequestParam String keyword){
         log.info("Getting News");
         NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
         newsApiClient.getTopHeadlines(
                 new TopHeadlinesRequest.Builder()
+                        .q(keyword)
                         .language("en")
                         .build(),
                 new NewsApiClient.ArticlesResponseCallback() {
