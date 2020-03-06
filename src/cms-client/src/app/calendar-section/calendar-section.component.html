@@ -224,44 +224,17 @@
 
           <!-- SECOND CORE LEFT -->
 
-
-          <table *ngIf="sectionEditable.secondCore !== undefined && sectionEditable.secondCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.secondCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.secondCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td>
-                    <td class="deleteCourse" (click)="removeCourseFromCore(c)">
-                      <font color="red" style="cursor: pointer;">[x]</font>
-                    </td>
-                  </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br>
-
-
-          <span class="row40">
-                <mat-form-field>
-                  <input class="full-width" type="text" placeholder="Add a course to core" matInput
-                  [formControl]="myControl" [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let course of allCourses" [value]="course.title">
-                    {{course.name}} {{course.number}} {{course.title}}
-                  </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-                <button class="mat-search" mat-raised-button color="primary" (click)="addCourseToCore()">
-                  Add
-                </button>
-              </span>
-
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.secondCoreCourses"
+            [core-name] = "sectionEditable.secondCore"
+            [printed-list] = "printedSecondCore"
+            [removed-list] = "removedSecondCore"
+            [added-list] = "addedSecondCore"
+            [all-courses] = "allCourses">
+          </app-calendar-course-list>
+          <button class="mat-search" mat-raised-button color="primary" (click)="printRemoved()">
+            printRemoved
+            </button>
 
           <!-- THIRD CORE LEFT -->
 

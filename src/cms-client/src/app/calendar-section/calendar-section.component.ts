@@ -42,11 +42,13 @@ export class CalendarSectionComponent implements OnInit {
 
   originalCourses = [];
   editedCourses: Course[] = [];
-  printedCourses: Course[] = [];
   sectionId: string;
   
-  removedPrintedCourses: Number[] = [];
-  addedPrintedCourses: Number[] = [];
+  printedCourses = [];
+
+  printedSecondCore: Course[] = [];
+  removedSecondCore: Number[] = [];
+  addedSecondCore: Number[] = [];
 
   courseIds = [];
 
@@ -60,7 +62,6 @@ export class CalendarSectionComponent implements OnInit {
   editedExtraModel = new SectionExtras();
 
   allCourses: Course[] = [];
-  myControl = new FormControl();
 
   selectedFiles: FileList;
   currentFile: File;
@@ -197,35 +198,15 @@ export class CalendarSectionComponent implements OnInit {
     });
   }
 
-  public removeCourseFromCore(course){
-    if (confirm('Are you sure you want to delete ' + course.title + ' from this core?')) {
-      this.removedPrintedCourses.push(course.id);
-      this.printedCourses = this.printedCourses.filter(element => element.id != course.id);
-    }
-  }
-
-  public addCourseToCore(){
-    let addedCourse = this.allCourses.find(course => course.title === this.myControl.value);
-    if(this.printedCourses.find(c => c.title===addedCourse.title) === undefined){
-      this.addedPrintedCourses.push(addedCourse.id);
-      this.printedCourses.push(addedCourse);
-      this.printedCourses = this.printedCourses.sort(function(a,b){
-        if(a.number<b.number){
-          return -1;
-        }
-        if(a.number>b.number){
-          return 1;
-        }
-        return 0;
-      })
-    }
+  public printRemoved(){
+    console.log(this.removedSecondCore);
   }
 
   public submitForm() {
     // bug hotfix for original_id = 0
     this.sectionEditable.id = 1;
-    this.editedExtraModel.core_additions = this.addedPrintedCourses;
-    this.editedExtraModel.core_removals = this.removedPrintedCourses;
+    // this.editedExtraModel.core_additions = this.addedPrintedCourses;
+    // this.editedExtraModel.core_removals = this.removedPrintedCourses;
     this.editedExtraModel.remove_from_core = this.sectionEditable.secondCore;
     this.editedExtraModel.add_to_core = this.sectionEditable.secondCore;
 
