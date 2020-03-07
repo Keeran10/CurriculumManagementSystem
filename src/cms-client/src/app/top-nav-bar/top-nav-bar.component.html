@@ -27,8 +27,8 @@
   </div>
 </nav>-->
 
-<div style="height: 100vh;">
-  <mat-toolbar color="primary">
+<div *ngIf="isLogged">
+  <mat-toolbar class="topNavBar" color="primary">
     <mat-toolbar-row>
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
@@ -43,12 +43,38 @@
       <a href="calendar" mat-button><mat-icon>calendar_today</mat-icon>Calendar</a>
       <span class="example-spacer"></span>
       <div>
-        <a href="#" mat-button><mat-icon>notifications</mat-icon>Notifications</a>
-        <a href="#" mat-button><mat-icon>message</mat-icon>Messages</a>
-        <a href="''" mat-button><mat-icon>directions_walk</mat-icon>Log Out</a>
+        <a href="" disabled mat-button><mat-icon>notifications</mat-icon>Notifications</a>
+        <a href="" disabled mat-button><mat-icon>message</mat-icon>Messages</a>
+        <a href="" mat-button (click)="logOut()"><mat-icon>directions_walk</mat-icon>Log Out</a>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-
-
+  <mat-toolbar class="subNavBar" color="primary">
+    <mat-toolbar-row>
+      Dossiers
+    </mat-toolbar-row>
+  </mat-toolbar>
 </div>
+<!--  <div class="example-container">
+    <mat-toolbar color="primary" class="example-toolbar">
+      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <h1 class="example-app-name">Responsive App</h1>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container">
+      <mat-sidenav #snav>
+        <mat-nav-list>
+          <a mat-list-item routerLink=".">navigate</a>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+
+
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>-->
+
+
+
+
