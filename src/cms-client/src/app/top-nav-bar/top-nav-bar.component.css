@@ -16,3 +16,25 @@ nav .navbar-nav li a.logout{
 .default-color {
   background-color: #92273B !important
 }
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+}
+
+a:hover{
+  text-decoration: none;
+  background-color: transparent;
+  color: white;
+}

@@ -68,6 +68,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 
 @NgModule({
@@ -119,7 +120,8 @@ import { CalendarCourseListComponent } from './calendar-course-list/calendar-cou
     MatToolbarModule,
     NgxFileDropModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    PdfViewerModule,
+    MatSidenavModule
   ],
   providers: [
     ApiService,

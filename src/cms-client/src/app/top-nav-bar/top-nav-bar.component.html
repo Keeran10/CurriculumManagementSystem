@@ -3,7 +3,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark default-color">
+<!--<nav class="navbar sticky-top navbar-expand-lg navbar-dark default-color">
   <a class="navbar-brand" href="package"><b>Welcome {{userName}}</b></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -25,4 +25,30 @@
         </li>
     </ul>
   </div>
-</nav>
+</nav>-->
+
+<div style="height: 100vh;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>person</mat-icon>
+      </button>
+      <span>CMS</span>
+      <a href="package" mat-button><mat-icon>home</mat-icon>Home</a>
+      <a href="search" mat-button><mat-icon>search</mat-icon>Search</a>
+      <a href="addcourse" mat-button><mat-icon>add</mat-icon>Add Course</a>
+      <a href="calendar" mat-button><mat-icon>calendar_today</mat-icon>Calendar</a>
+      <span class="example-spacer"></span>
+      <div>
+        <a href="#" mat-button><mat-icon>notifications</mat-icon>Notifications</a>
+        <a href="#" mat-button><mat-icon>message</mat-icon>Messages</a>
+        <a href="''" mat-button><mat-icon>directions_walk</mat-icon>Log Out</a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+
+</div>
