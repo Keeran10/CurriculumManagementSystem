@@ -55,6 +55,7 @@ export class CalendarCourseListComponent implements OnInit, OnChanges {
       if(this.core != undefined){
         this.printedCourses = this.core;
         this.hasCoreLoaded = true;
+        this.eventEmitter.emit(this.printedCourses);
         
       }
     }

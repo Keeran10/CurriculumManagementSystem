@@ -212,7 +212,6 @@ export class CalendarSectionComponent implements OnInit {
     this.cookieService.set('editedCourse', courseEditedId.toString());
 
     this.router.navigate(['editForm/' + courseOriginalId]);
-    this.sectionEditable.ei
   }
 
   public highlightChanges(): void {
@@ -229,7 +228,7 @@ export class CalendarSectionComponent implements OnInit {
   }
 
   public checkprinted(){
-    console.log(this.printedSecondCore);
+    console.log(this.removedSecondCore);
   }
 
   public getType(course: Course, added: Number[], removed: Number[]){
@@ -244,7 +243,33 @@ export class CalendarSectionComponent implements OnInit {
   }
 
   public triggerChanges(printed, printedCore){
-    printedCore = printed;
+    switch(printedCore){
+      case 1:
+        this.printedFirstCore = printed;
+        break;
+      case 2:
+        this.printedSecondCore = printed;
+        break;
+      case 3:
+        this.printedThirdCore = printed;
+        break;
+      case 4:
+        this.printedFourthCore = printed;
+        break;
+      case 5:
+        this.printedFifthCore = printed;
+        break;
+      case 6:
+        this.printedSixthCore = printed;
+        break;
+      case 7:
+        this.printedSeventhCore = printed;
+        break;
+      case 8:
+        this.printedEigthCore = printed;
+        break;
+
+    }
   }
 
   public submitForm() {
