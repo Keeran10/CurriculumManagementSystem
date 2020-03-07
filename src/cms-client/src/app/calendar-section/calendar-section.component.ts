@@ -45,9 +45,37 @@ export class CalendarSectionComponent implements OnInit {
   
   printedCourses = [];
 
+  printedFirstCore: Course[] = [];
+  removedFirstCore: Number[] = [];
+  addedFirstCore: Number[] = [];
+
   printedSecondCore: Course[] = [];
   removedSecondCore: Number[] = [];
   addedSecondCore: Number[] = [];
+
+  printedThirdCore: Course[] = [];
+  removedThirdCore: Number[] = [];
+  addedThirdCore: Number[] = [];
+
+  printedFourthCore: Course[] = [];
+  removedFourthCore: Number[] = [];
+  addedFourthCore: Number[] = [];
+
+  printedFifthCore: Course[] = [];
+  removedFifthCore: Number[] = [];
+  addedFifthCore: Number[] = [];
+
+  printedSixthCore: Course[] = [];
+  removedSixthCore: Number[] = [];
+  addedSixthCore: Number[] = [];
+
+  printedSeventhCore: Course[] = [];
+  removedSeventhCore: Number[] = [];
+  addedSeventhCore: Number[] = [];
+
+  printedEigthCore: Course[] = [];
+  removedEigthCore: Number[] = [];
+  addedEigthCore: Number[] = [];
 
   courseIds = [];
 
@@ -184,6 +212,7 @@ export class CalendarSectionComponent implements OnInit {
     this.cookieService.set('editedCourse', courseEditedId.toString());
 
     this.router.navigate(['editForm/' + courseOriginalId]);
+    this.sectionEditable.ei
   }
 
   public highlightChanges(): void {
@@ -214,8 +243,8 @@ export class CalendarSectionComponent implements OnInit {
     return result;
   }
 
-  public triggerChanges(printed){
-    this.printedSecondCore = printed;
+  public triggerChanges(printed, printedCore){
+    printedCore = printed;
   }
 
   public submitForm() {

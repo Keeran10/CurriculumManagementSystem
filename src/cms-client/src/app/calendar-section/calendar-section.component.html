@@ -205,22 +205,15 @@
 
           <!-- FIRST CORE LEFT -->
 
-          <table *ngIf="sectionEditable.firstCore !== undefined && sectionEditable.firstCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.firstCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.firstCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br />
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.firstCoreCourses"
+            [core-name] = "sectionEditable.firstCore"
+            [printed-list] = "printedFirstCore"
+            [removed-list] = "removedFirstCore"
+            [added-list] = "addedFirstCore"
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event, printedFirstCore)">
+          </app-calendar-course-list>
 
           <!-- SECOND CORE LEFT -->
 
@@ -239,118 +232,76 @@
 
           <!-- THIRD CORE LEFT -->
 
-          <table *ngIf="sectionEditable.thirdCore !== undefined && sectionEditable.thirdCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.thirdCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.thirdCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br>
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.thirdCoreCourses"
+            [core-name] = "sectionEditable.thirdCore"
+            [printed-list] = "printedThirdCore"
+            [removed-list] = "removedThirdCore"
+            [added-list] = "addedThirdCore"
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event)">
+          </app-calendar-course-list>
 
           <!-- FOURTH CORE LEFT -->
 
-          <table *ngIf="sectionEditable.fourthCore !== undefined && sectionEditable.fourthCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.fourthCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.fourthCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br>
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.fourthCoreCourses"
+            [core-name] = "sectionEditable.fourthCore"
+            [printed-list] = "printedFourthCore"
+            [removed-list] = "removedFourthCore"
+            [added-list] = "addedFourthCore"
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event)">
+          </app-calendar-course-list>
 
           <!-- FIFTH CORE LEFT -->
 
 
-          <table *ngIf="sectionEditable.fifthCore !== undefined && sectionEditable.fifthCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.fifthCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.fifthCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br>
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.fifthCoreCourses"
+            [core-name] = "sectionEditable.fifthCore"
+            [printed-list] = "printedFifthCore"
+            [removed-list] = "removedFifthCore"
+            [added-list] = "addedFifthCore"
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event)">
+          </app-calendar-course-list>
 
           <!-- SIXTH CORE LEFT -->
 
-          <table *ngIf="sectionEditable.sixthCore !== undefined && sectionEditable.sixthCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.sixthCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.sixthCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br>
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.sixthCoreCourses"
+            [core-name] = "sectionEditable.sixthCore"
+            [printed-list] = "printedSixthCore"
+            [removed-list] = "removedSixthCore"
+            [added-list] = "addedSixthCore"
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event)">
+          </app-calendar-course-list>
 
           <!-- SEVENTH CORE LEFT -->
 
-          <table *ngIf="sectionEditable.seventhCore !== undefined && sectionEditable.seventhCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.seventhCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.seventhCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br>
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.seventhCoreCourses"
+            [core-name] = "sectionEditable.seventhCore"
+            [printed-list] = "printedSeventhCore"
+            [removed-list] = "removedSeventhCore"
+            [added-list] = "addedSeventhCore"
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event)">
+          </app-calendar-course-list>
 
           <!-- EIGHT CORE LEFT -->
 
-          <table *ngIf="sectionEditable.eightCore !== undefined && sectionEditable.eightCoreCourses !== undefined" class="leftTable">
-            <tbody>
-            <strong>{{ sectionEditable.eightCore }}</strong>
-            <tr>
-              <div class="row40" *ngIf="isDoneLoading">
-                <div *ngFor="let c of sectionEditable.eightCoreCourses; let i = index">
-                  <br class="courseLinks">
-                  <span class="link" (click)="navigateToEditFormEdited(courseIds[2*i], courseIds[2*i+1])">
-                      <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
-                      <td class="courseTitle"> {{c.title}}</td>
-                      <td class="courseCredits">{{c.credits.toFixed(2)}} </td> </span>
-                </div>
-              </div>
-            </tr>
-            </tbody><br>
-          </table>
+          <app-calendar-course-list 
+            [section-editable-core] = "sectionEditable.eightCoreCourses"
+            [core-name] = "sectionEditable.eightCore"
+            [printed-list] = "printedEightCore"
+            [removed-list] = "removedEightCore"
+            [added-list] = "addedEightCore"
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event)">
+          </app-calendar-course-list>
 
           <br>
           <!-- RATIONALE & IMPLICATION -->
