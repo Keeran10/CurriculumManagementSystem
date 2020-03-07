@@ -230,10 +230,11 @@
             [printed-list] = "printedSecondCore"
             [removed-list] = "removedSecondCore"
             [added-list] = "addedSecondCore"
-            [all-courses] = "allCourses">
+            [all-courses] = "allCourses"
+            (eventEmitter) = "triggerChanges($event)">
           </app-calendar-course-list>
-          <button class="mat-search" mat-raised-button color="primary" (click)="printRemoved()">
-            printRemoved
+          <button class="mat-search" mat-raised-button color="primary" (click)="checkprinted()">
+            checkprint
             </button>
 
           <!-- THIRD CORE LEFT -->
@@ -737,33 +738,37 @@
 
               <table>
                 <tbody>
-                <tr>
-                  <th width="100%"> <b>
-                <span style="display: inline-block">
-                  <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
-                        [right]="sectionEditable.secondCore">
+                  <tr>
+                    <th width="100%"> <b>
+                  <span style="display: inline-block">
+                    <span style="display: inline-block" semanticDiff [left]="sectionOriginal.secondCore"
+                          [right]="sectionEditable.secondCore">
+                    </span>
                   </span>
-                </span>
-                  </b>
-                    <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
-                </tr>
-                <div class="right-side" *ngIf="isDoneLoading"><br>
-
-                  <div *ngFor="let c of printedCourses; let i = index">
-                    <div *ngIf="courseIds[2*i] === courseIds[2*i+1]">
-
-              <span><td class="courseNumber">{{ c.name }}{{c.number}}</td>
-                    <td class="courseTitle">{{c.title}}</td>
-                    <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
-              </span>
-                    </div>
-
-                    <div *ngIf="courseIds[2*i] != courseIds[2*i+1]">
-                      <span style="color:chartreuse">{{ c.name }} {{c.number}} {{c.title}} {{c.credits.toFixed(2)}}</span><br>
-                      <span style="color:red">{{ originalCourses[i].name }} {{originalCourses[i].number}} {{originalCourses[i].title}} {{originalCourses[i].credits.toFixed(2)}}</span>
+                    </b>
+                      <i style="font-weight: normal; margin-left: 50%;">Credits</i> </th>
+                  </tr>
+                  <div class="right-side"><br>
+                    <div *ngFor="let c of printedSecondCore">
+                      <div >
+                          <span style="color:chartreuse" *ngIf="getType(c, addedSecondCore, removedSecondCore) === 'added'">
+                              <td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                              <td class="courseTitle">{{c.title}}</td>
+                              <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+                          </span>
+                          <span style="color:red" *ngIf="getType(c, addedSecondCore, removedSecondCore) === 'removed'">
+                              <td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                              <td class="courseTitle">{{c.title}}</td>
+                              <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+                          </span>
+                          <span>
+                              <td class="courseNumber">{{ c.name }}{{c.number}}</td>
+                              <td class="courseTitle">{{c.title}}</td>
+                              <td class="courseCredits">{{c.credits.toFixed(2)}}</td>
+                          </span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </tbody>
               </table><br><br>
 

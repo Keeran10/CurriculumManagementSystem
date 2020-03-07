@@ -28,7 +28,6 @@ import { Section } from '../models/section';
 import { SectionExtras } from '../models/section-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 import { Course } from '../models/course';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-calendar-section',
@@ -66,6 +65,8 @@ export class CalendarSectionComponent implements OnInit {
   selectedFiles: FileList;
   currentFile: File;
   files: File[] = [];
+
+  displayedCoursesSecondCore = [];
 
   isDeleteVisible = true;
 
@@ -198,8 +199,23 @@ export class CalendarSectionComponent implements OnInit {
     });
   }
 
-  public printRemoved(){
-    console.log(this.removedSecondCore);
+  public checkprinted(){
+    console.log(this.printedSecondCore);
+  }
+
+  public getType(course: Course, added: Number[], removed: Number[]){
+    let result = "normal";
+    if(added.filter(id => id == course.id) == []){
+      result = "added";
+    }
+    else if(removed.filter(id => id == course.id) == []){
+      result = "removed";
+    }
+    return result;
+  }
+
+  public triggerChanges(printed){
+    this.printedSecondCore = printed;
   }
 
   public submitForm() {

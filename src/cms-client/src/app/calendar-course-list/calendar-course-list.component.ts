@@ -19,7 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Course } from '../models/course';
 import { Router } from '@angular/router';
@@ -39,6 +39,8 @@ export class CalendarCourseListComponent implements OnInit, OnChanges {
   @Input('added-list') added: Number[];
   @Input('all-courses') allCourses: Course[];
 
+  @Output() eventEmitter: EventEmitter<any> = new EventEmitter();
+
   hasCoreLoaded = false;
 
   myControl = new FormControl();
@@ -50,9 +52,10 @@ export class CalendarCourseListComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
     if(!this.hasCoreLoaded){
-      if(this.core.length > 0){
+      if(this.core != undefined){
         this.printedCourses = this.core;
         this.hasCoreLoaded = true;
+        
       }
     }
   }
@@ -61,6 +64,8 @@ export class CalendarCourseListComponent implements OnInit, OnChanges {
     if (confirm('Are you sure you want to delete ' + course.title + ' from this core?')) {
       this.removed.push(course.id);
       this.printedCourses = this.printedCourses.filter(element => element.id != course.id);
+      
+      this.eventEmitter.emit(this.printedCourses);
     }
   }
 
@@ -79,6 +84,7 @@ export class CalendarCourseListComponent implements OnInit, OnChanges {
         return 0;
       })
     }
+    this.eventEmitter.emit(this.printedCourses);
   }
 
   public navigateToEditFormEdited(id) {
