@@ -275,8 +275,26 @@ export class CalendarSectionComponent implements OnInit {
   public submitForm() {
     // bug hotfix for original_id = 0
     this.sectionEditable.id = 1;
-    // this.editedExtraModel.core_additions = this.addedPrintedCourses;
-    // this.editedExtraModel.core_removals = this.removedPrintedCourses;
+    this.editedExtraModel.core_additions = {
+      first: this.addedFirstCore,
+      second: this.addedSecondCore,
+      third: this.addedThirdCore,
+      fourth: this.addedFourthCore,
+      fifth: this.addedFifthCore,
+      sixth: this.addedSixthCore,
+      seventh: this.addedSeventhCore,
+      eight: this.addedEigthCore
+    };
+    this.editedExtraModel.core_removals = {
+      first: this.removedFirstCore,
+      second: this.removedSecondCore,
+      third: this.removedThirdCore,
+      fourth: this.removedFourthCore,
+      fifth: this.removedFifthCore,
+      sixth: this.removedSixthCore,
+      seventh: this.removedSeventhCore,
+      eight: this.removedEigthCore
+    };
     this.editedExtraModel.remove_from_core = this.sectionEditable.secondCore;
     this.editedExtraModel.add_to_core = this.sectionEditable.secondCore;
 
