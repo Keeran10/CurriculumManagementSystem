@@ -65,6 +65,16 @@ export class PackageComponent implements OnInit {
     this.userId = this.cookieService.get('user');
     this.editingPackage = this.cookieService.get('editingPackage');
     console.log(this.editingPackage);
+    this.refresh();
+  }
+
+  public refresh() {
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload();
+    } else {
+      localStorage.removeItem('foo');
+    }
   }
 
   public packageSelect(packageId, requestId, href) {
