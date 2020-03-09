@@ -28,7 +28,6 @@ import { Course } from '../models/course';
 import { CourseExtras } from '../models/course-extras';
 
 export interface DialogData {
-  animal: string;
   name: string;
 }
 
@@ -39,14 +38,6 @@ export interface DialogData {
 })
 export class CheckTrendsComponent implements OnInit {
 
-  animal: string;
-  name: string;
-
-  id: string;
-  // tslint:disable-next-line:prefer-const
-  trends;
-  title: 'test';
-  keys;
   articles: Article[];
 
   @Input() course: Course;
@@ -71,7 +62,8 @@ export class CheckTrendsComponent implements OnInit {
     console.log("this.articles=");
     console.log(this.articles);
     const dialogRef = this.dialog.open(DialogCheckTrendsComponent, {
-      width: '900px',
+      width: '50%',
+      height: 'auto',
       data: {
         articles: this.articles,
       },
@@ -79,7 +71,6 @@ export class CheckTrendsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
