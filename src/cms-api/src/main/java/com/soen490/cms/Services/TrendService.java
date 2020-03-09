@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -37,6 +38,7 @@ public class TrendService {
 
     static int MAX_ARTICLES = 3;
     List<Article> articles = null;
+    static int year = Calendar.getInstance().get(Calendar.YEAR);
 
     public List<Article> getTrends(String requestForm){
 
@@ -52,8 +54,9 @@ public class TrendService {
 
         Course present = targets.get(0);
         Course proposed = targets.get(1);
+
         List<String> keywords = getKeywords(present, proposed);
-        String keyword = "Software";
+        String keyword = proposed.getTitle();
 
         if(keywords != null) {
             for (String k : keywords)
@@ -61,11 +64,11 @@ public class TrendService {
         }
 
         NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
-        newsApiClient.getTopHeadlines(
-                new TopHeadlinesRequest.Builder()
+        newsApiClient.getEverything(
+                new EverythingRequest.Builder()
                         .q(keyword)
-                        .category("technology")
                         .language("en")
+                        .sortBy("relevancy")
                         .build(),
                 new NewsApiClient.ArticlesResponseCallback() {
                     @Override
