@@ -26,13 +26,13 @@ import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 import com.soen490.cms.Services.MailService;
+import com.soen490.cms.Services.TrendService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -40,6 +40,9 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class NewsFetchingController {
+
+    @Autowired
+    private TrendService trendService;
 
     Article articleFound = null;
     /**
@@ -86,5 +89,11 @@ public class NewsFetchingController {
             e.printStackTrace();
         }
         return articleFound;
+    }
+
+
+    @PostMapping(value = "check_trends")
+    public List<Article> getTrends(@RequestBody String requestForm){
+        return trendService.getTrends(requestForm);
     }
 }

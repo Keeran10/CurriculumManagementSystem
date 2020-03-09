@@ -3,6 +3,7 @@ package com.soen490.cms.Services;
 import com.kwabenaberko.newsapilib.NewsApiClient;
 import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.request.EverythingRequest;
+import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 import com.soen490.cms.Models.Course;
 import com.soen490.cms.Models.Degree;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @Log4j2
@@ -34,12 +36,11 @@ public class TrendService {
     DegreeRepository degreeRepository;
 
     static int MAX_ARTICLES = 3;
+    List<Article> articles = null;
 
     public List<Article> getTrends(String requestForm){
 
-        ArrayList<Article> articles = null;
         ArrayList<Course> targets;
-
         try {
             targets = getTargetCourses(requestForm);
             if(targets == null)
@@ -52,27 +53,24 @@ public class TrendService {
         Course present = targets.get(0);
         Course proposed = targets.get(1);
         List<String> keywords = getKeywords(present, proposed);
-        String keyword = "";
+        String keyword = "Software";
 
-        for(String k: keywords)
-            keyword += k;
+        if(keywords != null) {
+            for (String k : keywords)
+                keyword += k;
+        }
 
         NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
-        newsApiClient.getEverything(
-                new EverythingRequest.Builder()
+        newsApiClient.getTopHeadlines(
+                new TopHeadlinesRequest.Builder()
                         .q(keyword)
-                        .domains(present.getProgram().getName())
+                        .category("technology")
+                        .language("en")
                         .build(),
                 new NewsApiClient.ArticlesResponseCallback() {
                     @Override
                     public void onSuccess(ArticleResponse response) {
-                        int ctr = 0;
-                        for(Article article : response.getArticles()){
-                            articles.add(article);
-                            ctr++;
-                            if(ctr == MAX_ARTICLES)
-                                break;
-                        }
+                        articles = response.getArticles();
                     }
 
                     @Override
@@ -82,6 +80,38 @@ public class TrendService {
                 }
         );
 
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(articles == null)
+            return null;
+
+        System.out.println("Articles: " + articles.size());
+
+        if(articles.size() > MAX_ARTICLES) {
+            List<Article> articlesToReturn = new ArrayList<>();
+            int ctr = 0;
+            for (Article article : articles) {
+                boolean exist = false;
+                log.info(article.getTitle());
+                for(Article a : articlesToReturn){
+                    if(article.getTitle().equals(a.getTitle())) {
+                        exist = true;
+                        break;
+                    }
+                }
+                if(exist)
+                    continue;
+                articlesToReturn.add(article);
+                ctr++;
+                if(ctr == MAX_ARTICLES)
+                    break;
+            }
+            return articlesToReturn;
+        }
         return articles;
     }
 
