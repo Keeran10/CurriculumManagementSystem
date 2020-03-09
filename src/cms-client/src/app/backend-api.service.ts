@@ -255,7 +255,7 @@ export class ApiService {
 
     const formdata: FormData = this.submitSection(files, descriptions, section, sectionExtras);
 
-    const req = new HttpRequest('POST', this.url + 'save_section71709', formdata, {
+    const req = new HttpRequest('POST', this.url + 'save_section7170', formdata, {
       reportProgress: true,
       responseType: 'text',
     });

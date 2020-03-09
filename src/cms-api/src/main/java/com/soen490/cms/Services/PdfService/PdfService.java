@@ -29,6 +29,7 @@ import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.RequestPackageRepository;
 import com.soen490.cms.Repositories.SupportingDocumentRepository;
 import com.soen490.cms.Services.PdfService.PdfSections.PdfSection;
+import com.soen490.cms.Services.PdfService.PdfSections.PdfSection7071;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,8 @@ public class PdfService {
     private PdfProgram pdfProgram;
     @Autowired
     private PdfSection pdfSection;
+    @Autowired
+    private PdfSection7071 pdfSection7071;
 
 
     public byte[] getPDF(int package_id) { return requestPackageRepository.findPdfById(package_id); }
@@ -117,6 +120,14 @@ public class PdfService {
                     Course changed_course = courseRepository.findById(request.getTargetId());
 
                     if (isCoreRequest(original_course, changed_course)) continue;
+                }
+
+                if(request.getTargetType() == 1) {
+
+                    String section_id = request.getTitle();
+
+                    if(section_id.contains("71.70"))
+                        if (pdfSection7071.isCoreRequest(request, section_id)) continue;
                 }
 
                 Document doc = new Document();

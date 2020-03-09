@@ -68,6 +68,110 @@ public class PdfSection7071{
 
     private static int SECTION70719_DEGREE_ID = 1;
 
+    public boolean isCoreRequest(Request request, String section_id){
+
+        if(section_id.contains("71.70.1")) {
+
+            Section71701 present = section71701Repository.findById(request.getOriginalId());
+            Section71701 proposed = section71701Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph());
+        }
+        if(section_id.contains("71.70.2")) {
+
+            Section71702 present = section71702Repository.findById(request.getOriginalId());
+            Section71702 proposed = section71702Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph()) &&
+                    present.getSecondParagraph().equals(proposed.getSecondParagraph()) &&
+                    present.getThirdParagraph().equals(proposed.getThirdParagraph()) &&
+                    present.getFourthParagraph().equals(proposed.getFourthParagraph()) &&
+                    present.getFifthParagraph().equals(proposed.getFifthParagraph()) &&
+                    present.getSixthParagraph().equals(proposed.getSixthParagraph()) &&
+                    present.getSeventhParagraph().equals(proposed.getSeventhParagraph()) &&
+                    present.getEightParagraph().equals(proposed.getEightParagraph()) &&
+                    present.getNinthParagraph().equals(proposed.getNinthParagraph()) &&
+                    present.getTenthParagraph().equals(proposed.getTenthParagraph()) &&
+                    present.getEleventhParagraph().equals(proposed.getEleventhParagraph()) &&
+                    present.getTwelfthParagraph().equals(proposed.getTwelfthParagraph()) &&
+                    present.getThirteenthParagraph().equals(proposed.getThirteenthParagraph()) &&
+                    present.getFourteenthParagraph().equals(proposed.getFourteenthParagraph()) &&
+                    present.getFifteenthParagraph().equals(proposed.getFifteenthParagraph()) &&
+                    present.getSixteenthParagraph().equals(proposed.getSixteenthParagraph()) &&
+                    present.getSeventeenthParagraph().equals(proposed.getSeventeenthParagraph());
+        }
+        if(section_id.contains("71.70.3")) {
+
+            Section71703 present = section71703Repository.findById(request.getOriginalId());
+            Section71703 proposed = section71703Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph());
+        }
+        if(section_id.contains("71.70.4")) {
+
+            Section71704 present = section71704Repository.findById(request.getOriginalId());
+            Section71704 proposed = section71704Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph()) &&
+                    present.getSecondParagraph().equals(proposed.getSecondParagraph());
+        }
+        if(section_id.contains("71.70.5")) {
+
+            Section71705 present = section71705Repository.findById(request.getOriginalId());
+            Section71705 proposed = section71705Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph());
+        }
+        if(section_id.contains("71.70.6")) {
+
+            Section71706 present = section71706Repository.findById(request.getOriginalId());
+            Section71706 proposed = section71706Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph());
+        }
+        if(section_id.contains("71.70.7")) {
+
+            Section71707 present = section71707Repository.findById(request.getOriginalId());
+            Section71707 proposed = section71707Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph());
+        }
+        if(section_id.contains("71.70.8")) {
+
+            Section71708 present = section71708Repository.findById(request.getOriginalId());
+            Section71708 proposed = section71708Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph());
+        }
+        if(section_id.contains("71.70.9")) {
+
+            Section71709 present = section71709Repository.findById(request.getOriginalId());
+            Section71709 proposed = section71709Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph()) &&
+                    present.getSecondParagraph().equals(proposed.getSecondParagraph()) &&
+                    present.getThirdParagraph().equals(proposed.getThirdParagraph());
+        }
+        if(section_id.contains("71.70.10")) {
+
+            Section717010 present = section717010Repository.findById(request.getOriginalId());
+            Section717010 proposed = section717010Repository.findById(request.getTargetId());
+
+            return present.getSectionTitle().equals(proposed.getSectionTitle()) &&
+                    present.getFirstParagraph().equals(proposed.getFirstParagraph());
+        }
+        return false;
+    }
+
     public void addSectionPage(Document doc, Request request, String section_id) {
 
         if(section_id.contains("71.70.1")) {

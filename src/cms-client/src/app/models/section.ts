@@ -19,7 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
+import { Course } from './course';
 export class Section {
   id: number;
   sectionId: number;
@@ -62,14 +62,14 @@ export class Section {
   nineteenthCore: string;
   seventeenthParagraph: string;
 
-  firstCoreCourses: object[];
-  secondCoreCourses: object[];
-  thirdCoreCourses: object[];
-  fourthCoreCourses: object[];
-  fifthCoreCourses: object[];
-  sixthCoreCourses: object[];
-  seventhCoreCourses: object[];
-  eightCoreCourses: object[];
+  firstCoreCourses: Course[];
+  secondCoreCourses: Course[];
+  thirdCoreCourses: Course[];
+  fourthCoreCourses: Course[];
+  fifthCoreCourses: Course[];
+  sixthCoreCourses: Course[];
+  seventhCoreCourses: Course[];
+  eightCoreCourses: Course[];
 
   // mech
   introParagraph: string;
@@ -81,14 +81,14 @@ export class Section {
   fourthOption: string;
   fifthOption: string;
   sixthOption: string;
-  firstOptionCourses: object[];
-  sectionOptionCourses: object[];
-  thirdOptionCourses: object[];
-  fourthOptionCourses: object[];
-  fifthOptionCourses: object[];
-  sixthOptionCourses: object[];
+  firstOptionCourses: Course[];
+  sectionOptionCourses: Course[];
+  thirdOptionCourses: Course[];
+  fourthOptionCourses: Course[];
+  fifthOptionCourses: Course[];
+  sixthOptionCourses: Course[];
   // indu
   scienceCore: string;
-  scienceCoreCourses: object[];
-  electiveCourses: object[];
+  scienceCoreCourses: Course[];
+  electiveCourses: Course[];
 }

@@ -19,91 +19,81 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { ApiService } from '../backend-api.service';
 import { Course } from '../models/course';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-calendar-course-list',
   templateUrl: './calendar-course-list.component.html',
   styleUrls: ['./calendar-course-list.component.css']
 })
-export class CalendarCourseListComponent implements OnInit {
+export class CalendarCourseListComponent implements OnInit, OnChanges {
 
-  originalCourses = [];
-  editedCourses: Course[] = [];
-  printedCourses: Course[] = [];
-  sectionId;
+  @Input('section-editable-core') core: Course[];
+  @Input('core-name') coreName: string;
+  @Input('printed-list') printedCourses: Course[];
+  @Input('removed-list') removed: Number[];
+  @Input('added-list') added: Number[];
+  @Input('all-courses') allCourses: Course[];
 
-  courseIds = [];
+  @Output() eventEmitter: EventEmitter<any> = new EventEmitter();
 
-  isDoneLoading = false;
+  hasCoreLoaded = false;
 
-  constructor(private cookieService: CookieService,
-              private api: ApiService,
-              private router: Router) { }
+  myControl = new FormControl();
+
+  constructor(private cookieService: CookieService, private router: Router) { }
 
   ngOnInit() {
-    this.cookieService.get('sectionId');
-    const packageNumber = this.cookieService.get('package');
-    this.api.getSectionData(this.sectionId).subscribe(data => {
-      this.originalCourses = data.secondCoreCourses;
-
-      this.api.getPackage(packageNumber, '4').subscribe(data => {
-        const requests = data.requests;
-        let i = 0;
-        requests.forEach(request => {
-          if (request.targetType === 2) {
-            this.api.getCourse(String(request.targetId)).subscribe(data => {
-              this.editedCourses.push(data);
-              if ((requests.length - 1) === i) {
-                this.isDoneLoading = true;
-                this.getPrintedCourses();
-              }
-              i++;
-            });
-          }
-        });
-        if (i === 0) {
-          this.isDoneLoading = true;
-          this.getPrintedCourses();
-        }
-      });
-    });
   }
 
-  public getPrintedCourses() {
-    this.originalCourses.forEach(oc => {
-      let isRepeated = false;
-      this.editedCourses.forEach(ec => {
-        if (ec.number === oc.number) {
-          isRepeated = true;
-          this.printedCourses.push(ec);
-
-          this.courseIds.push(oc.id);
-          this.courseIds.push(ec.id);
-        }
-      });
-      if (!isRepeated) {
-        this.printedCourses.push(oc);
-
-        this.courseIds.push(oc.id);
-        this.courseIds.push(oc.id);
+  ngOnChanges(){
+    if(!this.hasCoreLoaded){
+      if(this.core != undefined){
+        this.printedCourses = this.core;
+        this.hasCoreLoaded = true;
+        this.eventEmitter.emit(this.printedCourses);
+        
       }
-    });
+    }
   }
 
-  public navigateToEditFormEdited(courseOriginalId, courseEditedId) {
-    this.cookieService.set('originalCourse', courseOriginalId.toString());
-    this.cookieService.set('editedCourse', courseEditedId.toString());
-
-    this.router.navigate(['editForm/' + courseOriginalId]);
+  public removeCourseFromCore(course){
+    if (confirm('Are you sure you want to delete ' + course.title + ' from this core?')) {
+      this.removed.push(course.id);
+      this.printedCourses = this.printedCourses.filter(element => element.id != course.id);
+      
+      this.eventEmitter.emit(this.printedCourses);
+    }
   }
 
-  public navigateToEditForm(a) {
-
+  public addCourseToCore(){
+    let addedCourse = this.allCourses.find(course => course.title === this.myControl.value);
+    if(this.printedCourses.find(c => c.title===addedCourse.title) === undefined){
+      this.added.push(addedCourse.id);
+      this.printedCourses.push(addedCourse);
+      this.printedCourses = this.printedCourses.sort(function(a,b){
+        if(a.number<b.number){
+          return -1;
+        }
+        if(a.number>b.number){
+          return 1;
+        }
+        return 0;
+      })
+    }
+    this.eventEmitter.emit(this.printedCourses);
   }
+
+  public navigateToEditFormEdited(id) {
+    this.cookieService.set('originalCourse', id.toString());
+    this.cookieService.set('editedCourse', id.toString());
+
+    this.router.navigate(['editForm/' + id]);
+  }
+
 
 }
