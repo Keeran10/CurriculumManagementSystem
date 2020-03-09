@@ -28,8 +28,8 @@ export class SectionExtras {
   rationale: string;
   userId: number;
   requestId: number;
-  core_removals: Number[];
-  core_additions: Number[];
+  core_removals;
+  core_additions;
   add_to_core: string;
   remove_from_core: string;
   constructor() {

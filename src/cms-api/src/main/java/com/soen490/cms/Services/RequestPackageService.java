@@ -213,9 +213,12 @@ public class RequestPackageService {
 
         if (request == null) {
             request = new Request();
-            section71702 = new Section71702();
         } else {
             section71702 = section71702Repository.findById(request.getTargetId());
+        }
+
+        if(section71702 == null){
+            section71702 = new Section71702();
         }
 
         JSONObject subSection71702JSON = new JSONObject(subSections71702);
@@ -324,10 +327,13 @@ public class RequestPackageService {
 
         if (request == null) {
             request = new Request();
-            section71703 = new Section71703();
+
         } else {
             section71703 = section71703Repository.findById(request.getTargetId());
         }
+
+        if(section71703 == null)
+            section71703 = new Section71703();
 
         JSONObject subSection71703JSON = new JSONObject(subSections71703);
 
@@ -404,6 +410,9 @@ public class RequestPackageService {
         } else {
             section71704 = section71704Repository.findById(request.getTargetId());
         }
+
+        if(section71704 == null)
+            section71704 = new Section71704();
 
         JSONObject subSection71704JSON = new JSONObject(subSections71704);
 
@@ -483,6 +492,9 @@ public class RequestPackageService {
             section71705 = section71705Repository.findById(request.getTargetId());
         }
 
+        if(section71705 == null)
+            section71705 = new Section71705();
+
         JSONObject subSection71705JSON = new JSONObject(subSections71705);
 
         section71705.setFirstCore((String) subSection71705JSON.get("firstCore"));
@@ -560,6 +572,9 @@ public class RequestPackageService {
             section71706 = section71706Repository.findById(request.getTargetId());
         }
 
+        if(section71706 == null)
+            section71706 = new Section71706();
+
         JSONObject subSection71706JSON = new JSONObject(subSections71706);
 
        section71706.setFirstParagraph((String) subSection71706JSON.get("firstParagraph"));
@@ -635,6 +650,9 @@ public class RequestPackageService {
         } else {
             section71707 = section71707Repository.findById(request.getTargetId());
         }
+
+        if(section71707 == null)
+            section71707 = new Section71707();
 
         JSONObject subSection71707JSON = new JSONObject(subSections71707);
 
@@ -712,6 +730,9 @@ public class RequestPackageService {
             section71708 = section71708Repository.findById(request.getTargetId());
         }
 
+        if(section71708 == null)
+            section71708 = new Section71708();
+
         JSONObject subSection71708JSON = new JSONObject(subSections71708);
 
         section71708.setFirstParagraph((String) subSection71708JSON.get("firstParagraph"));
@@ -787,6 +808,9 @@ public class RequestPackageService {
         } else {
             section71709 = section71709Repository.findById(request.getTargetId());
         }
+
+        if(section71709 == null)
+            section71709 = new Section71709();
 
         JSONObject subSection71709JSON = new JSONObject(subSections71709);
 
@@ -1599,17 +1623,17 @@ public class RequestPackageService {
         return true;
     }
 
-    public void processCoreRequests(JSONArray core_additions, JSONArray core_removals,
-                                    String add_to_core, String remove_from_core, int user_id, int dossier_id) throws JSONException {
+    public void processCoreRequests(String core, JSONArray core_additions, JSONArray core_removals,
+                                     int user_id, int dossier_id) throws JSONException {
 
         RequestPackage requestPackage = requestPackageRepository.findById(dossier_id);
         User user = userRepository.findById(user_id);
 
         for(int i=0; i < core_additions.length(); i++)
-            saveCourseCoreAdditionRequest(add_to_core, (int) core_additions.get(i), user, requestPackage);
+            saveCourseCoreAdditionRequest(core, (int) core_additions.get(i), user, requestPackage);
 
         for(int i=0; i < core_removals.length(); i++)
-            saveCourseCoreRemovalRequest(remove_from_core, (int) core_removals.get(i), user, requestPackage);
+            saveCourseCoreRemovalRequest(core, (int) core_removals.get(i), user, requestPackage);
 
     }
 

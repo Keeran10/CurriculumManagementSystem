@@ -28,7 +28,6 @@ import { Section } from '../models/section';
 import { SectionExtras } from '../models/section-extras';
 import { SupportDocumentComponent } from '../support-documents/support-documents.component';
 import { Course } from '../models/course';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-calendar-section',
@@ -42,11 +41,41 @@ export class CalendarSectionComponent implements OnInit {
 
   originalCourses = [];
   editedCourses: Course[] = [];
-  printedCourses: Course[] = [];
   sectionId: string;
   
-  removedPrintedCourses: Number[] = [];
-  addedPrintedCourses: Number[] = [];
+  printedCourses = [];
+
+  printedFirstCore: Course[] = [];
+  removedFirstCore: Number[] = [];
+  addedFirstCore: Number[] = [];
+
+  printedSecondCore: Course[] = [];
+  removedSecondCore: Number[] = [];
+  addedSecondCore: Number[] = [];
+
+  printedThirdCore: Course[] = [];
+  removedThirdCore: Number[] = [];
+  addedThirdCore: Number[] = [];
+
+  printedFourthCore: Course[] = [];
+  removedFourthCore: Number[] = [];
+  addedFourthCore: Number[] = [];
+
+  printedFifthCore: Course[] = [];
+  removedFifthCore: Number[] = [];
+  addedFifthCore: Number[] = [];
+
+  printedSixthCore: Course[] = [];
+  removedSixthCore: Number[] = [];
+  addedSixthCore: Number[] = [];
+
+  printedSeventhCore: Course[] = [];
+  removedSeventhCore: Number[] = [];
+  addedSeventhCore: Number[] = [];
+
+  printedEigthCore: Course[] = [];
+  removedEigthCore: Number[] = [];
+  addedEigthCore: Number[] = [];
 
   courseIds = [];
 
@@ -60,11 +89,12 @@ export class CalendarSectionComponent implements OnInit {
   editedExtraModel = new SectionExtras();
 
   allCourses: Course[] = [];
-  myControl = new FormControl();
 
   selectedFiles: FileList;
   currentFile: File;
   files: File[] = [];
+
+  displayedCoursesSecondCore = [];
 
   isDeleteVisible = true;
 
@@ -197,35 +227,74 @@ export class CalendarSectionComponent implements OnInit {
     });
   }
 
-  public removeCourseFromCore(course){
-    if (confirm('Are you sure you want to delete ' + course.title + ' from this core?')) {
-      this.removedPrintedCourses.push(course.id);
-      this.printedCourses = this.printedCourses.filter(element => element.id != course.id);
-    }
+  public checkprinted(){
+    console.log(this.removedSecondCore);
   }
 
-  public addCourseToCore(){
-    let addedCourse = this.allCourses.find(course => course.title === this.myControl.value);
-    if(this.printedCourses.find(c => c.title===addedCourse.title) === undefined){
-      this.addedPrintedCourses.push(addedCourse.id);
-      this.printedCourses.push(addedCourse);
-      this.printedCourses = this.printedCourses.sort(function(a,b){
-        if(a.number<b.number){
-          return -1;
-        }
-        if(a.number>b.number){
-          return 1;
-        }
-        return 0;
-      })
+  public getType(course: Course, added: Number[], removed: Number[]){
+    let result = "normal";
+    if(added.filter(id => id == course.id) == []){
+      result = "added";
+    }
+    else if(removed.filter(id => id == course.id) == []){
+      result = "removed";
+    }
+    return result;
+  }
+
+  public triggerChanges(printed, printedCore){
+    switch(printedCore){
+      case 1:
+        this.printedFirstCore = printed;
+        break;
+      case 2:
+        this.printedSecondCore = printed;
+        break;
+      case 3:
+        this.printedThirdCore = printed;
+        break;
+      case 4:
+        this.printedFourthCore = printed;
+        break;
+      case 5:
+        this.printedFifthCore = printed;
+        break;
+      case 6:
+        this.printedSixthCore = printed;
+        break;
+      case 7:
+        this.printedSeventhCore = printed;
+        break;
+      case 8:
+        this.printedEigthCore = printed;
+        break;
+
     }
   }
 
   public submitForm() {
     // bug hotfix for original_id = 0
     this.sectionEditable.id = 1;
-    this.editedExtraModel.core_additions = this.addedPrintedCourses;
-    this.editedExtraModel.core_removals = this.removedPrintedCourses;
+    this.editedExtraModel.core_additions = {
+      first: this.addedFirstCore,
+      second: this.addedSecondCore,
+      third: this.addedThirdCore,
+      fourth: this.addedFourthCore,
+      fifth: this.addedFifthCore,
+      sixth: this.addedSixthCore,
+      seventh: this.addedSeventhCore,
+      eight: this.addedEigthCore
+    };
+    this.editedExtraModel.core_removals = {
+      first: this.removedFirstCore,
+      second: this.removedSecondCore,
+      third: this.removedThirdCore,
+      fourth: this.removedFourthCore,
+      fifth: this.removedFifthCore,
+      sixth: this.removedSixthCore,
+      seventh: this.removedSeventhCore,
+      eight: this.removedEigthCore
+    };
     this.editedExtraModel.remove_from_core = this.sectionEditable.secondCore;
     this.editedExtraModel.add_to_core = this.sectionEditable.secondCore;
 
