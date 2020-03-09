@@ -68,6 +68,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
+import { CheckTrendsComponent, DialogCheckTrendsComponent } from './check-trends/check-trends.component';
 
 
 @NgModule({
@@ -77,8 +78,10 @@ import { CalendarCourseListComponent } from './calendar-course-list/calendar-cou
     ApproverHomepageComponent,
     CalendarSectionsComponent,
     CalendarSectionComponent,
+    CheckTrendsComponent,
     CourseFormComponent,
     CourseListComponent,
+    DialogCheckTrendsComponent,
     DialogImpactStatementComponent,
     EditFormComponent,
     FooterComponent,
@@ -95,7 +98,7 @@ import { CalendarCourseListComponent } from './calendar-course-list/calendar-cou
     TopNavBarComponent,
     CalendarCourseListComponent
   ],
-  entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
+  entryComponents: [CheckTrendsComponent, DialogCheckTrendsComponent, DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control
   imports: [
     AppRoutingModule,
