@@ -39,3 +39,27 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.courseTitle {
+    width: 100%;
+  }
+  
+  .courseNumber{
+    width: 10%;
+  }
+  
+  .courseNumberLeft{
+    width: 20%;
+  }
+  
+  .courseCredits{
+    width: 100%;
+  }
+  
+  .deleteCourse{
+    width: 5%;
+  }
+  
+  .mat-form-field{
+    width: 85%;
+  }

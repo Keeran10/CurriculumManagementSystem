@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -155,266 +156,17 @@ public class RequestPackageController {
 
     /**
      * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71701 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70711 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71701")
-    public int saveSubSection70711 (@RequestParam String subSection71701, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71701);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71701(subSection71701, sectionExtras, files, descriptions);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71702 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70712 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71702")
-    public int saveSubSection71702(@RequestParam String subSection71702, @RequestParam String sectionExtras,
-                                   @RequestParam(required = false) MultipartFile[] files,
-                                   @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71702);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71702(subSection71702, sectionExtras, files, descriptions);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71703 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70713 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71703")
-    public int saveSubSection71703(@RequestParam String subSection71703, @RequestParam String sectionExtras,
-                                   @RequestParam(required = false) MultipartFile[] files,
-                                   @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71703);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71703(subSection71703, sectionExtras, files, descriptions);
-
-            JSONArray core_removals = sectionExtrasJson.getJSONArray("core_removals");
-            JSONArray core_additions = sectionExtrasJson.getJSONArray("core_additions");
-
-            String add_to_core = (String) sectionExtrasJson.get("add_to_core");
-            String remove_from_core = (String) sectionExtrasJson.get("remove_from_core");
-
-            requestPackageService.processCoreRequests(core_additions, core_removals,
-                    add_to_core, remove_from_core,
-                    user_id, package_id);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71704 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70714 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71704")
-    public int saveSubSection71704(@RequestParam String subSection71704, @RequestParam String sectionExtras,
-                                   @RequestParam(required = false) MultipartFile[] files,
-                                   @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71704);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71704(subSection71704, sectionExtras, files, descriptions);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71705 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70715 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71705")
-    public int saveSubSection71705(@RequestParam String subSection71705, @RequestParam String sectionExtras,
-                                   @RequestParam(required = false) MultipartFile[] files,
-                                   @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71705);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71705(subSection71705, sectionExtras, files, descriptions);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71706 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70716 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71706")
-    public int saveSubSection71706(@RequestParam String subSection71706, @RequestParam String sectionExtras,
-                                   @RequestParam(required = false) MultipartFile[] files,
-                                   @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71706);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71706(subSection71706, sectionExtras, files, descriptions);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71707 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70717 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71707")
-    public int saveSubSection70717 (@RequestParam String subSection71707, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71707);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71707(subSection71707, sectionExtras, files, descriptions);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
-     * @param subSection71708 stringified JSON received from front-end.
-     * @param sectionExtras stringified JSON received from front-end.
-     * @param files supporting docs
-     * @return True if section70718 was successfully added to database.
-     */
-    @PostMapping(value= "/save_section71708")
-    public int saveSubSection70718 (@RequestParam String subSection71708, @RequestParam String sectionExtras,
-                                    @RequestParam(required = false) MultipartFile[] files,
-                                    @RequestParam(required = false) String descriptions) {
-        log.info("Saving Section: " + subSection71708);
-        try {
-            JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
-            int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
-            int package_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("packageId")));
-            int request_id = requestPackageService.saveSection71708(subSection71708, sectionExtras, files, descriptions);
-
-            if(request_id != 0)
-                requestPackageService.generatePdf(package_id, user_id);
-
-            return request_id;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Receives data from client and populates the database for course and its dependencies.
      * @param subSection71709 stringified JSON received from front-end.
      * @param sectionExtras stringified JSON received from front-end.
      * @param files supporting docs
      * @return True if section70719 was successfully added to database.
      */
-    @PostMapping(value= "/save_section71709")
+    @PostMapping(value= "/save_section7170")
     public int saveSubSection71709(@RequestParam String subSection71709, @RequestParam String sectionExtras,
                                    @RequestParam(required = false) MultipartFile[] files,
                                    @RequestParam(required = false) String descriptions) {
         log.info("Saving Section: " + subSection71709);
+        log.info("Saving SectionExtras: " + sectionExtras);
         try {
             JSONObject sectionExtrasJson = new JSONObject(sectionExtras);
             int user_id = Integer.parseInt(String.valueOf(sectionExtrasJson.get("userId")));
@@ -424,7 +176,35 @@ public class RequestPackageController {
             JSONObject sectionJson = new JSONObject(subSection71709);
             String section_id = (String) sectionJson.get("sectionId");
 
+            JSONObject core_removals = sectionExtrasJson.getJSONObject("core_removals");
+            JSONObject core_additions = sectionExtrasJson.getJSONObject("core_additions");
+
             if(section_id.contains("71.70.9")){
+                requestPackageService.processCoreRequests((String) sectionJson.get("firstCore"),
+                        core_additions.getJSONArray("first"), core_removals.getJSONArray("first"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("secondCore"),
+                        core_additions.getJSONArray("second"), core_removals.getJSONArray("second"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("thirdCore"),
+                        core_additions.getJSONArray("third"), core_removals.getJSONArray("third"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("fourthCore"),
+                        core_additions.getJSONArray("fourth"), core_removals.getJSONArray("fourth"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("fifthCore"),
+                        core_additions.getJSONArray("fifth"), core_removals.getJSONArray("fifth"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("sixthCore"),
+                        core_additions.getJSONArray("sixth"), core_removals.getJSONArray("sixth"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("seventhCore"),
+                        core_additions.getJSONArray("seventh"), core_removals.getJSONArray("seventh"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("eightCore"),
+                        core_additions.getJSONArray("eight"), core_removals.getJSONArray("eight"),
+                        user_id, package_id);
+
                 request_id = requestPackageService.saveSection71709(subSection71709, sectionExtras, files, descriptions);
             }
             else if(section_id.contains("71.70.8")){
@@ -437,15 +217,48 @@ public class RequestPackageController {
                 request_id = requestPackageService.saveSection71706(subSection71709, sectionExtras, files, descriptions);
             }
             else if(section_id.contains("71.70.5")){
+                requestPackageService.processCoreRequests((String) sectionJson.get("firstCore"),
+                        core_additions.getJSONArray("first"), core_removals.getJSONArray("first"),
+                        user_id, package_id);
+
                 request_id = requestPackageService.saveSection71705(subSection71709, sectionExtras, files, descriptions);
             }
             else if(section_id.contains("71.70.4")){
+                requestPackageService.processCoreRequests((String) sectionJson.get("firstCore"),
+                        core_additions.getJSONArray("first"), core_removals.getJSONArray("first"),
+                        user_id, package_id);
+
                 request_id = requestPackageService.saveSection71704(subSection71709, sectionExtras, files, descriptions);
             }
             else if(section_id.contains("71.70.3")){
                 request_id = requestPackageService.saveSection71703(subSection71709, sectionExtras, files, descriptions);
             }
             else if(section_id.contains("71.70.2")){
+                requestPackageService.processCoreRequests((String) sectionJson.get("firstCore"),
+                        core_additions.getJSONArray("first"), core_removals.getJSONArray("first"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("secondCore"),
+                        core_additions.getJSONArray("second"), core_removals.getJSONArray("second"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("thirdCore"),
+                        core_additions.getJSONArray("third"), core_removals.getJSONArray("third"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("fourthCore"),
+                        core_additions.getJSONArray("fourth"), core_removals.getJSONArray("fourth"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("fifthCore"),
+                        core_additions.getJSONArray("fifth"), core_removals.getJSONArray("fifth"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("sixthCore"),
+                        core_additions.getJSONArray("sixth"), core_removals.getJSONArray("sixth"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("seventhCore"),
+                        core_additions.getJSONArray("seventh"), core_removals.getJSONArray("seventh"),
+                        user_id, package_id);
+                requestPackageService.processCoreRequests((String) sectionJson.get("eightCore"),
+                        core_additions.getJSONArray("eight"), core_removals.getJSONArray("eight"),
+                        user_id, package_id);
+
                 request_id = requestPackageService.saveSection71702(subSection71709, sectionExtras, files, descriptions);
             }
             else if(section_id.contains("71.70.1")){
