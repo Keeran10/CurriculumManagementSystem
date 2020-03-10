@@ -80,3 +80,7 @@ h2 {
     grid-template-rows: 100px 50px 1fr 50px 30px;
   }
 }
+
+mat-card-content {
+    padding-left:5%;
+}

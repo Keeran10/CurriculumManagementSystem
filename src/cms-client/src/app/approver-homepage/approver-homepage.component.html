@@ -33,13 +33,11 @@
             <tr id="empty">No dossiers to display currently...</tr>
             <tr *ngFor="let package of packages">
                 <td>
-                        <mat-card-content>
-                            <button *ngIf="locks[package.id] === true" class="option" mat-button (click)="reviewPackage(package.id)">
+                        <button *ngIf="locks[package.id] === true" class="option" mat-button (click)="reviewPackage(package.id)">
                                 <i class="material-icons">
                                     chevron_right
                                     </i>Review Dossier #{{ package.id }}
                             </button>
-                        </mat-card-content>
                         <mat-card-content *ngIf="package.id == packageUnderReview">
                             <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
                             <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
