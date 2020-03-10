@@ -35,7 +35,7 @@
               <mat-expansion-panel [expanded]="package.id == editingPackage">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                    <strong><span>{{ packages[0].department.name}}, Dossier #{{package.id}}</span></strong>
+                    <strong>{{ packages[0].department.name}}, Dossier #{{package.id}}</strong>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -124,10 +124,15 @@
             </div>
           </mat-accordion> <br>
         </div>
-        <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
+        <div>
+        <button mat-button (click)="createNewPackage()">
+          <i class="material-icons">
+          add
+          </i>
+          New
           Package</button>
+        </div>
       </div>
-      <br>
     </mat-card>
   </main>
   <footer class="hg__footer">

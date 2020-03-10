@@ -50,7 +50,7 @@ mat-card{
 }
 
 .outerMatCard{
-  background-color: #F3E7E9;
+  
 }
 
 .container{
@@ -59,7 +59,10 @@ mat-card{
     grid-template-rows: 150px auto 100px;
     margin-left: 0;
     margin-right: 50px;
-    background-color: #F3E7E9;
+}
+
+mat-panel-title {
+  color: #424242;
 }
 
 
@@ -68,7 +71,6 @@ mat-card{
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
-    background-color: #F3E7E9;
 
 }
 
@@ -77,6 +79,7 @@ mat-card{
     grid-column-end: 2;
     grid-row-start: 3;
     grid-row-end: 4;
+    height: fit-content;
 }
 
 .inner-container{
