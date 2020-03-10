@@ -42,11 +42,7 @@ body {
 
 .container {
     margin: 30px;
-    display: flex;
-}
-
-.packages {
-    width:500px;
+    justify-content: center;
 }
 
 .buttons {
