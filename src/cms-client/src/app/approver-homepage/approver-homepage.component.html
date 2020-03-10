@@ -30,7 +30,7 @@
         <mat-card-title>Dossiers requesting approval:</mat-card-title>
     <table class="half">
         <tbody>
-            <tr id="empty">No dossiers to display currently...</tr>
+            <tr *ngIf="packages.length===0">No dossiers to display currently...</tr>
             <tr *ngFor="let package of packages">
                 <td>
                         <button *ngIf="locks[package.id] === true" class="option" mat-button (click)="reviewPackage(package.id)">
