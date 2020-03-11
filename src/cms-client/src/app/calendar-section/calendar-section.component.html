@@ -201,38 +201,36 @@
                         name="seventeenthParagraph"></textarea>
               </mat-form-field>
 
-          </form>
+          
 
           <!-- FIRST CORE LEFT -->
 
-          <app-calendar-course-list 
-            [section-editable-core] = "sectionEditable.firstCoreCourses"
-            [core-name] = "sectionEditable.firstCore"
-            [printed-list] = "printedFirstCore"
-            [removed-list] = "removedFirstCore"
-            [added-list] = "addedFirstCore"
-            [all-courses] = "allCourses"
-            (eventEmitter) = "triggerChanges($event, 1)">
-          </app-calendar-course-list>
+            <app-calendar-course-list class="row40"
+              [section-editable-core] = "sectionEditable.firstCoreCourses"
+              [core-name] = "sectionEditable.firstCore"
+              [printed-list] = "printedFirstCore"
+              [removed-list] = "removedFirstCore"
+              [added-list] = "addedFirstCore"
+              [all-courses] = "allCourses"
+              (eventEmitter) = "triggerChanges($event, 1)">
+            </app-calendar-course-list>
+
 
           <!-- SECOND CORE LEFT -->
 
-          <app-calendar-course-list 
-            [section-editable-core] = "sectionEditable.secondCoreCourses"
-            [core-name] = "sectionEditable.secondCore"
-            [printed-list] = "printedSecondCore"
-            [removed-list] = "removedSecondCore"
-            [added-list] = "addedSecondCore"
-            [all-courses] = "allCourses"
-            (eventEmitter) = "triggerChanges($event, 2)">
-          </app-calendar-course-list>
-          <button class="mat-search" mat-raised-button color="primary" (click)="checkprinted()">
-            checkprint
-            </button>
+            <app-calendar-course-list class="row41"
+              [section-editable-core] = "sectionEditable.secondCoreCourses"
+              [core-name] = "sectionEditable.secondCore"
+              [printed-list] = "printedSecondCore"
+              [removed-list] = "removedSecondCore"
+              [added-list] = "addedSecondCore"
+              [all-courses] = "allCourses"
+              (eventEmitter) = "triggerChanges($event, 2)">
+            </app-calendar-course-list>
 
           <!-- THIRD CORE LEFT -->
 
-          <app-calendar-course-list 
+          <app-calendar-course-list class="row42"
             [section-editable-core] = "sectionEditable.thirdCoreCourses"
             [core-name] = "sectionEditable.thirdCore"
             [printed-list] = "printedThirdCore"
@@ -244,7 +242,7 @@
 
           <!-- FOURTH CORE LEFT -->
 
-          <app-calendar-course-list 
+          <app-calendar-course-list class="row43"
             [section-editable-core] = "sectionEditable.fourthCoreCourses"
             [core-name] = "sectionEditable.fourthCore"
             [printed-list] = "printedFourthCore"
@@ -257,7 +255,7 @@
           <!-- FIFTH CORE LEFT -->
 
 
-          <app-calendar-course-list 
+          <app-calendar-course-list class="row44"
             [section-editable-core] = "sectionEditable.fifthCoreCourses"
             [core-name] = "sectionEditable.fifthCore"
             [printed-list] = "printedFifthCore"
@@ -269,7 +267,7 @@
 
           <!-- SIXTH CORE LEFT -->
 
-          <app-calendar-course-list 
+          <app-calendar-course-list class="row45"
             [section-editable-core] = "sectionEditable.sixthCoreCourses"
             [core-name] = "sectionEditable.sixthCore"
             [printed-list] = "printedSixthCore"
@@ -281,7 +279,7 @@
 
           <!-- SEVENTH CORE LEFT -->
 
-          <app-calendar-course-list 
+          <app-calendar-course-list class="row46"
             [section-editable-core] = "sectionEditable.seventhCoreCourses"
             [core-name] = "sectionEditable.seventhCore"
             [printed-list] = "printedSeventhCore"
@@ -293,7 +291,7 @@
 
           <!-- EIGHT CORE LEFT -->
 
-          <app-calendar-course-list 
+          <app-calendar-course-list class="row47"
             [section-editable-core] = "sectionEditable.eightCoreCourses"
             [core-name] = "sectionEditable.eightCore"
             [printed-list] = "printedEightCore"
@@ -302,7 +300,7 @@
             [all-courses] = "allCourses"
             (eventEmitter) = "triggerChanges($event, 8)">
           </app-calendar-course-list>
-
+          </form>
           <br>
           <!-- RATIONALE & IMPLICATION -->
           <form class ="edit-form">
