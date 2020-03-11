@@ -29,7 +29,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('PackageComponent', () => {
+describe('ApproverHomepageComponent', () => {
   let component: ApproverHomepageComponent;
   let fixture: ComponentFixture<ApproverHomepageComponent>;
 
