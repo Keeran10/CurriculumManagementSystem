@@ -69,6 +69,7 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
+import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     SearchPageComponent,
     SupportDocumentComponent,
     TopNavBarComponent,
-    CalendarCourseListComponent
+    CalendarCourseListComponent,
+    SideNavBarComponent
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
   // Keep imports alphabetical for source control

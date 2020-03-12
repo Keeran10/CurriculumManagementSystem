@@ -26,9 +26,10 @@ a:visited{
   color: #ffffcc;
 }
 
-
 .footer{
-  background-color: #92273B !important;
+  background-color: #3949ab !important;
   height: 80px;
   grid-area: footer;
 }
+
+

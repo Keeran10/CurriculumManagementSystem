@@ -21,7 +21,12 @@
 // SOFTWARE. -->
 
 <title>cms-client</title>
-<div class="app-container">
-  <app-top-nav-bar></app-top-nav-bar>
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="all-wrap">
+  <mat-sidenav-content class="page-wrap img-bg">
+    <app-top-nav-bar></app-top-nav-bar>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

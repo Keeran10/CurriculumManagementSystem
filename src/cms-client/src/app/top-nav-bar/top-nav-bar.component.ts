@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-top-nav-bar',
@@ -13,6 +14,9 @@ export class TopNavBarComponent implements OnInit {
   userName = 'User';
   isAdmin = false;
   isLogged = false;
+
+  // @ts-ignore
+  @ViewChild('sidenav') sidenav: any;
 
   ngOnInit() {
     this.userName = this.cookieService.get('userName');
@@ -33,5 +37,9 @@ export class TopNavBarComponent implements OnInit {
     this.cookieService.deleteAll();
     this.cookieService.set('logged', '0');
     this.isLoggedIn();
+  }
+
+  sidenavOpen() {
+    this.sidenav.toggle();
   }
 }
