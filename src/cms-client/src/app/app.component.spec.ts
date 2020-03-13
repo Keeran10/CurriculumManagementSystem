@@ -24,16 +24,36 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import {SideNavBarComponent} from './side-nav-bar/side-nav-bar.component';
+import {TopNavBarComponent} from './top-nav-bar/top-nav-bar.component';
+import {MatListModule} from '@angular/material/list';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {FooterComponent} from './footer/footer.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {CookieService} from 'ngx-cookie-service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        SideNavBarComponent,
+        TopNavBarComponent,
+        FooterComponent
       ],
       imports: [
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        MatListModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatToolbarModule,
+        BrowserAnimationsModule
+      ],
+      providers: [
+        CookieService
       ]
     }).compileComponents();
   }));
