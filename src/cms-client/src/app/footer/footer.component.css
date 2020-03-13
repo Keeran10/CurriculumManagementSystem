@@ -1,33 +1,43 @@
-
-.links{
-  text-align: left;
-  padding-left: 20px;
-  color: #f0f0d0;
-}
-
-.copyright{
-  text-align: right;
-  padding-right: 20px;
-  color: #f0f0d0;
-}
-
-a{
+footer {
+  background: #3949ab;
   color: white;
+}
+
+footer .links {
+  color: #fff;
+  font-size: 14px;
+  transition-duration: 0.2s;
+}
+
+footer .links:hover {
+  color: #FA944B;
   text-decoration: none;
 }
 
-a:hover{
-  color: #f0f0d0;
+footer .footer-link {
+  color: #fff;
+  font-size: 12px;
+  transition-duration: 0.2s;
 }
 
-a:visited{
-  color: #ffffcc;
+footer .footer-link:hover {
+  color: #FA944B;
+  text-decoration: none;
 }
 
-.footer{
-  background-color: #3949ab !important;
-  height: 80px;
-  grid-area: footer;
+footer p {
+  margin: 0;
+  padding: 0;
 }
 
+.copy {
+  font-size: 12px;
+  padding: 10px;
+  border-top: 1px solid #FFFFFF;
+}
+
+.footer-middle {
+  padding-top: 2em;
+  color: white;
+}
 

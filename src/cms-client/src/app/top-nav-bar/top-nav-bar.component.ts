@@ -1,7 +1,7 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { MediaMatcher} from '@angular/cdk/layout';
-import {SideNavService} from '../side-nav.service';
+import { SideNavService } from '../side-nav.service';
 
 @Component({
   selector: 'app-top-nav-bar',
