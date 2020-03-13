@@ -31,7 +31,7 @@ export class Article {
     url: string;
     urlToImage: string;
     publishedAt: string;
-    content: string;
+    type: string;
 
     constructor() {
         this.source = new Source();
@@ -41,6 +41,6 @@ export class Article {
         this.url = '';
         this.urlToImage = '';
         this.publishedAt = '';
-        this.content = '';
+        this.type = '';
     }
 };

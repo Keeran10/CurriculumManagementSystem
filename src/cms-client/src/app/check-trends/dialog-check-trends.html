@@ -21,22 +21,45 @@
 // SOFTWARE. -->
 
 <div mat-dialog-content>
+
   <div>
+    <h4 style="color:blue;">Relevant news about {{data.course.title}}:</h4>
+    <hr>
     <div *ngFor="let article of data.articles; let i=index">
-      <p *ngIf="article.source.name != ''"><span style="font-weight: bold;">Source: </span> {{article.source.name}}</p>
-      <p><span style="font-weight: bold;">Author: </span> {{article.author}}</p>
-      <p><span style="font-weight: bold;">Title: </span> {{article.title}}</p>
-      <p><span style="font-weight: bold;">Description: </span> {{article.description}}</p>
-      <p><span style="font-weight: bold;">URL: </span> <a href="{{article.url}}">{{article.url}}</a></p>
-      <p><img src="{{article.urlToImage}}" height="200" width="300"></p>
-      <p><span style="font-weight: bold;">Published: </span> {{article.publishedAt}}</p>
-      <p>{{article.content}}</p>
-      <hr>
+      <div *ngIf="article.type == 'relevant'">
+        <p *ngIf="article.source.name != ''"><span style="font-weight: bold;">Source: </span> {{article.source.name}}
+        </p>
+        <p><span style="font-weight: bold;">Author: </span> {{article.author}}</p>
+        <p><span style="font-weight: bold;">Title: </span> {{article.title}}</p>
+        <p><span style="font-weight: bold;">Description: </span> {{article.description}}</p>
+        <p><span style="font-weight: bold;">URL: </span> <a href="{{article.url}}">{{article.url}}</a></p>
+        <p><img src="{{article.urlToImage}}" height="200" width="300"></p>
+        <p><span style="font-weight: bold;">Published: </span> {{article.publishedAt}}</p>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h4 style="color:blue;">Trending news about {{data.course.program.name}}:</h4>
+    <hr>
+    <div *ngFor="let article of data.articles; let i=index">
+      <div *ngIf="article.type == 'trend'">
+        <p *ngIf="article.source.name != ''"><span style="font-weight: bold;">Source: </span> {{article.source.name}}
+        </p>
+        <p><span style="font-weight: bold;">Author: </span> {{article.author}}</p>
+        <p><span style="font-weight: bold;">Title: </span> {{article.title}}</p>
+        <p><span style="font-weight: bold;">Description: </span> {{article.description}}</p>
+        <p><span style="font-weight: bold;">URL: </span> <a href="{{article.url}}">{{article.url}}</a></p>
+        <p><img src="{{article.urlToImage}}" height="200" width="300"></p>
+        <p><span style="font-weight: bold;">Published: </span> {{article.publishedAt}}</p>
+        <hr>
+      </div>
     </div>
   </div>
 
   <ng-template [ngIf]="data.articles == null">
-    <p style="color:red;font-style:italic">No trends have been found.</p>
+    <p style="color:red;font-style:italic">No articles have been found.</p>
   </ng-template>
   <br>
 </div>

@@ -61,11 +61,19 @@ export class CheckTrendsComponent implements OnInit {
   openDialog(): void {
     console.log("this.articles=");
     console.log(this.articles);
+
+    for (let i = 0; i < this.articles.length; i++) {
+      var d = new Date(this.articles[i].publishedAt);
+      this.articles[i].publishedAt = d.getMonth() + "-" + d.getDate() + "-" + d.getFullYear() + " at "
+        + d.getUTCHours() + ':' + d.getUTCMinutes() + ":" + d.getUTCSeconds();
+    }
+
     const dialogRef = this.dialog.open(DialogCheckTrendsComponent, {
       width: '50%',
       height: 'auto',
       data: {
         articles: this.articles,
+        course: this.course,
       },
     });
 
