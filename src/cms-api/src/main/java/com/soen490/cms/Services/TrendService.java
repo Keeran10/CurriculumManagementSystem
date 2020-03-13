@@ -12,7 +12,6 @@ import com.soen490.cms.Models.TrendArticle;
 import com.soen490.cms.Repositories.CourseRepository;
 import com.soen490.cms.Repositories.DegreeRepository;
 import com.soen490.cms.Repositories.DegreeRequirementRepository;
-import com.soen490.cms.Repositories.RequestRepository;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,10 +19,15 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Log4j2
@@ -37,11 +41,30 @@ public class TrendService {
     @Autowired
     DegreeRepository degreeRepository;
 
-    static int MAX_ARTICLES = 3;
+    static int MAX_RELEVANT_ARTICLES = 3;
+    static int MAX_TRENDING_ARTICLES = 3;
     List<Article> articles = null;
     static int year = Calendar.getInstance().get(Calendar.YEAR);
+    static List<String> stopwords;
 
+    // text file provided by https://www.baeldung.com/java-string-remove-stopwords
+    public static void loadStopwords() throws IOException {
+        stopwords = Files.readAllLines(Paths.get("src/main/resources/english_stopwords.txt"));
+    }
+
+
+    /**
+     * Takes in a course change request and returns a list of trending or relevant articles
+     * @param requestForm course info provided by user
+     * @return a list of articles either of type "relevant" or "trending"
+     */
     public List<TrendArticle> getArticles(String requestForm){
+
+        try {
+            loadStopwords();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         List<TrendArticle> articlesToReturn = new ArrayList<>();
 
@@ -61,62 +84,13 @@ public class TrendService {
         List<TrendArticle> trendingArticles = getTrendingArticles(present, proposed);
         List<TrendArticle> relevantArticles = getRelevantArticles(present, proposed);
 
-        if (trendingArticles != null)
-            articlesToReturn.addAll(trendingArticles);
-        if (relevantArticles != null)
-            articlesToReturn.addAll(relevantArticles);
-
-        return articlesToReturn;
-    }
-
-    private List<TrendArticle> getTrendingArticles(Course present, Course proposed){
-
-        List<String> keywords = getKeywords(present, proposed);
-        String keyword = proposed.getProgram().getName();
-
-        if(keywords != null) {
-            for (String k : keywords)
-                keyword += k;
-        }
-
-        NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
-        newsApiClient.getEverything(
-                new EverythingRequest.Builder()
-                        .q(keyword)
-                        .language("en")
-                        .sortBy("popularity")
-                        .build(),
-                new NewsApiClient.ArticlesResponseCallback() {
-                    @Override
-                    public void onSuccess(ArticleResponse response) {
-                        articles = response.getArticles();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        System.out.println(throwable.getMessage());
-                    }
-                }
-        );
-
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(articles == null)
-            return null;
-
-        System.out.println("Articles: " + articles.size());
-
-        List<TrendArticle> articlesToReturn = new ArrayList<>();
-
-        if(articles.size() > MAX_ARTICLES) {
+        if(relevantArticles != null && relevantArticles.size() > MAX_RELEVANT_ARTICLES) {
 
             int ctr = 0;
-            for (Article article : articles) {
+            for (TrendArticle article : relevantArticles) {
                 boolean exist = false;
+                if(article.getTitle().contains("$") || article.getDescription().contains("$") || article.getAuthor() == null)
+                    continue;
                 log.info(article.getTitle());
                 for(TrendArticle a : articlesToReturn){
                     if(article.getTitle().equals(a.getTitle())) {
@@ -126,29 +100,63 @@ public class TrendService {
                 }
                 if(exist)
                     continue;
-                articlesToReturn.add(new TrendArticle(article, "trend"));
+                articlesToReturn.add(article);
                 ctr++;
-                if(ctr == MAX_ARTICLES)
+                if(ctr == MAX_RELEVANT_ARTICLES)
                     break;
             }
-            return articlesToReturn;
         }
 
-        for(Article a : articles)
-            articlesToReturn.add(new TrendArticle(a, "trend"));
+        if(trendingArticles != null && trendingArticles.size() > MAX_TRENDING_ARTICLES) {
+
+            int ctr = 0;
+            for (TrendArticle article : trendingArticles) {
+                boolean exist = false;
+                if(article.getTitle().contains("$") || article.getDescription().contains("$") || article.getAuthor() == null)
+                    continue;
+                log.info(article.getTitle());
+                for(TrendArticle a : articlesToReturn){
+                    if(article.getTitle().equals(a.getTitle())) {
+                        exist = true;
+                        break;
+                    }
+                }
+                if(exist)
+                    continue;
+                articlesToReturn.add(article);
+                ctr++;
+                if(ctr == MAX_RELEVANT_ARTICLES)
+                    break;
+            }
+        }
+
+        for(DegreeRequirement dr : proposed.getDegreeRequirements()){
+            degreeRequirementRepository.delete(dr);
+        }
+        courseRepository.delete(proposed);
 
         return articlesToReturn;
     }
 
     public List<TrendArticle> getRelevantArticles(Course present, Course proposed){
 
-        List<String> keywords = getKeywords(present, proposed);
-        String keyword = proposed.getTitle();
+        List<String> descriptionKeywords = getDescriptionKeywords(present, proposed);
+        List<String> titleKeywords = getTitleKeywords(present, proposed);
+        String keyword = "";
 
-        if(keywords != null) {
-            for (String k : keywords)
-                keyword += k;
-        }
+        for (String k : titleKeywords)
+            keyword += k + " AND ";
+
+        keyword = keyword + "(";
+
+        for (String k : descriptionKeywords)
+            keyword += k + " OR ";
+
+        keyword = keyword.trim();
+        keyword = keyword.substring(0, keyword.length() - 3);
+        keyword = keyword + ")";
+
+        System.out.println(keyword);
 
         NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
         newsApiClient.getEverything(
@@ -171,7 +179,7 @@ public class TrendService {
         );
 
         try {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -183,58 +191,95 @@ public class TrendService {
 
         List<TrendArticle> articlesToReturn = new ArrayList<>();
 
-        if(articles.size() > MAX_ARTICLES) {
-
-            int ctr = 0;
-            for (Article article : articles) {
-                boolean exist = false;
-                log.info(article.getTitle());
-                for(TrendArticle a : articlesToReturn){
-                    if(article.getTitle().equals(a.getTitle())) {
-                        exist = true;
-                        break;
-                    }
-                }
-                if(exist)
-                    continue;
-                articlesToReturn.add(new TrendArticle(article, "relevant"));
-                ctr++;
-                if(ctr == MAX_ARTICLES)
-                    break;
-            }
-            return articlesToReturn;
-        }
-
         for(Article a : articles)
             articlesToReturn.add(new TrendArticle(a, "relevant"));
 
         return articlesToReturn;
     }
 
-    // keywords heuristic
-    public List<String> getKeywords(Course present, Course proposed){
 
-        String credit_keyword = getCreditKeyword(present, proposed);
-        String description_keyword = getDescriptionKeyword(present, proposed);
+    private List<TrendArticle> getTrendingArticles(Course present, Course proposed){
 
-        // delete proposed course from database; might not be needed if temp is sufficient (i.e. no heuristic for degree requirements)
-        for(DegreeRequirement dr : proposed.getDegreeRequirements()){
-            degreeRequirementRepository.delete(dr);
+        List<String> keywords = getTitleKeywords(present, proposed);
+        String keyword = "";
+
+        for (String k : keywords)
+            keyword += k + " AND ";
+
+        keyword = keyword + "education";
+
+        System.out.println(keyword);
+
+        NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
+        newsApiClient.getEverything(
+                new EverythingRequest.Builder()
+                        .q(keyword)
+                        .language("en")
+                        .sortBy("popularity")
+                        .build(),
+                new NewsApiClient.ArticlesResponseCallback() {
+                    @Override
+                    public void onSuccess(ArticleResponse response) {
+                        articles = response.getArticles();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println(throwable.getMessage());
+                    }
+                }
+        );
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        courseRepository.delete(proposed);
 
-        return null;
+        if(articles == null)
+            return null;
+
+        System.out.println("Articles: " + articles.size());
+
+        List<TrendArticle> articlesToReturn = new ArrayList<>();
+
+        for(Article a : articles)
+            articlesToReturn.add(new TrendArticle(a, "trend"));
+
+        return articlesToReturn;
     }
 
-    private String getDescriptionKeyword(Course present, Course proposed) {
 
-        return null;
+    public List<String> getTitleKeywords(Course present, Course proposed){
+
+        String rawKeywords = proposed.getTitle();
+
+        rawKeywords = rawKeywords.replaceAll("[^a-zA-Z ]", "");
+
+        ArrayList<String> keywords =
+                Stream.of(rawKeywords.toLowerCase().split(" "))
+                        .collect(Collectors.toCollection(ArrayList<String>::new));
+
+        keywords.removeAll(stopwords);
+
+        return keywords;
     }
 
-    private String getCreditKeyword(Course present, Course proposed) {
+    public List<String> getDescriptionKeywords(Course present, Course proposed){
 
-        return null;
+        String rawKeywords = proposed.getDescription();
+
+        rawKeywords = rawKeywords.replaceAll("[^a-zA-Z ]", "");
+
+        ArrayList<String> keywords =
+                Stream.of(rawKeywords.toLowerCase().split(" "))
+                        .collect(Collectors.toCollection(ArrayList<String>::new));
+
+        keywords.removeAll(stopwords);
+
+        return keywords;
     }
+
 
     public ArrayList<Course> getTargetCourses(String requestForm) throws JSONException {
 
