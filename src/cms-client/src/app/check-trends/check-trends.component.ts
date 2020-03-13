@@ -64,8 +64,33 @@ export class CheckTrendsComponent implements OnInit {
 
     for (let i = 0; i < this.articles.length; i++) {
       var d = new Date(this.articles[i].publishedAt);
-      this.articles[i].publishedAt = d.getMonth() + "-" + d.getDate() + "-" + d.getFullYear() + " at "
-        + d.getUTCHours() + ':' + d.getUTCMinutes() + ":" + d.getUTCSeconds();
+      var raw_month = d.getMonth();
+      var raw_day = d.getDay();
+      var month = "";
+      var day = "";
+
+      if (raw_month == 0) { month = "January"; }
+      if (raw_month == 1) { month = "Feburary"; }
+      if (raw_month == 2) { month = "March"; }
+      if (raw_month == 3) { month = "April"; }
+      if (raw_month == 4) { month = "May"; }
+      if (raw_month == 5) { month = "June"; }
+      if (raw_month == 6) { month = "July"; }
+      if (raw_month == 7) { month = "August"; }
+      if (raw_month == 8) { month = "September"; }
+      if (raw_month == 9) { month = "October"; }
+      if (raw_month == 10) { month = "November"; }
+      if (raw_month == 11) { month = "December"; }
+
+      if (raw_day == 0) { day = "Sunday"; }
+      if (raw_day == 1) { day = "Monday"; }
+      if (raw_day == 2) { day = "Tuesday"; }
+      if (raw_day == 3) { day = "Wednesday"; }
+      if (raw_day == 4) { day = "Thursday"; }
+      if (raw_day == 5) { day = "Friday"; }
+      if (raw_day == 6) { day = "Saturday"; }
+
+      this.articles[i].publishedAt = "published on " + day + ", " + month + " " + d.getDate() + ", " + d.getFullYear() + ".";
     }
 
     const dialogRef = this.dialog.open(DialogCheckTrendsComponent, {
