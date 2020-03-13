@@ -27,12 +27,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { CalendarCourseListComponent } from './calendar-course-list.component';
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 describe('CalendarCourseListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatAutocompleteModule, 
+        MatFormFieldModule,
+        MatInputModule
       ],
       declarations: [CalendarCourseListComponent],
       providers: [

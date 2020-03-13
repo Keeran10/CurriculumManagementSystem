@@ -62,6 +62,10 @@ mat-card{
     background-color: #f5f5f5;
 }
 
+mat-panel-title {
+  color: #424242;
+}
+
 
 .packages{
     grid-column-start: 1;
@@ -69,7 +73,6 @@ mat-card{
     grid-row-start: 1;
     grid-row-end: 3;
     background-color: #f5f5f5;
-
 }
 
 .bottom{
@@ -77,6 +80,7 @@ mat-card{
     grid-column-end: 2;
     grid-row-start: 3;
     grid-row-end: 4;
+    height: fit-content;
 }
 
 .inner-container{
