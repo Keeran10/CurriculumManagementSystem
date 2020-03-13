@@ -25,6 +25,7 @@ import com.kwabenaberko.newsapilib.NewsApiClient;
 import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
+import com.soen490.cms.Models.TrendArticle;
 import com.soen490.cms.Services.MailService;
 import com.soen490.cms.Services.TrendService;
 import lombok.extern.log4j.Log4j2;
@@ -93,7 +94,8 @@ public class NewsFetchingController {
 
 
     @PostMapping(value = "check_trends")
-    public List<Article> getTrends(@RequestBody String requestForm){
-        return trendService.getTrends(requestForm);
+    public List<TrendArticle> getTrends(@RequestBody String requestForm){
+
+        return trendService.getArticles(requestForm);
     }
 }
