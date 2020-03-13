@@ -36,7 +36,7 @@
 }
 
 body{
-  background-color: #F3E7E9;
+  background-color: #eeeeee;
 }
 h1 {
   margin: 3% 10% 0% 30%;
@@ -47,14 +47,24 @@ h1 {
   margin: 3% 15% 0% 25%;
 }
 
-
-
 .example-full-width{
   width: 40%;
 }
 
 .example-select {
   width: 25%;
+}
+
+.create-link {
+  color: #3949ab;
+  margin: 0;
+  padding: 0;
+}
+
+.create-link:hover{
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
 }
 
 .mat-search {
@@ -65,7 +75,7 @@ mat-card-header{
   margin-left: 350px;
 }
 mat-card{
-  background-color: #F3E7E9;
+  background-color: #f5f5f5;
 }
 
 .searchContent{
