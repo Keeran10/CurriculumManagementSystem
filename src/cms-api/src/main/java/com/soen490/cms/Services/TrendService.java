@@ -89,7 +89,9 @@ public class TrendService {
             int ctr = 0;
             for (TrendArticle article : relevantArticles) {
                 boolean exist = false;
-                if(article.getTitle().contains("$") || article.getDescription().contains("$") || article.getAuthor() == null)
+                if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
+                        article.getTitle().contains("$") || article.getDescription().contains("$") ||
+                        article.getTitle().contains("be single") || article.getDescription().contains("be single"))
                     continue;
                 log.info(article.getTitle());
                 for(TrendArticle a : articlesToReturn){
@@ -112,7 +114,9 @@ public class TrendService {
             int ctr = 0;
             for (TrendArticle article : trendingArticles) {
                 boolean exist = false;
-                if(article.getTitle().contains("$") || article.getDescription().contains("$") || article.getAuthor() == null)
+                if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
+                        article.getTitle().contains("$") || article.getDescription().contains("$") ||
+                        article.getTitle().contains("be single") || article.getDescription().contains("be single"))
                     continue;
                 log.info(article.getTitle());
                 for(TrendArticle a : articlesToReturn){
@@ -187,7 +191,7 @@ public class TrendService {
         if(articles == null)
             return null;
 
-        System.out.println("Articles: " + articles.size());
+        System.out.println("Relevant Articles: " + articles.size());
 
         List<TrendArticle> articlesToReturn = new ArrayList<>();
 
@@ -200,13 +204,7 @@ public class TrendService {
 
     private List<TrendArticle> getTrendingArticles(Course present, Course proposed){
 
-        List<String> keywords = getTitleKeywords(present, proposed);
-        String keyword = "";
-
-        for (String k : keywords)
-            keyword += k + " AND ";
-
-        keyword = keyword + "education";
+        String keyword = proposed.getProgram().getName().toLowerCase() + " AND " + "(job OR jobs OR education)";
 
         System.out.println(keyword);
 
@@ -239,7 +237,7 @@ public class TrendService {
         if(articles == null)
             return null;
 
-        System.out.println("Articles: " + articles.size());
+        System.out.println("Trending Articles: " + articles.size());
 
         List<TrendArticle> articlesToReturn = new ArrayList<>();
 
