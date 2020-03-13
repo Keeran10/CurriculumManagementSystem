@@ -20,9 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { ApiService } from './backend-api.service';
-import {MatSidenav} from '@angular/material/sidenav';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -34,23 +32,9 @@ export class AppComponent implements OnInit {
   title = 'cms-client';
   featureFlagTest = 'test';
 
-  routes = [
-    { path: '/', name: 'Home' },
-    { path: 'one', name: 'One' },
-    { path: 'two', name: 'Two' },
-    { path: 'three', name: 'Three' }
-  ];
-
-  // @ts-ignore
-  @ViewChild('sidenav') public sidenav: MatSidenav;
-
   constructor() {}
 
   ngOnInit() {
-  }
-
-  public sidenavOpen() {
-    this.sidenav.toggle();
   }
 
 }

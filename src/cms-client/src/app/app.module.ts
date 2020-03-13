@@ -70,6 +70,7 @@ import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
+import {MatBadgeModule} from "@angular/material/badge";
 
 
 @NgModule({
@@ -123,7 +124,8 @@ import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
     NgxFileDropModule,
     ReactiveFormsModule,
     PdfViewerModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatBadgeModule
   ],
   providers: [
     ApiService,

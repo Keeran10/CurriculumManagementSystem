@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import {AppComponent} from "../app.component";
+import { MediaMatcher} from '@angular/cdk/layout';
+import {SideNavService} from '../side-nav.service';
 
 @Component({
   selector: 'app-top-nav-bar',
@@ -9,14 +10,29 @@ import {AppComponent} from "../app.component";
 })
 export class TopNavBarComponent implements OnInit {
 
-  constructor(private cookieService: CookieService) {}
+  toggleActive = false;
+
+  mobileQuery: MediaQueryList;
+  // tslint:disable-next-line:variable-name
+  private _mobileQueryListener: () => void;
+
+  constructor(private cookieService: CookieService,
+              private sidenav: SideNavService,
+              changeDetectorRef: ChangeDetectorRef,
+              media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   userName = 'User';
   isAdmin = false;
   isLogged = false;
 
-  // @ts-ignore
-  @ViewChild('sidenav') sidenav: any;
+  toggleSidenav() {
+    this.toggleActive = !this.toggleActive;
+    this.sidenav.toggle();
+  }
 
   ngOnInit() {
     this.userName = this.cookieService.get('userName');
@@ -37,9 +53,5 @@ export class TopNavBarComponent implements OnInit {
     this.cookieService.deleteAll();
     this.cookieService.set('logged', '0');
     this.isLoggedIn();
-  }
-
-  sidenavOpen() {
-    this.sidenav.toggle();
   }
 }
