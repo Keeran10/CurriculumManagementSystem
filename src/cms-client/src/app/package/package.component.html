@@ -32,7 +32,7 @@
               <mat-expansion-panel [expanded]="package.id == editingPackage">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                    <span>{{ packages[0].department.name}}, Dossier #{{package.id}}</span>
+                    <strong>{{ packages[0].department.name}}, Dossier #{{package.id}}</strong>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -66,7 +66,10 @@
                       </ng-template>
 
                       <td (click)="removeRequest(request.id)">
-                        &nbsp;&nbsp;<font color="red" style="cursor: pointer;">[x]</font>
+                        &nbsp;&nbsp;
+                        <i class="material-icons">
+                          clear
+                          </i>
                       </td>
                     </tr>
                     <!--
@@ -120,8 +123,8 @@
         </div>
         <button mat-stroked-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
           Package</button>
+        </div>
       </div>
-      <br>
     </mat-card>
   </main>
 </body>

@@ -25,9 +25,6 @@
     <mat-card class="matCardBackground">
       <div class="container">
         <mat-card>
-          <mat-card-header>
-            <h1 class="title">Edit Course Page</h1>
-          </mat-card-header>
           <form class="edit-form">
             <mat-form-field class="row1col1">
               <input autofocus matInput placeholder="Program" spellcheck="true" [(ngModel)]="courseEditable.name"
@@ -181,6 +178,7 @@
         </div>
 
       </div>
+      <br />
       <app-support-documents [courseId]="editId" [target_type]="2"></app-support-documents>
       <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
       <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn"

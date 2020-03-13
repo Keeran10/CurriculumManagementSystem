@@ -323,6 +323,42 @@ body{
   grid-row-end: 43;
 }
 
+.row43{
+  grid-column: span 60;
+  grid-row-start: 43;
+  grid-row-end: 44;
+}
+
+.row44{
+  grid-column: span 60;
+  grid-row-start: 44;
+  grid-row-end: 45;
+}
+
+.row45{
+  grid-column: span 60;
+  grid-row-start: 45;
+  grid-row-end: 46;
+}
+
+.row46{
+  grid-column: span 60;
+  grid-row-start: 46;
+  grid-row-end: 47;
+}
+
+.row47{
+  grid-column: span 60;
+  grid-row-start: 47;
+  grid-row-end: 48;
+}
+
+.row48{
+  grid-column: span 60;
+  grid-row-start: 48;
+  grid-row-end: 49;
+}
+
 .courseLinks {
   content: "";
   margin: 2em;
@@ -413,6 +449,10 @@ td, th {
 
 .mat-form-field{
   width: 85%;
+}
+
+.app-calendar-course-list{
+  width: 600px;
 }
 
 tr:nth-child(even) {
