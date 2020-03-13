@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/Keeran10/CurriculumManagementSystem.svg?token=MoxxqDdGkV24zknvVVL5&branch=master)](https://travis-ci.com/Keeran10/CurriculumManagementSystem)
 
 ### Setup Instructions
-Setup instructions can be found [here](https://github.com/Keeran10/CurriculumManagementSystem/wiki).
+Setup instructions can be found [here](https://github.com/Keeran10/CurriculumManagementSystem/wiki/Setup-Instructions).
 
 ### About
 The Curriculum Management System will be a software-as-a-service providing University faculty members the necessary tools to modify their respective  University Academic Calendar. The objectives of the CMS are the following:
