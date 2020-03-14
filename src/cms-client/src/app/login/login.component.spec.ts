@@ -30,7 +30,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { User } from '../models/user';
 
 describe('LoginComponent', () => {
   beforeEach(async(() => {
@@ -55,7 +54,7 @@ describe('LoginComponent', () => {
       const fixture = TestBed.createComponent(LoginComponent);
       const component = fixture.componentInstance;
       const apiService = TestBed.get(ApiService);
-      const cookieService = TestBed.get(CookieService); 
+      const cookieService = TestBed.get(CookieService);
       const httpClient = TestBed.get(HttpTestingController);
       const router = TestBed.get(Router);
       const activatedRoute = TestBed.get(ActivatedRoute);
@@ -80,14 +79,14 @@ describe('LoginComponent', () => {
         department: { id: 8 }
       };
       spyOn(apiService, 'setCredentials').and.returnValue(new Observable((observer) => {
-    
+
         // observable execution
         observer.next(user);
         observer.complete();
       }));
       spyOn(cookieService, 'set');
       component.OnSubmit('fakename', 'fakepass');
-      expect(cookieService.set).toHaveBeenCalledTimes(4);
+      expect(cookieService.set).toHaveBeenCalledTimes(5);
     });
 
   });

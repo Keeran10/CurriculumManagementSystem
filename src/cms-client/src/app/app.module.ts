@@ -68,6 +68,9 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 @NgModule({
@@ -93,9 +96,11 @@ import { CalendarCourseListComponent } from './calendar-course-list/calendar-cou
     SearchPageComponent,
     SupportDocumentComponent,
     TopNavBarComponent,
-    CalendarCourseListComponent
+    CalendarCourseListComponent,
+    SideNavBarComponent
   ],
   entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
+  exports: [MatSidenavModule],
   // Keep imports alphabetical for source control
   imports: [
     AppRoutingModule,
@@ -119,7 +124,9 @@ import { CalendarCourseListComponent } from './calendar-course-list/calendar-cou
     MatToolbarModule,
     NgxFileDropModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    PdfViewerModule,
+    MatSidenavModule,
+    MatBadgeModule,
   ],
   providers: [
     ApiService,

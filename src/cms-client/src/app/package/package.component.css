@@ -37,7 +37,7 @@
 }
 
 body {
-  background-color: #F3E7E9;
+  background-color: #eeeeee;
 }
 
 mat-card{
@@ -50,7 +50,7 @@ mat-card{
 }
 
 .outerMatCard{
-  
+  background-color: #f5f5f5;
 }
 
 .container{
@@ -59,6 +59,7 @@ mat-card{
     grid-template-rows: 150px auto 100px;
     margin-left: 0;
     margin-right: 50px;
+    background-color: #f5f5f5;
 }
 
 mat-panel-title {
@@ -71,7 +72,7 @@ mat-panel-title {
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
-
+    background-color: #f5f5f5;
 }
 
 .bottom{
