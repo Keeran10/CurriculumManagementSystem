@@ -83,7 +83,7 @@ button:hover {
 
 .seeRevisionsDiv {
   font-size: 80%;
-  margin-left: 85%;
+  margin-left: 80%;
 }
 
 .seeRevisionsButton {
@@ -103,5 +103,11 @@ button:hover {
     grid-template-columns: 100%;
     grid-template-rows: 100px 50px 1fr 50px 30px;
   }
+}
+
+mat-card {
+  margin-left: 20%;
+  margin-right: 20%;
+  padding-left: 5%;
 }
 

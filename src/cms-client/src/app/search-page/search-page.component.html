@@ -21,15 +21,9 @@
 // SOFTWARE. -->
 
 <body class="hg">
-<header class="hg__header">
-  <app-top-nav-bar></app-top-nav-bar>
-</header>
 <main class="hg__main">
   <div id="cloud-container">
-
-
       <div class="searchForm">
-          <h1>Enter your search criteria below</h1>
         <mat-card-content>
           <form class="example-form" id="searchForm">
             <mat-form-field class="example-full-width">
@@ -50,8 +44,9 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <button class="mat-search" mat-raised-button color="primary" (click)="showResults()">Search
-            </button>
+            <button class="mat-search" mat-stroked-button color="primary" (click)="showResults()">Search</button>
+            <button class="mat-search" mat-stroked-button color="primary"><a
+              class="create-link" href= "http://localhost:4200/editForm/0">Create New Course</a></button>
           </form>
         </mat-card-content>
       </div>
@@ -89,46 +84,6 @@
             </mat-card>
           </div>
         </div>
-        <!--
-        <mat-card class="searchResultsCard">
-          <mat-card-content>
-            <div class="searchResults">
-              <div *ngIf="isResultShown === true && displayedList.length === 0">
-                <span>No results found.</span>
-              </div>
-
-              <div *ngIf="isResultShown === true && displayedList.length != 0">
-                <div *ngFor="let listItem of displayedList ; let i = index">
-                  <div *ngIf="searchType === 'course'">
-                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getCourseId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-        </pre>
-                  </div>
-                  <div *ngIf="searchType === 'degree'">
-                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getDegreeId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-        </pre>
-                  </div>
-                  <div *ngIf="searchType === 'department'">
-                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getDepartmentId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-        </pre>
-                  </div>
-                  <div *ngIf="searchType === 'faculty'">
-                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getFacultyId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-        </pre>
-                  </div>
-                  <div *ngIf="searchType === 'program'">
-                    <pre><a href = "http://192.168.99.100:4200/editForm/{{getProgramId(listItem)}}">{{listItem}}</a><br><b>Description Summary:</b> {{ (descriptionList[i].length>50)? (descriptionList[i] | slice:0:50)+'...':(descriptionList[i]) }}
-        </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-        -->
-      <div>
-        <a href = "http://localhost:4200/editForm/0">Create New Course</a>
-      </div>
     </div>
     </main>
-    <footer class="hg__footer">
-      <app-footer></app-footer>
-    </footer>
 </body>

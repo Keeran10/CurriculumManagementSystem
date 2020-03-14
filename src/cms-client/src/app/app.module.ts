@@ -69,6 +69,9 @@ import { SupportDocumentComponent } from './support-documents/support-documents.
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
 import { CheckTrendsComponent, DialogCheckTrendsComponent } from './check-trends/check-trends.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -96,9 +99,11 @@ import { CheckTrendsComponent, DialogCheckTrendsComponent } from './check-trends
     SearchPageComponent,
     SupportDocumentComponent,
     TopNavBarComponent,
-    CalendarCourseListComponent
+    CalendarCourseListComponent,
+    SideNavBarComponent
   ],
   entryComponents: [CheckTrendsComponent, DialogCheckTrendsComponent, DialogImpactStatementComponent, ImpactStatementComponent],
+  exports: [MatSidenavModule],
   // Keep imports alphabetical for source control
   imports: [
     AppRoutingModule,
@@ -122,7 +127,9 @@ import { CheckTrendsComponent, DialogCheckTrendsComponent } from './check-trends
     MatToolbarModule,
     NgxFileDropModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    PdfViewerModule,
+    MatSidenavModule,
+    MatBadgeModule,
   ],
   providers: [
     ApiService,

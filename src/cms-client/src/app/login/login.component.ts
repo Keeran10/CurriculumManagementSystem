@@ -36,10 +36,10 @@ import { Department } from '../models/department';
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private api: ApiService,
-    private cookieService: CookieService,
-    private router: Router
+              private route: ActivatedRoute,
+              private api: ApiService,
+              private cookieService: CookieService,
+              private router: Router
   ) {
   }
 
@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
       this.cookieService.set('userName', this.user.firstName);
       this.cookieService.set('userType', this.user.userType);
       this.cookieService.set('department', this.user.department.id.toString());
+      this.cookieService.set('logged', '1');
       if (this.user.userType === 'Professor' || this.user.userType === 'admin') {
         this.router.navigate(['/package']);
       } else { // if any approval body
