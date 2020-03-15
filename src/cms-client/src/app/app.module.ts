@@ -68,9 +68,10 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import { SupportDocumentComponent } from './support-documents/support-documents.component';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { CheckTrendsComponent, DialogCheckTrendsComponent } from './check-trends/check-trends.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -80,8 +81,10 @@ import {MatBadgeModule} from '@angular/material/badge';
     ApproverHomepageComponent,
     CalendarSectionsComponent,
     CalendarSectionComponent,
+    CheckTrendsComponent,
     CourseFormComponent,
     CourseListComponent,
+    DialogCheckTrendsComponent,
     DialogImpactStatementComponent,
     EditFormComponent,
     FooterComponent,
@@ -99,7 +102,7 @@ import {MatBadgeModule} from '@angular/material/badge';
     CalendarCourseListComponent,
     SideNavBarComponent
   ],
-  entryComponents: [DialogImpactStatementComponent, ImpactStatementComponent],
+  entryComponents: [CheckTrendsComponent, DialogCheckTrendsComponent, DialogImpactStatementComponent, ImpactStatementComponent],
   exports: [MatSidenavModule],
   // Keep imports alphabetical for source control
   imports: [
