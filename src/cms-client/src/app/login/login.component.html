@@ -22,14 +22,23 @@
 
 <body class="hg">
 <main class="hg__main">
-<div class="top-container">
-<h1>Please enter your login information</h1>
-</div>
+  <mat-toolbar class="topNavBar" color="primary">
+    <mat-toolbar-row>
+     <span>Welcome to Concordia's Curriculum Management System -</span>
+      <span>&nbsp;CMS</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
 <br><br>
 <div class="middle-container">
 <div *ngIf="isLoginError" class="red-text center error-message">
   <i class="material-icons">error</i> Incorrect username or password
 </div>
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Please Login</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <br>
 <form class="example-form" #loginForm="ngForm" (ngSubmit)="OnSubmit(UserName.value,Password.value)">
   <mat-form-field class="example-full-width">
       <input matInput type="text" #UserName ngModel name="UserName" placeholder="Email" required>
@@ -43,6 +52,7 @@
     </div>
   </div>
 </form>
+  </mat-card>
 </div>
 </main>
 </body>
