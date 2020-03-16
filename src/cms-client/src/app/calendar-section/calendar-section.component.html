@@ -4,9 +4,6 @@
       <div class="container">
 
         <mat-card class="leftSide">
-          <mat-card-header>
-            <h2 class="title">Edit Section {{sectionEditable.sectionId}} Page</h2>
-          </mat-card-header><br>
           <form class="edit-form">
             <mat-form-field class="row1" *ngIf="sectionEditable.sectionId !== undefined" >
               <input matInput placeholder="Section Id" spellcheck="true" [(ngModel)]="sectionEditable.sectionId"
@@ -1227,9 +1224,9 @@
               No implication is available for this section.
             </div>
 
-
+      <br />
       <app-support-documents [sectionId]="id" [target_type]="3"></app-support-documents>
-      <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
+      <button class="submitButton" mat-stroked-button color="primary" (click)="submitForm()">Submit</button>
 
     </mat-card>
   </main>
