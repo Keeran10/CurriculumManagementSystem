@@ -84,6 +84,7 @@ public class TrendService {
         List<TrendArticle> trendingArticles = getTrendingArticles(present, proposed);
         List<TrendArticle> relevantArticles = getRelevantArticles(present, proposed);
         List<TrendArticle> growthArticles = getGrowthArticles(present, proposed);
+        List<TrendArticle> localArticles = getLocalArticles(present, proposed);
 
         if(relevantArticles != null && relevantArticles.size() > MAX_RELEVANT_ARTICLES) {
 
@@ -139,6 +140,31 @@ public class TrendService {
 
             int ctr = 0;
             for (TrendArticle article : growthArticles) {
+                boolean exist = false;
+                if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
+                        article.getTitle().contains("$") || article.getDescription().contains("$") ||
+                        article.getTitle().contains("be single") || article.getDescription().contains("be single"))
+                    continue;
+                log.info(article.getTitle());
+                for(TrendArticle a : articlesToReturn){
+                    if(article.getTitle().equals(a.getTitle())) {
+                        exist = true;
+                        break;
+                    }
+                }
+                if(exist)
+                    continue;
+                articlesToReturn.add(article);
+                ctr++;
+                if(ctr == MAX_RELEVANT_ARTICLES)
+                    break;
+            }
+        }
+
+        if(localArticles != null && localArticles.size() > MAX_TRENDING_ARTICLES) {
+
+            int ctr = 0;
+            for (TrendArticle article : localArticles) {
                 boolean exist = false;
                 if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
                         article.getTitle().contains("$") || article.getDescription().contains("$") ||
@@ -273,10 +299,52 @@ public class TrendService {
         return articlesToReturn;
     }
 
+    private List<TrendArticle> getLocalArticles(Course present, Course proposed){
+
+        String keyword = proposed.getProgram().getName().toLowerCase() + " AND (montreal OR quebec OR canada) AND " + "(job OR jobs OR education)";
+
+        System.out.println(keyword);
+
+        NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
+        newsApiClient.getEverything(
+                new EverythingRequest.Builder()
+                        .q(keyword)
+                        .language("en")
+                        .sortBy("relevancy")
+                        .build(),
+                new NewsApiClient.ArticlesResponseCallback() {
+                    @Override
+                    public void onSuccess(ArticleResponse response) {
+                        articles = response.getArticles();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println(throwable.getMessage());
+                    }
+                }
+        );
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(articles == null)
+            return null;
+
+        System.out.println("Local News Articles: " + articles.size());
+
+        List<TrendArticle> articlesToReturn = new ArrayList<>();
+
+        for(Article a : articles)
+            articlesToReturn.add(new TrendArticle(a, "local_news"));
+
+        return articlesToReturn;
+    }
+
     private List<TrendArticle> getGrowthArticles(Course present, Course proposed) {
-
-        //String keyword = proposed.getProgram().getName().toLowerCase() + " AND " + "growth";
-
 
         List<String> programKeywords = getProgramKeywords(present, proposed);
         List<String> titleKeywords = getTitleKeywords(present, proposed);
@@ -297,7 +365,7 @@ public class TrendService {
         keyword = keyword.substring(0, keyword.length() - 4);
         keyword = keyword + ")";
 
-        keyword += ") AND growth AND (job OR jobs)";
+        keyword += ") AND (growth OR expansion) AND (job OR jobs)";
 
         System.out.println(keyword);
 
