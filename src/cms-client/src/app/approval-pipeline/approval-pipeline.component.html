@@ -26,7 +26,6 @@
 
     <h2>Please Select an Approval Pipeline:</h2>
 
-    <div class="options">
         <div class="card">
             <mat-card class="predefined">
                 <mat-card-title>
@@ -53,7 +52,7 @@
                     <p>
                         6. Senate
                     </p>
-                    <button class="predefined-button" (click)="predefined()" mat-raised-button color="primary" >Select</button>
+                    <button class="predefined-button" (click)="predefined()" mat-stroked-button color="primary" >Select</button>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -97,11 +96,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="custom-button" mat-raised-button color="primary" class="select_button" (click)="custom(options.selectedOptions.selected)">Select</button>
+                        <button class="custom-button" mat-stroked-button color="primary" class="select_button" (click)="custom(options.selectedOptions.selected)">Select</button>
                     </mat-card-content>
             </mat-card>
         </div>
-    </div>
 </div>
 
 </main>
