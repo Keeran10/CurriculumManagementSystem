@@ -36,7 +36,7 @@
 }
 
 body {
-  background-color: #F3E7E9;
+  background-color: #eeeeee;
 }
 
 table td {
@@ -57,6 +57,11 @@ table {
 
 h4 {
     margin: 2%;
+}
+
+mat-card {
+  background-color: #f5f5f5;
+  min-height: 500px;
 }
 
 @media screen and (max-width: 600px) {
