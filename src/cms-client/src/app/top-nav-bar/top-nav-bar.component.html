@@ -5,9 +5,23 @@
       <button mat-icon-button (click)="toggleSidenav()">
         <mat-icon>menu</mat-icon>
       </button>
-      <button mat-icon-button (click)="toggleSidenav()">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>person</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>assignment_ind</mat-icon>
+          <span>Account</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <a href="" class="mat-menu-item" (click)="logOut()">
+          <mat-icon>directions_walk</mat-icon>
+          <span>Logout</span>
+        </a>
+      </mat-menu>
       <span>CMS</span>
       <a href="package" mat-button><mat-icon>home</mat-icon>Home</a>
       <a href="search" mat-button><mat-icon>search</mat-icon>Search</a>
@@ -15,9 +29,9 @@
       <a href="calendar" mat-button><mat-icon>calendar_today</mat-icon>Calendar</a>
       <span class="example-spacer"></span>
       <div>
-        <a href="" mat-button><mat-icon matBadge="12" matBadgeColor="warn">notifications</mat-icon>
+        <a href="package" mat-button><mat-icon matBadge="12" matBadgeColor="warn">notifications</mat-icon>
           &nbsp;&nbsp;&nbsp;Notifications</a>
-        <a href="" mat-button><mat-icon matBadge="3" matBadgeColor="warn">message</mat-icon>
+        <a href="package" mat-button><mat-icon matBadge="3" matBadgeColor="warn">message</mat-icon>
           &nbsp;&nbsp;&nbsp;Messages</a>
         <a href="" mat-button (click)="logOut()"><mat-icon>directions_walk</mat-icon>Log Out</a>
       </div>

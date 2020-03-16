@@ -25,15 +25,15 @@
 
 <main class="hg__main">
     <div class="list">
-        <h1>Please select a Section to edit</h1>
 
       <div class="links">
         <div *ngFor="let c of printedSections; let i = index">
           <br class="sectionsLinks">
+          <button mat-button>
           <span class="link" (click)="goToCalendarSection(extractSectionId(c.sectionId))">
                     <td class="courseNumberLeft">{{ c.sectionId }} &nbsp;</td>
                     <td class="courseTitle"> {{c.sectionTitle}}</td>
-          </span>
+          </span></button>
         </div>
       </div>
 

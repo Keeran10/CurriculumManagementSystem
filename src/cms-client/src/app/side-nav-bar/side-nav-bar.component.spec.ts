@@ -11,6 +11,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {CookieService} from 'ngx-cookie-service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MatMenuModule} from '@angular/material/menu';
 
 describe('SideNavBarComponent', () => {
   let component: SideNavBarComponent;
@@ -27,6 +28,7 @@ describe('SideNavBarComponent', () => {
         MatSidenavModule,
         MatIconModule,
         MatToolbarModule,
+        MatMenuModule,
         BrowserAnimationsModule,
         RouterTestingModule],
       providers: [
