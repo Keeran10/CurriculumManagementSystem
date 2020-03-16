@@ -173,17 +173,27 @@
                 </mat-select>
               </mat-card>
             </mat-card>
-            <button mat-raised-button color="primary" (click)="addDegree()">+</button>
-            <button mat-raised-button color="warn" (click)="removeDegree()">-</button>
+            <button mat-stroked-button color="primary" (click)="addDegree()">
+              <i class="material-icons">
+                add
+                </i>
+            </button>
+            <button mat-stroked-button color="warn" (click)="removeDegree()">
+              <i class="material-icons">
+                remove
+                </i>
+            </button>
           </mat-card>
         </div>
 
       </div>
       <br />
+      <div class="bottom">
       <app-support-documents [courseId]="editId" [target_type]="2"></app-support-documents>
-      <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
-      <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn"
+      <button class="submitButton" mat-stroked-button color="primary" (click)="submitForm()">Submit</button>
+      <button class="submitButton" *ngIf="isDeleteVisible" mat-stroked-button color="warn"
         (click)="openDeleteDialog()">Delete Course</button>
+      </div>
     </mat-card>
   </main>
 </body>
