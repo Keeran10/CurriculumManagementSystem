@@ -301,7 +301,7 @@ public class TrendService {
 
     private List<TrendArticle> getLocalArticles(Course present, Course proposed){
 
-        String keyword = proposed.getProgram().getName().toLowerCase() + " AND (montreal OR quebec OR canada) AND " + "(job OR jobs OR education)";
+        String keyword = proposed.getProgram().getName().toLowerCase() + " AND (montreal OR quebec OR canada)";// AND " + "(job OR jobs OR education)";
 
         System.out.println(keyword);
 
