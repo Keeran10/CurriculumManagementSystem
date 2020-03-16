@@ -33,3 +33,7 @@ main{
   flex-direction: column;
 }
 
+a:hover, mat-list-item:hover{
+  text-decoration: none;
+}
+

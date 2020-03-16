@@ -8,6 +8,7 @@
     <mat-sidenav class="example-sidenav" #snav (keydown.escape)="this.sidenav.close()" disableClose>
       <mat-nav-list>
         <a mat-list-item routerLink="{{nav.link}}" *ngFor="let nav of fillerNav">{{nav.name}}</a>
+        <a mat-list-item href="" (click)="logOut()">Logout</a>
       </mat-nav-list>
     </mat-sidenav>
 

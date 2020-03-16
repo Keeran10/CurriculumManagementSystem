@@ -31,3 +31,9 @@ a:hover{
   background-color: transparent;
   color: white;
 }
+
+.mat-menu-item:hover{
+  color: black;
+  text-decoration: none;
+  background-color: transparent;
+}
