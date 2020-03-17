@@ -66,6 +66,15 @@ mat-panel-title {
   color: #424242;
 }
 
+.material-icons.md1::before{
+  content:"clear"; 
+}
+
+.material-icons.md1:hover::before{
+  content:"clear"; 
+  color: grey;
+}
+
 
 .packages{
     grid-column-start: 1;

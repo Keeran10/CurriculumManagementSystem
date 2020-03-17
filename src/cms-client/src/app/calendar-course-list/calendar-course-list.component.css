@@ -59,4 +59,12 @@
   margin-left: 10px;
 }
 
-.material-icons.red { color: red; }
+.material-icons.md1::before{
+  content:"clear"; 
+  color: darkgrey;
+}
+
+.material-icons.md1:hover::before{
+  content:"clear"; 
+  color: grey;
+}
