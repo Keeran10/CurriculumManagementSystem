@@ -27,6 +27,9 @@
       <a href="search" mat-button><mat-icon>search</mat-icon>Search</a>
       <a href="addcourse" mat-button><mat-icon>add</mat-icon>Add Course</a>
       <a href="calendar" mat-button><mat-icon>calendar_today</mat-icon>Calendar</a>
+      <a *ngIf="isAdmin" href="registration" mat-button><i class="material-icons">
+        person_add
+        </i>Register</a>
       <span class="example-spacer"></span>
       <div>
         <a href="package" mat-button><mat-icon matBadge="12" matBadgeColor="warn">notifications</mat-icon>
