@@ -143,7 +143,11 @@ public class TrendService {
                 boolean exist = false;
                 if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
                         article.getTitle().contains("$") || article.getDescription().contains("$") ||
-                        article.getTitle().contains("be single") || article.getDescription().contains("be single"))
+                        article.getTitle().contains("be single") || article.getDescription().contains("be single") ||
+                        article.getTitle().contains("Q1") || article.getDescription().contains("Q1") ||
+                        article.getTitle().contains("Q2") || article.getDescription().contains("Q2") ||
+                        article.getTitle().contains("Q3") || article.getDescription().contains("Q3") ||
+                        article.getTitle().contains("Q4") || article.getDescription().contains("Q4"))
                     continue;
                 log.info(article.getTitle());
                 for(TrendArticle a : articlesToReturn){
@@ -168,7 +172,11 @@ public class TrendService {
                 boolean exist = false;
                 if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
                         article.getTitle().contains("$") || article.getDescription().contains("$") ||
-                        article.getTitle().contains("be single") || article.getDescription().contains("be single"))
+                        article.getTitle().contains("be single") || article.getDescription().contains("be single") ||
+                        article.getTitle().contains("Q1") || article.getDescription().contains("Q1") ||
+                        article.getTitle().contains("Q2") || article.getDescription().contains("Q2") ||
+                        article.getTitle().contains("Q3") || article.getDescription().contains("Q3") ||
+                        article.getTitle().contains("Q4") || article.getDescription().contains("Q4"))
                     continue;
                 log.info(article.getTitle());
                 for(TrendArticle a : articlesToReturn){
