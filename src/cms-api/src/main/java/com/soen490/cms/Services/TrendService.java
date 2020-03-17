@@ -83,6 +83,8 @@ public class TrendService {
 
         List<TrendArticle> trendingArticles = getTrendingArticles(present, proposed);
         List<TrendArticle> relevantArticles = getRelevantArticles(present, proposed);
+        List<TrendArticle> growthArticles = getGrowthArticles(present, proposed);
+        List<TrendArticle> localArticles = getLocalArticles(present, proposed);
 
         if(relevantArticles != null && relevantArticles.size() > MAX_RELEVANT_ARTICLES) {
 
@@ -113,6 +115,56 @@ public class TrendService {
 
             int ctr = 0;
             for (TrendArticle article : trendingArticles) {
+                boolean exist = false;
+                if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
+                        article.getTitle().contains("$") || article.getDescription().contains("$") ||
+                        article.getTitle().contains("be single") || article.getDescription().contains("be single"))
+                    continue;
+                log.info(article.getTitle());
+                for(TrendArticle a : articlesToReturn){
+                    if(article.getTitle().equals(a.getTitle())) {
+                        exist = true;
+                        break;
+                    }
+                }
+                if(exist)
+                    continue;
+                articlesToReturn.add(article);
+                ctr++;
+                if(ctr == MAX_RELEVANT_ARTICLES)
+                    break;
+            }
+        }
+
+        if(growthArticles != null && growthArticles.size() > MAX_TRENDING_ARTICLES) {
+
+            int ctr = 0;
+            for (TrendArticle article : growthArticles) {
+                boolean exist = false;
+                if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
+                        article.getTitle().contains("$") || article.getDescription().contains("$") ||
+                        article.getTitle().contains("be single") || article.getDescription().contains("be single"))
+                    continue;
+                log.info(article.getTitle());
+                for(TrendArticle a : articlesToReturn){
+                    if(article.getTitle().equals(a.getTitle())) {
+                        exist = true;
+                        break;
+                    }
+                }
+                if(exist)
+                    continue;
+                articlesToReturn.add(article);
+                ctr++;
+                if(ctr == MAX_RELEVANT_ARTICLES)
+                    break;
+            }
+        }
+
+        if(localArticles != null && localArticles.size() > MAX_TRENDING_ARTICLES) {
+
+            int ctr = 0;
+            for (TrendArticle article : localArticles) {
                 boolean exist = false;
                 if(article.getAuthor() == null || article.getTitle() == null || article.getDescription() == null ||
                         article.getTitle().contains("$") || article.getDescription().contains("$") ||
@@ -245,6 +297,125 @@ public class TrendService {
             articlesToReturn.add(new TrendArticle(a, "trend"));
 
         return articlesToReturn;
+    }
+
+    private List<TrendArticle> getLocalArticles(Course present, Course proposed){
+
+        String keyword = proposed.getProgram().getName().toLowerCase() + " AND (montreal OR quebec OR canada)";// AND " + "(job OR jobs OR education)";
+
+        System.out.println(keyword);
+
+        NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
+        newsApiClient.getEverything(
+                new EverythingRequest.Builder()
+                        .q(keyword)
+                        .language("en")
+                        .sortBy("relevancy")
+                        .build(),
+                new NewsApiClient.ArticlesResponseCallback() {
+                    @Override
+                    public void onSuccess(ArticleResponse response) {
+                        articles = response.getArticles();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println(throwable.getMessage());
+                    }
+                }
+        );
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(articles == null)
+            return null;
+
+        System.out.println("Local News Articles: " + articles.size());
+
+        List<TrendArticle> articlesToReturn = new ArrayList<>();
+
+        for(Article a : articles)
+            articlesToReturn.add(new TrendArticle(a, "local_news"));
+
+        return articlesToReturn;
+    }
+
+    private List<TrendArticle> getGrowthArticles(Course present, Course proposed) {
+
+        List<String> programKeywords = getProgramKeywords(present, proposed);
+        List<String> titleKeywords = getTitleKeywords(present, proposed);
+        String keyword = "((";
+        // add program words
+        for(String k : programKeywords) {
+            keyword += k.toLowerCase() + " AND ";
+        }
+        keyword = keyword.trim();
+        keyword = keyword.substring(0, keyword.length() - 4);
+        keyword = keyword + ")";
+        keyword += " OR (";
+        // add title words
+        for(String k : titleKeywords) {
+            keyword += k.toLowerCase() + " AND ";
+        }
+        keyword = keyword.trim();
+        keyword = keyword.substring(0, keyword.length() - 4);
+        keyword = keyword + ")";
+
+        keyword += ") AND (growth OR expansion) AND (job OR jobs)";
+
+        System.out.println(keyword);
+
+        NewsApiClient newsApiClient = new NewsApiClient("0582968f2d9547518781438e31b66f87");
+        newsApiClient.getEverything(
+                new EverythingRequest.Builder()
+                        .q(keyword)
+                        .language("en")
+                        .sortBy("relevancy")
+                        .build(),
+                new NewsApiClient.ArticlesResponseCallback() {
+                    @Override
+                    public void onSuccess(ArticleResponse response) {
+                        articles = response.getArticles();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println(throwable.getMessage());
+                    }
+                }
+        );
+
+        if(articles == null) {
+            return null;
+        }
+
+        System.out.println("Growth articles: " + articles.size());
+
+        List<TrendArticle> growthArticles = new ArrayList<>();
+
+        for(Article a : articles)
+            growthArticles.add(new TrendArticle(a, "growth"));
+
+        return growthArticles;
+    }
+
+    private List<String> getProgramKeywords(Course present, Course proposed) {
+
+        String rawKeywords = proposed.getProgram().getName();
+
+        rawKeywords = rawKeywords.replaceAll("[^a-zA-Z ]", "");
+
+        ArrayList<String> keywords =
+                Stream.of(rawKeywords.toLowerCase().split(" "))
+                        .collect(Collectors.toCollection(ArrayList<String>::new));
+
+        keywords.removeAll(stopwords);
+
+        return keywords;
     }
 
 

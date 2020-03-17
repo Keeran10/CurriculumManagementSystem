@@ -62,6 +62,46 @@
     </div>
   </div>
 
+  <div>
+    <h4 style="color:blue;">Local news about {{data.course.program.name}}:</h4>
+    <hr>
+    <div *ngFor="let article of data.articles; let i=index">
+      <div *ngIf="article.type == 'local_news'">
+        <p *ngIf="article.source.name != ''"><span style="font-weight: bold;">Source: </span> {{article.source.name}}
+        </p>
+        <p><a href="{{article.url}}" style="font-weight: bold;">{{article.title}}</a>
+          <br>
+          By {{article.author}}
+          <br>
+          <i>{{article.publishedAt}}</i>
+        </p>
+        <p><img src="{{article.urlToImage}}" height="200" width="300"></p>
+        <p>{{article.description}}</p>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h4 style="color:blue;">Growth statistics news about {{data.course.title}}:</h4>
+    <hr>
+    <div *ngFor="let article of data.articles; let i=index">
+      <div *ngIf="article.type == 'growth'">
+        <p *ngIf="article.source.name != ''"><span style="font-weight: bold;">Source: </span> {{article.source.name}}
+        </p>
+        <p><a href="{{article.url}}" style="font-weight: bold;">{{article.title}}</a>
+          <br>
+          By {{article.author}}
+          <br>
+          <i>{{article.publishedAt}}</i>
+        </p>
+        <p><img src="{{article.urlToImage}}" height="200" width="300"></p>
+        <p>{{article.description}}</p>
+        <hr>
+      </div>
+    </div>
+  </div>
+
   <ng-template [ngIf]="data.articles == null">
     <p style="color:red;font-style:italic">No articles have been found.</p>
   </ng-template>
