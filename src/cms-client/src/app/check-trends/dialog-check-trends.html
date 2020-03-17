@@ -23,7 +23,7 @@
 <div mat-dialog-content>
 
   <div>
-    <h4 style="color:blue;">Relevant news about {{data.course.title}}:</h4>
+    <h6 style="color:blue;">Relevant news about {{data.course.title}}:</h6>
     <hr>
     <div *ngFor="let article of data.articles; let i=index">
       <div *ngIf="article.type == 'relevant'">
@@ -43,7 +43,7 @@
   </div>
 
   <div>
-    <h4 style="color:blue;">Trending news about {{data.course.program.name}}:</h4>
+    <h6 style="color:blue;">Trending news about {{data.course.program.name}}:</h6>
     <hr>
     <div *ngFor="let article of data.articles; let i=index">
       <div *ngIf="article.type == 'trend'">
@@ -63,7 +63,7 @@
   </div>
 
   <div>
-    <h4 style="color:blue;">Local news about {{data.course.program.name}}:</h4>
+    <h6 style="color:blue;">Local news about {{data.course.program.name}}:</h6>
     <hr>
     <div *ngFor="let article of data.articles; let i=index">
       <div *ngIf="article.type == 'local_news'">
@@ -83,7 +83,7 @@
   </div>
 
   <div>
-    <h4 style="color:blue;">Growth statistics news about {{data.course.title}}:</h4>
+    <h6 style="color:blue;">Growth statistics news about {{data.course.title}}:</h6>
     <hr>
     <div *ngFor="let article of data.articles; let i=index">
       <div *ngIf="article.type == 'growth'">
