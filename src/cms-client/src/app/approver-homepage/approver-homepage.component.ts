@@ -56,6 +56,7 @@ export class ApproverHomepageComponent implements OnInit {
         this.packageUnderReview = this.cookieService.get('reviewingPackage');
         this.api.getPackagesToBeApproved(this.userMap.get(this.userType)).subscribe(data => {
             this.packages = data;
+            console.log(this.packages);
             if (data.length === 0) {
                 document.getElementById('empty').style.visibility = 'display';
             }
@@ -65,7 +66,17 @@ export class ApproverHomepageComponent implements OnInit {
         this.userId = parseInt(this.cookieService.get('user'), 10);
         this.user_id = this.cookieService.get('user');
         //this.api.releaseReviewKey(1).subscribe(data => console.log(data));
+        this.refresh();
     }
+
+  public refresh() {
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload();
+    } else {
+      localStorage.removeItem('foo');
+    }
+  }
 
     // generate PDF before viewing
     public generatePdf(packageId) {
@@ -105,7 +116,7 @@ export class ApproverHomepageComponent implements OnInit {
     // on accept
     public accept(packageId, value) {
         let rationale = ' '
-        if (value != '') {
+        if (value !== '') {
             rationale = value;
         }
         this.api.getPipeline(packageId).subscribe(data => {

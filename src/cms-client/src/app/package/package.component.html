@@ -37,17 +37,17 @@
                 </mat-expansion-panel-header>
 
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <div class="request" (click)="getSectionsByDepartmentId(package.id, packages[0].department.id)">{{ packages[0].department.name}} Calendar</div>
+                  <button mat-stroked-button color="primary" (click)="getSectionsByDepartmentId(package.id, packages[0].department.id)">{{ packages[0].department.name}} Calendar</button>
                 </div>
 
                 <a class="viewRevisions" (click)="viewAllRevisions(package.id, 'revisions')">
-                  <button class="seeRevisionsButton" color="primary">view all revisions</button>
+                  <button mat-stroked-button color="primary">view all revisions</button>
                 </a>
                 <div *ngIf="package.approvalPipelineRequestPackages.length != 0">
-                  This package has been submitted for approval.
+                  <p style="color: #3949ab; font-style: italic">This package has been submitted for approval.</p>
                   <br /><br />
                   <div class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
-                    Track Progress
+                    <button mat-stroked-button>Track Progress</button>
                   </div>
                 </div>
                 <br>
@@ -70,7 +70,7 @@
                         <!-- <i class="material-icons">
                           clear
                           </i> -->
-                          <i class="material-icons md1"></i>
+                          <mat-icon class="delete">close</mat-icon>
                       </td>
                     </tr>
                     <!--
@@ -86,8 +86,8 @@
 
                 </div>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <br> <div class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
-                    request</div>
+                  <br> <button mat-stroked-button color="warn" (click)="packageSelect(package.id, 0, 'search')">Create new
+                    request</button>
                 </div>
                 <br><br>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">

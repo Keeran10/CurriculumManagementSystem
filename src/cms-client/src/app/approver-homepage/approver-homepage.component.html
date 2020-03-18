@@ -25,6 +25,9 @@
 <div class="container">
     <mat-card>
         <mat-card-title>Dossiers requesting approval:</mat-card-title>
+      <div *ngIf="packages[0] == null">
+        No dossiers are available at the moment.
+      </div>
     <table class="half">
         <tbody>
             <tr *ngFor="let package of packages">
