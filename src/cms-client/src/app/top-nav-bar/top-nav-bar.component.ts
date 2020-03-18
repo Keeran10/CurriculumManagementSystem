@@ -44,7 +44,7 @@ export class TopNavBarComponent implements OnInit {
   }
 
   isLoggedIn() {
-    if (this.cookieService.get('logged') !== '0') {
+    if (this.cookieService.get('logged') === '1') {
       this.isLogged = true;
     }
   }
