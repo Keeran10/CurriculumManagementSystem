@@ -37,7 +37,7 @@
                 </mat-expansion-panel-header>
 
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <a class="request" (click)="getSectionsByDepartmentId(package.id, packages[0].department.id)">{{ packages[0].department.name}} Calendar</a>
+                  <div class="request" (click)="getSectionsByDepartmentId(package.id, packages[0].department.id)">{{ packages[0].department.name}} Calendar</div>
                 </div>
 
                 <a class="viewRevisions" (click)="viewAllRevisions(package.id, 'revisions')">
@@ -46,9 +46,9 @@
                 <div *ngIf="package.approvalPipelineRequestPackages.length != 0">
                   This package has been submitted for approval.
                   <br /><br />
-                  <a class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
+                  <div class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
                     Track Progress
-                  </a>
+                  </div>
                 </div>
                 <br>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
@@ -67,9 +67,10 @@
 
                       <td (click)="removeRequest(request.id)">
                         &nbsp;&nbsp;
-                        <i class="material-icons">
+                        <!-- <i class="material-icons">
                           clear
-                          </i>
+                          </i> -->
+                          <i class="material-icons md1"></i>
                       </td>
                     </tr>
                     <!--
@@ -85,8 +86,8 @@
 
                 </div>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <br> <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
-                    request</a>
+                  <br> <div class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
+                    request</div>
                 </div>
                 <br><br>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">

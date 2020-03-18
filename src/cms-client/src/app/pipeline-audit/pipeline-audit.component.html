@@ -24,6 +24,7 @@
     <main class="hg__main">
 
     <div class="container">
+        <mat-card>
         <h4>
             Revisions for Pipeline #{{ pipelineId }}
         </h4>
@@ -53,9 +54,10 @@
                 </tr>
             </td>
             <tr *ngIf="revisions.length == 0">
-                    Nothing to show.
+                    No revisions to show.
             </tr>
         </table>
+    </mat-card>
     </div>
     </main>
     </body>
