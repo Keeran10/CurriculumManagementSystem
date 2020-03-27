@@ -1,6 +1,7 @@
 package com.soen490.cms;
 
 import com.soen490.cms.Models.Course;
+import com.soen490.cms.Models.Program;
 import com.soen490.cms.Services.TrendService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,5 +46,21 @@ public class TrendTest {
             keyword += k + " ";
 
         assertEquals("software security system ", keyword);
+    }
+
+    // test that the trend service returns at least one article
+    @Test
+    public void testTrendingArticles() {
+        Course present = new Course();
+        Course proposed = new Course();
+        Program soen = new Program();
+        soen.setName("Software Engineering");
+
+        proposed.setTitle("Software Engineering Concepts");
+        proposed.setProgram(soen);
+
+        int nbArticles = trendService.getTrendingArticles(present,proposed).size();
+
+        assertTrue(nbArticles > 0);
     }
 }

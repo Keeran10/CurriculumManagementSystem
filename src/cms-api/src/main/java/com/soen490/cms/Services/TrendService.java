@@ -262,7 +262,7 @@ public class TrendService {
     }
 
 
-    private List<TrendArticle> getTrendingArticles(Course present, Course proposed){
+    public List<TrendArticle> getTrendingArticles(Course present, Course proposed){
 
         String keyword = proposed.getProgram().getName().toLowerCase() + " AND " + "(job OR jobs OR education)";
 
