@@ -20,24 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
 <body class="hg">
-<header class="hg__header">
-  <app-top-nav-bar></app-top-nav-bar>
-</header>
 <main class="hg__main">
-<h2>Dossiers requesting approval:</h2>
+
 <div class="container">
+    <mat-card>
+        <mat-card-title>Dossiers requesting approval:</mat-card-title>
+      <div *ngIf="packages[0] == null">
+        No dossiers are available at the moment.
+      </div>
     <table class="half">
         <tbody>
-            <tr id="empty">No dossiers to display currently...</tr>
             <tr *ngFor="let package of packages">
                 <td>
-                    <mat-card class="packages">
-                        <mat-card-title>Dossier #{{ package.id }} </mat-card-title>
-                        <mat-card-content>
-                            <button *ngIf="locks[package.id] === true" class="option" mat-button color="primary" (click)="reviewPackage(package.id)">
-                                Review this dossier
+                        <button *ngIf="locks[package.id] === true" class="option" mat-button (click)="reviewPackage(package.id)">
+                                <i class="material-icons">
+                                    chevron_right
+                                    </i>Review Dossier #{{ package.id }}
                             </button>
-                        </mat-card-content>
                         <mat-card-content *ngIf="package.id == packageUnderReview">
                             <button class="option" mat-button color="primary" (click)="viewPDF(package.id)">view PDF</button>
                             <button class="option" mat-button color="primary" (click)="packageSelect(package.id)">edit</button>
@@ -53,19 +52,18 @@
                                 <button mat-button (click)="decline(package.id, value)">Decline</button>
                                 <button mat-button color="warn" (click)="releaseReviewMutex(package.id)">Cancel Review</button>
                             </div>
+                            <br />
+                            <mat-divider></mat-divider>
                         </div>
                         <div *ngIf="locks[package.id] === false && package.id != packageUnderReview">
                             Review blocked, dossier is being modified.
                         </div>
-                    </mat-card>
                 </td>
             </tr>
         </tbody>
     </table>
+</mat-card>
 </div>
 
 </main>
-<footer class="hg__footer">
-  <app-footer></app-footer>
-</footer>
 </body>

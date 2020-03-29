@@ -21,12 +21,10 @@
 // SOFTWARE. -->
 
 <body class="hg">
-<header class="hg__header">
-  <app-top-nav-bar></app-top-nav-bar>
-</header>
 <main class="hg__main">
 
 <div class="container">
+    <mat-card>
     <h4>
         Revisions of Dossier #{{ packageId }}
     </h4>
@@ -59,10 +57,8 @@
                 No revisions for this package.
         </tr>
     </table>
+</mat-card>
 </div>
 </main>
-<footer class="hg__footer">
-  <app-footer></app-footer>
-</footer>
 </body>
 

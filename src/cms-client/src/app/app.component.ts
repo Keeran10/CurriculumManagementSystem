@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from './backend-api.service';
+import {Component, OnInit} from '@angular/core';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   title = 'cms-client';
   featureFlagTest = 'test';
 
-  constructor(private apiService: ApiService) {}
+  constructor() {}
 
   ngOnInit() {
   }

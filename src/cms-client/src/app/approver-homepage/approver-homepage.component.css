@@ -37,16 +37,12 @@
 }
 
 body {
-    background-color: #F3E7E9;
+    background-color: #f4f4f4;
   }
 
 .container {
     margin: 30px;
-    display: flex;
-}
-
-.packages {
-    width:500px;
+    justify-content: center;
 }
 
 .buttons {
@@ -83,4 +79,8 @@ h2 {
     grid-template-columns: 100%;
     grid-template-rows: 100px 50px 1fr 50px 30px;
   }
+}
+
+mat-card-content {
+    padding-left:5%;
 }

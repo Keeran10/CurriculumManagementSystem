@@ -21,16 +21,10 @@
 // SOFTWARE. -->
 
 <body class="hg">
-  <header class="hg__header">
-    <app-top-nav-bar></app-top-nav-bar>
-  </header>
   <main class="hg__main">
     <mat-card class="matCardBackground">
       <div class="container">
         <mat-card>
-          <mat-card-header>
-            <h1 class="title">Edit Course Page</h1>
-          </mat-card-header>
           <form class="edit-form">
             <mat-form-field class="row1col1">
               <input autofocus matInput placeholder="Program" spellcheck="true" [(ngModel)]="courseEditable.name"
@@ -142,6 +136,7 @@
             <br>
             <button mat-stroked-button color="primary" (click)="highlightChanges()">Highlight Changes</button>
             <app-impact-statement [course]="courseEditable" [courseExtras]="editedModel"></app-impact-statement>
+            <app-check-trends [course]="courseEditable" [courseExtras]="editedModel"></app-check-trends>
             <br><br>
             <span><b>Rationale:</b></span>
             <br>
@@ -178,19 +173,27 @@
                 </mat-select>
               </mat-card>
             </mat-card>
-            <button mat-raised-button color="primary" (click)="addDegree()">+</button>
-            <button mat-raised-button color="warn" (click)="removeDegree()">-</button>
+            <button mat-stroked-button color="primary" (click)="addDegree()">
+              <i class="material-icons">
+                add
+                </i>
+            </button>
+            <button mat-stroked-button color="warn" (click)="removeDegree()">
+              <i class="material-icons">
+                remove
+                </i>
+            </button>
           </mat-card>
         </div>
 
       </div>
+      <br />
+      <div class="bottom">
       <app-support-documents [courseId]="editId" [target_type]="2"></app-support-documents>
-      <button class="submitButton" mat-raised-button color="primary" (click)="submitForm()">Submit</button>
-      <button class="submitButton" *ngIf="isDeleteVisible" mat-raised-button color="warn"
+      <button class="submitButton" mat-stroked-button color="primary" (click)="submitForm()">Submit</button>
+      <button class="submitButton" *ngIf="isDeleteVisible" mat-stroked-button color="warn"
         (click)="openDeleteDialog()">Delete Course</button>
+      </div>
     </mat-card>
   </main>
-  <footer class="hg__footer">
-    <app-footer></app-footer>
-  </footer>
 </body>

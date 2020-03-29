@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE. -->
 
-<table>
+<table class="list-table">
     <tbody>
         <strong>{{ coreName }}</strong>
         <tr>
@@ -28,11 +28,11 @@
                 <div *ngFor="let c of printedCourses; let i = index">
                 <br class="courseLinks">
                 <span class="link" (click)="navigateToEditFormEdited(c.id)">
-                    <td class="courseNumberLeft">{{ c.name }} {{c.number}}</td>
+                    <td class="courseNumberLeft" align="left">{{ c.name }} {{c.number}}</td>
                     <td class="courseTitle"> {{c.title}}</td>
                     <td class="courseCredits">{{c.credits.toFixed(2)}} </td>
-                    <td class="deleteCourse" (click)="removeCourseFromCore(c)">
-                    <font color="red" style="cursor: pointer;">[x]</font>
+                    <td class="deleteCourse" align="right" (click)="removeCourseFromCore(c)">
+                        <i class="material-icons md1"></i>
                     </td>
                 </span>
                 </div>
@@ -52,7 +52,7 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <button class="mat-search" mat-raised-button color="primary" (click)="addCourseToCore()">
+        <button class="add-button" mat-stroked-button color="primary" (click)="addCourseToCore()">
         Add
         </button>
     </span>

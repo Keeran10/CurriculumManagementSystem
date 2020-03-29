@@ -27,6 +27,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../models/user';
 import { CookieService } from 'ngx-cookie-service';
 import { Department } from '../models/department';
+import {PackageComponent} from "../package/package.component";
 
 @Component({
   selector: 'app-login',
@@ -36,10 +37,10 @@ import { Department } from '../models/department';
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private api: ApiService,
-    private cookieService: CookieService,
-    private router: Router
+              private route: ActivatedRoute,
+              private api: ApiService,
+              private cookieService: CookieService,
+              private router: Router
   ) {
   }
 
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
   password: string;
   user: User;
   department: Department;
+  package: PackageComponent;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -57,6 +59,18 @@ export class LoginComponent implements OnInit {
     this.api.setCredentials(this.email, this.password).subscribe(data => {
       console.log(data);
     });
+    this.cookieService.deleteAll();
+    this.cookieService.set('logged', '0');
+    this.refresh();
+  }
+
+  public refresh() {
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload();
+    } else {
+      localStorage.removeItem('foo');
+    }
   }
 
   OnSubmit(username, password) {
@@ -67,6 +81,7 @@ export class LoginComponent implements OnInit {
       this.cookieService.set('userName', this.user.firstName);
       this.cookieService.set('userType', this.user.userType);
       this.cookieService.set('department', this.user.department.id.toString());
+      this.cookieService.set('logged', '1');
       if (this.user.userType === 'Professor' || this.user.userType === 'admin') {
         this.router.navigate(['/package']);
       } else { // if any approval body

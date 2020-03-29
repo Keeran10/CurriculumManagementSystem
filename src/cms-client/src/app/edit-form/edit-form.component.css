@@ -37,7 +37,7 @@
 }
 
 body{
-  background-color: #F3E7E9;
+  background-color: #eeeeee;
 }
 .container{
   display: grid;
@@ -152,15 +152,14 @@ mat-card{
 
 .matCardBackground{
   margin: 30px;
-  background-color: #F3E7E9;
+  background-color: #f5f5f5;
 }
 
 .submitButton{
 
-  height: 100px;
-  width: 400px;
-  font-size: 20px;
-  margin-right: 50px;
+  height: 50px;
+  width: 150px;
+  font-size: 15px;
   margin-bottom: 50px;
 }
 
@@ -170,6 +169,10 @@ ins, ins * {
 
 del, del * {
   background: #ffbbbb!important;
+}
+
+.bottom {
+  padding-left: 2.5%;
 }
 
 @media screen and (max-width: 600px) {

@@ -21,9 +21,6 @@
 // SOFTWARE. -->
 
 <body class="hg">
-  <header class="hg__header">
-    <app-top-nav-bar></app-top-nav-bar>
-  </header>
   <main class="hg__main">
     <mat-card class="outerMatCard">
       <div class="container">
@@ -35,23 +32,23 @@
               <mat-expansion-panel [expanded]="package.id == editingPackage">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                    <span>{{ packages[0].department.name}}, Dossier #{{package.id}}</span>
+                    <strong>{{ packages[0].department.name}}, Dossier #{{package.id}}</strong>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <a class="request" (click)="getSectionsByDepartmentId(package.id, packages[0].department.id)">{{ packages[0].department.name}} Calendar</a>
+                  <button mat-stroked-button color="primary" (click)="getSectionsByDepartmentId(package.id, packages[0].department.id)">{{ packages[0].department.name}} Calendar</button>
                 </div>
 
                 <a class="viewRevisions" (click)="viewAllRevisions(package.id, 'revisions')">
-                  <button class="seeRevisionsButton" color="primary">view all revisions</button>
+                  <button mat-stroked-button color="primary">view all revisions</button>
                 </a>
                 <div *ngIf="package.approvalPipelineRequestPackages.length != 0">
-                  This package has been submitted for approval.
+                  <p style="color: #3949ab; font-style: italic">This package has been submitted for approval.</p>
                   <br /><br />
-                  <a class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
-                    Track Progress
-                  </a>
+                  <div class="request" (click)="packageSelect(package.id, 0, 'pipeline')">
+                    <button mat-stroked-button>Track Progress</button>
+                  </div>
                 </div>
                 <br>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
@@ -69,7 +66,11 @@
                       </ng-template>
 
                       <td (click)="removeRequest(request.id)">
-                        &nbsp;&nbsp;<font color="red" style="cursor: pointer;">[x]</font>
+                        &nbsp;&nbsp;
+                        <!-- <i class="material-icons">
+                          clear
+                          </i> -->
+                          <mat-icon class="delete">close</mat-icon>
                       </td>
                     </tr>
                     <!--
@@ -85,8 +86,8 @@
 
                 </div>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
-                  <br> <a class="new-request" (click)="packageSelect(package.id, 0, 'search')">Create new
-                    request</a>
+                  <br> <button mat-stroked-button color="warn" (click)="packageSelect(package.id, 0, 'search')">Create new
+                    request</button>
                 </div>
                 <br><br>
                 <div *ngIf="package.approvalPipelineRequestPackages.length == 0 || package.id == editingPackage">
@@ -121,13 +122,8 @@
             </div>
           </mat-accordion> <br>
         </div>
-        <button mat-raised-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new
-          Package</button>
-      </div>
-      <br>
+        <button mat-stroked-button color="primary" class="bottom" (click)="createNewPackage()" href="">Create new Package</button>
+        </div>
     </mat-card>
   </main>
-  <footer class="hg__footer">
-    <app-footer></app-footer>
-  </footer>
 </body>

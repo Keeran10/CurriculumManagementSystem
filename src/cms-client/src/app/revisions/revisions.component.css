@@ -15,7 +15,12 @@
 }
 
 body {
-  background-color: #F3E7E9;
+  background-color: #eeeeee;
+}
+
+mat-card {
+  background-color: #f5f5f5;
+  min-height: 400px;
 }
 
 table td {

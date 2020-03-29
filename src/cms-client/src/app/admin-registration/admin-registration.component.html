@@ -21,15 +21,10 @@
 // SOFTWARE. -->
 
 <body class="hg">
-    <header class="hg__header">
-    </header>
     <main class="hg__main">
-      <app-top-nav-bar></app-top-nav-bar>
-    <div class="top-container">
-    <h1>Register User Below:</h1>
-    </div>
     <br><br>
     <div class="middle-container">
+      <h1>Register User Below:</h1>
     <div *ngIf="isLoginError" class="red-text center error-message">
       <i class="material-icons">error</i> Incorrect username or password
     </div>
@@ -68,8 +63,4 @@
     </form>
     </div>
     </main>
-    <footer class="hg__footer">
-    <app-footer></app-footer>
-    </footer>
 </body>
-    

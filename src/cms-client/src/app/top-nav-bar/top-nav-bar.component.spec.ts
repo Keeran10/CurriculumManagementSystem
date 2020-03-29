@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TopNavBarComponent } from './top-nav-bar.component';
 import { CookieService } from 'ngx-cookie-service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {MatMenuModule} from '@angular/material/menu';
 
 describe('TopNavBarComponent', () => {
   let component: TopNavBarComponent;
@@ -9,6 +10,7 @@ describe('TopNavBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ MatMenuModule ],
       declarations: [ TopNavBarComponent ],
       providers: [
         CookieService

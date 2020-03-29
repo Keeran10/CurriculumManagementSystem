@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 import { HttpClient, HttpParams, HttpRequest, HttpEvent } from '@angular/common/http';
+import { Article } from './models/article';
 import { Course } from './models/course';
 import { CourseExtras } from './models/course-extras';
 import { Degree } from './models/degree';
@@ -121,6 +122,16 @@ export class ApiService {
     console.log('Impact endpoint called.');
 
     return this.http.post(this.url + 'ImpactAssessment', {
+      params: new HttpParams().set('course', JSON.stringify(course))
+        .set('courseExtras', JSON.stringify(courseExtras))
+    });
+  }
+
+  public getTrends(course: Course, courseExtras: CourseExtras) {
+
+    console.log('Trends endpoint called.');
+
+    return this.http.post<Article[]>(this.url + 'check_trends', {
       params: new HttpParams().set('course', JSON.stringify(course))
         .set('courseExtras', JSON.stringify(courseExtras))
     });

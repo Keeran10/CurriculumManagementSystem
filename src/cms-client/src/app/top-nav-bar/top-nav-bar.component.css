@@ -1,5 +1,4 @@
 
-
 .ml-auto {
   left: auto !important;
   right: 0px;
@@ -13,6 +12,28 @@ nav .navbar-nav li a.logout{
   color: #f0f0d0 !important;
 }
 
-.default-color {
-  background-color: #92273B !important
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.topNavBar{
+  -webkit-box-shadow: 0px 2px 6px 0px rgba(21,18,84,1);
+  -moz-box-shadow: 0px 2px 6px 0px rgba(21,18,84,1);
+  box-shadow: 0px 2px 6px 0px rgba(21,18,84,1);
+}
+
+a:hover{
+  text-decoration: none;
+  background-color: transparent;
+  color: white;
+}
+
+.mat-menu-item:hover{
+  color: black;
+  text-decoration: none;
+  background-color: transparent;
 }
