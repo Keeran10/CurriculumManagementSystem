@@ -66,13 +66,13 @@ mat-panel-title {
   color: #424242;
 }
 
-.material-icons.md1::before{
-  content:"clear"; 
+.delete{
+  color: #3949ab;
 }
 
-.material-icons.md1:hover::before{
-  content:"clear"; 
-  color: grey;
+.delete:hover{
+  color: #d50000;
+  cursor: pointer;
 }
 
 

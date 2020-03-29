@@ -27,6 +27,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../models/user';
 import { CookieService } from 'ngx-cookie-service';
 import { Department } from '../models/department';
+import {PackageComponent} from "../package/package.component";
 
 @Component({
   selector: 'app-login',
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
   password: string;
   user: User;
   department: Department;
+  package: PackageComponent;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -57,6 +59,18 @@ export class LoginComponent implements OnInit {
     this.api.setCredentials(this.email, this.password).subscribe(data => {
       console.log(data);
     });
+    this.cookieService.deleteAll();
+    this.cookieService.set('logged', '0');
+    this.refresh();
+  }
+
+  public refresh() {
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload();
+    } else {
+      localStorage.removeItem('foo');
+    }
   }
 
   OnSubmit(username, password) {

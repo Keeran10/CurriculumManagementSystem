@@ -37,14 +37,14 @@ export class TopNavBarComponent implements OnInit {
   ngOnInit() {
     this.userName = this.cookieService.get('userName');
     const userType = this.cookieService.get('userType');
+    this.isLoggedIn();
     if (userType === 'admin') {
       this.isAdmin = true;
     }
-    this.isLoggedIn();
   }
 
   isLoggedIn() {
-    if (this.cookieService.get('logged') !== '0') {
+    if (this.cookieService.get('logged') === '1') {
       this.isLogged = true;
     }
   }
