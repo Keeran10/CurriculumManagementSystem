@@ -98,4 +98,8 @@ public class NewsFetchingController {
 
         return trendService.getArticles(requestForm);
     }
+
+    public void setArticleFoundMock(Article articleMock){
+        articleFound = articleMock;
+    }
 }
