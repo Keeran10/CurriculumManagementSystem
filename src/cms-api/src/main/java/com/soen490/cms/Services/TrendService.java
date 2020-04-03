@@ -64,6 +64,7 @@ public class TrendService {
             loadStopwords();
         } catch (IOException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         List<TrendArticle> articlesToReturn = new ArrayList<>();
@@ -75,6 +76,7 @@ public class TrendService {
                 return null;
         } catch (JSONException e) {
             e.printStackTrace();
+            log.error(e);
             return null;
         }
 
@@ -246,6 +248,7 @@ public class TrendService {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         if(articles == null)
@@ -292,6 +295,7 @@ public class TrendService {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         if(articles == null)
@@ -337,6 +341,7 @@ public class TrendService {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         if(articles == null)
@@ -484,7 +489,6 @@ public class TrendService {
         c.setCredits(Double.valueOf(String.valueOf(course.get("credits"))));
         c.setDescription((String) course.get("description"));
         c.setLevel((Integer) course.get("level"));
-        c.setNote((String) course.get("note"));
         c.setLabHours(Double.valueOf(String.valueOf(course.get("labHours"))));
         c.setTutorialHours(Double.valueOf(String.valueOf(course.get("tutorialHours"))));
         c.setLectureHours(Double.valueOf(String.valueOf(course.get("lectureHours"))));
