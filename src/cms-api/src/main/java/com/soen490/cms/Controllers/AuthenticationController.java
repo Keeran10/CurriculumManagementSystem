@@ -26,6 +26,7 @@ import com.soen490.cms.Services.AdminService;
 import com.soen490.cms.Services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 
 @RestController
@@ -54,5 +55,10 @@ public class AuthenticationController {
     public boolean registerUser(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String user_type,
                                 @RequestParam String email, @RequestParam String password, @RequestParam int department_id) {
         return adminService.saveUser(first_name, last_name, user_type, email, password, department_id);
+    }
+
+    @GetMapping(value = "/get_users")
+    public List<User> getAllUsers(){
+        return adminService.getAllUsers();
     }
 }

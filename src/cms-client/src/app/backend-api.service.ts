@@ -419,4 +419,8 @@ export class ApiService {
 
     return this.http.request(req);
   }
+
+  public getAllUsers(){
+    return this.http.get<Course[]>(this.url + 'get_users');
+  }
 }

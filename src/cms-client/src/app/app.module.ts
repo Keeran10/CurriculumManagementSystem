@@ -72,6 +72,7 @@ import { CheckTrendsComponent, DialogCheckTrendsComponent } from './check-trends
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     SupportDocumentComponent,
     TopNavBarComponent,
     CalendarCourseListComponent,
-    SideNavBarComponent
+    SideNavBarComponent,
+    ManageUsersComponent
   ],
   entryComponents: [CheckTrendsComponent, DialogCheckTrendsComponent, DialogImpactStatementComponent, ImpactStatementComponent],
   exports: [MatSidenavModule],
