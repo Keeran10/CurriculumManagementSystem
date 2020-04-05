@@ -45,4 +45,8 @@ public class AdminService {
 
         return userRepository.findAll();
     }
+
+    public boolean updateUsers(List<User> updated_users) {
+
+    }
 }

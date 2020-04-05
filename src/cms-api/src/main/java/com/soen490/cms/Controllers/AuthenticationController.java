@@ -61,4 +61,9 @@ public class AuthenticationController {
     public List<User> getAllUsers(){
         return adminService.getAllUsers();
     }
+
+    @PostMapping(value = "/update_users")
+    public boolean updateUsers(@RequestParam List<User> updated_users){
+        return adminService.updateUsers(updated_users);
+    }
 }
