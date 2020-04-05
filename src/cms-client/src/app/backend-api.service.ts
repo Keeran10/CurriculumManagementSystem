@@ -421,6 +421,6 @@ export class ApiService {
   }
 
   public getAllUsers(){
-    return this.http.get<Course[]>(this.url + 'get_users');
+    return this.http.get<User[]>(this.url + 'get_users');
   }
 }
