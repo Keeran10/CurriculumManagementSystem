@@ -1,0 +1,78 @@
+<!-- // MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE. -->
+<body class="hg">
+    <main class="hg__main">
+        <h1>Manage Users:</h1>
+        <mat-accordion class="headers-align">
+            <mat-expansion-panel *ngFor="let user of users">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                    {{user.lastName}}, {{user.firstName}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    {{user.userType}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+            
+                <mat-form-field>
+                    <mat-label>First name</mat-label>
+                    <input matInput [(ngModel)]="user.firstName">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Last name</mat-label>
+                    <input matInput [(ngModel)]="user.lastName">
+                </mat-form-field>
+            
+                <mat-form-field>
+                    <mat-label>Type</mat-label>
+                    <mat-select [(ngModel)]="user.userType">
+                        <mat-option *ngFor="let type of userTypes" [value]="type">
+                            {{ type }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput [(ngModel)]="user.email">
+                </mat-form-field>
+                
+                <mat-form-field >
+                    <mat-label>Password</mat-label>
+                    <input matInput id="{{user.id}}" type="password" (focus)="invertPasswordShown(user.id)" (focusout)="invertPasswordShown(user.id)" [(ngModel)]="user.password">
+                </mat-form-field>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <div class="button-area">
+            <button mat-raised-button class="btn-large btn-submit" (click)="submitChanges()"><mat-icon>save</mat-icon> Save Changes</button>
+        </div>
+        <h5 id="success">
+            User Registration Successful.
+        </h5>
+        <h5 id="fail">
+            User Registration Unsuccessful.
+        </h5>
+    </main>
+</body>

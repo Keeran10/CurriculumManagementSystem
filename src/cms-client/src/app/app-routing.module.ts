@@ -37,6 +37,7 @@ import {CalendarSectionComponent} from './calendar-section/calendar-section.comp
 import { CalendarSectionsComponent } from './calendar-sections/calendar-sections.component';
 import { RegistrationComponent } from './admin-registration/admin-registration.component';
 import { CalendarCourseListComponent } from './calendar-course-list/calendar-course-list.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 const routes: Routes = [
   { path: 'addcourse', component: CourseFormComponent },
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: 'section/:id', component: CalendarSectionComponent},
   { path: 'calendar', component: CalendarSectionsComponent },
   { path: 'registration', component: RegistrationComponent},
+  { path: 'manage', component: ManageUsersComponent},
   { path: 'tempPage', component: CalendarCourseListComponent },
   { path: '', component: LoginComponent }
 ];

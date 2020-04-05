@@ -1,0 +1,74 @@
+/* // MIT License
+
+// Copyright (c) 2019 teamCMS
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE. */
+
+.hg__main { grid-area: content; }
+.hg {
+  display: grid;
+  grid-template-areas: "left title right"
+  "left content right"
+  "footer footer footer";
+  grid-template-columns: 150px 1fr 150px;
+  grid-template-rows: 100px
+  1fr
+  80px;
+  min-height: 100vh;
+}
+  
+body{
+    background-color: #eeeeee;
+}
+
+h1 {
+  margin-left: 1%;
+  margin-bottom: 2%;
+  font-family: Calibri;
+  color: black;
+}
+
+.headers-align .mat-expansion-panel-header-title,
+.headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: left;
+}
+
+.headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.button-area{
+    margin-top: 2%;
+    float: right;
+}
+
+#success {
+  visibility: hidden;
+  color: green;
+}
+
+#fail {
+  visibility: hidden;
+  color: red;
+}
