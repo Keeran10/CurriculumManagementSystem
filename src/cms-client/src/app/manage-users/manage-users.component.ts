@@ -79,5 +79,15 @@ export class ManageUsersComponent implements OnInit {
       }
     }
     console.log(this.changeList);
+    this.api.updateUsers(this.changeList).subscribe(data => {
+      const res = JSON.stringify(data);
+      if (res.includes('200')) {
+        const success = document.getElementById('success');
+        success.style.visibility = 'visible';
+      } else if (res.includes('400')) {
+        const fail = document.getElementById('fail');
+        fail.style.visibility = 'visible';
+      }
+    });
   }
 }

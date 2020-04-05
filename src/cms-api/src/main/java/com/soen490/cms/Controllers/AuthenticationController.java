@@ -21,11 +21,17 @@
 // SOFTWARE.
 package com.soen490.cms.Controllers;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soen490.cms.Models.User;
 import com.soen490.cms.Services.AdminService;
 import com.soen490.cms.Services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -63,7 +69,18 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/update_users")
-    public boolean updateUsers(@RequestParam List<User> updated_users){
-        return adminService.updateUsers(updated_users);
+    public boolean updateUsers(@RequestParam String updated_users){
+        ObjectMapper mapper = new ObjectMapper();
+        try{
+            List<User> updatedUsersList = Arrays.asList(mapper.readValue(updated_users, User[].class));
+            return adminService.updateUsers(updatedUsersList);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

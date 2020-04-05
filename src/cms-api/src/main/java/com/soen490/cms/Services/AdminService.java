@@ -46,7 +46,21 @@ public class AdminService {
         return userRepository.findAll();
     }
 
-    public boolean updateUsers(List<User> updated_users) {
-
+    public boolean updateUsers(List<User> updated_users){
+        for(User u : updated_users){
+            User user = userRepository.findById(u.getId());
+            if(user == null){
+                log.error("User not found. id = " + u.getId());
+                return false;
+            }
+            user.setFirstName(u.getFirstName());
+            user.setLastName(u.getLastName());
+            user.setUserType(u.getUserType());
+            user.setEmail(u.getEmail());
+            user.setPassword(u.getPassword());
+            userRepository.save(user);
+            log.info("User saved. id=" + user.getId());
+        }
+        return true;
     }
 }

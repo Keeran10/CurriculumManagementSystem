@@ -423,4 +423,18 @@ export class ApiService {
   public getAllUsers(){
     return this.http.get<User[]>(this.url + 'get_users');
   }
+
+  public updateUsers(updated_users){
+    
+    const formdata: FormData = new FormData();
+    formdata.append('updated_users', JSON.stringify(updated_users));
+
+    const req = new HttpRequest('POST', this.url + 'update_users', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+    });
+
+    return this.http.request(req);
+  }
+  
 }
