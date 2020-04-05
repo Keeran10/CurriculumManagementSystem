@@ -21,6 +21,7 @@
 // SOFTWARE. -->
 <body class="hg">
     <main class="hg__main">
+        <h1>Manage Users:</h1>
         <mat-accordion class="headers-align">
             <mat-expansion-panel *ngFor="let user of users">
                 <mat-expansion-panel-header>
@@ -64,8 +65,9 @@
             </mat-expansion-panel>
         </mat-accordion>
 
-        
-        <button mat-raised-button class="btn-large btn-submit" (click)="submitChanges()"><mat-icon>save</mat-icon> Save Changes</button>
+        <div class="button-area">
+            <button mat-raised-button class="btn-large btn-submit" (click)="submitChanges()"><mat-icon>save</mat-icon> Save Changes</button>
+        </div>
         <h5 id="success">
             User Registration Successful.
         </h5>

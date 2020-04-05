@@ -37,6 +37,13 @@ body{
     background-color: #eeeeee;
 }
 
+h1 {
+  margin-left: 1%;
+  margin-bottom: 2%;
+  font-family: Calibri;
+  color: black;
+}
+
 .headers-align .mat-expansion-panel-header-title,
 .headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;
@@ -49,6 +56,11 @@ body{
 
 .headers-align .mat-form-field + .mat-form-field {
   margin-left: 8px;
+}
+
+.button-area{
+    margin-top: 2%;
+    float: right;
 }
 
 #success {
