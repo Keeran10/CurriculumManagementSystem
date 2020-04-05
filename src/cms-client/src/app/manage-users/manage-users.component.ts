@@ -23,6 +23,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../backend-api.service';
 import { User } from '../models/user';
+import * as _ from "lodash"
 
 @Component({
   selector: 'app-manage-users',
@@ -72,15 +73,11 @@ export class ManageUsersComponent implements OnInit {
   }
 
   public submitChanges(){
-    
-    console.log(this.originalUsers[0]);
-    console.log(this.users[0]);
-
     for(let i=0; i<this.originalUsers.length; i++){
       if(!this.areEqualUsers(this.originalUsers[i], this.users[i])){
         this.changeList.push(this.users[i]);
       }
     }
-    //console.log(this.changeList);
+    console.log(this.changeList);
   }
 }
