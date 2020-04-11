@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/Keeran10/CurriculumManagementSystem.svg?token=MoxxqDdGkV24zknvVVL5&branch=master)](https://travis-ci.com/Keeran10/CurriculumManagementSystem)
 
+Project demonstration can be found [here](https://capstone-projects-491.firebaseapp.com/project/2CP7fRQZOW). 
+
 ### Setup Instructions
 Setup instructions can be found [here](https://github.com/Keeran10/CurriculumManagementSystem/wiki/Setup-Instructions).
 
